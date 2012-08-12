@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service("articleService")
-@Scope("prototype")
 public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
@@ -38,9 +37,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 		switch (status) {
 		case Article.STAT_PUBLISHED:
-			switch (type) {
-			case Article.TYPE_ARTICLE:
-				if (articles.isEmpty()) {
+			if(type == Article.TYPE_ARTICLE) {
+				if (articles == null) {
 					log.info("aaaaaaaaaaaaaaaaaaaa》》》》》》》》》》");
 					updateArticleCache();
 					log.info("《《《《《《《《《《《《aaaaaaaaaaaaaaaaaaaa");
@@ -52,8 +50,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				} else {
 					return articles;
 				}
-			default:
-				if (pages.isEmpty()) {
+			} else {
+				if (pages == null) {
 					log.info("dddddddddddddddaaaaaaaaaaaaaaaaaaaa》》》》》》》");
 					updateArticleCache();
 					log.info("《《《《《《《《《dddddddddddddddaaaaaaaaaaaaaaaaaaaa");
@@ -92,7 +90,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public long save(Article article) throws SQLException {
 		long rs = articleDao.save(article);
-		if(rs == 0) {
+		if(rs < 1) {
 			throw new SQLException("Article save error");
 		} else if(article.getStat() == Article.STAT_PUBLISHED) {
 			updateArticleCache();
@@ -195,7 +193,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public void updateSidebarArticleCache() {
-		if (articles.isEmpty()) {
+		if (articles == null) {
 			updateArticleCache();
 		}
 		List<Article> tmp;

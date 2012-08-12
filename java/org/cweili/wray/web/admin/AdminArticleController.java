@@ -47,7 +47,7 @@ public class AdminArticleController extends BaseController {
 		v.add("actionName", actionName);
 		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page, LIMIT));
 		
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED), LIMIT, page);
+		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), LIMIT, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -70,15 +70,8 @@ public class AdminArticleController extends BaseController {
 	@RequestMapping(value="/admin-article-add", method = RequestMethod.POST)
 	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
-//		v.add("actionName", "新增文章");
+		v.add("actionName", "新增文章");
 		Article article = getArticle(request, null);
-//		v.add("err", "succ");
-//		v.add("title", article.getTitle());
-//		v.add("permalink", article.getPermalink());
-//		v.add("tag", article.getTag());
-//		v.add("content", article.getContent());
-//		v.add("commentStatus", article.getCommentStatus());
-//		v.add("stat", article.getStat());
 		v.add("redirect", "admin-article-edit-"+article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "文章保存成功");
@@ -86,8 +79,14 @@ public class AdminArticleController extends BaseController {
 		try {
 			articleService.save(article);
 		} catch(Exception e) {
+			v.setView("article-edit");
+			v.add("title", article.getTitle());
+			v.add("permalink", article.getPermalink());
+			v.add("tag", article.getTag());
+			v.add("content", article.getContent());
+			v.add("commentStatus", article.getCommentStatus());
+			v.add("stat", article.getStat());
 			v.add("err", "数据库更新失败");
-			v.add("msg", "文章保存失败");
 		}
 		return v;
 	}
@@ -134,9 +133,7 @@ public class AdminArticleController extends BaseController {
 			log.error(e.toString());
 		}
 		Article article = articleService.getArticleById(id);
-//		log.info("[OLD]" + article.toString());
 		article = getArticle(request, article);
-//		log.info("[NEW]" + article.toString());
 		v.add("title", article.getTitle());
 		v.add("permalink", article.getPermalink());
 		v.add("tag", article.getTag());

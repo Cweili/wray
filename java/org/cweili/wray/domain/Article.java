@@ -11,11 +11,11 @@ public class Article {
 	private String content = "";
 	private String tag = "";
 	private Date createTime = new Date();
-	private byte stat = 0;
+	private byte stat = Article.STAT_PUBLISHED;
 	private int hits = 0;
 	private int commentCount = 0;
-	private byte commentStatus = 0;
-	private byte isPage = 0;
+	private byte commentStatus = Article.COMMENT_ON;
+	private byte isPage = Article.TYPE_ARTICLE;
 	
 	public static final byte STAT_PUBLISHED = 4;
 	public static final byte STAT_DRAFT = 2;
@@ -29,7 +29,7 @@ public class Article {
 	public static final byte TYPE_PAGE = 1;
 	
 	public Article(){
-		
+		super();
 	}
 	
 	public Article(long articleId,
@@ -43,7 +43,7 @@ public class Article {
 			int commentCount,
 			byte commentStatus,
 			byte isPage) {
-		
+		super();
 		this.articleId = articleId;
 		this.title = title;
 		this.permalink = permalink;

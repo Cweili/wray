@@ -17,7 +17,7 @@
 				<div class="err_icon"><!-- --></div>
 				<a href="#" class="close" title="关闭">x</a>
 				<div class="desc">
-					<span>文章保存失败!</span>
+					<span>${err}</span>
 					<p>实在抱歉，${err}, 请联系管理员。</p>
 				</div>
 			</div>

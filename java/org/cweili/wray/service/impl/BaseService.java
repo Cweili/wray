@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.dao.ArticleDao;
 import org.cweili.wray.dao.ConfigDao;
+import org.cweili.wray.dao.ItemDao;
 import org.cweili.wray.domain.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,9 +21,12 @@ public abstract class BaseService {
 	@Autowired
 	protected ConfigDao configDao;
 	
-	protected static List<Article> articles = new ArrayList<Article>();
+	@Autowired
+	protected ItemDao itemDao;
 	
-	protected static List<Article> pages = new ArrayList<Article>();
+	protected static List<Article> articles = null;
+	
+	protected static List<Article> pages = null;
 	
 	protected static List<Article> topCommentArticles = new ArrayList<Article>();
 

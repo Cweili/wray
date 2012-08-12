@@ -31,16 +31,16 @@ public class AdminPageController extends BaseController {
 			@PathVariable String status) {
 		BlogView v = new BlogView("page-list");
 		byte stat = Article.STAT_PUBLISHED;
-		String actionName = "已发布页面";
+		String actionName = "公开页面";
 		int page = 1;
 		try {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request.getParameter("page"));
 		} catch(Exception e) {
 			log.error(e.toString());
 		}
-		if("draft".equals(status)) {
+		if("private".equals(status)) {
 			stat = Article.STAT_DRAFT;
-			actionName = "页面草稿";
+			actionName = "私密页面";
 		} else if("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;
 			actionName = "页面回收站";
@@ -48,7 +48,7 @@ public class AdminPageController extends BaseController {
 		v.add("actionName", actionName);
 		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, LIMIT));
 		
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED), LIMIT, page);
+		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE, stat), LIMIT, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -71,14 +71,8 @@ public class AdminPageController extends BaseController {
 	@RequestMapping(value="/admin-page-add", method = RequestMethod.POST)
 	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
-//		v.add("actionName", "新增页面");
+		v.add("actionName", "新增页面");
 		Article article = getArticle(request, null);
-//		v.add("title", article.getTitle());
-//		v.add("permalink", article.getPermalink());
-//		v.add("tag", article.getTag());
-//		v.add("content", article.getContent());
-//		v.add("commentStatus", article.getCommentStatus());
-//		v.add("stat", article.getStat());
 		v.add("redirect", "admin-page-edit-"+article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "页面保存成功");
@@ -86,6 +80,12 @@ public class AdminPageController extends BaseController {
 		try {
 			articleService.save(article);
 		} catch(Exception e) {
+			v.setView("page-edit");
+			v.add("title", article.getTitle());
+			v.add("permalink", article.getPermalink());
+			v.add("content", article.getContent());
+			v.add("commentStatus", article.getCommentStatus());
+			v.add("stat", article.getStat());
 			v.add("err", "数据库更新失败");
 			v.add("msg", "页面保存失败");
 		}
@@ -108,7 +108,6 @@ public class AdminPageController extends BaseController {
 		if(article != null) {
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
-			v.add("tag", article.getTag());
 			v.add("content", article.getContent());
 			v.add("commentStatus", article.getCommentStatus());
 			v.add("stat", article.getStat());
@@ -134,22 +133,19 @@ public class AdminPageController extends BaseController {
 			log.error(e.toString());
 		}
 		Article article = articleService.getArticleById(id);
-//		log.info("[OLD]" + article.toString());
 		article = getArticle(request, article);
-//		log.info("[NEW]" + article.toString());
 		v.add("title", article.getTitle());
 		v.add("permalink", article.getPermalink());
 		v.add("tag", article.getTag());
 		v.add("content", article.getContent());
 		v.add("commentStatus", article.getCommentStatus());
 		v.add("stat", article.getStat());
-		String err = "succ";
+		v.add("err", "succ");
 		try {
 			articleService.update(article);
 		} catch(Exception e) {
-			err = "数据库更新失败";
+			v.add("err", "数据库更新失败");
 		}
-		v.add("err", err);
 		return v;
 	}
 	
@@ -189,7 +185,7 @@ public class AdminPageController extends BaseController {
 		}
 		
 		byte stat = Article.STAT_PUBLISHED;
-		if("draft".equals(status)) {
+		if("private".equals(status)) {
 			stat = Article.STAT_DRAFT;
 		} else if("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;

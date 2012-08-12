@@ -43,7 +43,6 @@ public class ArticleController extends BaseController {
 
 	@Override
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

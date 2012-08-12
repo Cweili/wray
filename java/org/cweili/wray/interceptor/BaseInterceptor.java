@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.service.ConfigService;
+import org.cweili.wray.service.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +21,9 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	protected ArticleService articleService;
+	
+	@Autowired
+	protected LinkService linkService;
 	
 	@Override
 	public abstract boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;

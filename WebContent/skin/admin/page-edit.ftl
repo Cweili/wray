@@ -17,13 +17,13 @@
 				<div class="err_icon"><!-- --></div>
 				<a href="#" class="close" title="关闭">x</a>
 				<div class="desc">
-					<span>页面保存失败!</span>
+					<span>${err}</span>
 					<p>实在抱歉，${err}, 请联系管理员。</p>
 				</div>
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="articleForm" action="admin-${adminAction}<#if adminAction="page-edit">-${articleId?if_exists}</#if>.html" method="post">
+		<form id="articleForm" action="admin-${adminAction}<#if adminAction="page-edit">-${articleId?if_exists?c}</#if>.html" method="post">
 			<fieldset><legend>页面信息</legend>
 				<div class="input_field">
 					<label for="title">页面标题</label>
@@ -40,11 +40,11 @@
 					<textarea id="wysiwyg" name="content" style="width:100%;height:300px;">${content?if_exists}</textarea>
 				</div>
 			</fieldset>
-			<fieldset><legend>发布选项</legend>
+			<fieldset><legend>保存选项</legend>
 				<div class="input_field no_margin_bottom">
 					<span class="form_line"><input type="checkbox" name="commentStatus" class="checkbox" value="1" <#if commentStatus=1>checked="checked" </#if>/>允许评论</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if stat=4>checked="checked" </#if>/>已发布</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if stat=2>checked="checked" </#if>/>草稿</span>
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if stat=4>checked="checked" </#if>/>公开</span>
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if stat=2>checked="checked" </#if>/>私密</span>
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if stat=1>checked="checked" </#if>/>回收站</span>
 					<span class="form_line"><input class="submit" type="submit" value="保存页面" /></span>
 				</div>

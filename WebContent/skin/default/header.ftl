@@ -13,13 +13,13 @@
 				<div id="nav">
 					<ul id="header-navi">
 						<li><a href="${staticServePath}">${homeLabel}</a></li>
-						<``#list pageNavigations as page>
+						<#list pageNavigations as page>
 						<li>
-							<a href="$`{page.pagePermalink}">
-								$`{page.pageTitle}
+							<a href="page/${page.permalink}/">
+								${page.title}
 							</a>
 						</li>
-						<``/#list>
+						</#list>
 						<li>
 							<a href="/tags.html">$`{allTagsLabel}</a>
 						</li>

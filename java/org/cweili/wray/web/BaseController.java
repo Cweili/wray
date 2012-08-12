@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.service.ConfigService;
+import org.cweili.wray.service.LinkService;
 import org.cweili.wray.util.BlogView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,10 @@ public abstract class BaseController extends MultiActionController {
 	
 	@Autowired
 	protected ArticleService articleService;
-
+	
+	@Autowired
+	protected LinkService linkService;
+	
 	public abstract BlogView index(HttpServletRequest request,
 			HttpServletResponse response);
 	

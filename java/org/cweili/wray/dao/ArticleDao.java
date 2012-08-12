@@ -16,7 +16,7 @@ public interface ArticleDao extends BaseDao<Article>{
 	
 	public Article getArticleByPermalink(final String permalink);
 	
-	public int remove(final List<Long> ids, byte type);
+	public int remove(List<Long> ids, byte type);
 	
 	public int updateColumn(long id, String col, int type, Object value);
 }

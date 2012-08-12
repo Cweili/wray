@@ -2,25 +2,47 @@ package org.cweili.wray.domain;
 
 public class Item {
 
-	private long item_id;
-	private String item_name;
-	private String permalink;
-	private String description;
-	private int count;
-	private int item_order;
-	private byte item_type;
-	private long parrent_id;
+	private long itemId = 0;
+	private String itemName = "";
+	private String permalink = "";
+	private String description = "";
+	private int count = 0;
+	private int itemOrder = 0;
+	private byte itemType = Item.TYPE_CATEGORY;
+	private long parrentId = 0;
+	private byte stat = Item.STAT_ON;
 	
-	public static final byte CATEGORY = 0;
-	public static final byte TAG = 1;
-	public static final byte LINK = 2;
-	public static final byte MENU = 3;
+	public static final byte TYPE_CATEGORY = 0;
+	public static final byte TYPE_TAG = 1;
+	public static final byte TYPE_LINK = 2;
+	public static final byte TYPE_MENU = 3;
 	
+	public static final byte STAT_ON = 1;
+	public static final byte STAT_OFF = 0;
+	
+	public Item() {
+		super();
+	}
+
+	public Item(long itemId, String itemName, String permalink, String description, int count,
+			int itemOrder, byte itemType, long parrentId, byte stat) {
+		super();
+		this.itemId = itemId;
+		this.itemName = itemName;
+		this.permalink = permalink;
+		this.description = description;
+		this.count = count;
+		this.itemOrder = itemOrder;
+		this.itemType = itemType;
+		this.parrentId = parrentId;
+		this.stat = stat;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (item_id ^ (item_id >>> 32));
+		result = prime * result + (int) (itemId ^ (itemId >>> 32));
 		return result;
 	}
 
@@ -33,63 +55,90 @@ public class Item {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (item_id != other.item_id)
+		if (itemId != other.itemId)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Item [item_id=" + item_id + ", item_name=" + item_name + ", permalink=" + permalink
-				+ ", item_type=" + item_type + ", parrent_id=" + parrent_id + "]";
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", permalink=" + permalink
+				+ ", description=" + description + ", count=" + count + ", itemOrder=" + itemOrder
+				+ ", itemType=" + itemType + ", parrentId=" + parrentId + ", stat=" + stat + "]";
 	}
-	
-	public long getItem_id() {
-		return item_id;
+
+	public long getItemId() {
+		return itemId;
 	}
-	public void setItem_id(long item_id) {
-		this.item_id = item_id;
+
+	public void setItemId(long itemId) {
+		this.itemId = itemId;
 	}
-	public String getItem_name() {
-		return item_name;
+
+	public String getItemName() {
+		return itemName;
 	}
-	public void setItem_name(String item_name) {
-		this.item_name = item_name;
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
+
 	public String getPermalink() {
 		return permalink;
 	}
+
 	public void setPermalink(String permalink) {
 		this.permalink = permalink;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public int getCount() {
 		return count;
 	}
+
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public int getItem_order() {
-		return item_order;
+
+	public int getItemOrder() {
+		return itemOrder;
 	}
-	public void setItem_order(int item_order) {
-		this.item_order = item_order;
+
+	public void setItemOrder(int itemOrder) {
+		this.itemOrder = itemOrder;
 	}
-	public byte getItem_type() {
-		return item_type;
+
+	public byte getItemType() {
+		return itemType;
 	}
-	public void setItem_type(byte item_type) {
-		this.item_type = item_type;
+
+	public void setItemType(byte itemType) {
+		this.itemType = itemType;
 	}
-	public long getParrent_id() {
-		return parrent_id;
+
+	public long getParrentId() {
+		return parrentId;
 	}
-	public void setParrent_id(long parrent_id) {
-		this.parrent_id = parrent_id;
+
+	public void setParrentId(long parrentId) {
+		this.parrentId = parrentId;
 	}
+
+	public byte getStat() {
+		return stat;
+	}
+
+	public void setStat(byte stat) {
+		this.stat = stat;
+	}
+
+	
+	
 }

@@ -42,16 +42,16 @@
 				<div class="subnav">
 					<ul class="submenu">
 						<li<#if adminAction="page-add"> id="current_nav"</#if>><a href="admin-page-add.html">新增页面</a></li>
-						<li<#if adminAction="page-pub"> id="current_nav"</#if>><a href="admin-page-pub.html">已发布页面</a></li>
-						<li<#if adminAction="page-draft"> id="current_nav"</#if>><a href="admin-page-draft.html">页面草稿</a></li>
+						<li<#if adminAction="page-pub"> id="current_nav"</#if>><a href="admin-page-pub.html">公开页面</a></li>
+						<li<#if adminAction="page-private"> id="current_nav"</#if>><a href="admin-page-private.html">私密页面</a></li>
 						<li<#if adminAction="page-recycle"> id="current_nav"</#if>><a href="admin-page-recycle.html">页面回收站</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>链接管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="#">新增链接</a></li>
-						<li><a href="#">链接管理</a></li>
+						<li<#if adminAction="link-add"> id="current_nav"</#if>><a href="admin-link-add.html">新增链接</a></li>
+						<li<#if adminAction="link"> id="current_nav"</#if>><a href="admin-link.html">链接管理</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>博客设置</span></div>

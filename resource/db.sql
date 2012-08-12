@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `comment_count` int(10) NOT NULL,
   `comment_status` tinyint(1) NOT NULL,
   `is_page` tinyint(1) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `article` (`article_id`, `title`, `permalink`, `content`, `tag`, `create_time`, `stat`, `hits`, `comment_count`, `comment_status`, `is_page`) VALUES
 (1344330420779, '无标题1344330420779', '1344330420779', '', '', '2012-08-07 17:07:00', 4, 30, 0, 1, 1),
@@ -1090,13 +1090,13 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `content` varchar(2048) NOT NULL,
   `stat` tinyint(1) NOT NULL,
   `parrent_id` bigint(20) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE IF NOT EXISTS `config` (
   `config_key` varchar(64) NOT NULL,
   `config_value` varchar(2048) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `config` (`config_key`, `config_value`) VALUES
 ('adminNick', 'Cweili'),
@@ -1145,13 +1145,13 @@ CREATE TABLE IF NOT EXISTS `item` (
   `item_order` int(10) NOT NULL,
   `item_type` tinyint(3) NOT NULL,
   `parrent_id` bigint(20) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `relationship`;
 CREATE TABLE IF NOT EXISTS `relationship` (
   `item_a` bigint(20) NOT NULL,
   `item_b` bigint(20) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
@@ -1163,7 +1163,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(255) NOT NULL,
   `regtime` datetime NOT NULL,
   `usergroup` tinyint(1) NOT NULL
-) ENGINE=CSV DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `user` (`user_id`, `username`, `passwd`, `nickname`, `permalink`, `email`, `regtime`, `usergroup`) VALUES
 (1, 'Cweili', '3', 'Cweili', 'cweili', '3weili@gmail.com', '2012-07-31 00:00:00', 9);

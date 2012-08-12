@@ -84,8 +84,15 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 	@Override
 	public Article getArticleByPermalink(String permalink) {
 		return db.queryForObject("SELECT * FROM article WHERE permalink=? AND stat > 0 LIMIT 1",
-				new Object[] { permalink }, new int[] { Types.VARCHAR }, new BeanPropertyRowMapper<Article>(
-						Article.class));
+				new Object[] { permalink }, new int[] { Types.VARCHAR }, new RowMapper<Article>() {
+					@Override
+					public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return new Article(rs.getLong(1), rs.getString(2), rs
+								.getString(3), rs.getString(4), rs.getString(5), rs.getTimestamp(6),
+								rs.getByte(7), rs.getInt(8), rs.getInt(9), rs.getByte(10), rs
+										.getByte(11));
+					}
+		});
 	}
 
 	@Override
@@ -115,7 +122,7 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 			log.info("Save " + t.toString());
 			return t.getArticleId();
 		} else {
-			log.info("Error Saving article");
+			log.info("Error saving article");
 			return 0;
 		}
 	}

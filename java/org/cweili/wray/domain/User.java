@@ -22,7 +22,7 @@ public class User {
 	public static final byte GROUP_BLOCK = 0;
 	
 	public User() {
-		
+		super();
 	}
 	
 	public User(long userId,
@@ -33,7 +33,7 @@ public class User {
 			String email, 
 			Date regtime,
 			byte usergroup) {
-		
+		super();
 		this.userId = userId;
 		this.username = username;
 		this.passwd = passwd;
