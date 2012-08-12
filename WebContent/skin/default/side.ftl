@@ -73,10 +73,10 @@
 		<div class="widget-cat">
 			<h4>${linkLabel}</h4>
 			<ul id="link">
-			<``#list links as link>
-				<li><a href="$`{link.linkAddress}" title="$`{link.linkTitle}" target="_blank">
-				$`{link.linkTitle}</a></li>
-			<``/#list>
+			<#list links as link>
+				<li><a href="${link.description}" title="${link.itemName}" target="_blank">
+				${link.itemName}</a></li>
+			</#list>
 			</ul>
 		</div>
 		<div class="clr"></div>

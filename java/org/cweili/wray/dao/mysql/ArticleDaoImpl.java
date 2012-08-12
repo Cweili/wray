@@ -31,7 +31,8 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 	@Override
 	public List<Article> getArticlesByTypeStatus(byte type, byte status) {
 		final List<Article> list = new ArrayList<Article>();
-		db.query("SELECT * FROM article WHERE is_page=? AND stat=?",
+		db.query("SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article WHERE is_page=? AND stat=?",
 				new Object[] { type, status }, new int[] { Types.INTEGER,
 						Types.INTEGER}, new RowCallbackHandler() {
 					@Override
@@ -51,7 +52,8 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 	@Override
 	public List<Article> getArticlesByTypeStatus(byte type, byte status, int start, int limit) {
 		final List<Article> list = new ArrayList<Article>();
-		db.query("SELECT * FROM article WHERE is_page=? AND stat=? LIMIT ?,?",
+		db.query("SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article WHERE is_page=? AND stat=? LIMIT ?,?",
 				new Object[] { type, status, start, limit }, new int[] { Types.INTEGER,
 						Types.INTEGER, Types.INTEGER, Types.INTEGER }, new RowCallbackHandler() {
 					@Override
@@ -69,7 +71,8 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 
 	@Override
 	public Article getArticleById(final long id) {
-		return db.queryForObject("SELECT * FROM article WHERE article_id=? AND stat > 0 LIMIT 1",
+		return db.queryForObject("SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article WHERE article_id=? AND stat > 0 LIMIT 1",
 				new Object[] { id }, new int[] { Types.BIGINT }, new RowMapper<Article>() {
 					@Override
 					public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -83,7 +86,8 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 
 	@Override
 	public Article getArticleByPermalink(String permalink) {
-		return db.queryForObject("SELECT * FROM article WHERE permalink=? AND stat > 0 LIMIT 1",
+		return db.queryForObject("SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article WHERE permalink=? AND stat > 0 LIMIT 1",
 				new Object[] { permalink }, new int[] { Types.VARCHAR }, new RowMapper<Article>() {
 					@Override
 					public Article mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -21,7 +21,6 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<div style="height:400px"><!-- --></div>
 	</div> <!-- END Content -->
 	<#if redirect?default('') != ''>
 		<script type="text/javascript">

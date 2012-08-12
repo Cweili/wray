@@ -35,7 +35,6 @@
 					</div>
 				</fieldset>
 			</form>
-			<div style="height:120px"><!-- --></div>
 		</#if>
 	</div> <!-- END Content -->
 </div> 	

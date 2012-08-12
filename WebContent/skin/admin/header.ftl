@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
-	<title>Wray Admin Panel</title>
+	<title>${blogTitle?if_exists}管理面板 - Wray Admin Panel</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!--base href="${staticServePath}" /-->
 	<style type="text/css" media="all">
@@ -31,11 +31,11 @@
 	<div id="header"> <!-- Header -->
 		<div id="title">
 			Wray Admin Panel
-			<span>${blogTitle?if_exists} 系统管理</span>
+			<span>${blogTitle?if_exists} 管理面板</span>
 		</div>
 		<div class="logged">
 			<p style="height:40px"><!-- --></p>
 			<p style="font-size:16px">欢迎您, ${adminNick}! | <a href="${staticServePath}" target="_blank">博客首页</a> | <a href="#" >退出登录</a></p>
 		</div>
 	</div>
-	<#include "sidebar.ftl">
+	<#include "sidenav.ftl">

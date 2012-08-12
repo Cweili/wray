@@ -114,7 +114,8 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 
 	@Override
 	public Item getItemById(long id) {
-		return db.queryForObject("SELECT * FROM item WHERE item_id=? AND stat > 0 LIMIT 1",
+		return db.queryForObject("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+				+ " parrent_id, stat FROM item WHERE item_id=? AND stat > 0 LIMIT 1",
 				new Object[] { id }, new int[] { Types.BIGINT }, new RowMapper<Item>() {
 					@Override
 					public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -126,7 +127,8 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 
 	@Override
 	public Item getItemByPermalink(String permalink, byte type) {
-		return db.queryForObject("SELECT * FROM item WHERE permalink=? AND stat > 0 LIMIT 1",
+		return db.queryForObject("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+				+ " parrent_id, stat FROM item WHERE permalink=? AND stat > 0 LIMIT 1",
 				new Object[] { permalink }, new int[] { Types.VARCHAR }, new RowMapper<Item>() {
 					@Override
 					public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -139,7 +141,8 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 	@Override
 	public Map<Long, Item> getItemMapByType(byte type) {
 		final Map<Long, Item> map = new HashMap<Long, Item>();
-		db.query("SELECT * FROM item WHERE item_type=? AND stat>0",
+		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0",
 				new Object[] { type }, new int[] { Types.INTEGER,
 						Types.INTEGER}, new RowCallbackHandler() {
 					@Override
@@ -155,7 +158,8 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 	@Override
 	public List<Item> getItemsByType(byte type) {
 		final List<Item> list = new ArrayList<Item>();
-		db.query("SELECT * FROM item WHERE item_type=? AND stat>0",
+		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0",
 				new Object[] { type }, new int[] { Types.INTEGER }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {

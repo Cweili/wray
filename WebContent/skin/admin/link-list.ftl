@@ -60,7 +60,6 @@
 				</div>
 			</div>
 			<div class="clearboth"><!-- --></div>
-			<div style="height:370px"><!-- --></div>
 		</#if>
 	</div> <!-- END Content -->
 </div>

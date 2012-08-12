@@ -286,13 +286,12 @@ INPUT.radio {
 /* ---------------------------------------*/
 #container #sidebar { 
 	width:251px;
-	margin-left:15px;
-	margin-top:15px;
+	margin:5px 0 0 15px;
 	float:left;
-} 
+}
 
 #sidebar .sidebox { 
-	margin-bottom:15px;
+	margin-bottom:10px;
 	width:231px;
 	background:#222 url('../assets/sidebar_box_rep.png') 100% 0 repeat-y;
 	border-right:1px solid #222;
@@ -456,7 +455,7 @@ li#current_nav a {
 }
 
 #main #content { 
-	margin:15px 0 77px 15px;
+	margin:5px 0 77px 15px;
 	background:#161616;
 	padding:1px 0 0 10px;
 	-moz-border-radius:5px;
@@ -827,14 +826,21 @@ ul.modals li a span {
 textarea {
 	clear:both;
 	float:left;
-	width:500px;
-	background:#eee;
-	color:#fff;
+	width:98%;
+	height:100px;
 	border:1px solid #333;
 	padding:10px;
 	margin-top:20px;
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
+	background:#1a1a1a;
+	color:#eee;
+}
+
+textarea.wysiwyg {
+	height:300px;
+	background:#eee;
+	color:#000;
 }
 
 div.wysiwyg {

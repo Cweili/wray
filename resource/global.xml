@@ -121,16 +121,16 @@
 	<!-- 允许对静态资源文件的访问 --> 
 	<mvc:default-servlet-handler/>
 	
-	<!-- JDBC数据源 -->
+	<!-- JDBC数据源
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${datasource.driver}"/>
 		<property name="url" value="${datasource.url}" />
 		<property name="username" value="${datasource.username}"/>
 		<property name="password" value="${datasource.password}"/>
 	</bean>
+	-->
 
-	<!-- 数据源 ,DBCP连接池-->
-	<!-- 
+	<!-- 数据源, DBCP连接池-->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${datasource.driver}"/>
 		<property name="url" value="${datasource.url}"/>
@@ -142,7 +142,6 @@
 		<property name="maxWait" value="1000"/>
 		<property name="poolPreparedStatements" value="true"/>
 	</bean>
-	-->
 	
 	<!-- JNDI数据源
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">

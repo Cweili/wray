@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 
  //DATE PICKER
-	   $("#datepicker").datepicker();
+  $("#datepicker").datepicker();
 
 
  //CLOSE NOTIFICATIONS BUTTON
@@ -56,6 +56,19 @@ $(document).ready(function() {
 			$(this).parent().parent().parent().parent().find('input[type="checkbox"]').attr("checked", $(this).is(":checked"));   
 		}
 	);
+	
+	$("input.submit").click(
+		function(){
+			$(this).attr("disabled",true);
+			$("form").submit();
+		}
+	);
+	
+	if($("#main").height() < 590) {
+		$("#main").css({
+			height: 590 + "px"
+		});
+	}
 
 	reSizeMain();
 	
@@ -67,7 +80,7 @@ $(document).ready(function() {
 	});
 	
     KindEditor.ready(function(K) {
-    	K.create("#wysiwyg", {
+    	K.create(".wysiwyg", {
     		themeType: "default",
     		wellFormatMode: true,
     		indentChar: "",
@@ -110,9 +123,14 @@ $(window).resize(function() {
 });
 
 function reSizeMain() {
-	var mainwidth = $(window).width() - 285;
+	var containerwidth = $(window).width();
+	containerwidth = containerwidth > 996 ? containerwidth : 996;
+	var mainwidth = containerwidth - 285;
+	$("#container").css({
+		width: containerwidth + "px"
+	});
 	$("#main").css({
-		width: mainwidth + "px",
+		width: mainwidth + "px"
 	});
 }
 

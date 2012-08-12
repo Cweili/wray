@@ -31,18 +31,19 @@
 				</div>
 				<div class="input_field">
 					<label for="permalink">永久链接</label>
-					${staticServePath}article/<input class="mediumfield" name="permalink" type="text" value="${permalink?if_exists}" />/
-					<span class="field_desc">如果留空系统将自动生成</span>
+					<span class="field_desc">${staticServePath}article/</span>
+					<input class="mediumfield" name="permalink" type="text" value="${permalink?if_exists}" />
+					<span class="field_desc">/</span>
 				</div>
 				<div class="input_field">
 					<label for="tag">文章标签</label>
 					<input class="bigfield" name="tag" type="text" value="${tag?if_exists}" />
-					<span class="field_desc">使用逗号或空格来分隔标签</span>
+					<span class="field_desc">使用逗号或空格分隔</span>
 				</div>
 			</fieldset>
 			<fieldset><legend>文章正文</legend>
 				<div class="input_field">
-					<textarea id="wysiwyg" name="content" style="width:100%;height:300px;">${content?if_exists}</textarea>
+					<textarea class="wysiwyg" name="content" style="width:100%;">${content?if_exists}</textarea>
 				</div>
 			</fieldset>
 			<fieldset><legend>发布选项</legend>

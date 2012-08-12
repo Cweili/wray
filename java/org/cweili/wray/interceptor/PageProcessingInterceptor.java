@@ -44,6 +44,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		
 //		log.info("Page Processing: " + title);
 		
+		// Not Admin
 		if(!isAdminPanel) {
 		
 			List<Article> pageNavigations = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 10);
@@ -51,6 +52,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			mv.addObject("mostCommentArticles", articleService.getTopCommentArticles(Integer.valueOf(blogConfig.get("topCommentArticlesSize"))));
 			mv.addObject("mostViewCountArticles", articleService.getTopHitsArticles(Integer.valueOf(blogConfig.get("topHitsArticlesSize"))));
 		
+			mv.addObject("links", linkService.getLinks());
 		}
 		
 		// Admin

@@ -2,6 +2,7 @@ package org.cweili.wray.dao.mysql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,15 +23,9 @@ public class ConfigDaoImpl implements ConfigDao {
 	private JdbcTemplate db;
 	
 	@Override
-	public String get(String key) {
-
-		return null;
-	}
-
-	@Override
 	public Map<String, String> getAll() {
 		final Map<String, String> map = new HashMap<String, String>();
-		db.query("SELECT * FROM config", new RowCallbackHandler() {
+		db.query("SELECT config_key, config_value FROM config", new RowCallbackHandler() {
 			public void processRow(ResultSet rs) throws SQLException {
 				map.put(rs.getString(1), rs.getString(2));
 				log.info("Load config: " + rs.getString(1) + " => " + rs.getString(2));
@@ -41,7 +36,15 @@ public class ConfigDaoImpl implements ConfigDao {
 
 	@Override
 	public int saveOrUpdate(String key, String value) {
-		return 0;
+		int rs = db.queryForInt("SELECT COUNT(*) FROM config WHERE config_key=?", new Object[]{ key }, new int[]{ Types.VARCHAR });
+		if(rs > 0) {
+			rs = db.update("UPDATE config SET config_value=? WHERE config_key=?", new Object[]{ value, key }, new int[]{ Types.VARCHAR, Types.VARCHAR });
+			log.info("Update config: " + key + " => " + value);
+		} else {
+			rs = db.update("INSERT INTO config (config_key, config_value) VALUES(?, ?)", new Object[]{ key, value }, new int[]{ Types.VARCHAR, Types.VARCHAR });
+			log.info("Insert config: " + key + " => " + value);
+		}
+		return rs;
 	}
 
 }

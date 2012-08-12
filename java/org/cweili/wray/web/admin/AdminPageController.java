@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public class AdminPageController extends BaseController {
-	
+
 	private static final int LIMIT = 12;
 
 	@Override
@@ -34,21 +34,24 @@ public class AdminPageController extends BaseController {
 		String actionName = "公开页面";
 		int page = 1;
 		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request.getParameter("page"));
-		} catch(Exception e) {
+			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
+					.getParameter("page"));
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		if("private".equals(status)) {
+		if ("private".equals(status)) {
 			stat = Article.STAT_DRAFT;
 			actionName = "私密页面";
-		} else if("recycle".equals(status)) {
+		} else if ("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;
 			actionName = "页面回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, LIMIT));
-		
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE, stat), LIMIT, page);
+		v.add("articles",
+				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, LIMIT));
+
+		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE,
+				stat), LIMIT, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -57,8 +60,8 @@ public class AdminPageController extends BaseController {
 		v.add("paginationPageCount", pagination.getLast());
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-page-add", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin-page-add", method = RequestMethod.GET)
 	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "新增页面");
@@ -67,19 +70,19 @@ public class AdminPageController extends BaseController {
 		v.add("err", "");
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-page-add", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-page-add", method = RequestMethod.POST)
 	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增页面");
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin-page-edit-"+article.getArticleId());
+		v.add("redirect", "admin-page-edit-" + article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "页面保存成功");
 		v.add("succ", "恭喜您，您的页面已成功保存。");
 		try {
 			articleService.save(article);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			v.setView("page-edit");
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
@@ -92,7 +95,7 @@ public class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value="/admin-page-edit-{articleid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.GET)
 	public BlogView editGet(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String articleid) {
 		BlogView v = new BlogView("page-edit");
@@ -101,11 +104,11 @@ public class AdminPageController extends BaseController {
 		long id = 0;
 		try {
 			id = Long.valueOf(articleid);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		Article article = articleService.getArticleById(id);
-		if(article != null) {
+		if (article != null) {
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
 			v.add("content", article.getContent());
@@ -119,8 +122,8 @@ public class AdminPageController extends BaseController {
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-page-edit-{articleid}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
 	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String articleid) {
 		BlogView v = new BlogView("page-edit");
@@ -129,7 +132,7 @@ public class AdminPageController extends BaseController {
 		long id = 0;
 		try {
 			id = Long.valueOf(articleid);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		Article article = articleService.getArticleById(id);
@@ -143,85 +146,89 @@ public class AdminPageController extends BaseController {
 		v.add("err", "succ");
 		try {
 			articleService.update(article);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			v.add("err", "数据库更新失败");
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-page-manage-{status}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-page-manage-{status}", method = RequestMethod.POST)
 	public BlogView manage(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String status) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "页面更新成功");
 		v.add("succ", "恭喜您，您的页面排序已成功更新，选中页面已成功移入回收站。");
-		v.add("redirect", "admin-page-"+status);
-		
+		v.add("redirect", "admin-page-" + status);
+
 		byte type = Article.STAT_RECYCLE;
-		if("recycle".equals(status)) {
+		if ("recycle".equals(status)) {
 			type = Article.STAT_REMOVED;
 			v.add("succ", "恭喜您，您的页面排序已成功更新，选中页面已成功删除。");
 		}
-		
+
 		List<Long> ids = new ArrayList<Long>();
 		Long id;
 		try {
-			if(request.getParameterValues("id") != null && request.getParameterValues("id").length > 0) {
-				for(int i = 0; i < request.getParameterValues("id").length; ++i) {
+			if (request.getParameterValues("id") != null
+					&& request.getParameterValues("id").length > 0) {
+				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
 					id = Long.valueOf(request.getParameterValues("id")[i]);
 					ids.add(id);
 				}
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
+
 		int page = 1;
 		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request.getParameter("page"));
-		} catch(Exception e) {
+			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
+					.getParameter("page"));
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
+
 		byte stat = Article.STAT_PUBLISHED;
-		if("private".equals(status)) {
+		if ("private".equals(status)) {
 			stat = Article.STAT_DRAFT;
-		} else if("recycle".equals(status)) {
+		} else if ("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;
 		}
-		
+
 		boolean orderUpdated = false;
-		
-		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, LIMIT);
+
+		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat,
+				page, LIMIT);
 		int order = 0;
 		Article article;
-		
+
 		try {
-			for(int i = 0; i < articles.size(); ++i) {
-				if(request.getParameter("order" + articles.get(i).getArticleId()) != null) {
-					order = Integer.valueOf(request.getParameter("order" + articles.get(i).getArticleId()));
+			for (int i = 0; i < articles.size(); ++i) {
+				if (request.getParameter("order" + articles.get(i).getArticleId()) != null) {
+					order = Integer.valueOf(request.getParameter("order"
+							+ articles.get(i).getArticleId()));
 					article = articles.get(i);
-					if(article.getHits() != order) {
+					if (article.getHits() != order) {
 						orderUpdated = true;
 						article.setHits(order);
 						articleService.updateHitsCommentCount(article);
 					}
 				}
 			}
-			if(orderUpdated) {
+			if (orderUpdated) {
 				articleService.updateArticleCache();
 			}
-		} catch(SQLException se) {
-			if(orderUpdated) {
+		} catch (SQLException se) {
+			if (orderUpdated) {
 				v.add("err", "数据库更新失败");
 				v.add("msg", "页面排序失败");
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
-		if(!ids.isEmpty()) {
+
+		if (!ids.isEmpty()) {
 			try {
 				articleService.remove(ids, type);
 			} catch (Exception e) {
@@ -231,30 +238,33 @@ public class AdminPageController extends BaseController {
 		}
 		return v;
 	}
-	
+
 	private Article getArticle(HttpServletRequest request, Article ori) {
 		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
-		String permalink = request.getParameter("permalink") != null ? request.getParameter("permalink") : "";
-		String content = request.getParameter("content") != null ? request.getParameter("content"): "";
+		String permalink = request.getParameter("permalink") != null ? request
+				.getParameter("permalink") : "";
+		String content = request.getParameter("content") != null ? request.getParameter("content")
+				: "";
 		byte commentStatus = Article.COMMENT_OFF;
-		if(request.getParameterValues("commentStatus") != null && request.getParameterValues("commentStatus").length > 0) {
+		if (request.getParameterValues("commentStatus") != null
+				&& request.getParameterValues("commentStatus").length > 0) {
 			commentStatus = Article.COMMENT_ON;
 		}
 		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
-		
+
 		Long id = Function.generateId();
-		
+
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "无标题" + id : title;
 		permalink = Function.stripTags(permalink).trim().toLowerCase();
 		permalink = "".equals(permalink) ? id.toString() : permalink;
 		byte stat = Article.STAT_PUBLISHED;
-		if((Article.STAT_DRAFT + "").equals(s)) {
+		if ((Article.STAT_DRAFT + "").equals(s)) {
 			stat = Article.STAT_DRAFT;
-		} else if((Article.STAT_RECYCLE + "").equals(s)) {
+		} else if ((Article.STAT_RECYCLE + "").equals(s)) {
 			stat = Article.STAT_RECYCLE;
 		}
-		if(ori != null) {
+		if (ori != null) {
 			ori.setTitle(title);
 			ori.setPermalink(permalink);
 			ori.setContent(content);
@@ -262,7 +272,8 @@ public class AdminPageController extends BaseController {
 			ori.setCommentStatus(commentStatus);
 			return ori;
 		}
-		return new Article(id, title, permalink, content, "", new Date(), stat, 0, 0, commentStatus, Article.TYPE_PAGE);
+		return new Article(id, title, permalink, content, "", new Date(), stat, 0, 0,
+				commentStatus, Article.TYPE_PAGE);
 	}
 
 	@Override

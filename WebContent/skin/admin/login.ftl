@@ -7,7 +7,7 @@
 	</head>
 <body>
 	<div id="container">
-		<h1>Wray Admin Panel</h1>
+		<h1>${blogTitle?if_exists}管理面板 - Wray Admin Panel</h1>
 		<div id="box">
 			<form action="admin-login.html" method="post">
 			<p class="main">

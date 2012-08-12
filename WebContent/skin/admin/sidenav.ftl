@@ -57,8 +57,10 @@
 				<div class="navhead"><span>博客设置</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="#">基本设置</a></li>
-						<li><a href="#">界面设置</a></li>
+						<li<#if adminAction="setup-basic"> id="current_nav"</#if>><a href="admin-setup-basic.html">基本设置</a></li>
+						<li<#if adminAction="setup-account"> id="current_nav"</#if>><a href="admin-setup-account.html">管理帐户</a></li>
+						<li<#if adminAction="setup-skin"> id="current_nav"</#if>><a href="admin-setup-skin.html">外观设置</a></li>
+						<li<#if adminAction="setup-test"> id="current_nav"</#if>><a href="admin-setup-test.html">测试设置</a></li>
 					</ul>
 				</div>
 			</div>
