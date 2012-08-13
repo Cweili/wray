@@ -22,51 +22,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public class AdminSetupController extends BaseController {
-	
-	private static final String[] labels = new String[]{
-			"firstPageLabel","lastPageLabel",
-			"previousPageLabel","nextPageLabel","sumLabel","pageLabel",
-			"noticeBoardLabel","recentCommentsLabel","mostCommentArticlesLabel",
-			"mostViewCountArticlesLabel","popTagsLabel","archiveLabel","linkLabel",
-			"atomLabel","homeLabel","commentLabel","moreLabel","tagLabel","viewLabel"};
+
+	private static final String[] labels = new String[] { "firstPageLabel", "lastPageLabel",
+			"previousPageLabel", "nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel",
+			"recentCommentsLabel", "mostCommentArticlesLabel", "mostViewCountArticlesLabel",
+			"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
+			"moreLabel", "tagLabel", "viewLabel" };
 
 	@Override
-	@RequestMapping(value="/admin-setup-basic", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		BlogView v = new BlogView("setup-basic");
-		if(saveConfig(request, new String[]{
-				"blogTitle", "blogSubtitle", "metaKeywords", "metaDescription"
-			}, new String[]{
-				"noticeBoard", "attachHeader", "attachFooter", "attachStat"
-			})) {
+		if (saveConfig(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
+				"metaDescription" }, new String[] { "noticeBoard", "attachHeader", "attachFooter",
+				"attachStat" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-setup-account", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-setup-account", method = RequestMethod.POST)
 	public BlogView account(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-account");
-		if(saveConfig(request, new String[]{
-				"adminName", "adminNick", "adminEmail"
-			}, "".equals(request.getParameter("adminPwd")) ? new String[]{} : new String[]{
-				"adminPwd"
-			})) {
+		if (saveConfig(request, new String[] { "adminName", "adminNick", "adminEmail" },
+				"".equals(request.getParameter("adminPwd")) ? new String[] {}
+						: new String[] { "adminPwd" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-setup-skin", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
 	public BlogView skin(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-skin");
 		v.add("labels", Arrays.asList(labels));
-		List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()+"../../../../../../../skin"));
+		List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()
+				+ "../../../../../../../skin"));
 		skinDirs.remove("admin");
 		v.add("skinDirs", skinDirs);
 		int limit = 10;
@@ -75,14 +71,15 @@ public class AdminSetupController extends BaseController {
 		try {
 			limit = Integer.valueOf(request.getParameter("limit"));
 			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
-			topCommentArticlesSize = Integer.valueOf(request.getParameter("topCommentArticlesSize"));
-		} catch(Exception e) {
+			topCommentArticlesSize = Integer
+					.valueOf(request.getParameter("topCommentArticlesSize"));
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		blogConfig.saveOrUpdate("limit", limit + "");
 		blogConfig.saveOrUpdate("topHitsArticlesSize", topHitsArticlesSize + "");
 		blogConfig.saveOrUpdate("topCommentArticlesSize", topCommentArticlesSize + "");
-		if(saveConfig(request, labels, new String[]{ "skinDir" })) {
+		if (saveConfig(request, labels, new String[] { "skinDir" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
@@ -92,14 +89,16 @@ public class AdminSetupController extends BaseController {
 	}
 
 	@Override
-	@RequestMapping(value="/admin-setup-{type}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-setup-{type}", method = RequestMethod.GET)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String type) {
 		BlogView v = new BlogView("msg");
-		if("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
+		if ("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
 			v.setView("setup-" + type);
-			if("skin".equals(type)) {
-				List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()+"../../../../../../../skin"));
+			if ("skin".equals(type)) {
+				List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("")
+						.getFile()
+						+ "../../../../../../../skin"));
 				skinDirs.remove("admin");
 				v.add("skinDirs", skinDirs);
 				v.add("currentSkinDir", blogConfig.get("skinDir"));
@@ -111,30 +110,30 @@ public class AdminSetupController extends BaseController {
 		}
 		return v;
 	}
-	
+
 	private boolean saveConfig(HttpServletRequest request, String[] nonHtmlArray, String[] htmlArray) {
 		List<String> nonHtmlList = Arrays.asList(nonHtmlArray);
 		List<String> htmlList = Arrays.asList(htmlArray);
 		Map<String, String[]> map = request.getParameterMap();
 		Map<String, String> values = new HashMap<String, String>();
 		String key;
-		for(Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
+		for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
 			key = it.next();
-			if(nonHtmlList.contains(key)) {
+			if (nonHtmlList.contains(key)) {
 				values.put(key, Function.trimAndStripTags(map.get(key)[0]));
-			} else if(htmlList.contains(key)) {
+			} else if (htmlList.contains(key)) {
 				values.put(key, map.get(key)[0].trim());
-				
+
 			}
 		}
 		byte failed = 0;
-		for(Iterator<String> it = values.keySet().iterator(); it.hasNext();) {
+		for (Iterator<String> it = values.keySet().iterator(); it.hasNext();) {
 			key = it.next();
-			if(!blogConfig.saveOrUpdate(key, values.get(key))) {
+			if (!blogConfig.saveOrUpdate(key, values.get(key))) {
 				++failed;
 			}
 		}
-		if(failed == 0) {
+		if (failed == 0) {
 			blogConfig.UpdateConfigMap();
 		}
 		return failed == 0;

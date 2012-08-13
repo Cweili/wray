@@ -13,8 +13,6 @@ import org.springframework.stereotype.Service;
 @Service("linkService")
 public class LinkServiceImpl extends BaseService implements LinkService {
 	
-	private List<Item> links = null;
-
 	@Override
 	public Item getLinkById(long id) {
 		return itemDao.getItemById(id);
@@ -79,7 +77,7 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 			Collections.sort(links, new Comparator<Item>() {
 	
 				public int compare(Item i1, Item i2) {
-					return new Integer(i2.getItemOrder()).compareTo(new Integer(i1.getItemOrder()));
+					return new Integer(i1.getItemOrder()).compareTo(new Integer(i2.getItemOrder()));
 				}
 			});
 		}
