@@ -425,7 +425,7 @@
 /* toolbar */
 .ke-toolbar {
 	border-bottom: 1px solid #CCC;
-	background-color: #F0F0EE;
+	background:url('toolbar.png') 0 0 repeat;
 	padding: 2px 5px;
 	text-align: left;
 	overflow: hidden;
@@ -493,8 +493,9 @@
 	overflow: auto;
 }
 .ke-edit-textarea {
-	font: 12px/1.5 "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+	font: 12px/1.5 "Consolas", "Microsoft Yahei", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
 	color: #000;
+	background-color:#eee;
 	overflow: auto;
 	resize: none;
 }
@@ -691,7 +692,7 @@
 	overflow: auto;
 	padding: 0;
 	resize: none;
-	background: #222;
+	background: #fff;
 }
 .ke-dialog-body textarea:focus,
 .ke-dialog-body input:focus,

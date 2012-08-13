@@ -489,7 +489,7 @@ input, select {
 
 select {
 	padding:4px;
-	width:200px!important;
+	width:300px!important;
 }
 
 .pagination { 
@@ -570,7 +570,21 @@ fieldset legend {
 	position:relative;
 	top:6px;
 	padding-right:6px;
-} 
+}
+
+label.error {
+	display:inline;
+	float:none;
+	position:static;
+	background:#e28b65 url('../images/validate_error.png') no-repeat left;
+	margin-left:4px;
+	font-style:italic;
+	padding:4px 6px 4px 21px;
+	color:#981d05;
+	top:0;
+	border:1px solid #a5260f;
+	behavior:url(js/iepngfix.html) !important;
+}
 
 .field_desc { 
 	padding-left:6px;
@@ -581,6 +595,10 @@ fieldset legend {
 
 .field_desc:hover { 
 	color:#59544a;
+}
+
+input.tinyfield { 
+	width:20px;
 } 
 
 input.smallfield { 
@@ -759,9 +777,9 @@ tbody tr.alt td {
 #container #footer { 
 	float:left;
 	display:inline;
-	width:500px;
+	width:700px;
 	margin-left:285px;
-	height:35px;
+	height:42px;
 	text-align:center;
 }
 
@@ -839,7 +857,7 @@ textarea {
 
 textarea.wysiwyg {
 	height:300px;
-	background:#eee;
+	background:#fff;
 	color:#000;
 }
 

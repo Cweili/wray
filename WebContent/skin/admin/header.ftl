@@ -14,6 +14,7 @@
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}${skinDir}js/jquery-ui-1.8.22.custom.min.js" type="text/javascript"></script>
+	<script src="${staticServePath}${skinDir}js/jquery.validate.min.js" type="text/javascript"></script>
 	<#--
 	<script src="${staticServePath}${skinDir}js/jquery.wysiwyg.js" type="text/javascript"></script>
 	<script src="${staticServePath}${skinDir}js/wysiwyg.image.js" type="text/javascript"></script>

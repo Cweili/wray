@@ -57,12 +57,19 @@ $(document).ready(function() {
 		}
 	);
 	
-	$("input.submit").click(
-		function(){
-			$(this).attr("disabled",true);
-			$("form").submit();
+//	$("input.submit").click(
+//		function(){
+//			$(this).attr("disabled",true);
+//			$("form").submit();
+//		}
+//	);
+	
+	$.validator.setDefaults({
+		 submitHandler: function(form) {
+			 $(".submit").attr("disabled",true);
+			 form.submit();
 		}
-	);
+	});
 	
 	if($("#main").height() < 590) {
 		$("#main").css({
@@ -133,5 +140,25 @@ function reSizeMain() {
 		width: mainwidth + "px"
 	});
 }
+
+jQuery.extend(jQuery.validator.messages, {
+    required: "必须填写",
+	remote: "请修正此处",
+	email: "请输入正确格式的电子邮件",
+	url: "请输入合法的网址",
+	date: "请输入合法的日期",
+	dateISO: "请输入合法的日期 (ISO).",
+	number: "请输入数字",
+	digits: "请输入整数",
+	creditcard: "请输入合法的信用卡号",
+	equalTo: "两次输入的密码不同",
+	accept: "扩展名不合法",
+	maxlength: jQuery.validator.format("长度最长为 {0}"),
+	minlength: jQuery.validator.format("长度最短为 {0}"),
+	rangelength: jQuery.validator.format("长度在 {0} 和 {1} 之间"),
+	range: jQuery.validator.format("数值范围 {0} 到 {1}"),
+	max: jQuery.validator.format("数值最大为 {0}"),
+	min: jQuery.validator.format("数值最小为 {0}")
+});
 
 /*$(function(){ prettyPrint(); });*/

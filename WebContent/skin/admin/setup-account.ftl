@@ -33,6 +33,7 @@
 		</div>
 		<div class="clearboth"><!-- --></div>
 		<script type="text/javascript">
+		/*
 			function checkForm(form) {
 				if($("#adminName").val() == "") {
 					err("登录名不能为空");
@@ -60,22 +61,23 @@
 				$("#error").find("span").text(errorText);
 				$("input.submit").attr("disabled",false);
 			};
+			*/
 		</script>
-		<form id="setupForm" action="admin-${adminAction}.html" method="post" onsubmit="return checkForm(this);">
+		<form id="setupForm" action="admin-${adminAction}.html" method="post">
 			<fieldset><legend>博客管理员帐户</legend>
 				<div class="input_field">
 					<label for="adminName">登录名</label>
-					<input class="bigfield" id="adminName" name="adminName" type="text" value="${adminName?if_exists}" />
+					<input class="bigfield" name="adminName" type="text" value="${adminName?if_exists}" />
 					<span class="field_desc">用于管理登录</span>
 				</div>
 				<div class="input_field">
 					<label for="adminNick">显示名</label>
-					<input class="bigfield" id="adminNick" name="adminNick" type="text" value="${adminNick?if_exists}" />
+					<input class="bigfield" name="adminNick" type="text" value="${adminNick?if_exists}" />
 					<span class="field_desc">用于博客页面显示</span>
 				</div>
 				<div class="input_field">
 					<label for="adminEmail">E-mail</label>
-					<input class="bigfield" id="adminEmail" name="adminEmail" type="text" value="${adminEmail?if_exists}" />
+					<input class="bigfield" name="adminEmail" type="text" value="${adminEmail?if_exists}" />
 				</div>
 				<div class="input_field">
 					<label for="adminPwd">新密码</label>
@@ -94,6 +96,31 @@
 				</div>
 			</fieldset>
 		</form>
+		<script type="text/javascript">
+			$("#setupForm").validate({
+				rules: {
+					adminName: {
+						required:true,
+						maxlength:512
+					},
+					adminNick: {
+						required:true,
+						maxlength:512
+					},
+					adminEmail: {
+						required:true,
+						email:true,
+						maxlength:512
+					},
+					adminPwd: {
+						maxlength:512
+					},
+					newPwdCheck: {
+						equalTo:"#adminPwd",
+					}
+				}
+			});
+		</script>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">

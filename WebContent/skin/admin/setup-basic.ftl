@@ -44,6 +44,11 @@
 					<span class="field_desc">通常显示在搜索引擎结果页面上</span>
 				</div>
 			</fieldset>
+			<fieldset><legend>公告栏</legend>
+				<div class="input_field">
+					<textarea class="wysiwyg" name="noticeBoard" style="width:100%;height:100px;">${noticeBoard?if_exists}</textarea>
+				</div>
+			</fieldset>
 			<fieldset><legend>页面附加HTML</legend>
 				<div class="input_field">
 					<label for="attachHeader">头部附加HTML</label>
@@ -67,6 +72,37 @@
 				</div>
 			</fieldset>
 		</form>
+				<script type="text/javascript">
+			$("#setupForm").validate({
+				rules: {
+					blogTitle: {
+						required:true,
+						maxlength:512
+					},
+					blogSubtitle: {
+						maxlength:512
+					},
+					metaKeywords: {
+						maxlength:512
+					},
+					metaDescription: {
+						maxlength:512
+					},
+					noticeBoard: {
+						maxlength:512
+					},
+					attachHeader: {
+						maxlength:512
+					},
+					attachFooter: {
+						maxlength:512
+					},
+					attachStat: {
+						maxlength:512
+					}
+				}
+			});
+		</script>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">

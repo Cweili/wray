@@ -1,11 +1,11 @@
 package org.cweili.wray.web.admin;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public class AdminSetupController extends BaseController {
+	
+	private static final String[] labels = new String[]{
+			"firstPageLabel","lastPageLabel",
+			"previousPageLabel","nextPageLabel","sumLabel","pageLabel",
+			"noticeBoardLabel","recentCommentsLabel","mostCommentArticlesLabel",
+			"mostViewCountArticlesLabel","popTagsLabel","archiveLabel","linkLabel",
+			"atomLabel","homeLabel","commentLabel","moreLabel","tagLabel","viewLabel"};
 
 	@Override
 	@RequestMapping(value="/admin-setup-basic", method = RequestMethod.POST)
@@ -31,7 +38,7 @@ public class AdminSetupController extends BaseController {
 		if(saveConfig(request, new String[]{
 				"blogTitle", "blogSubtitle", "metaKeywords", "metaDescription"
 			}, new String[]{
-				"attachHeader", "attachFooter", "attachStat"
+				"noticeBoard", "attachHeader", "attachFooter", "attachStat"
 			})) {
 			v.add("err", "succ");
 		} else {
@@ -57,8 +64,30 @@ public class AdminSetupController extends BaseController {
 	
 	@RequestMapping(value="/admin-setup-skin", method = RequestMethod.POST)
 	public BlogView skin(HttpServletRequest request, HttpServletResponse response) {
-		BlogView v = new BlogView("setup-account");
-		v.add("err", "");
+		BlogView v = new BlogView("setup-skin");
+		v.add("labels", Arrays.asList(labels));
+		List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()+"../../../../../../../skin"));
+		skinDirs.remove("admin");
+		v.add("skinDirs", skinDirs);
+		int limit = 10;
+		int topHitsArticlesSize = 10;
+		int topCommentArticlesSize = 10;
+		try {
+			limit = Integer.valueOf(request.getParameter("limit"));
+			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
+			topCommentArticlesSize = Integer.valueOf(request.getParameter("topCommentArticlesSize"));
+		} catch(Exception e) {
+			log.error(e.toString());
+		}
+		blogConfig.saveOrUpdate("limit", limit + "");
+		blogConfig.saveOrUpdate("topHitsArticlesSize", topHitsArticlesSize + "");
+		blogConfig.saveOrUpdate("topCommentArticlesSize", topCommentArticlesSize + "");
+		if(saveConfig(request, labels, new String[]{ "skinDir" })) {
+			v.add("err", "succ");
+		} else {
+			v.add("err", "数据库更新失败");
+		}
+		v.add("currentSkinDir", blogConfig.get("skinDir"));
 		return v;
 	}
 
@@ -69,6 +98,13 @@ public class AdminSetupController extends BaseController {
 		BlogView v = new BlogView("msg");
 		if("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
 			v.setView("setup-" + type);
+			if("skin".equals(type)) {
+				List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()+"../../../../../../../skin"));
+				skinDirs.remove("admin");
+				v.add("skinDirs", skinDirs);
+				v.add("currentSkinDir", blogConfig.get("skinDir"));
+				v.add("labels", Arrays.asList(labels));
+			}
 			v.add("err", "");
 		} else {
 			v.add("err", "找不到页面");

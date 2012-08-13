@@ -56,6 +56,16 @@
 				</div>
 			</fieldset>
 		</form>
+		<script type="text/javascript">
+			$("#articleForm").validate({
+				rules: {
+					title: {
+						required:true,
+						maxlength:200
+					}
+				}
+			});
+		</script>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">

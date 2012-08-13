@@ -16,10 +16,10 @@
 		</#if>
 	</#list>
 	<#if paginationPageNums?last != paginationPageCount>
-		<li><a href="admin-${adminAction}.html?page=${paginationNextPageNum?c}">${nextPagePabel}</a></li>
+		<li><a href="admin-${adminAction}.html?page=${paginationNextPageNum?c}">${nextPageLabel}</a></li>
 		<li><a href="admin-${adminAction}.html?page=${paginationPageCount?c}">${lastPageLabel}</a></li>
 	<#else>
-		<li><a>${nextPagePabel}</a></li>
+		<li><a>${nextPageLabel}</a></li>
 		<li><a>${lastPageLabel}</a></li>
 	</#if>
 	<li>${sumLabel} ${paginationPageCount?c} ${pageLabel}</li>

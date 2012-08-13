@@ -9,7 +9,7 @@
 				$("#deleteForm").submit();
 			};
 		</script>
-		<form id="deleteForm" action="admin-page-manage-${adminAction?replace('page-','')}.html?page=${paginationCurrentPageNum}" method="post">
+		<form id="manageForm" action="admin-page-manage-${adminAction?replace('page-','')}.html?page=${paginationCurrentPageNum}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -17,7 +17,7 @@
 						<th>标题</th>
 						<th>时间</th>
 						<th>回复</th>
-						<th>排序</th>
+						<th style="width:180px;">排序</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -29,7 +29,7 @@
 						<td><a href="admin-page-edit-${article.articleId?c}.html">${article.title}</a></td>
 						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${article.commentCount}</td>
-						<td><input class="smallfield" type="text" name="order${article.articleId?c}" value="${article.hits}" /></td>
+						<td><input class="tinyfield" type="text" name="order${article.articleId?c}" value="${article.hits}" /></td>
 						<td>
 							<a href="admin-page-edit-${article.articleId?c}.html"><img src="${staticServePath}${skinDir}assets/action_edit.png" alt="编辑" /></a>
 							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId?c});"><img src="${staticServePath}${skinDir}assets/action_delete.png" alt="删除" /></a>
@@ -53,6 +53,19 @@
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
 		</form>
+		<script type="text/javascript">
+			$("#manageForm").validate({
+				rules: {
+					<#list articles as article>
+					order${article.articleId?c}: {
+						required:true,
+						digits:true,
+						range:[0,99]
+					},
+					</#list>
+				}
+			});
+		</script>
 		<#include "pagination.ftl">
 		<#else>
 			<div class="warning">

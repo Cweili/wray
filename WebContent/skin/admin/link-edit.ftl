@@ -21,7 +21,7 @@
 						<input class="bigfield" name="itemName" type="text" value="${itemName?if_exists}" />
 					</div>
 					<div class="input_field">
-						<label for="permalink">链接地址</label>
+						<label for="description">链接地址</label>
 						<input class="bigfield" name="description" type="text" value="${description?if_exists}" />
 					</div>
 					<div class="input_field">
@@ -35,6 +35,25 @@
 					</div>
 				</fieldset>
 			</form>
+			<script type="text/javascript">
+				$("#setupForm").validate({
+					rules: {
+						title: {
+							required:true,
+							maxlength:200
+						},
+						description: {
+							required:true,
+							maxlength:512
+						},
+						itemOrder: {
+							required:true,
+							digits:true,
+							range:[0,99]
+						}
+					}
+				});
+			</script>
 		</#if>
 	</div> <!-- END Content -->
 </div> 	

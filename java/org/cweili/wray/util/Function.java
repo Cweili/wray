@@ -1,10 +1,24 @@
 package org.cweili.wray.util;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Function {
 	
+	public static List<String> dirList(File file) {
+		File[] files = file.listFiles();
+		List<String> list = new ArrayList<String>();
+		for (File f : files) {
+			if (f.isDirectory()) {
+				list.add(f.getPath().substring(f.getPath().lastIndexOf('/') + 1));
+			}
+		}
+		return list;
+	}
+
 	private static long id = 0;
 	public synchronized static long generateId() {
 		long time = timestamp();
@@ -49,7 +63,8 @@ public class Function {
 	}
 	
 	public static String trimAndStripTags(String input) {
-		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;").replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;").trim();
+		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;").replace("\"", "&quot;")
+				.replace("<", "&lt;").replace(">", "&gt;").replace("«", "&laquo;").replace("»", "&raquo;").trim();
 	}
 	
 	public static String year() {

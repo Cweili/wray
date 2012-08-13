@@ -9,14 +9,14 @@
 				$("#deleteForm").submit();
 			};
 		</script>
-		<form id="deleteForm" action="admin-link-manage.html" method="post">
+		<form id="manageForm" action="admin-link-manage.html" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
 						<th><input type="checkbox" class="checkall" /></th>
 						<th>名称</th>
 						<th>地址</th>
-						<th>排序</th>
+						<th style="width:180px;">排序</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -27,7 +27,7 @@
 						<td><input type="checkbox" name="id" value="${link.itemId?c}" /></td>
 						<td><a href="admin-link-edit-${link.itemId?c}.html">${link.itemName}</a></td>
 						<td>${link.description}</td>
-						<td><input class="smallfield" type="text" name="order${link.itemId?c}" value="${link.itemOrder}" /></td>
+						<td><input class="tinyfield" type="text" name="order${link.itemId?c}" value="${link.itemOrder}" /></td>
 						<td>
 							<a href="admin-link-edit-${link.itemId?c}.html"><img src="${staticServePath}${skinDir}assets/action_edit.png" alt="编辑" /></a>
 							<a href="javascript:void(0)" onclick="deleteSingle(${link.itemId?c});"><img src="${staticServePath}${skinDir}assets/action_delete.png" alt="删除" /></a>
@@ -51,6 +51,19 @@
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
 		</form>
+		<script type="text/javascript">
+			$("#manageForm").validate({
+				rules: {
+					<#list links as link>
+					order${link.itemId?c}: {
+						required:true,
+						digits:true,
+						range:[0,99]
+					},
+					</#list>
+				}
+			});
+		</script>
 		<#else>
 			<div class="warning">
 				<div class="warn_icon"><!-- --></div>
