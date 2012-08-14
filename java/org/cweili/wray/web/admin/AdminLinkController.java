@@ -116,9 +116,9 @@ public class AdminLinkController extends BaseController {
 	private Item getLink(HttpServletRequest request, Item ori) {
 		String itemName = request.getParameter("itemName") != null ? request.getParameter("itemName") : "";
 		String description = request.getParameter("description") != null ? request.getParameter("description") : "";
-		int itemOrder = 0;
+		byte itemOrder = 0;
 		try {
-			itemOrder = Integer.valueOf(request.getParameter("itemOrder"));
+			itemOrder = Byte.valueOf(request.getParameter("itemOrder"));
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
