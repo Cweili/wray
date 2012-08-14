@@ -71,12 +71,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	if($("#main").height() < 590) {
-		$("#main").css({
-			height: 590 + "px"
-		});
-	}
-
 	reSizeMain();
 	
 	KindEditor.plugin('insertmore', function(K) {
@@ -133,11 +127,15 @@ function reSizeMain() {
 	var containerwidth = $(window).width();
 	containerwidth = containerwidth > 996 ? containerwidth : 996;
 	var mainwidth = containerwidth - 285;
+	var mainheight = $(window).height - 100;
+	mainheight = mainheight >= 590 ? mainheight : 590;
+	
 	$("#container").css({
 		width: containerwidth + "px"
 	});
 	$("#main").css({
-		width: mainwidth + "px"
+		width: mainwidth + "px",
+		height: mainheight + "px"
 	});
 }
 

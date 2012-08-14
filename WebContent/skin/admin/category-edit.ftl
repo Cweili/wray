@@ -14,22 +14,22 @@
 			<div class="clearboth"><!-- --></div>
 			<div style="height:400px"><!-- --></div>
 		<#else>
-			<form id="itemForm" action="admin-${adminAction}<#if adminAction="link-edit">-${itemId?if_exists?c}</#if>.html" method="post">
-				<fieldset><legend>链接信息</legend>
+			<form id="itemForm" action="admin-${adminAction}<#if adminAction="category-edit">-${itemId?if_exists?c}</#if>.html" method="post">
+				<fieldset><legend>分类信息</legend>
 					<div class="input_field">
-						<label for="title">链接名称</label>
+						<label for="title">分类名称</label>
 						<input class="bigfield" name="itemName" type="text" value="${itemName?if_exists}" />
 					</div>
 					<div class="input_field">
-						<label for="description">链接地址</label>
+						<label for="description">分类简介</label>
 						<input class="bigfield" name="description" type="text" value="${description?if_exists}" />
 					</div>
 					<div class="input_field">
-						<label for="itemOrder">链接排序</label>
+						<label for="itemOrder">分类排序</label>
 						<input class="smallfield" name="itemOrder" type="text" value="${itemOrder?if_exists}" />
 					</div>
 				</fieldset>
-				<fieldset><legend>保存链接</legend>
+				<fieldset><legend>保存分类</legend>
 					<div class="input_field no_margin_bottom">
 						<input class="submit" type="submit" value="保存链接" />
 					</div>
