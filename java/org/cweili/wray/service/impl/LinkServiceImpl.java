@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.LinkService;
 import org.springframework.stereotype.Service;
@@ -72,7 +71,7 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 
 	@Override
 	public void updateLinkCache() {
-		links = itemDao.getItemsByType(Item.TYPE_LINK);
+		links = itemDao.getItems(Item.TYPE_LINK, "item_order");
 		if(!links.isEmpty()) {
 			Collections.sort(links, new Comparator<Item>() {
 	

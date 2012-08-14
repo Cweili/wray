@@ -7,7 +7,7 @@ import org.cweili.wray.domain.Item;
 
 public interface TagService {
 	
-	public Item getTagByPermalink(String parmalink);
+	public long getIdByPermalink(String parmalink);
 
 	public List<Item> getTags();
 	

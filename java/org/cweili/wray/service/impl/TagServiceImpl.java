@@ -1,8 +1,6 @@
 package org.cweili.wray.service.impl;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.cweili.wray.domain.Item;
@@ -11,8 +9,11 @@ import org.cweili.wray.service.TagService;
 public class TagServiceImpl extends BaseService implements TagService {
 	
 	@Override
-	public Item getTagByPermalink(String parmalink) {
-		return itemDao.getItemByPermalink(parmalink, Item.TYPE_TAG);
+	public long getIdByPermalink(String parmalink) {
+		if(tags == null) {
+			updateTagCache();
+		}
+		return tagMap.get(parmalink);
 	}
 
 	@Override
@@ -69,15 +70,20 @@ public class TagServiceImpl extends BaseService implements TagService {
 
 	@Override
 	public void updateTagCache() {
-		tags = itemDao.getItemsByType(Item.TYPE_TAG);
-		if(!tags.isEmpty()) {
-			Collections.sort(tags, new Comparator<Item>() {
-	
-				public int compare(Item i1, Item i2) {
-					return new Integer(i2.getCount()).compareTo(new Integer(i1.getCount()));
-				}
-			});
+		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
+		
+		for(int i = 0; i < tags.size(); ++i) {
+			tagMap.put(tags.get(i).getItemName(), tags.get(i).getItemId());
 		}
+		
+//		if(!tags.isEmpty()) {
+//			Collections.sort(tags, new Comparator<Item>() {
+//	
+//				public int compare(Item i1, Item i2) {
+//					return new Integer(i2.getCount()).compareTo(new Integer(i1.getCount()));
+//				}
+//			});
+//		}
 	}
 
 }

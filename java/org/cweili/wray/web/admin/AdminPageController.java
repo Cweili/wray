@@ -212,7 +212,7 @@ public class AdminPageController extends BaseController {
 					if (article.getHits() != order) {
 						orderUpdated = true;
 						article.setHits(order);
-						articleService.updateHitsCommentCount(article);
+						articleService.updateHits(article);
 					}
 				}
 			}

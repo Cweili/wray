@@ -1,9 +1,6 @@
 package org.cweili.wray.interceptor;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,7 +44,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// Not Admin
 		if(!isAdminPanel) {
 		
-			List<Article> pageNavigations = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 10);
+			List<Article> pageNavigations = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 0);
 			mv.addObject("pageNavigations", pageNavigations);
 			mv.addObject("mostCommentArticles", articleService.getTopCommentArticles(Integer.valueOf(blogConfig.get("topCommentArticlesSize"))));
 			mv.addObject("mostViewCountArticles", articleService.getTopHitsArticles(Integer.valueOf(blogConfig.get("topHitsArticlesSize"))));

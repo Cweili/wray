@@ -19,7 +19,7 @@ public interface ArticleService {
 	
 	public boolean update(Article article) throws SQLException;
 	
-	public boolean updateHitsCommentCount(Article article) throws SQLException;
+	public boolean updateHits(Article article) throws SQLException;
 	
 	public boolean remove(Article article) throws SQLException;
 	

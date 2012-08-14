@@ -1,7 +1,5 @@
 package org.cweili.wray.web;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,11 +21,6 @@ public class PageController extends BaseController {
 		BlogView v = new BlogView("page");
 		Article page = articleService.getArticleByPermalink(permalink);
 		v.add("article", page);
-		try {
-			articleService.updateHitsCommentCount(page);
-		} catch (SQLException e) {
-			log.error(e.toString());
-		}
 		return v;
 	}
 	

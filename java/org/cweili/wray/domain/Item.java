@@ -7,7 +7,7 @@ public class Item {
 	private String permalink = "";
 	private String description = "";
 	private int count = 0;
-	private int itemOrder = 0;
+	private byte itemOrder = 0;
 	private byte itemType = Item.TYPE_CATEGORY;
 	private long parrentId = 0;
 	private byte stat = Item.STAT_ON;
@@ -25,7 +25,7 @@ public class Item {
 	}
 
 	public Item(long itemId, String itemName, String permalink, String description, int count,
-			int itemOrder, byte itemType, long parrentId, byte stat) {
+			byte itemOrder, byte itemType, long parrentId, byte stat) {
 		super();
 		this.itemId = itemId;
 		this.itemName = itemName;
@@ -107,11 +107,11 @@ public class Item {
 		this.count = count;
 	}
 
-	public int getItemOrder() {
+	public byte getItemOrder() {
 		return itemOrder;
 	}
 
-	public void setItemOrder(int itemOrder) {
+	public void setItemOrder(byte itemOrder) {
 		this.itemOrder = itemOrder;
 	}
 

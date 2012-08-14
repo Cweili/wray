@@ -1,8 +1,6 @@
 package org.cweili.wray.service.impl;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.cweili.wray.domain.Item;
@@ -17,7 +15,10 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	
 	@Override
 	public Item getCategoryByPermalink(String permalink) {
-		return itemDao.getItemByPermalink(permalink, Item.TYPE_CATEGORY);
+		if(categories == null) {
+			updateCategoryCache();
+		}
+		return categoryMap.get(permalink);
 	}
 
 	@Override
@@ -74,15 +75,22 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public void updateCategoryCache() {
-		categories = itemDao.getItemsByType(Item.TYPE_CATEGORY);
-		if(!categories.isEmpty()) {
-			Collections.sort(categories, new Comparator<Item>() {
-	
-				public int compare(Item i1, Item i2) {
-					return new Integer(i1.getItemOrder()).compareTo(new Integer(i2.getItemOrder()));
-				}
-			});
+		categories = itemDao.getItems(Item.TYPE_CATEGORY, "item_order");
+		
+		categoryMap.clear();
+		
+		for(int i = 0; i < categories.size(); ++i) {
+			categoryMap.put(categories.get(i).getPermalink(), categories.get(i));
 		}
+		
+//		if(!categories.isEmpty()) {
+//			Collections.sort(categories, new Comparator<Item>() {
+//	
+//				public int compare(Item i1, Item i2) {
+//					return new Integer(i1.getItemOrder()).compareTo(new Integer(i2.getItemOrder()));
+//				}
+//			});
+//		}
 	}
 
 }

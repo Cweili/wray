@@ -2,15 +2,11 @@ package org.cweili.wray.service.impl;
 
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Function;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 @Service("articleService")
@@ -33,47 +29,58 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public List<Article> getArticlesByTypeStatus(byte type, byte status, int page, int limit) {
 		int start = (page - 1) * limit;
-		List<Article> list;
+//		List<Article> list;
 
-		switch (status) {
-		case Article.STAT_PUBLISHED:
-			if(type == Article.TYPE_ARTICLE) {
-				if (articles == null) {
-					log.info("aaaaaaaaaaaaaaaaaaaa》》》》》》》》》》");
-					updateArticleCache();
-					log.info("《《《《《《《《《《《《aaaaaaaaaaaaaaaaaaaa");
-				}
-				if(!articles.isEmpty()) {
-					start = start < articles.size() ? start : articles.size() - 1;
-					limit = (start + limit) < articles.size() ? (start + limit) : articles.size();
-					return dealList(articles.subList(start, limit));
-				} else {
-					return articles;
-				}
-			} else {
+//		switch (status) {
+//		case Article.STAT_PUBLISHED:
+//			if(type == Article.TYPE_ARTICLE) {
+//				if (articles == null) {
+//					updateArticleCache();
+//				}
+//				if(!articles.isEmpty()) {
+//					start = start < articles.size() ? start : articles.size() - 1;
+//					limit = (start + limit) < articles.size() ? (start + limit) : articles.size();
+//					return dealList(articles.subList(start, limit));
+//				} else {
+//					return articles;
+//				}
+//			} else {
+//				if (pages == null) {
+//					updateArticleCache();
+//				}
+//				if(!pages.isEmpty()) {
+//					start = start < pages.size() ? start : pages.size() - 1;
+//					limit = (start + limit) < pages.size() ? (start + limit) : pages.size();
+//					return dealList(pages.subList(start, limit));
+//				} else {
+//					return pages;
+//				}
+//			}
+//		default:
+//			list = articleDao.getArticlesByTypeStatus(type, status);
+//		}
+//		if(!list.isEmpty()) {
+//			Collections.reverse(list);
+//			start = start < list.size() ? start : list.size() - 1;
+//			limit = (start + limit) < list.size() ? (start + limit) : list.size();
+//			return dealList(list.subList(start, limit));
+//		} else {
+//			return list;
+//		}
+		if(type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED) {
+			return dealList(articleDao.getArticles(type, status, start, limit));
+		} else if(type == Article.TYPE_ARTICLE) {
+			return articleDao.getMetas(type, status, start, limit, "article_id DESC");
+		} else {
+			if(limit < 1 && status == Article.STAT_PUBLISHED) {
 				if (pages == null) {
-					log.info("dddddddddddddddaaaaaaaaaaaaaaaaaaaa》》》》》》》");
 					updateArticleCache();
-					log.info("《《《《《《《《《dddddddddddddddaaaaaaaaaaaaaaaaaaaa");
-				}
-				if(!pages.isEmpty()) {
-					start = start < pages.size() ? start : pages.size() - 1;
-					limit = (start + limit) < pages.size() ? (start + limit) : pages.size();
-					return dealList(pages.subList(start, limit));
-				} else {
 					return pages;
 				}
+				return pages;
+			} else {
+				return articleDao.getMetas(type, status, start, limit, "hits");
 			}
-		default:
-			list = articleDao.getArticlesByTypeStatus(type, status);
-		}
-		if(!list.isEmpty()) {
-			Collections.reverse(list);
-			start = start < list.size() ? start : list.size() - 1;
-			limit = (start + limit) < list.size() ? (start + limit) : list.size();
-			return dealList(list.subList(start, limit));
-		} else {
-			return list;
 		}
 	}
 
@@ -112,8 +119,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 	
 	@Override
-	public boolean updateHitsCommentCount(Article article) throws SQLException {
-		int rs = articleDao.update(article);
+	public boolean updateHits(Article article) throws SQLException {
+		int rs = articleDao.updateColumn(article, "hits", Types.INTEGER, article.getHits());
 		if(rs == 0) {
 			throw new SQLException("Article update error");
 		}
@@ -166,68 +173,74 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public void updateArticleCache() {
-		articles = articleDao.getArticlesByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED);
-		pages = articleDao.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED);
+//		articles = articleDao.getArticlesByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED);
+//		pages = articleDao.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED);
 
-		if(!articles.isEmpty()) {
-			Collections.sort(articles, new Comparator<Article>() {
-	
-				public int compare(Article a1, Article a2) {
-					return new Long(a2.getArticleId()).compareTo(new Long(a1.getArticleId()));
-				}
-			});
-			//Collections.reverse(articles);
-		}
-		if(!pages.isEmpty()) {
-			Collections.sort(pages, new Comparator<Article>() {
-	
-				public int compare(Article a1, Article a2) {
-					return new Integer(a2.getHits()).compareTo(new Integer(a1.getHits()));
-				}
-			});
-		}
+//		if(!articles.isEmpty()) {
+//			Collections.sort(articles, new Comparator<Article>() {
+//	
+//				public int compare(Article a1, Article a2) {
+//					return new Long(a2.getArticleId()).compareTo(new Long(a1.getArticleId()));
+//				}
+//			});
+//			//Collections.reverse(articles);
+//		}
+//		if(!pages.isEmpty()) {
+//			Collections.sort(pages, new Comparator<Article>() {
+//	
+//				public int compare(Article a1, Article a2) {
+//					return new Integer(a2.getHits()).compareTo(new Integer(a1.getHits()));
+//				}
+//			});
+//		}
+		
+		pages = articleDao.getMetas(Article.TYPE_PAGE, Article.STAT_PUBLISHED, "hits");
+		
 		publishedArticleCount = articleDao.getCountByTypeStatus(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED);
-
 	}
 
 	@Override
 	public void updateSidebarArticleCache() {
-		if (articles == null) {
-			updateArticleCache();
-		}
-		List<Article> tmp;
-		if (!articles.isEmpty() && topCommentArticlesSize > 0) {
-			tmp = new ArrayList<Article>();
-			tmp.addAll(articles);
-			Collections.sort(tmp, new Comparator<Article>() {
-
-				public int compare(Article a1, Article a2) {
-					if (a1.getCommentCount() > a2.getCommentCount())
-						return 1;
-					else
-						return 0;
-				}
-			});
-			topCommentArticles = new ArrayList<Article>(tmp.subList(0, (topCommentArticlesSize - 1) < tmp
-					.size() ? (topCommentArticlesSize - 1) : tmp.size()));
-		}
-
-		if (!articles.isEmpty() && topHitsArticlesSize > 0) {
-			tmp = new ArrayList<Article>();
-			tmp.addAll(articles);
-			Collections.sort(tmp, new Comparator<Article>() {
-
-				public int compare(Article a1, Article a2) {
-					if (a1.getHits() > a2.getHits())
-						return 1;
-					else
-						return 0;
-				}
-			});
-			topHitsArticles = new ArrayList<Article>(tmp.subList(0, (topHitsArticlesSize - 1) < tmp
-					.size() ? (topHitsArticlesSize - 1) : tmp.size()));
-		}
+//		if (articles == null) {
+//			updateArticleCache();
+//		}
+//		List<Article> tmp;
+//		if (!articles.isEmpty() && topCommentArticlesSize > 0) {
+//			tmp = new ArrayList<Article>();
+//			tmp.addAll(articles);
+//			Collections.sort(tmp, new Comparator<Article>() {
+//
+//				public int compare(Article a1, Article a2) {
+//					if (a1.getCommentCount() > a2.getCommentCount())
+//						return 1;
+//					else
+//						return 0;
+//				}
+//			});
+//			topCommentArticles = new ArrayList<Article>(tmp.subList(0, (topCommentArticlesSize - 1) < tmp
+//					.size() ? (topCommentArticlesSize - 1) : tmp.size()));
+//		
+//		}
+//
+//		if (!articles.isEmpty() && topHitsArticlesSize > 0) {
+//			tmp = new ArrayList<Article>();
+//			tmp.addAll(articles);
+//			Collections.sort(tmp, new Comparator<Article>() {
+//
+//				public int compare(Article a1, Article a2) {
+//					if (a1.getHits() > a2.getHits())
+//						return 1;
+//					else
+//						return 0;
+//				}
+//			});
+//			topHitsArticles = new ArrayList<Article>(tmp.subList(0, (topHitsArticlesSize - 1) < tmp
+//					.size() ? (topHitsArticlesSize - 1) : tmp.size()));
+//		}
+		
+		topCommentArticles = articleDao.getMetas(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 0, topCommentArticlesSize, "comment_count DESC");
+		topHitsArticles = articleDao.getMetas(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 0, topHitsArticlesSize, "hits DESC");
 	}
 	
 	private List<Article> dealList(List<Article> list) {

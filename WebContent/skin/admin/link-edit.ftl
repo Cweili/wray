@@ -40,11 +40,11 @@
 					rules: {
 						title: {
 							required:true,
-							maxlength:200
+							maxlength:150
 						},
 						description: {
 							required:true,
-							maxlength:512
+							maxlength:682
 						},
 						itemOrder: {
 							required:true,

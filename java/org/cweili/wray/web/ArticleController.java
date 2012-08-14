@@ -1,7 +1,6 @@
 package org.cweili.wray.web;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,16 +24,9 @@ public class ArticleController extends BaseController {
 		BlogView v = new BlogView("article");
 		Article article = articleService.getArticleByPermalink(permalink);
 		v.add("article", article);
-//		for(int i = 0; i < 100; ++i) {
-//			articleService.save(new Article(0, "标题" + i, "permalink" + i, "内容" + i, "标签1,标签2,标签3,标签4", new Date(), Article.STAT_PUBLISHED, 0, 0, Article.COMMENT_ON, Article.TYPE_ARTICLE));
-//		}
-//		List<Article> list = articleService.getAll();
-//		for(int i = 0; i < list.size(); ++i) {
-//			log.info(list.get(i).toString());
-//		}
 		article.setHits(article.getHits() + 1);
 		try {
-			articleService.updateHitsCommentCount(article);
+			articleService.updateHits(article);
 		} catch (SQLException e) {
 			log.error(e.toString());
 		}

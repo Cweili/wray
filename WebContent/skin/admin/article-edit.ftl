@@ -61,7 +61,13 @@
 				rules: {
 					title: {
 						required:true,
-						maxlength:200
+						maxlength:340
+					},
+					permalink: {
+						maxlength:150
+					},
+					tag: {
+						maxlength:150
 					}
 				}
 			});

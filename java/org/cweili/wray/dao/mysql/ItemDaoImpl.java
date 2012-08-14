@@ -5,9 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.cweili.wray.dao.ItemDao;
 import org.cweili.wray.domain.Item;
@@ -120,51 +118,51 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 					@Override
 					public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
 						return new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-								rs.getInt(5), rs.getInt(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
+								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
 					}
 		});
 	}
 
-	@Override
-	public Item getItemByPermalink(String permalink, byte type) {
-		return db.queryForObject("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
-				+ " parrent_id, stat FROM item WHERE permalink=? AND stat > 0 LIMIT 1",
-				new Object[] { permalink }, new int[] { Types.VARCHAR }, new RowMapper<Item>() {
-					@Override
-					public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
-						return new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-								rs.getInt(5), rs.getInt(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
-					}
-		});
-	}
+//	@Override
+//	public Item getItemByPermalink(String permalink, byte type) {
+//		return db.queryForObject("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+//				+ " parrent_id, stat FROM item WHERE permalink=? AND stat > 0 LIMIT 1",
+//				new Object[] { permalink }, new int[] { Types.VARCHAR }, new RowMapper<Item>() {
+//					@Override
+//					public Item mapRow(ResultSet rs, int rowNum) throws SQLException {
+//						return new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
+//								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
+//					}
+//		});
+//	}
+
+//	@Override
+//	public Map<String, Item> getItemMap(byte type, String order) {
+//		final Map<String, Item> map = new HashMap<String, Item>();
+//		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+//				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0 ORDER BY " + order,
+//				new Object[] { type }, new int[] { Types.INTEGER,
+//						Types.INTEGER}, new RowCallbackHandler() {
+//					@Override
+//					public void processRow(ResultSet rs) throws SQLException {
+//						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
+//								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
+//						map.put(item.getPermalink(), item);
+//					}
+//				});
+//		return map;
+//	}
 
 	@Override
-	public Map<Long, Item> getItemMapByType(byte type) {
-		final Map<Long, Item> map = new HashMap<Long, Item>();
-		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
-				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0",
-				new Object[] { type }, new int[] { Types.INTEGER,
-						Types.INTEGER}, new RowCallbackHandler() {
-					@Override
-					public void processRow(ResultSet rs) throws SQLException {
-						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-								rs.getInt(5), rs.getInt(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
-						map.put(item.getItemId(), item);
-					}
-				});
-		return map;
-	}
-
-	@Override
-	public List<Item> getItemsByType(byte type) {
+	public List<Item> getItems(byte type, String order) {
 		final List<Item> list = new ArrayList<Item>();
 		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
-				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0",
+				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0 ORDER BY " + order,
 				new Object[] { type }, new int[] { Types.INTEGER }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-								rs.getInt(5), rs.getInt(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
+								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
 						list.add(item);
 					}
 				});
