@@ -26,14 +26,6 @@ public abstract class BaseController extends MultiActionController {
 	@Autowired
 	protected LinkService linkService;
 	
-	protected static final int LIMIT = 12;
-	
-	protected static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel",
-		"previousPageLabel", "nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel",
-		"recentCommentsLabel", "mostCommentArticlesLabel", "mostViewCountArticlesLabel",
-		"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
-		"moreLabel", "tagLabel", "viewLabel" };
-	
 	public abstract BlogView index(HttpServletRequest request,
 			HttpServletResponse response);
 	

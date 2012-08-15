@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.Paginator;
 import org.cweili.wray.web.BaseController;
@@ -46,10 +47,10 @@ public class AdminPageController extends BaseController {
 		}
 		v.add("actionName", actionName);
 		v.add("articles",
-				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, LIMIT));
+				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, Constant.ADMIN_LIST_LIMIT));
 
 		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE,
-				stat), LIMIT, page);
+				stat), Constant.ADMIN_LIST_LIMIT, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -197,7 +198,7 @@ public class AdminPageController extends BaseController {
 		boolean orderUpdated = false;
 
 		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat,
-				page, LIMIT);
+				page, Constant.ADMIN_LIST_LIMIT);
 		int order = 0;
 		Article article;
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class Function {
 	
 	public static List<String> dirList(File file) {
@@ -43,6 +45,10 @@ public class Function {
 		return page;
 	}
 	
+	public static String requestScript(HttpServletRequest request) {
+		return request.getRequestURI().replaceFirst(request.getContextPath(), "").toLowerCase();
+	}
+	
 	public static int round(int a, int b) {
 		return (((double) a / (double) b ) > ( a / b ) ? a / b + 1 : a / b);
 	}
@@ -67,7 +73,4 @@ public class Function {
 				.replace("<", "&lt;").replace(">", "&gt;").replace("«", "&laquo;").replace("»", "&raquo;").trim();
 	}
 	
-	public static String year() {
-		return new SimpleDateFormat("yyyy").format(new Date());
-	}
 }

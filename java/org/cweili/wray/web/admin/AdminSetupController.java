@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -54,9 +55,9 @@ public class AdminSetupController extends BaseController {
 	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
 	public BlogView skin(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-skin");
-		v.add("labels", Arrays.asList(LABELS));
+		v.add("labels", Arrays.asList(Constant.LABELS));
 		List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()
-				+ "../../../../../../../skin"));
+				+ "../../../../../../../" + Constant.SKIN_PATH));
 		skinDirs.remove("admin");
 		v.add("skinDirs", skinDirs);
 		int limit = 10;
@@ -73,7 +74,7 @@ public class AdminSetupController extends BaseController {
 		blogConfig.saveOrUpdate("limit", limit + "");
 		blogConfig.saveOrUpdate("topHitsArticlesSize", topHitsArticlesSize + "");
 		blogConfig.saveOrUpdate("topCommentArticlesSize", topCommentArticlesSize + "");
-		if (saveConfig(request, LABELS, new String[] { "skinDir" })) {
+		if (saveConfig(request, Constant.LABELS, new String[] { "skinDir" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
@@ -92,11 +93,11 @@ public class AdminSetupController extends BaseController {
 			if ("skin".equals(type)) {
 				List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("")
 						.getFile()
-						+ "../../../../../../../skin"));
+						+ "../../../../../../../" + Constant.SKIN_PATH));
 				skinDirs.remove("admin");
 				v.add("skinDirs", skinDirs);
 				v.add("currentSkinDir", blogConfig.get("skinDir"));
-				v.add("labels", Arrays.asList(LABELS));
+				v.add("labels", Arrays.asList(Constant.LABELS));
 			}
 			v.add("err", "");
 		} else {

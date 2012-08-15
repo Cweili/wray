@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.cweili.wray.dao.ItemDao;
 import org.cweili.wray.domain.Item;
@@ -136,22 +138,23 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 		});
 	}
 
-//	@Override
-//	public Map<String, Item> getItemMap(byte type, String order) {
-//		final Map<String, Item> map = new HashMap<String, Item>();
-//		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
-//				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0 ORDER BY " + order,
-//				new Object[] { type }, new int[] { Types.INTEGER,
-//						Types.INTEGER}, new RowCallbackHandler() {
-//					@Override
-//					public void processRow(ResultSet rs) throws SQLException {
-//						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
-//								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
-//						map.put(item.getPermalink(), item);
-//					}
-//				});
-//		return map;
-//	}
+	@Override
+	@Deprecated
+	public Map<String, Item> getItemMap(byte type, String order) {
+		final Map<String, Item> map = new HashMap<String, Item>();
+		db.query("SELECT item_id, item_name, permalink, description, count, item_order, item_type,"
+				+ " parrent_id, stat FROM item WHERE item_type=? AND stat>0 ORDER BY " + order,
+				new Object[] { type }, new int[] { Types.INTEGER,
+						Types.INTEGER}, new RowCallbackHandler() {
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs.getString(4),
+								rs.getInt(5), rs.getByte(6), rs.getByte(7), rs.getLong(8), rs.getByte(9));
+						map.put(item.getPermalink(), item);
+					}
+				});
+		return map;
+	}
 
 	@Override
 	public List<Item> getItems(byte type, String order) {

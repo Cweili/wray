@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.Paginator;
 import org.cweili.wray.web.BaseController;
@@ -43,9 +44,9 @@ public class AdminArticleController extends BaseController {
 			actionName = "文章回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page, LIMIT));
+		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page, Constant.ADMIN_LIST_LIMIT));
 		
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), LIMIT, page);
+		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), Constant.ADMIN_LIST_LIMIT, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);

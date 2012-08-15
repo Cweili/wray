@@ -8,8 +8,6 @@ public interface ArticleDao extends BaseDao<Article>{
 	
 	public int getCountByTypeStatus(byte type, byte status);
 	
-	//public List<Article> getArticlesByTypeStatus(byte type, byte status);
-
 	public List<Article> getArticles(byte type, byte status, int start, int limit);
 	
 	public List<Article> getArticles(byte type, byte status, int start, int limit, String order);

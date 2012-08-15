@@ -11,7 +11,8 @@ public interface ItemDao extends BaseDao<Item> {
 	
 	public Item getItemByPermalink(String permalink, byte type);
 	
-	//public Map<String, Item> getItemMap(byte type, String order);
+	@Deprecated
+	public Map<String, Item> getItemMap(byte type, String order);
 	
 	public List<Item> getItems(byte type, String order);
 	

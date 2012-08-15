@@ -1,7 +1,5 @@
 package org.cweili.wray.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +27,7 @@ public abstract class BaseService {
 	
 	// Config 缓存
 	
-	protected static Map<String, String> configMap = new HashMap<String, String>();
+	protected static Map<String, String> configMap = null;
 	
 	// Article 缓存
 	
@@ -37,9 +35,9 @@ public abstract class BaseService {
 	
 	protected static List<Article> pages = null;
 	
-	protected static List<Article> topCommentArticles = new ArrayList<Article>();
+	protected static List<Article> topCommentArticles = null;
 
-	protected static List<Article> topHitsArticles = new ArrayList<Article>();
+	protected static List<Article> topHitsArticles = null;
 	
 	protected static int topCommentArticlesSize = 0;
 
