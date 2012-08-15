@@ -17,7 +17,7 @@
 			<form id="itemForm" action="admin-${adminAction}<#if adminAction="link-edit">-${itemId?if_exists?c}</#if>.html" method="post">
 				<fieldset><legend>链接信息</legend>
 					<div class="input_field">
-						<label for="title">链接名称</label>
+						<label for="itemName">链接名称</label>
 						<input class="bigfield" name="itemName" type="text" value="${itemName?if_exists}" />
 					</div>
 					<div class="input_field">
@@ -38,7 +38,7 @@
 			<script type="text/javascript">
 				$("#itemForm").validate({
 					rules: {
-						title: {
+						itemName: {
 							required:true,
 							maxlength:150
 						},

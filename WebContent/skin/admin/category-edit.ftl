@@ -17,9 +17,15 @@
 			<form id="itemForm" action="admin-${adminAction}<#if adminAction="category-edit">-${itemId?if_exists?c}</#if>.html" method="post">
 				<fieldset><legend>分类信息</legend>
 					<div class="input_field">
-						<label for="title">分类名称</label>
+						<label for="itemName">分类名称</label>
 						<input class="bigfield" name="itemName" type="text" value="${itemName?if_exists}" />
 					</div>
+					<div class="input_field">
+					<label for="permalink">永久链接</label>
+					<span class="field_desc">${staticServePath}category/</span>
+					<input class="mediumfield" name="permalink" type="text" value="${permalink?if_exists}" />
+					<span class="field_desc">/</span>
+				</div>
 					<div class="input_field">
 						<label for="description">分类简介</label>
 						<input class="bigfield" name="description" type="text" value="${description?if_exists}" />
@@ -38,9 +44,13 @@
 			<script type="text/javascript">
 				$("#itemForm").validate({
 					rules: {
-						title: {
+						itemName: {
 							required:true,
 							maxlength:200
+						},
+						permalink: {
+							required:true,
+							maxlength:150
 						},
 						description: {
 							required:true,

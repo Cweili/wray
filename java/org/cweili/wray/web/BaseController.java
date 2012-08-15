@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.service.ArticleService;
+import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.util.BlogView;
@@ -22,6 +23,9 @@ public abstract class BaseController extends MultiActionController {
 	
 	@Autowired
 	protected ArticleService articleService;
+	
+	@Autowired
+	protected CategoryService categoryService;
 	
 	@Autowired
 	protected LinkService linkService;
