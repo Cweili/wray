@@ -14,6 +14,14 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	
 	@Override
 	public Item getLinkById(long id) {
+		if(links == null) {
+			updateLinkCache();
+		}
+		for(int i = 0; i < links.size(); ++i) {
+			if(links.get(i).getItemId() == id) {
+				return links.get(i);
+			}
+		}
 		return itemDao.getItemById(id);
 	}
 

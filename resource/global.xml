@@ -60,7 +60,7 @@
 	</bean>
 	
 	<bean name="characterEncodingInterceptor" class="org.cweili.wray.interceptor.CharacterEncodingInterceptor" />
-	<bean name="permissionInterceptor" class="org.cweili.wray.interceptor.PermissionInterceptor" lazy-init="true" scope="prototype" />
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" lazy-init="true" scope="prototype" />
 	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" lazy-init="true" scope="prototype" />
 	
 	<!-- 注解请求映射  -->
@@ -68,7 +68,7 @@
 		<property name="interceptors">
 			<list>
 				<ref bean="characterEncodingInterceptor" />
-				<ref bean="permissionInterceptor" />
+				<ref bean="authenticationInterceptor" />
 				<ref bean="pageProcessingInterceptor" />
 			</list>		
 		</property>		

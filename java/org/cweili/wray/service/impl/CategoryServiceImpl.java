@@ -10,6 +10,14 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public Item getCategoryById(long id) {
+		if(categories == null) {
+			updateCategoryCache();
+		}
+		for(int i = 0; i < categories.size(); ++i) {
+			if(categories.get(i).getItemId() == id) {
+				return categories.get(i);
+			}
+		}
 		return itemDao.getItemById(id);
 	}
 	
@@ -18,7 +26,12 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		if(categories == null) {
 			updateCategoryCache();
 		}
-		return categoryMap.get(permalink);
+		for(int i = 0; i < categories.size(); ++i) {
+			if(categories.get(i).getPermalink().equals(permalink)) {
+				return categories.get(i);
+			}
+		}
+		return itemDao.getItemByPermalink(permalink, Item.TYPE_CATEGORY);
 	}
 
 	@Override
@@ -76,12 +89,6 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.getItems(Item.TYPE_CATEGORY, "item_order");
-		
-		categoryMap.clear();
-		
-		for(int i = 0; i < categories.size(); ++i) {
-			categoryMap.put(categories.get(i).getPermalink(), categories.get(i));
-		}
 		
 //		if(!categories.isEmpty()) {
 //			Collections.sort(categories, new Comparator<Item>() {

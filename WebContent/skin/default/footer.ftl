@@ -8,7 +8,7 @@
 					<span style="color: red;">O</span>
 					<span style="color: blue;">G</span>&nbsp;
 					<span style="color: orangered; font-weight: bold;">Solo</span></a>,
-				ver ${version}&nbsp;&nbsp;
+				ver ${wrayVersion}&nbsp;&nbsp;
 				Theme by <a href="http://www.noday.net" target="_blank">Noday</a> 
 				& <a href="http://www.templatesnext.org/" target="_blank">Templates Next</a>
 			</div>

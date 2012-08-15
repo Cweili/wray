@@ -9,11 +9,16 @@ import org.cweili.wray.service.TagService;
 public class TagServiceImpl extends BaseService implements TagService {
 	
 	@Override
-	public long getIdByPermalink(String parmalink) {
+	public long getIdByName(String name) {
 		if(tags == null) {
 			updateTagCache();
 		}
-		return tagMap.get(parmalink);
+		for(int i = 0; i < tags.size(); ++i) {
+			if(tags.get(i).getItemName().equals(name)) {
+				return tags.get(i).getItemId();
+			}
+		}
+		return 0;
 	}
 
 	@Override
@@ -71,10 +76,6 @@ public class TagServiceImpl extends BaseService implements TagService {
 	@Override
 	public void updateTagCache() {
 		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
-		
-		for(int i = 0; i < tags.size(); ++i) {
-			tagMap.put(tags.get(i).getItemName(), tags.get(i).getItemId());
-		}
 		
 //		if(!tags.isEmpty()) {
 //			Collections.sort(tags, new Comparator<Item>() {

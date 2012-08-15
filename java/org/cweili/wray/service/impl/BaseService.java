@@ -19,13 +19,17 @@ public abstract class BaseService {
 	protected Log log = LogFactory.getLog(BaseService.class);
 
 	@Autowired
-	protected ArticleDao articleDao;
-	
-	@Autowired
 	protected ConfigDao configDao;
 	
 	@Autowired
+	protected ArticleDao articleDao;
+	
+	@Autowired
 	protected ItemDao itemDao;
+	
+	// Config 缓存
+	
+	protected static Map<String, String> configMap = new HashMap<String, String>();
 	
 	// Article 缓存
 	
@@ -47,13 +51,9 @@ public abstract class BaseService {
 	
 	protected List<Item> categories = null;
 	
-	protected Map<String, Item> categoryMap = new HashMap<String, Item>();
-	
 	// Tag 缓存
 	
 	protected List<Item> tags = null;
-	
-	protected Map<String, Long> tagMap = new HashMap<String, Long>();
 	
 	// Link 缓存
 	

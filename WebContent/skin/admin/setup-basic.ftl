@@ -34,6 +34,11 @@
 					<input class="bigfield" name="blogSubtitle" type="text" value="${blogSubtitle?if_exists}" />
 				</div>
 				<div class="input_field">
+					<label for="blogHost">网站URL</label>
+					<input class="bigfield" name="blogSubtitle" type="text" value="${blogHost?if_exists}" />
+					<span class="field_desc">用于页脚版权链接</span>
+				</div>
+				<div class="input_field">
 					<label for="metaKeywords">关键字</label>
 					<input class="bigfield" name="metaKeywords" type="text" value="${metaKeywords?if_exists}" />
 					<span class="field_desc">提供给搜索引擎索引用, 逗号分隔</span>
@@ -80,6 +85,9 @@
 						maxlength:512
 					},
 					blogSubtitle: {
+						maxlength:512
+					},
+					blogHost: {
 						maxlength:512
 					},
 					metaKeywords: {

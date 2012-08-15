@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public class AdminArticleController extends BaseController {
 	
-	private static final int LIMIT = 12;
-
 	@Override
 	@RequestMapping("/admin-article-{status}")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,

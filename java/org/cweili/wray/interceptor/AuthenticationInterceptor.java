@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 
-public class PermissionInterceptor extends BaseInterceptor {
+public class AuthenticationInterceptor extends BaseInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

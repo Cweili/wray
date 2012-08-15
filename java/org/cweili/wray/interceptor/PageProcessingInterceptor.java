@@ -34,14 +34,11 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			host += ":" + request.getServerPort();
 		}
 		String basePath = request.getScheme() + "://" + host + request.getContextPath()+"/";
-		mv.addObject("blogHost", basePath);
 		mv.addObject("staticServePath", basePath);
 		mv.addObject("year", Function.year());
 		mv.addObject("wrayVersion", "0.0.1");
 		
-//		log.info("Page Processing: " + title);
-		
-		// Not Admin
+		// Not Admin and Admin view
 		if(!isAdminPanel) {
 		
 			List<Article> pageNavigations = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 0);
@@ -50,10 +47,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			mv.addObject("mostViewCountArticles", articleService.getTopHitsArticles(Integer.valueOf(blogConfig.get("topHitsArticlesSize"))));
 		
 			mv.addObject("links", linkService.getLinks());
-		}
-		
-		// Admin
-		if(isAdminPanel) {
+		} else {
 			int endIndex = requestURI.indexOf(".", 7) > 0 ? requestURI.indexOf(".", 7) : requestURI.indexOf("/", 7) > 0 ? requestURI.indexOf("/", 7) : requestURI.length();
 			mv.addObject("adminAction", requestURI.substring(7, endIndex));
 			log.info("Admin Action: " + requestURI.substring(7, endIndex));

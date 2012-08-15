@@ -9,7 +9,7 @@ public interface ItemDao extends BaseDao<Item> {
 
 	public Item getItemById(long id);
 	
-	//public Item getItemByPermalink(String permalink, byte type);
+	public Item getItemByPermalink(String permalink, byte type);
 	
 	//public Map<String, Item> getItemMap(byte type, String order);
 	
