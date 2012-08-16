@@ -12,6 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:14:17
+ *
+ */
 public abstract class BaseInterceptor implements HandlerInterceptor {
 	
 	protected Log log = LogFactory.getLog(BaseInterceptor.class);

@@ -6,6 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.cweili.wray.util.Function;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Authentication Interceptor
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:14:05
+ *
+ */
 public class AuthenticationInterceptor extends BaseInterceptor {
 
 	@Override

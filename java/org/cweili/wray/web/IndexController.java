@@ -13,9 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:36:32
+ *
+ */
 @Controller
 @Scope("prototype")
-public class IndexController extends BaseController {
+public final class IndexController extends BaseController {
 
 	@Override
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {

@@ -1,5 +1,12 @@
 package org.cweili.wray.domain;
 
+/**
+ * Item Model
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:12:40
+ *
+ */
 public class Item {
 
 	private long itemId = 0;
@@ -24,6 +31,17 @@ public class Item {
 		super();
 	}
 
+	/**
+	 * @param itemId
+	 * @param itemName
+	 * @param permalink
+	 * @param description
+	 * @param count
+	 * @param itemOrder
+	 * @param itemType
+	 * @param parrentId
+	 * @param stat
+	 */
 	public Item(long itemId, String itemName, String permalink, String description, int count,
 			byte itemOrder, byte itemType, long parrentId, byte stat) {
 		super();

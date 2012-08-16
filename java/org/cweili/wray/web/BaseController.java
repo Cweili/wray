@@ -14,6 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:36:16
+ *
+ */
 public abstract class BaseController extends MultiActionController {
 	
 	protected Log log = LogFactory.getLog(BaseController.class);

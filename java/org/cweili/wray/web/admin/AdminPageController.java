@@ -20,9 +20,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:39:25
+ *
+ */
 @Controller
 @Scope("prototype")
-public class AdminPageController extends BaseController {
+public final class AdminPageController extends BaseController {
 
 	@Override
 	@RequestMapping("/admin-page-{status}")
@@ -47,10 +53,10 @@ public class AdminPageController extends BaseController {
 		}
 		v.add("actionName", actionName);
 		v.add("articles",
-				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, Constant.ADMIN_LIST_LIMIT));
+				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, Constant.ADMIN_LIST_SIZE));
 
 		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE,
-				stat), Constant.ADMIN_LIST_LIMIT, page);
+				stat), Constant.ADMIN_LIST_SIZE, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -198,7 +204,7 @@ public class AdminPageController extends BaseController {
 		boolean orderUpdated = false;
 
 		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat,
-				page, Constant.ADMIN_LIST_LIMIT);
+				page, Constant.ADMIN_LIST_SIZE);
 		int order = 0;
 		Article article;
 
@@ -267,7 +273,7 @@ public class AdminPageController extends BaseController {
 			ori.setTitle(title);
 			ori.setPermalink(permalink);
 			ori.setContent(content);
-			ori.setStatus(stat);
+			ori.setStat(stat);
 			ori.setCommentStatus(commentStatus);
 			return ori;
 		}

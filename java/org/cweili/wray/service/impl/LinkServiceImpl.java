@@ -9,9 +9,18 @@ import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.LinkService;
 import org.springframework.stereotype.Service;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:23:06
+ *
+ */
 @Service("linkService")
 public class LinkServiceImpl extends BaseService implements LinkService {
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#getLinkById(long)
+	 */
 	@Override
 	public Item getLinkById(long id) {
 		if(links == null) {
@@ -25,6 +34,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return itemDao.getItemById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#getLinks()
+	 */
 	@Override
 	public List<Item> getLinks() {
 		if(links == null) {
@@ -33,6 +45,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return links;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#save(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public long save(Item link) throws SQLException {
 		long rs = itemDao.save(link);
@@ -44,6 +59,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return rs;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#update(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public boolean update(Item link) throws SQLException {
 		int rs = itemDao.update(link);
@@ -55,6 +73,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return rs > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#remove(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public boolean remove(Item link) throws SQLException {
 		int rs = itemDao.remove(link);
@@ -66,6 +87,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return rs > 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#remove(java.util.List)
+	 */
 	@Override
 	public boolean remove(List<Long> ids) throws SQLException {
 		int rs = itemDao.remove(ids);
@@ -77,6 +101,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return rs > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.LinkService#updateLinkCache()
+	 */
 	@Override
 	public void updateLinkCache() {
 		links = itemDao.getItems(Item.TYPE_LINK, "item_order");

@@ -20,9 +20,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:39:36
+ *
+ */
 @Controller
 @Scope("prototype")
-public class AdminSetupController extends BaseController {
+public final class AdminSetupController extends BaseController {
 
 	@Override
 	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)

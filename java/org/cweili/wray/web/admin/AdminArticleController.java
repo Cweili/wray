@@ -19,9 +19,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:36:57
+ *
+ */
 @Controller
 @Scope("prototype")
-public class AdminArticleController extends BaseController {
+public final class AdminArticleController extends BaseController {
 	
 	@Override
 	@RequestMapping("/admin-article-{status}")
@@ -44,9 +50,9 @@ public class AdminArticleController extends BaseController {
 			actionName = "文章回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page, Constant.ADMIN_LIST_LIMIT));
+		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page, Constant.ADMIN_LIST_SIZE));
 		
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), Constant.ADMIN_LIST_LIMIT, page);
+		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), Constant.ADMIN_LIST_SIZE, page);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
 		v.add("paginationCurrentPageNum", page);
@@ -215,7 +221,7 @@ public class AdminArticleController extends BaseController {
 			ori.setPermalink(permalink);
 			ori.setTag(tag);
 			ori.setContent(content);
-			ori.setStatus(stat);
+			ori.setStat(stat);
 			ori.setCommentStatus(commentStatus);
 			return ori;
 		}

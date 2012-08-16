@@ -16,9 +16,20 @@ import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午4:48:37
+ * 
+ */
 @Repository("articleDao")
 public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDao {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getCountByTypeStatus(byte, byte)
+	 */
 	@Override
 	public int getCountByTypeStatus(byte type, byte status) {
 		int r = db.queryForInt("SELECT COUNT(*) FROM article WHERE is_page=? AND stat=?",
@@ -27,6 +38,11 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return r;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getArticles(byte, byte, int, int)
+	 */
 	@Override
 	public List<Article> getArticles(byte type, byte status, int start, int limit) {
 		final List<Article> list = new ArrayList<Article>();
@@ -47,9 +63,14 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getArticles(byte, byte, int, int,
+	 * java.lang.String)
+	 */
 	@Override
-	public List<Article> getArticles(byte type, byte status, int start, int limit,
-			String order) {
+	public List<Article> getArticles(byte type, byte status, int start, int limit, String order) {
 		final List<Article> list = new ArrayList<Article>();
 		db.query("SELECT article_id, title, permalink, content, tag, create_time, stat, "
 				+ "hits, comment_count, comment_status, is_page FROM article "
@@ -68,6 +89,12 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getMetas(byte, byte,
+	 * java.lang.String)
+	 */
 	@Override
 	public List<Article> getMetas(byte type, byte status, String order) {
 		final List<Article> list = new ArrayList<Article>();
@@ -90,9 +117,14 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getMetas(byte, byte, int, int,
+	 * java.lang.String)
+	 */
 	@Override
-	public List<Article> getMetas(byte type, byte status, int start, int limit,
-			String order) {
+	public List<Article> getMetas(byte type, byte status, int start, int limit, String order) {
 		final List<Article> list = new ArrayList<Article>();
 		db.query("SELECT article_id, title, permalink, tag, create_time, stat, "
 				+ "hits, comment_count, comment_status, is_page FROM article "
@@ -113,43 +145,85 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getMetasByRelationship(long, byte,
+	 * byte, int, int, java.lang.String)
+	 */
+	@Override
+	public List<Article> getMetasByRelationship(long id, byte type, byte status, int start,
+			int limit, String order) {
+		final List<Article> list = new ArrayList<Article>();
+		db.query(
+				"SELECT a.article_id, title, permalink, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article a, relationship r "
+						+ "WHERE a.article_id=r.article_id AND r.item_id=? AND is_page=? AND stat=? ORDER BY "
+						+ order + " LIMIT ?,?", new Object[] { id, type, status, start, limit },
+				new int[] { Types.BIGINT, Types.INTEGER, Types.INTEGER, Types.INTEGER,
+						Types.INTEGER }, new RowCallbackHandler() {
+					@Override
+					public void processRow(ResultSet rs) throws SQLException {
+						Article article = new Article(rs.getLong(1), rs.getString("title"), rs
+								.getString("permalink"), "", rs.getString("tag"), rs
+								.getTimestamp("create_time"), rs.getByte("stat"),
+								rs.getInt("hits"), rs.getInt("comment_count"), rs
+										.getByte("comment_status"), rs.getByte("is_page"));
+						list.add(article);
+					}
+				});
+		log.info("Query article for relationship: " + id);
+		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getArticleById(long)
+	 */
 	@Override
 	public Article getArticleById(final long id) {
-		return db
-				.queryForObject(
-						"SELECT article_id, title, permalink, content, tag, create_time, stat, "
-								+ "hits, comment_count, comment_status, is_page FROM article "
-								+ "WHERE article_id=? AND stat > 0 LIMIT 1",
-						new Object[] { id }, new int[] { Types.BIGINT }, new RowMapper<Article>() {
-							@Override
-							public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
-								return new Article(rs.getLong(1), rs.getString(2), rs.getString(3),
-										rs.getString(4), rs.getString(5), rs.getTimestamp(6), rs
-												.getByte(7), rs.getInt(8), rs.getInt(9), rs
-												.getByte(10), rs.getByte(11));
-							}
-						});
+		return db.queryForObject(
+				"SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article "
+						+ "WHERE article_id=? AND stat > 0 LIMIT 1", new Object[] { id },
+				new int[] { Types.BIGINT }, new RowMapper<Article>() {
+					@Override
+					public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return new Article(rs.getLong(1), rs.getString(2), rs.getString(3), rs
+								.getString(4), rs.getString(5), rs.getTimestamp(6), rs.getByte(7),
+								rs.getInt(8), rs.getInt(9), rs.getByte(10), rs.getByte(11));
+					}
+				});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.dao.ArticleDao#getArticleByPermalink(java.lang.String)
+	 */
 	@Override
 	public Article getArticleByPermalink(String permalink) {
-		return db
-				.queryForObject(
-						"SELECT article_id, title, permalink, content, tag, create_time, stat, "
-								+ "hits, comment_count, comment_status, is_page FROM article "
-								+ "WHERE permalink=? AND stat > 0 LIMIT 1",
-						new Object[] { permalink }, new int[] { Types.VARCHAR },
-						new RowMapper<Article>() {
-							@Override
-							public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
-								return new Article(rs.getLong(1), rs.getString(2), rs.getString(3),
-										rs.getString(4), rs.getString(5), rs.getTimestamp(6), rs
-												.getByte(7), rs.getInt(8), rs.getInt(9), rs
-												.getByte(10), rs.getByte(11));
-							}
-						});
+		return db.queryForObject(
+				"SELECT article_id, title, permalink, content, tag, create_time, stat, "
+						+ "hits, comment_count, comment_status, is_page FROM article "
+						+ "WHERE permalink=? AND stat > 0 LIMIT 1", new Object[] { permalink },
+				new int[] { Types.VARCHAR }, new RowMapper<Article>() {
+					@Override
+					public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+						return new Article(rs.getLong(1), rs.getString(2), rs.getString(3), rs
+								.getString(4), rs.getString(5), rs.getTimestamp(6), rs.getByte(7),
+								rs.getInt(8), rs.getInt(9), rs.getByte(10), rs.getByte(11));
+					}
+				});
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.BaseDao#save(java.lang.Object)
+	 */
 	@Override
 	public long save(final Article t) {
 		if (t.getArticleId() < 1) {
@@ -182,6 +256,11 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.BaseDao#update(java.lang.Object)
+	 */
 	@Override
 	public int update(final Article t) {
 		int r = db.update(
@@ -245,6 +324,13 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		return r;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.dao.ArticleDao#updateColumn(org.cweili.wray.domain.Article
+	 * , java.lang.String, int, java.lang.Object)
+	 */
 	@Override
 	public int updateColumn(Article article, String col, int type, Object value) {
 		int r = db.update("UPDATE article SET " + col + "=? WHERE article_id=?", new Object[] {

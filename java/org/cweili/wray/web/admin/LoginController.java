@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:39:44
+ *
+ */
 @Controller
 @Scope("prototype")
-public class LoginController extends BaseController {
+public final class LoginController extends BaseController {
 
 	@Override
 	@RequestMapping(value="/admin-login", method = RequestMethod.GET)

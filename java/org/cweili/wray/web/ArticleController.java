@@ -12,9 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:36:09
+ *
+ */
 @Controller
 @Scope("prototype")
-public class ArticleController extends BaseController {
+public final class ArticleController extends BaseController {
 	
 	@Override
 	@RequestMapping("/article/{permalink}/*")

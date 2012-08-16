@@ -10,6 +10,13 @@ import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Do Page Processing
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:15:25
+ *
+ */
 public class PageProcessingInterceptor extends BaseInterceptor {
 
 	@Override
@@ -53,6 +60,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 
 			mv.addObject("links", linkService.getLinks());
 		} else {
+			mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
 			int endIndex = reqs.indexOf(".", 7) > 0 ? reqs.indexOf(".", 7)
 					: reqs.indexOf("/", 7) > 0 ? reqs.indexOf("/", 7) : reqs.length();
 			mv.addObject("adminAction", reqs.substring(7, endIndex));
@@ -62,7 +70,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// Skin Dir
 		String skinDir = isAdminPanel ? "admin" : blogConfig.get("skinDir");
 		mv.addObject("skinDir", Constant.SKIN_PATH + skinDir + "/");
-		mv.setViewName(skinDir + mv.getViewName());
+		mv.setViewName(skinDir + mv.getViewName() + Constant.SKIN_EXT);
 	}
 
 	@Override

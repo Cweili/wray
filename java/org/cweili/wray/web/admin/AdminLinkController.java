@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:39:12
+ *
+ */
 @Controller
 @Scope("prototype")
-public class AdminLinkController extends BaseController {
+public final class AdminLinkController extends BaseController {
 
 	@Override
 	@RequestMapping(value="/admin-link-edit-{linkid}", method = RequestMethod.GET)

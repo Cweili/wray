@@ -2,6 +2,13 @@ package org.cweili.wray.util;
 
 import java.util.ArrayList;
 
+/**
+ * 分页导航
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:33:14
+ *
+ */
 public class Paginator {
 
 	private int total = 0;
@@ -21,6 +28,11 @@ public class Paginator {
 		
 	}
 	
+	/**
+	 * @param total
+	 * @param limit
+	 * @param current
+	 */
 	public Paginator(int total, int limit, int current) {
 		this.total = total;
 		this.limit = limit;
@@ -28,6 +40,9 @@ public class Paginator {
 		calculate();
 	}
 	
+	/**
+	 * 计算分页
+	 */
 	public void calculate() {
 		limit = limit > 0 ? limit : 1;
 		current = current > 0 ? current : 1;

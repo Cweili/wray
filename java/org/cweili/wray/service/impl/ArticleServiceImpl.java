@@ -9,9 +9,18 @@ import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:17:58
+ *
+ */
 @Service("articleService")
 public class ArticleServiceImpl extends BaseService implements ArticleService {
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getCountByTypeStatus(byte, byte)
+	 */
 	@Override
 	public int getCountByTypeStatus(byte type, byte status) {
 
@@ -26,6 +35,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return publishedArticleCount;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getArticlesByTypeStatus(byte, byte, int, int)
+	 */
 	@Override
 	public List<Article> getArticlesByTypeStatus(byte type, byte status, int page, int limit) {
 		int start = (page - 1) * limit;
@@ -84,16 +96,25 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getArticleById(long)
+	 */
 	@Override
 	public Article getArticleById(long id) {
 		return articleDao.getArticleById(id);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getArticleByPermalink(java.lang.String)
+	 */
 	@Override
 	public Article getArticleByPermalink(String Permalink) {
 		return articleDao.getArticleByPermalink(Permalink);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#save(org.cweili.wray.domain.Article)
+	 */
 	@Override
 	public long save(Article article) throws SQLException {
 		long rs = articleDao.save(article);
@@ -106,6 +127,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return rs;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#update(org.cweili.wray.domain.Article)
+	 */
 	@Override
 	public boolean update(Article article) throws SQLException {
 		int rs = articleDao.update(article);
@@ -118,6 +142,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return rs > 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#updateHits(org.cweili.wray.domain.Article)
+	 */
 	@Override
 	public boolean updateHits(Article article) throws SQLException {
 		int rs = articleDao.updateColumn(article, "hits", Types.INTEGER, article.getHits());
@@ -127,6 +154,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return rs > 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#remove(org.cweili.wray.domain.Article)
+	 */
 	@Override
 	public boolean remove(Article article) throws SQLException {
 		int rs = articleDao.remove(article);
@@ -139,6 +169,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return rs > 0;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#remove(java.util.List, byte)
+	 */
 	@Override
 	public boolean remove(List<Long> ids, byte type) throws SQLException {
 		int rs = articleDao.remove(ids, type);
@@ -151,6 +184,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return 0 > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getTopCommentArticles(int)
+	 */
 	@Override
 	public List<Article> getTopCommentArticles(int num) {
 		if (topCommentArticlesSize != num) {
@@ -161,6 +197,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return topCommentArticles;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#getTopHitsArticles(int)
+	 */
 	@Override
 	public List<Article> getTopHitsArticles(int num) {
 		if (topHitsArticlesSize != num) {
@@ -171,6 +210,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return topHitsArticles;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#updateArticleCache()
+	 */
 	@Override
 	public void updateArticleCache() {
 //		articles = articleDao.getArticlesByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED);
@@ -200,6 +242,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				Article.STAT_PUBLISHED);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.ArticleService#updateSidebarArticleCache()
+	 */
 	@Override
 	public void updateSidebarArticleCache() {
 //		if (articles == null) {
@@ -243,6 +288,10 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		topHitsArticles = articleDao.getMetas(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 0, topHitsArticlesSize, "hits DESC");
 	}
 	
+	/**
+	 * @param list
+	 * @return
+	 */
 	private List<Article> dealList(List<Article> list) {
 		Article a;
 		for(int i = 0; i < list.size(); ++i) {

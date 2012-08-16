@@ -39,7 +39,7 @@
 						</td>
 					</tr>
 					</#list>
-					<#assign i = (12 - articles?size)>
+					<#assign i = (adminListSize - articles?size)>
 					<#if (i > 0)>
 						<#list 1..i as t>
 						<tr><td colspan="7" style="color:#242424">.</td></tr>

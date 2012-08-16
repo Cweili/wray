@@ -15,9 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:37:04
+ *
+ */
 @Controller
 @Scope("prototype")
-public class AdminCategoryController extends BaseController {
+public final class AdminCategoryController extends BaseController {
 
 	@Override
 	@RequestMapping(value="/admin-category-edit-{categoryid}", method = RequestMethod.GET)

@@ -6,8 +6,17 @@ import java.util.List;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.CategoryService;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:22:11
+ *
+ */
 public class CategoryServiceImpl extends BaseService implements CategoryService {
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#getCategoryById(long)
+	 */
 	@Override
 	public Item getCategoryById(long id) {
 		if(categories == null) {
@@ -21,6 +30,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return itemDao.getItemById(id);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#getCategoryByPermalink(java.lang.String)
+	 */
 	@Override
 	public Item getCategoryByPermalink(String permalink) {
 		if(categories == null) {
@@ -34,6 +46,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return itemDao.getItemByPermalink(permalink, Item.TYPE_CATEGORY);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#getCategories()
+	 */
 	@Override
 	public List<Item> getCategories() {
 		if(categories == null) {
@@ -42,6 +57,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return categories;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#save(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public long save(Item category) throws SQLException {
 		long rs = itemDao.save(category);
@@ -53,6 +71,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#update(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public boolean update(Item category) throws SQLException {
 		int rs = itemDao.update(category);
@@ -64,6 +85,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#remove(org.cweili.wray.domain.Item)
+	 */
 	@Override
 	public boolean remove(Item category) throws SQLException {
 		int rs = itemDao.remove(category);
@@ -75,6 +99,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#remove(java.util.List)
+	 */
 	@Override
 	public boolean remove(List<Long> ids) throws SQLException {
 		int rs = itemDao.remove(ids);
@@ -86,6 +113,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs > 0;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#updateCategoryCache()
+	 */
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.getItems(Item.TYPE_CATEGORY, "item_order");

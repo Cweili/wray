@@ -3,6 +3,13 @@ package org.cweili.wray.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * User Model
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:12:51
+ *
+ */
 public class User {
 
 	private long userId;
@@ -25,6 +32,16 @@ public class User {
 		super();
 	}
 	
+	/**
+	 * @param userId
+	 * @param username
+	 * @param passwd
+	 * @param nickname
+	 * @param permalink
+	 * @param email
+	 * @param regtime
+	 * @param usergroup
+	 */
 	public User(long userId,
 			String username,
 			String passwd,

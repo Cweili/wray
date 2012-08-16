@@ -3,6 +3,13 @@ package org.cweili.wray.domain;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Article Model
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:10:14
+ *
+ */
 public class Article {
 
 	private long articleId = 0;
@@ -32,6 +39,19 @@ public class Article {
 		super();
 	}
 	
+	/**
+	 * @param articleId
+	 * @param title
+	 * @param permalink
+	 * @param content
+	 * @param tag
+	 * @param createTime
+	 * @param stat
+	 * @param hits
+	 * @param commentCount
+	 * @param commentStatus
+	 * @param isPage
+	 */
 	public Article(long articleId,
 			String title,
 			String permalink,
@@ -135,15 +155,14 @@ public class Article {
 		this.createTime = createTime;
 	}
 
-	public int getStat() {
+	public byte getStat() {
 		return stat;
 	}
 
-	public void setStatus(byte stat) {
+	public void setStat(byte stat) {
 		this.stat = stat;
 	}
-	
-	
+
 	public int getHits() {
 		return hits;
 	}
@@ -151,7 +170,7 @@ public class Article {
 	public void setHits(int hits) {
 		this.hits = hits;
 	}
-	
+
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -160,7 +179,7 @@ public class Article {
 		this.commentCount = commentCount;
 	}
 
-	public int getCommentStatus() {
+	public byte getCommentStatus() {
 		return commentStatus;
 	}
 
@@ -168,12 +187,13 @@ public class Article {
 		this.commentStatus = commentStatus;
 	}
 
-	public int getIsPage() {
+	public byte getIsPage() {
 		return isPage;
 	}
 
 	public void setIsPage(byte isPage) {
 		this.isPage = isPage;
 	}
+
 
 }

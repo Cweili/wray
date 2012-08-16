@@ -17,8 +17,17 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowCallbackHandler;
 
+/**
+ * 
+ * @author cweili
+ * @version 2012-8-16 下午5:09:46
+ *
+ */
 public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.BaseDao#save(java.lang.Object)
+	 */
 	@Override
 	public long save(final User t) {
 		t.setUserId(Function.generateId());
@@ -45,6 +54,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.BaseDao#update(java.lang.Object)
+	 */
 	@Override
 	public int update(final User t) {
 		int r = db.update(
@@ -66,6 +78,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 		return r;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.BaseDao#remove(java.lang.Object)
+	 */
 	@Override
 	public int remove(final User t) {
 		int r = db.update("UPDATE user SET (usergroup) VALUES (?) WHERE user_id=?",
@@ -79,6 +94,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 		return r;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.UserDao#getUsersWithLimit(int, int)
+	 */
 	@Override
 	public List<User> getUsersWithLimit(int start, int limit) {
 		final List<User> list = new ArrayList<User>();
@@ -96,6 +114,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 		return list;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.UserDao#getAllUsers()
+	 */
 	@Override
 	public Map<Long, User> getAllUsers() {
 		final Map<Long, User> map = new HashMap<Long, User>();
@@ -111,6 +132,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 		return map;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.UserDao#getUserByPermalink(java.lang.String)
+	 */
 	@Override
 	public User getUserByPermalink(String permalink) {
 		return db.queryForObject("SELECT * FROM article WHERE permalink=? AND usergroup > 0 LIMIT 1",
@@ -118,6 +142,9 @@ public class UserDaoImpl extends BaseDaoSupport<User> implements UserDao {
 						User.class));
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.dao.UserDao#getUserByName(java.lang.String)
+	 */
 	@Override
 	public User getUserByName(String name) {
 		return db.queryForObject("SELECT * FROM article WHERE name=? AND usergroup > 0 LIMIT 1",
