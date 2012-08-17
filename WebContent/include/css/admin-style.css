@@ -23,7 +23,7 @@
 /* ---------------------------------------*/
 
 img {
-	behavior:url('js/iepngfix.html') !important;
+	behavior:url('../js/iepngfix.htc') !important;
 }
 
 html {
@@ -32,7 +32,7 @@ html {
 
 body { 
 	line-height:1.5;
-	background:#161616 url('../assets/bgtop.png') 0 0 repeat-x;
+	background:#161616 url('../image/bgtop.png') 0 0 repeat-x;
 	font-size:14px;
 	color:#ccc;
 	font-family:"Arial", "Microsoft YaHei", Tahoma, sans-serif;
@@ -252,7 +252,7 @@ INPUT.radio {
 #container { 
 	float:left;
 	width:100%;
-	background:url('../assets/footer.png') 0 100% repeat-x;
+	background:url('../image/footer.png') 0 100% repeat-x;
 } 
 
 
@@ -293,7 +293,7 @@ INPUT.radio {
 #sidebar .sidebox { 
 	margin-bottom:10px;
 	width:231px;
-	background:#222 url('../assets/sidebar_box_rep.png') 100% 0 repeat-y;
+	background:#222 url('../image/sidebar_box_rep.png') 100% 0 repeat-y;
 	border-right:1px solid #222;
 	border-top:1px solid #222;
 	border-bottom:5px solid #111;
@@ -369,7 +369,7 @@ a.close {
 	text-align:center;
 	height:21px;
 	padding-top:3px;
-	background:url('../assets/greenrep.png') 0 0 repeat-x;
+	background:url('../image/greenrep.png') 0 0 repeat-x;
 	border:1px solid #7dbc00;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
@@ -377,7 +377,7 @@ a.close {
 } 
 
 .selected {
-	background:url('../assets/whiterep.png') 0 0 repeat-x;
+	background:url('../image/whiterep.png') 0 0 repeat-x;
 	border:1px solid #e8e8e8;
 	
 	font-weight:bold;
@@ -520,7 +520,7 @@ select {
 } 
 
 .pagination li.current a {
-	background:url('../assets/greenrep.png') 0 0 repeat-x;
+	background:url('../image/greenrep.png') 0 0 repeat-x;
 	border:1px solid #7dbc00;
 }
 
@@ -540,13 +540,13 @@ fieldset {
 
 .validate_success { 
 	background:url('../images/validate_success.png') no-repeat left;
-	behavior:url(js/iepngfix.html) !important;
+	behavior:url('../js/iepngfic.htc') !important;
 	color:#39ce31;
 } 
 
 .validate_error { 
 	background:url('../images/validate_error.png') no-repeat left;
-	behavior:url(js/iepngfix.html) !important;
+	behavior:url('../js/iepngfic.htc') !important;
 	color:#d33232;
 } 
 
@@ -576,14 +576,13 @@ label.error {
 	display:inline;
 	float:none;
 	position:static;
-	background:#e28b65 url('../images/validate_error.png') no-repeat left;
+	background:#e28b65 url('../image/action_delete.png') no-repeat left;
 	margin-left:4px;
-	font-style:italic;
 	padding:4px 6px 4px 21px;
 	color:#981d05;
 	top:0;
 	border:1px solid #a5260f;
-	behavior:url(js/iepngfix.html) !important;
+	behavior:url('../js/iepngfic.htc') !important;
 }
 
 .field_desc { 
@@ -624,7 +623,7 @@ input[type="text"], input[type="password"], select {
 .submit { 
 	text-align:center;
 	height:24px;
-	background:url('../assets/greenrep.png') 0 0 repeat-x;
+	background:url('../image/greenrep.png') 0 0 repeat-x;
 	float:left;
 	color:#eee;
 	font-size:0.9em;
@@ -636,7 +635,7 @@ input[type="text"], input[type="password"], select {
 a.button {
 	text-align:center;
 	height:24px;
-	background:url('../assets/greenrep.png') 0 0 repeat-x;
+	background:url('../image/greenrep.png') 0 0 repeat-x;
 	color:#eee;
 	font-size:0.9em;
 	margin:5px;
@@ -694,8 +693,8 @@ a.button {
 	width:48px;
 	height:48px;
 	margin:14px;
-	background:url('../assets/warn.png') no-repeat 0 0;
-	behavior:url(js/iepngfix.html) !important;
+	background:url('../image/warn.png') no-repeat 0 0;
+	behavior:url('../js/iepngfic.htc') !important;
 }
 
 .err .err_icon {
@@ -703,8 +702,8 @@ a.button {
 	width:48px;
 	height:48px;
 	margin:14px;
-	background:url('../assets/fail.png') no-repeat 0 0;
-	behavior:url(js/iepngfix.html) !important;
+	background:url('../image/fail.png') no-repeat 0 0;
+	behavior:url('../js/iepngfic.htc') !important;
 }
 
 .succes .succes_icon {
@@ -712,8 +711,8 @@ a.button {
 	width:48px;
 	height:48px;
 	margin:14px;
-	background:url('../assets/success.png') no-repeat 0 0;
-	behavior:url(js/iepngfix.html) !important;
+	background:url('../image/success.png') no-repeat 0 0;
+	behavior:url('../js/iepngfic.htc') !important;
 }
 
 .desc {
@@ -798,7 +797,7 @@ ul.modals li {
 	display:inline;
 	width:90px;
 	height:90px;
-	background:#222 url('../assets/sidebar_box_top.png') 100% 0 no-repeat;
+	background:#222 url('../image/sidebar_box_top.png') 100% 0 no-repeat;
 	padding:5px;
 	text-align:center;
 	margin:0 15px 15px 0;

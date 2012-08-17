@@ -77,12 +77,14 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	 * @see org.cweili.wray.service.CategoryService#update(org.cweili.wray.domain.Item)
 	 */
 	@Override
-	public boolean update(Item category) throws SQLException {
+	public boolean update(Item category, boolean updateCache) throws SQLException {
 		int rs = itemDao.update(category);
 		if(rs < 1) {
 			throw new SQLException("Category update error");
 		} else {
-			updateCategoryCache();
+			if(updateCache) {
+				updateCategoryCache();
+			}
 		}
 		return rs > 0;
 	}

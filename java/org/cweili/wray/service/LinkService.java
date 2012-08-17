@@ -33,17 +33,11 @@ public interface LinkService {
 	
 	/**
 	 * @param link
+	 * @param updateCache
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean update(Item link) throws SQLException;
-	
-	/**
-	 * @param link
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean updateOrder(Item link) throws SQLException;
+	public boolean update(Item link, boolean updateCache) throws SQLException;
 	
 	/**
 	 * @param link

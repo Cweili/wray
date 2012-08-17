@@ -63,12 +63,14 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	 * @see org.cweili.wray.service.LinkService#update(org.cweili.wray.domain.Item)
 	 */
 	@Override
-	public boolean update(Item link) throws SQLException {
+	public boolean update(Item link, boolean updateCache) throws SQLException {
 		int rs = itemDao.update(link);
 		if(rs < 1) {
 			throw new SQLException("Link update error");
 		} else {
-			updateLinkCache();
+			if(updateCache) {
+				updateLinkCache();
+			}
 		}
 		return rs > 0;
 	}

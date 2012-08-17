@@ -72,7 +72,7 @@ public final class AdminLinkController extends BaseController {
 		v.add("msg", "链接保存成功");
 		v.add("succ", "恭喜您，您的链接已成功保存。");
 		try {
-			linkService.update(link);
+			linkService.update(link, true);
 		} catch(Exception e) {
 			v.setView("link-edit");
 			v.add("itemId", linkid);
@@ -123,43 +123,13 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 	
-	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
-	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
-		BlogView v = new BlogView("page-edit");
-		v.add("actionName", "编辑页面");
-		v.add("articleId", articleid);
-		long id = 0;
-		try {
-			id = Long.valueOf(articleid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Article article = articleService.getArticleById(id);
-		article = getArticle(request, article);
-		v.add("title", article.getTitle());
-		v.add("permalink", article.getPermalink());
-		v.add("tag", article.getTag());
-		v.add("content", article.getContent());
-		v.add("commentStatus", article.getCommentStatus());
-		v.add("stat", article.getStat());
-		v.add("err", "succ");
-		try {
-			articleService.update(article);
-		} catch (Exception e) {
-			v.add("err", "数据库更新失败");
-		}
-		return v;
-	}
-
 	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)
-	public BlogView manage(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String status) {
+	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "链接更新成功");
-		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已成功移入回收站。");
-		v.add("redirect", "admin-page-" + status);
+		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已删除。");
+		v.add("redirect", "admin-link");
 
 		List<Long> ids = new ArrayList<Long>();
 		Long id;
@@ -190,11 +160,11 @@ public final class AdminLinkController extends BaseController {
 					if (item.getItemOrder() != order) {
 						orderUpdated = true;
 						item.setItemOrder(order);
-						linkService.updateOrder(item);
+						linkService.update(item, false);
 					}
 				}
 			}
-			if (orderUpdated) {
+			if (orderUpdated && ids.isEmpty()) {
 				linkService.updateLinkCache();
 			}
 		} catch (SQLException se) {

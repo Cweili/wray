@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Wray Admin Panel</title>
-		<link type="text/css" rel="stylesheet" href="${staticServePath}${skinDir}css/login.css" charset="utf-8" />
+		<link type="text/css" rel="stylesheet" href="${staticServePath}include/css/admin-login.css" charset="utf-8" />
 	</head>
 <body>
 	<div id="container">

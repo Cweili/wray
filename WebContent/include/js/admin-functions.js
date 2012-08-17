@@ -92,7 +92,7 @@ $(document).ready(function() {
     		wellFormatMode: true,
     		indentChar: "",
     		urlType: "relative",
-    		emoticonsPath: "image/emotion/",
+    		emoticonsPath: "include/image/emotion/",
     		uploadJson: "include/editor/jsp/upload_json.jsp",
     		fileManagerJson: "include/editor/jsp/file_manager_json.jsp",
     		allowFileManager : true,

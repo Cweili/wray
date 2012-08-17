@@ -4,7 +4,7 @@
 }
 
 body {
-	background:#161616 url('../assets/rep.png') 0 0 repeat-x;
+	background:#161616 url('../image/rep.png') 0 0 repeat-x;
 	font-family:Arial,"Microsoft YaHei",Tahoma,sans-serif;
 	color:#ccc;
 }
@@ -60,7 +60,7 @@ input.login {
 	float:right;
 	width:76px;
 	height:24px;
-	background:url('../assets/greenrep.png') 0 0 repeat-x;
+	background:url('../image/greenrep.png') 0 0 repeat-x;
 	color:#fff;
 	border:1px solid #7dbc00;
 	padding:0;
@@ -104,8 +104,8 @@ span input {
 	width:48px;
 	height:48px;
 	margin:14px;
-	background:url('../assets/fail.png') no-repeat 0 0;
-	behavior:url(js/iepngfix.html) !important;
+	background:url('../image/fail.png') no-repeat 0 0;
+	behavior:url('..js/iepngfix.htc') !important;
 }
 
 .desc {

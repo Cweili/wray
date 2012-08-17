@@ -29,9 +29,9 @@
 						<td>${item.count}</td>
 						<td><input class="tinyfield" type="text" name="order${item.itemId?c}" value="${item.itemOrder}" /></td>
 						<td>
-							<a href="admin-category-edit-${item.itemId?c}.html"><img src="${staticServePath}${skinDir}assets/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${item.itemId?c});"><img src="${staticServePath}${skinDir}assets/action_delete.png" alt="删除" /></a>
-							<a href="${item.description}" target="_blank"><img src="${staticServePath}${skinDir}assets/folder.png" alt="查看" /></a>
+							<a href="admin-category-edit-${item.itemId?c}.html"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle(${item.itemId?c});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="category/${item.permalink}/" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>
 					</#list>
@@ -46,7 +46,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="更新排序并删除选中分类" />
-					<input class="submit" type="button" value="添加新的分类" onclick="location.href='admin-link-add.html'" />
+					<input class="submit" type="button" value="添加新的分类" onclick="location.href='admin-category-add.html'" />
 				</div>
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
@@ -54,7 +54,7 @@
 		<script type="text/javascript">
 			$("#manageForm").validate({
 				rules: {
-					<#list items as itme>
+					<#list items as item>
 					order${item.itemId?c}: {
 						required:true,
 						digits:true,

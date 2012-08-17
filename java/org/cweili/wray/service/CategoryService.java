@@ -42,7 +42,7 @@ public interface CategoryService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean update(Item category) throws SQLException;
+	public boolean update(Item category, boolean updateCache) throws SQLException;
 	
 	/**
 	 * @param category

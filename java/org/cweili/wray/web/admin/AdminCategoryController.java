@@ -1,5 +1,7 @@
 package org.cweili.wray.web.admin;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +71,7 @@ public final class AdminCategoryController extends BaseController {
 		v.add("msg", "分类保存成功");
 		v.add("succ", "恭喜您，您的分类已成功保存。");
 		try {
-			categoryService.update(category);
+			categoryService.update(category, true);
 		} catch(Exception e) {
 			v.setView("category-edit");
 			v.add("itemId", categoryid);
@@ -110,6 +112,70 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 	
+	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.POST)
+	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
+		BlogView v = new BlogView("msg");
+		v.add("err", "succ");
+		v.add("msg", "链接更新成功");
+		v.add("succ", "恭喜您，您的分类排序已成功更新，选中分类已删除。");
+		v.add("redirect", "admin-category");
+
+		List<Long> ids = new ArrayList<Long>();
+		Long id;
+		try {
+			if (request.getParameterValues("id") != null
+					&& request.getParameterValues("id").length > 0) {
+				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
+					id = Long.valueOf(request.getParameterValues("id")[i]);
+					ids.add(id);
+				}
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		boolean orderUpdated = false;
+
+		List<Item> items = categoryService.getCategories();
+		byte order = 0;
+		Item item;
+
+		try {
+			for (int i = 0; i < items.size(); ++i) {
+				if (request.getParameter("order" + items.get(i).getItemId()) != null) {
+					order = Byte.valueOf(request.getParameter("order"
+							+ items.get(i).getItemId()));
+					item = items.get(i);
+					if (item.getItemOrder() != order) {
+						orderUpdated = true;
+						item.setItemOrder(order);
+						categoryService.update(item, false);
+					}
+				}
+			}
+			if (orderUpdated && ids.isEmpty()) {
+				categoryService.updateCategoryCache();
+			}
+		} catch (SQLException se) {
+			if (orderUpdated) {
+				v.add("err", "数据库更新失败");
+				v.add("msg", "链接排序失败");
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		if (!ids.isEmpty()) {
+			try {
+				linkService.remove(ids);
+			} catch (Exception e) {
+				v.add("err", "数据库更新失败");
+				v.add("msg", "链接删除失败");
+			}
+		}
+		return v;
+	}
+	
 	@Override
 	@RequestMapping("/admin-category")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
@@ -134,6 +200,8 @@ public final class AdminCategoryController extends BaseController {
 		Long id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
 		itemName = "".equals(itemName) ? "未命名" + id : itemName;
+		permalink = Function.trimAndStripTags(permalink);
+		permalink = "".equals(permalink) ? "" + id : permalink;
 		description = Function.trimAndStripTags(description);
 		
 		if(ori != null) {

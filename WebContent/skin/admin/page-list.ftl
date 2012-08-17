@@ -31,9 +31,9 @@
 						<td>${article.commentCount}</td>
 						<td><input class="tinyfield" type="text" name="order${article.articleId?c}" value="${article.hits}" /></td>
 						<td>
-							<a href="admin-page-edit-${article.articleId?c}.html"><img src="${staticServePath}${skinDir}assets/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId?c});"><img src="${staticServePath}${skinDir}assets/action_delete.png" alt="删除" /></a>
-							<a href="page/${article.permalink}/" target="_blank"><img src="${staticServePath}${skinDir}assets/folder.png" alt="查看" /></a>
+							<a href="admin-page-edit-${article.articleId?c}.html"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId?c});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="page/${article.permalink}/" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>
 					</#list>

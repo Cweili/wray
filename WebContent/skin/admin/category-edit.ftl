@@ -49,7 +49,6 @@
 							maxlength:200
 						},
 						permalink: {
-							required:true,
 							maxlength:150
 						},
 						description: {
