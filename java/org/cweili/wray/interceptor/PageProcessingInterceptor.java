@@ -70,7 +70,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// Skin Dir
 		String skinDir = isAdminPanel ? "admin" : blogConfig.get("skinDir");
 		mv.addObject("skinDir", Constant.SKIN_PATH + skinDir + "/");
-		mv.setViewName(skinDir + mv.getViewName() + Constant.SKIN_EXT);
+		mv.setViewName(skinDir + "/" + mv.getViewName() + Constant.SKIN_EXT);
 	}
 
 	@Override

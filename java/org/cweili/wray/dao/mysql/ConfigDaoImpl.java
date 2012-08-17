@@ -54,14 +54,14 @@ public class ConfigDaoImpl implements ConfigDao {
 	 */
 	@Override
 	public int saveOrUpdate(String key, String value) {
-		int rs = db.queryForInt("SELECT COUNT(*) FROM config WHERE config_key=?", new Object[]{ key }, new int[]{ Types.VARCHAR });
-		if(rs > 0) {
-			rs = db.update("UPDATE config SET config_value=? WHERE config_key=?", new Object[]{ value, key }, new int[]{ Types.VARCHAR, Types.VARCHAR });
-			log.info("Update config: " + key + " => " + value);
-		} else {
-			rs = db.update("INSERT INTO config (config_key, config_value) VALUES(?, ?)", new Object[]{ key, value }, new int[]{ Types.VARCHAR, Types.VARCHAR });
+//		int rs = db.queryForInt("SELECT COUNT(*) FROM config WHERE config_key=?", new Object[]{ key }, new int[]{ Types.VARCHAR });
+//		if(rs > 0) {
+//			rs = db.update("UPDATE config SET config_value=? WHERE config_key=?", new Object[]{ value, key }, new int[]{ Types.VARCHAR, Types.VARCHAR });
+//			log.info("Update config: " + key + " => " + value);
+//		} else {
+			int rs = db.update("REPLACE INTO config (config_key, config_value) VALUES(?, ?)", new Object[]{ key, value }, new int[]{ Types.VARCHAR, Types.VARCHAR });
 			log.info("Insert config: " + key + " => " + value);
-		}
+//		}
 		return rs;
 	}
 

@@ -101,7 +101,7 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		db.query("SELECT article_id, title, permalink, tag, create_time, stat, "
 				+ "hits, comment_count, comment_status, is_page FROM article "
 				+ "WHERE is_page=? AND stat=? ORDER BY " + order, new Object[] { type, status },
-				new int[] { Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER },
+				new int[] { Types.INTEGER, Types.INTEGER },
 				new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {

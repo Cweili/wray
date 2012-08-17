@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.CategoryService;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -12,6 +13,7 @@ import org.cweili.wray.service.CategoryService;
  * @version 2012-8-16 下午5:22:11
  *
  */
+@Service("categoryService")
 public class CategoryServiceImpl extends BaseService implements CategoryService {
 
 	/* (non-Javadoc)

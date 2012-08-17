@@ -12,7 +12,8 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd
 	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-lazy-init="true">
 	
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -56,12 +57,12 @@
 				<prop key="default_encoding">UTF-8</prop> 
 				<prop key="locale">zh_CN</prop> 
 			</props> 
-		</property> 
+		</property>
 	</bean>
 	
 	<bean name="characterEncodingInterceptor" class="org.cweili.wray.interceptor.CharacterEncodingInterceptor" />
-	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" lazy-init="true" scope="prototype" />
-	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" lazy-init="true" scope="prototype" />
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
+	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
 	
 	<!-- 注解请求映射  -->
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">		
