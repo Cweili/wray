@@ -22,7 +22,7 @@
 					</div>
 					<div class="input_field">
 						<label for="description">链接地址</label>
-						<input class="bigfield" name="description" type="text" value="${description?if_exists}" />
+						<textarea name="description">${description?if_exists}</textarea>
 					</div>
 					<div class="input_field">
 						<label for="itemOrder">链接排序</label>

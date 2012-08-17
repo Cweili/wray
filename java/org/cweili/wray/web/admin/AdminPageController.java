@@ -260,7 +260,7 @@ public final class AdminPageController extends BaseController {
 		Long id = Function.generateId();
 
 		title = Function.trimAndStripTags(title);
-		title = "".equals(title) ? "无标题" + id : title;
+		title = "".equals(title) ? "未命名" + id : title;
 		permalink = Function.stripTags(permalink).trim().toLowerCase();
 		permalink = "".equals(permalink) ? id.toString() : permalink;
 		byte stat = Article.STAT_PUBLISHED;

@@ -28,7 +28,7 @@
 				</div>
 					<div class="input_field">
 						<label for="description">分类简介</label>
-						<input class="bigfield" name="description" type="text" value="${description?if_exists}" />
+						<textarea name="description">${description?if_exists}</textarea>
 					</div>
 					<div class="input_field">
 						<label for="itemOrder">分类排序</label>
@@ -53,7 +53,6 @@
 							maxlength:150
 						},
 						description: {
-							required:true,
 							maxlength:512
 						},
 						itemOrder: {

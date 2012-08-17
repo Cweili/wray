@@ -27,8 +27,8 @@
 				<div class="navhead"><span>分类管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="#">新增分类</a></li>
-						<li><a href="#">分类管理</a></li>
+						<li<#if adminAction="category-add"> id="current_nav"</#if>><a href="admin-category-add.html">新增分类</a></li>
+						<li<#if adminAction="category"> id="current_nav"</#if>><a href="admin-category.html">分类管理</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>标签管理</span></div>

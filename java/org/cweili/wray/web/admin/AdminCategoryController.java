@@ -41,6 +41,7 @@ public final class AdminCategoryController extends BaseController {
 		Item category = categoryService.getCategoryById(id);
 		if(category != null) {
 			v.add("itemName", category.getItemName());
+			v.add("permalink", category.getPermalink());
 			v.add("description", category.getDescription());
 			v.add("itemOrder", category.getItemOrder());
 			v.add("err", "");
@@ -114,8 +115,8 @@ public final class AdminCategoryController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("category-list");
 		v.add("actionName", "分类");
-		List<Item> categorys = categoryService.getCategories();
-		v.add("categorys", categorys);
+		List<Item> items = categoryService.getCategories();
+		v.add("items", items);
 		return v;
 	}
 	
@@ -132,7 +133,7 @@ public final class AdminCategoryController extends BaseController {
 		
 		Long id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
-		itemName = "".equals(itemName) ? "无标题" + id : itemName;
+		itemName = "".equals(itemName) ? "未命名" + id : itemName;
 		description = Function.trimAndStripTags(description);
 		
 		if(ori != null) {

@@ -1,12 +1,16 @@
 package org.cweili.wray.web.admin;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -114,8 +118,102 @@ public final class AdminLinkController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("link-list");
 		v.add("actionName", "博客链接");
-		List<Item> links = linkService.getLinks();
-		v.add("links", links);
+		List<Item> items = linkService.getLinks();
+		v.add("items", items);
+		return v;
+	}
+	
+	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
+	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String articleid) {
+		BlogView v = new BlogView("page-edit");
+		v.add("actionName", "编辑页面");
+		v.add("articleId", articleid);
+		long id = 0;
+		try {
+			id = Long.valueOf(articleid);
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+		Article article = articleService.getArticleById(id);
+		article = getArticle(request, article);
+		v.add("title", article.getTitle());
+		v.add("permalink", article.getPermalink());
+		v.add("tag", article.getTag());
+		v.add("content", article.getContent());
+		v.add("commentStatus", article.getCommentStatus());
+		v.add("stat", article.getStat());
+		v.add("err", "succ");
+		try {
+			articleService.update(article);
+		} catch (Exception e) {
+			v.add("err", "数据库更新失败");
+		}
+		return v;
+	}
+
+	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)
+	public BlogView manage(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String status) {
+		BlogView v = new BlogView("msg");
+		v.add("err", "succ");
+		v.add("msg", "链接更新成功");
+		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已成功移入回收站。");
+		v.add("redirect", "admin-page-" + status);
+
+		List<Long> ids = new ArrayList<Long>();
+		Long id;
+		try {
+			if (request.getParameterValues("id") != null
+					&& request.getParameterValues("id").length > 0) {
+				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
+					id = Long.valueOf(request.getParameterValues("id")[i]);
+					ids.add(id);
+				}
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		boolean orderUpdated = false;
+
+		List<Item> items = linkService.getLinks();
+		byte order = 0;
+		Item item;
+
+		try {
+			for (int i = 0; i < items.size(); ++i) {
+				if (request.getParameter("order" + items.get(i).getItemId()) != null) {
+					order = Byte.valueOf(request.getParameter("order"
+							+ items.get(i).getItemId()));
+					item = items.get(i);
+					if (item.getItemOrder() != order) {
+						orderUpdated = true;
+						item.setItemOrder(order);
+						linkService.updateOrder(item);
+					}
+				}
+			}
+			if (orderUpdated) {
+				linkService.updateLinkCache();
+			}
+		} catch (SQLException se) {
+			if (orderUpdated) {
+				v.add("err", "数据库更新失败");
+				v.add("msg", "链接排序失败");
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		}
+
+		if (!ids.isEmpty()) {
+			try {
+				linkService.remove(ids);
+			} catch (Exception e) {
+				v.add("err", "数据库更新失败");
+				v.add("msg", "链接删除失败");
+			}
+		}
 		return v;
 	}
 	
@@ -131,7 +229,7 @@ public final class AdminLinkController extends BaseController {
 		
 		Long id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
-		itemName = "".equals(itemName) ? "无标题" + id : itemName;
+		itemName = "".equals(itemName) ? "未命名" + id : itemName;
 		description = Function.trimAndStripTags(description);
 		
 		if(ori != null) {

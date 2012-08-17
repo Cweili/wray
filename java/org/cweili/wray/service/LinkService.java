@@ -43,6 +43,13 @@ public interface LinkService {
 	 * @return
 	 * @throws SQLException
 	 */
+	public boolean updateOrder(Item link) throws SQLException;
+	
+	/**
+	 * @param link
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean remove(Item link) throws SQLException;
 	
 	/**
