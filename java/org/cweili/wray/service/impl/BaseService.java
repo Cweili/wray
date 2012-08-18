@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.dao.ArticleDao;
 import org.cweili.wray.dao.ConfigDao;
 import org.cweili.wray.dao.ItemDao;
+import org.cweili.wray.dao.RelationshipDao;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public abstract class BaseService {
 	
 	@Autowired
 	protected ItemDao itemDao;
+	
+	@Autowired
+	protected RelationshipDao relationshipDao;
 	
 	
 	/**

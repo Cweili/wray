@@ -26,6 +26,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public final class AdminCategoryController extends BaseController {
+	
+	@Override
+	@RequestMapping("/admin-category")
+	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+		BlogView v = new BlogView("category-list");
+		v.add("actionName", "分类");
+		List<Item> items = categoryService.getCategories();
+		v.add("items", items);
+		return v;
+	}
 
 	@Override
 	@RequestMapping(value="/admin-category-edit-{categoryid}", method = RequestMethod.GET)
@@ -121,17 +131,14 @@ public final class AdminCategoryController extends BaseController {
 		v.add("redirect", "admin-category");
 
 		List<Long> ids = new ArrayList<Long>();
-		Long id;
-		try {
-			if (request.getParameterValues("id") != null
-					&& request.getParameterValues("id").length > 0) {
-				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
-					id = Long.valueOf(request.getParameterValues("id")[i]);
-					ids.add(id);
+		if(request.getParameterValues("id") != null) {
+			for(String idStr : request.getParameterValues("id")) {
+				try {
+					ids.add(Long.valueOf(idStr));
+				} catch(Exception e) {
+					log.error(e.toString());
 				}
 			}
-		} catch (Exception e) {
-			log.error(e.toString());
 		}
 
 		boolean orderUpdated = false;
@@ -173,16 +180,6 @@ public final class AdminCategoryController extends BaseController {
 				v.add("msg", "链接删除失败");
 			}
 		}
-		return v;
-	}
-	
-	@Override
-	@RequestMapping("/admin-category")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		BlogView v = new BlogView("category-list");
-		v.add("actionName", "分类");
-		List<Item> items = categoryService.getCategories();
-		v.add("items", items);
 		return v;
 	}
 	

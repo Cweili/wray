@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.Item;
+import org.cweili.wray.service.TagService;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
@@ -66,6 +68,7 @@ public final class AdminArticleController extends BaseController {
 	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "新增文章");
+		v.add("categories", categoryService.getCategories());
 		v.add("commentStatus", Article.COMMENT_ON);
 		v.add("stat", Article.STAT_PUBLISHED);
 		v.add("err", "");
@@ -77,12 +80,19 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增文章");
 		Article article = getArticle(request, null);
+		for(String tagStr : article.getTag().split(",")) {
+			if(tagService.getIdByName(tagStr) == 0) {
+				tagService.save(new Item(0, tagStr, "", "", 1, 0, Item.TYPE_TAG, 0, Item.STAT_ON), updateCache)
+			}
+		}
+		List<Long> relatedIds = getRelatedIds(request);
 		v.add("redirect", "admin-article-edit-"+article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "文章保存成功");
 		v.add("succ", "恭喜您，您的文章已成功保存。");
 		try {
 			articleService.save(article);
+			categoryService.saveRelationshipWithArticleId(article.getArticleId(), relatedIds);
 		} catch(Exception e) {
 			v.setView("article-edit");
 			v.add("title", article.getTitle());
@@ -109,6 +119,18 @@ public final class AdminArticleController extends BaseController {
 			log.error(e.toString());
 		}
 		Article article = articleService.getArticleById(id);
+		
+		List<Long> relatedIds = categoryService.getRelatedIdsByArticleId(id);
+		List<Item> categories = categoryService.getCategories();
+		for(int i = 0; i < categories.size(); ++i) {
+			if(relatedIds.contains(categories.get(i).getItemId())) {
+				Item category = categories.get(i);
+				category.setStat(Item.STAT_SELECTED);
+				categories.set(i, category);
+			}
+		}
+		v.add("categories", categories);
+		
 		if(article != null) {
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
@@ -139,6 +161,16 @@ public final class AdminArticleController extends BaseController {
 		}
 		Article article = articleService.getArticleById(id);
 		article = getArticle(request, article);
+		List<Long> relatedIds = getRelatedIds(request);
+		List<Item> categories = categoryService.getCategories();
+		for(int i = 0; i < categories.size(); ++i) {
+			if(relatedIds.contains(categories.get(i).getItemId())) {
+				Item category = categories.get(i);
+				category.setStat(Item.STAT_SELECTED);
+				categories.set(i, category);
+			}
+		}
+		v.add("categories", categories);
 		v.add("title", article.getTitle());
 		v.add("permalink", article.getPermalink());
 		v.add("tag", article.getTag());
@@ -148,6 +180,7 @@ public final class AdminArticleController extends BaseController {
 		String err = "succ";
 		try {
 			articleService.update(article);
+			categoryService.saveRelationshipWithArticleId(article.getArticleId(), relatedIds);
 		} catch(Exception e) {
 			err = "数据库更新失败";
 		}
@@ -171,16 +204,14 @@ public final class AdminArticleController extends BaseController {
 		}
 		
 		List<Long> ids = new ArrayList<Long>();
-		Long id;
-		try {
-			if(request.getParameterValues("id") != null && request.getParameterValues("id").length > 0) {
-				for(int i = 0; i < request.getParameterValues("id").length; ++i) {
-					id = Long.valueOf(request.getParameterValues("id")[i]);
-					ids.add(id);
+		if(request.getParameterValues("id") != null) {
+			for(String idStr : request.getParameterValues("id")) {
+				try {
+					ids.add(Long.valueOf(idStr));
+				} catch(Exception e) {
+					log.error(e.toString());
 				}
 			}
-		} catch(Exception e) {
-			log.error(e.toString());
 		}
 		
 		try {
@@ -226,6 +257,27 @@ public final class AdminArticleController extends BaseController {
 			return ori;
 		}
 		return new Article(id, title, permalink, content, tag, new Date(), stat, 0, 0, commentStatus, Article.TYPE_ARTICLE);
+	}
+	
+	private List<Long> getRelatedIds(HttpServletRequest request) {
+		List<Long> relatedIds = new ArrayList<Long>();
+		if(request.getParameterValues("category") != null) {
+			for(String catStr : request.getParameterValues("category")) {
+				try {
+					relatedIds.add(Long.valueOf(catStr));
+				} catch(Exception e) {
+					log.error(e.toString());
+				}
+			}
+		}
+		if(request.getParameter("tag") != null) {
+			String tag = request.getParameter("tag");
+			tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
+			for(String tagStr : tag.split(",")) {
+				
+			}
+		}
+		return relatedIds;
 	}
 
 	@Override

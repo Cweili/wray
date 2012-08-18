@@ -7,6 +7,7 @@ import java.util.List;
 import org.cweili.wray.dao.RelationshipDao;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
+import org.springframework.stereotype.Repository;
 
 /**
  *
@@ -14,6 +15,7 @@ import org.cweili.wray.domain.Item;
  * @version 2012-8-16 下午10:56:49
  *
  */
+@Repository("relationshipDao")
 public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements RelationshipDao {
 
 	/* (non-Javadoc)
@@ -48,7 +50,7 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 	public List<Long> getIds(final Class<?> domain, long id) {
 		String select = domain.equals(Item.class) ? "item_id" : "article_id";
 		String where = domain.equals(Item.class) ? "article_id" : "item_id";
-		return db.queryForList("SELECT " + select + " FROM relationship WHERE " + where + "=? AND stat>0",
+		return db.queryForList("SELECT " + select + " FROM relationship WHERE " + where + "=?",
 				new Object[] { id }, Long.class);
 	}
 
@@ -61,7 +63,6 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 		String notIN = domain.equals(Article.class) ? "item_id" : "article_id";
 		StringBuilder sql = new StringBuilder("DELETE FROM relationship WHERE ")
 				.append(notIN).append(" NOT IN (");
-		List<Integer> types = new ArrayList<Integer>();
 		List<Object[]> batchArgs = new ArrayList<Object[]>();
 		for(int i = 0; i < relatedIds.size(); ++i) {
 			if(i != 0) {
@@ -69,7 +70,6 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 			} else {
 				sql.append("?");
 			}
-			types.add(Types.BIGINT);
 			if(domain.equals(Article.class)) {
 				batchArgs.add(new Long[]{ id, relatedIds.get(i) });
 			} else {
@@ -78,10 +78,9 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 			
 		}
 		sql.append(") AND ").append(where).append("=?");
-		types.add(Types.BIGINT);
 		List<Long> args = new ArrayList<Long>(relatedIds);
 		args.add(id);
-		db.update(sql.toString(), args.toArray(), types.toArray());
+		db.update(sql.toString(), args.toArray());
 		return db.batchUpdate("REPLACE INTO relationship (article_id, item_id) VALUES (?,?)",
 				batchArgs, new int[]{ Types.BIGINT, Types.BIGINT });
 	}

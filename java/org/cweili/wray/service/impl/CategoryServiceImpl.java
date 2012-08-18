@@ -3,6 +3,7 @@ package org.cweili.wray.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.CategoryService;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		if(categories == null) {
 			updateCategoryCache();
 		}
-		for(int i = 0; i < categories.size(); ++i) {
-			if(categories.get(i).getItemId() == id) {
-				return categories.get(i);
+		for(Item item : categories) {
+			if(item.getItemId() == id) {
+				return item;
 			}
 		}
 		return itemDao.getItemById(id);
@@ -40,9 +41,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		if(categories == null) {
 			updateCategoryCache();
 		}
-		for(int i = 0; i < categories.size(); ++i) {
-			if(categories.get(i).getPermalink().equals(permalink)) {
-				return categories.get(i);
+		for(Item item : categories) {
+			if(item.getPermalink().equals(permalink)) {
+				return item;
 			}
 		}
 		return itemDao.getItemByPermalink(permalink, Item.TYPE_CATEGORY);
@@ -57,6 +58,20 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 			updateCategoryCache();
 		}
 		return categories;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#getIdsByArticleId(long)
+	 */
+	public List<Long> getRelatedIdsByArticleId(long id) {
+		return relationshipDao.getIds(Item.class, id);
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.cweili.wray.service.CategoryService#saveRelationshipWithArticleId(long, java.util.List)
+	 */
+	public void saveRelationshipWithArticleId(long id, List<Long> relatedIds) {
+		relationshipDao.saveOrUpdate(Article.class, id, relatedIds);
 	}
 
 	/* (non-Javadoc)

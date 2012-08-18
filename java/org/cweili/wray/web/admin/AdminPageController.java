@@ -173,17 +173,14 @@ public final class AdminPageController extends BaseController {
 		}
 
 		List<Long> ids = new ArrayList<Long>();
-		Long id;
-		try {
-			if (request.getParameterValues("id") != null
-					&& request.getParameterValues("id").length > 0) {
-				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
-					id = Long.valueOf(request.getParameterValues("id")[i]);
-					ids.add(id);
+		if(request.getParameterValues("id") != null) {
+			for(String idStr : request.getParameterValues("id")) {
+				try {
+					ids.add(Long.valueOf(idStr));
+				} catch(Exception e) {
+					log.error(e.toString());
 				}
 			}
-		} catch (Exception e) {
-			log.error(e.toString());
 		}
 
 		int page = 1;

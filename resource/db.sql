@@ -1140,8 +1140,12 @@ CREATE TABLE item (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO item VALUES(1344733501021, 'Cweili Alpha', '', 'http://cweili.sinaapp.com', 0, 2, 2, 0, 1);
-INSERT INTO item VALUES(1344733501052, 'Cweili 微博', '1344733501052', 'http://weibo.com/cweili', 0, 9, 2, 0, 1);
+INSERT INTO item VALUES(1344733501052, 'Cweili 微博', '1344733501052', 'http://weibo.com/cweili', 0, 10, 2, 0, 1);
 INSERT INTO item VALUES(1344734305714, 'Wray 项目', '1344734305714', 'https://github.com/Cweili/wray', 0, 0, 2, 0, 1);
+INSERT INTO item VALUES(1345216752793, '日记', 'diary', '&lt;!--我是&amp;&amp;介绍&apos;&apos;了啦&quot;&quot;--&gt;', 0, 3, 0, 0, 1);
+INSERT INTO item VALUES(1345219944403, '生活', 'life', '生活就是生活嘛', 0, 2, 0, 0, 1);
+INSERT INTO item VALUES(1345220112266, '编程', 'coding', '', 0, 0, 0, 0, 1);
+INSERT INTO item VALUES(1345220124927, '测试', 'test', '', 0, 9, 0, 0, 1);
 
 DROP TABLE IF EXISTS relationship;
 CREATE TABLE relationship (
@@ -1149,6 +1153,9 @@ CREATE TABLE relationship (
   article_id bigint(20) NOT NULL,
   PRIMARY KEY (item_id,article_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO relationship VALUES(1345216752793, 1344333436828);
+INSERT INTO relationship VALUES(1345219944403, 1344333436828);
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (

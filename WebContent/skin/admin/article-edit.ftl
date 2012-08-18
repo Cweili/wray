@@ -40,6 +40,15 @@
 					<input class="bigfield" name="tag" type="text" value="${tag?if_exists}" />
 					<span class="field_desc">使用逗号或空格分隔</span>
 				</div>
+				<div class="input_field">
+					<label for="permalink">文章分类</label>
+					<span class="category">
+						<#list categories as category>
+							<input type="checkbox" name="category" value="${category.itemId?c}" <#if category.stat=2>checked="checked" </#if>/>
+							${category.itemName} &nbsp;
+						</#list>
+					</span>
+				</div>
 			</fieldset>
 			<fieldset><legend>文章正文</legend>
 				<div class="input_field">

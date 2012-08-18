@@ -31,6 +31,18 @@ public interface CategoryService {
 	public List<Item> getCategories();
 	
 	/**
+	 * @param id
+	 * @return
+	 */
+	public List<Long> getRelatedIdsByArticleId(long id);
+	
+	/**
+	 * @param id
+	 * @param relatedIds
+	 */
+	public void saveRelationshipWithArticleId(long id, List<Long> relatedIds);
+	
+	/**
 	 * @param category
 	 * @return
 	 * @throws SQLException

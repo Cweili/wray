@@ -3,7 +3,6 @@ package org.cweili.wray.web.admin;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -117,20 +116,16 @@ public final class AdminSetupController extends BaseController {
 		List<String> htmlList = Arrays.asList(htmlArray);
 		Map<String, String[]> map = request.getParameterMap();
 		Map<String, String> values = new HashMap<String, String>();
-		String key;
-		for (Iterator<String> it = map.keySet().iterator(); it.hasNext();) {
-			key = it.next();
-			if (nonHtmlList.contains(key)) {
-				values.put(key, Function.trimAndStripTags(map.get(key)[0]));
-			} else if (htmlList.contains(key)) {
-				values.put(key, map.get(key)[0].trim());
-
+		for (Map.Entry<String, String[]> entry : map.entrySet()) {
+			if (nonHtmlList.contains(entry.getKey())) {
+				values.put(entry.getKey(), Function.trimAndStripTags(entry.getValue()[0]));
+			} else if (htmlList.contains(entry.getKey())) {
+				values.put(entry.getKey(), entry.getValue()[0].trim());
 			}
 		}
 		byte failed = 0;
-		for (Iterator<String> it = values.keySet().iterator(); it.hasNext();) {
-			key = it.next();
-			if (!blogConfig.saveOrUpdate(key, values.get(key))) {
+		for (Map.Entry<String, String> entry : values.entrySet()) {
+			if (!blogConfig.saveOrUpdate(entry.getKey(), entry.getValue())) {
 				++failed;
 			}
 		}

@@ -71,9 +71,9 @@ $(document).ready(function() {
 		}
 	});
 	
-	if($("#main").height() < 510) {
+	if($("#main").height() < 570) {
 		$("#main").css({
-			height: "510px"
+			height: "570px"
 		});
 	}
 	

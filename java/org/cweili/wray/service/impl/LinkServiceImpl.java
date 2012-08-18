@@ -26,9 +26,9 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		if(links == null) {
 			updateLinkCache();
 		}
-		for(int i = 0; i < links.size(); ++i) {
-			if(links.get(i).getItemId() == id) {
-				return links.get(i);
+		for(Item item : links) {
+			if(item.getItemId() == id) {
+				return item;
 			}
 		}
 		return itemDao.getItemById(id);

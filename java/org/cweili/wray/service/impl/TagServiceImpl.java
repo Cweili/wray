@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.TagService;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -12,6 +13,7 @@ import org.cweili.wray.service.TagService;
  * @version 2012-8-16 下午5:23:30
  *
  */
+@Service("tagService")
 public class TagServiceImpl extends BaseService implements TagService {
 	
 	/* (non-Javadoc)
@@ -22,9 +24,9 @@ public class TagServiceImpl extends BaseService implements TagService {
 		if(tags == null) {
 			updateTagCache();
 		}
-		for(int i = 0; i < tags.size(); ++i) {
-			if(tags.get(i).getItemName().equals(name)) {
-				return tags.get(i).getItemId();
+		for(Item item : tags) {
+			if(item.getItemName().equals(name)) {
+				return item.getItemId();
 			}
 		}
 		return 0;
@@ -45,12 +47,14 @@ public class TagServiceImpl extends BaseService implements TagService {
 	 * @see org.cweili.wray.service.TagService#save(org.cweili.wray.domain.Item)
 	 */
 	@Override
-	public long save(Item tag) throws SQLException {
+	public long save(Item tag, boolean updateCache) throws SQLException {
 		long rs = itemDao.save(tag);
 		if(rs < 1) {
 			throw new SQLException("Tag save error");
 		} else {
-			updateTagCache();
+			if(updateCache) {
+				updateTagCache();
+			}
 		}
 		return rs;
 	}

@@ -7,10 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +26,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public final class AdminLinkController extends BaseController {
+	
+	@Override
+	@RequestMapping("/admin-link")
+	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+		BlogView v = new BlogView("link-list");
+		v.add("actionName", "博客链接");
+		List<Item> items = linkService.getLinks();
+		v.add("items", items);
+		return v;
+	}
 
 	@Override
 	@RequestMapping(value="/admin-link-edit-{linkid}", method = RequestMethod.GET)
@@ -113,16 +121,6 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 	
-	@Override
-	@RequestMapping("/admin-link")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		BlogView v = new BlogView("link-list");
-		v.add("actionName", "博客链接");
-		List<Item> items = linkService.getLinks();
-		v.add("items", items);
-		return v;
-	}
-	
 	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)
 	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
@@ -132,17 +130,14 @@ public final class AdminLinkController extends BaseController {
 		v.add("redirect", "admin-link");
 
 		List<Long> ids = new ArrayList<Long>();
-		Long id;
-		try {
-			if (request.getParameterValues("id") != null
-					&& request.getParameterValues("id").length > 0) {
-				for (int i = 0; i < request.getParameterValues("id").length; ++i) {
-					id = Long.valueOf(request.getParameterValues("id")[i]);
-					ids.add(id);
+		if(request.getParameterValues("id") != null) {
+			for(String idStr : request.getParameterValues("id")) {
+				try {
+					ids.add(Long.valueOf(idStr));
+				} catch(Exception e) {
+					log.error(e.toString());
 				}
 			}
-		} catch (Exception e) {
-			log.error(e.toString());
 		}
 
 		boolean orderUpdated = false;

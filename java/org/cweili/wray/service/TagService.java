@@ -29,7 +29,7 @@ public interface TagService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public long save(Item tag) throws SQLException;
+	public long save(Item tag, boolean updateCache) throws SQLException;
 	
 	/**
 	 * @param tag
