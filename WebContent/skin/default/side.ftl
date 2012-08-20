@@ -25,17 +25,16 @@
 		</div>
 		<div class="clr"></div>
 		<``/#if>
-		<``#if 0 != mostUsedTags?size>
+		<if 0 != mostUsedTags?size>
+		<div class="clr"></div>
 		<div class="widget-cat">
 			<h4><span>${popTagsLabel}</span></h4>
-			<ul id="blogtags">
-			<``#list mostUsedTags as tag>
-				<span class="tag">
-					<a href="/tags/$`{tag.tagTitle?url('UTF-8')}" title="$`{tag.tagTitle}">
-					$`{tag.tagTitle}($`{tag.tagPublishedRefCount})</a>
-				</span>
-			 <``/#list>
-			</ul>
+			<div id="tagcloud">
+			<#list mostUsedTags as tag>
+					<a href="/tag/${tag.itemName?url('UTF-8')}" title="${tag.itemName}">
+					${tag.itemName}(${tag.count})</a>
+			 </#list>
+			 </div>
 		</div>
 		<div class="clr"></div>
 		<``/#if>
@@ -69,7 +68,7 @@
 		</div>
 		<div class="clr"></div>
 		</#if>
-		<``#if 0 != links?size>
+		<#if 0 != links?size>
 		<div class="widget-cat">
 			<h4>${linkLabel}</h4>
 			<ul id="link">
@@ -80,7 +79,7 @@
 			</ul>
 		</div>
 		<div class="clr"></div>
-		<``/#if>
+		</#if>
 		<``#if 0 != archiveDates?size>
 		<div class="widget-cat">
 			<h4>${archiveLabel}</h4>

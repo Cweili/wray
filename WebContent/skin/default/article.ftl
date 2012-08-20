@@ -52,10 +52,10 @@
 								</#if-->
 								${adminNick} post on
 								<#list relatedCats as cat>
-									<a href="/category/${cat.permalink?url('UTF-8')}/">
+									<a href="/category/${cat.permalink}/">
 											${cat.itemName}</a><#if cat_has_next>,</#if>
 								</#list>
-								<a href="article/${article.permalink?url('UTF-8')}/">${article.createTime?string("HH:mm:ss")}</a>
+								<a href="article/${article.permalink}/">${article.createTime?string("HH:mm:ss")}</a>
 								${article.hits} ${viewLabel}
 							</div>
 							<div class="clr16"></div>
