@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:39:07
- *
+ * 
  */
 @Controller
 @Scope("prototype")

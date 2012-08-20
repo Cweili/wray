@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:37:04
- *
+ * 
  */
 @Controller
 @Scope("prototype")
 public final class AdminCategoryController extends BaseController {
-	
+
 	@Override
 	@RequestMapping("/admin-category")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
@@ -38,7 +38,7 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@Override
-	@RequestMapping(value="/admin-category-edit-{categoryid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.GET)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String categoryid) {
 		BlogView v = new BlogView("category-edit");
@@ -47,11 +47,11 @@ public final class AdminCategoryController extends BaseController {
 		long id = 0;
 		try {
 			id = Long.valueOf(categoryid);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		Item category = categoryService.getCategoryById(id);
-		if(category != null) {
+		if (category != null) {
 			v.add("itemName", category.getItemName());
 			v.add("permalink", category.getPermalink());
 			v.add("description", category.getDescription());
@@ -62,8 +62,8 @@ public final class AdminCategoryController extends BaseController {
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-category-edit-{categoryid}", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.POST)
 	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String categoryid) {
 		BlogView v = new BlogView("msg");
@@ -72,7 +72,7 @@ public final class AdminCategoryController extends BaseController {
 		long id = 0;
 		try {
 			id = Long.valueOf(categoryid);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		Item category = categoryService.getCategoryById(id);
@@ -82,7 +82,7 @@ public final class AdminCategoryController extends BaseController {
 		v.add("succ", "恭喜您，您的分类已成功保存。");
 		try {
 			categoryService.update(category, true);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			v.setView("category-edit");
 			v.add("itemId", categoryid);
 			v.add("itemName", category.getItemName());
@@ -92,16 +92,16 @@ public final class AdminCategoryController extends BaseController {
 		}
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-category-add", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin-category-add", method = RequestMethod.GET)
 	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "新增分类");
 		v.add("itemOrder", 0);
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-category-add", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-category-add", method = RequestMethod.POST)
 	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增分类");
@@ -112,7 +112,7 @@ public final class AdminCategoryController extends BaseController {
 		v.add("succ", "恭喜您，您的分类已成功保存。");
 		try {
 			categoryService.save(category);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			v.setView("category-edit");
 			v.add("itemName", category.getItemName());
 			v.add("description", category.getDescription());
@@ -121,7 +121,7 @@ public final class AdminCategoryController extends BaseController {
 		}
 		return v;
 	}
-	
+
 	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.POST)
 	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("msg");
@@ -131,11 +131,11 @@ public final class AdminCategoryController extends BaseController {
 		v.add("redirect", "admin-category");
 
 		List<Long> ids = new ArrayList<Long>();
-		if(request.getParameterValues("id") != null) {
-			for(String idStr : request.getParameterValues("id")) {
+		if (request.getParameterValues("id") != null) {
+			for (String idStr : request.getParameterValues("id")) {
 				try {
 					ids.add(Long.valueOf(idStr));
-				} catch(Exception e) {
+				} catch (Exception e) {
 					log.error(e.toString());
 				}
 			}
@@ -150,8 +150,7 @@ public final class AdminCategoryController extends BaseController {
 		try {
 			for (int i = 0; i < items.size(); ++i) {
 				if (request.getParameter("order" + items.get(i).getItemId()) != null) {
-					order = Byte.valueOf(request.getParameter("order"
-							+ items.get(i).getItemId()));
+					order = Byte.valueOf(request.getParameter("order" + items.get(i).getItemId()));
 					item = items.get(i);
 					if (item.getItemOrder() != order) {
 						orderUpdated = true;
@@ -182,33 +181,37 @@ public final class AdminCategoryController extends BaseController {
 		}
 		return v;
 	}
-	
+
 	private Item getCategory(HttpServletRequest request, Item ori) {
-		String itemName = request.getParameter("itemName") != null ? request.getParameter("itemName") : "";
-		String permalink = request.getParameter("permalink") != null ? request.getParameter("permalink") : "";
-		String description = request.getParameter("description") != null ? request.getParameter("description") : "";
+		String itemName = request.getParameter("itemName") != null ? request
+				.getParameter("itemName") : "";
+		String permalink = request.getParameter("permalink") != null ? request
+				.getParameter("permalink") : "";
+		String description = request.getParameter("description") != null ? request
+				.getParameter("description") : "";
 		byte itemOrder = 0;
 		try {
 			itemOrder = Byte.valueOf(request.getParameter("itemOrder"));
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		
+
 		Long id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
 		itemName = "".equals(itemName) ? "未命名" + id : itemName;
-		permalink = Function.trimAndStripTags(permalink);
+		permalink = Function.url(permalink);
 		permalink = "".equals(permalink) ? "" + id : permalink;
 		description = Function.trimAndStripTags(description);
-		
-		if(ori != null) {
+
+		if (ori != null) {
 			ori.setItemName(itemName);
 			ori.setPermalink(permalink);
 			ori.setDescription(description);
 			ori.setItemOrder(itemOrder);
 			return ori;
 		}
-		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY, 0, Item.STAT_ON);
+		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY, 0,
+				Item.STAT_ON);
 	}
 
 }

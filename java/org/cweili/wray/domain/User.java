@@ -8,7 +8,7 @@ import java.util.Date;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:12:51
- *
+ * 
  */
 public class User {
 
@@ -17,21 +17,21 @@ public class User {
 	private String passwd;
 	private String nickname;
 	private String permalink;
-	private String email; 
+	private String email;
 	private Date regtime;
 	private byte usergroup;
-	
+
 	public static final byte GROUP_ADMIN = 9;
 	public static final byte GROUP_EDITOR = 7;
 	public static final byte GROUP_AUTHOR = 5;
 	public static final byte GROUP_CONTRIBUTOR = 3;
 	public static final byte GROUP_READER = 1;
 	public static final byte GROUP_BLOCK = 0;
-	
+
 	public User() {
 		super();
 	}
-	
+
 	/**
 	 * @param userId
 	 * @param username
@@ -42,25 +42,19 @@ public class User {
 	 * @param regtime
 	 * @param usergroup
 	 */
-	public User(long userId,
-			String username,
-			String passwd,
-			String nickname,
-			String permalink,
-			String email, 
-			Date regtime,
-			byte usergroup) {
+	public User(long userId, String username, String passwd, String nickname, String permalink,
+			String email, Date regtime, byte usergroup) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.passwd = passwd;
 		this.nickname = nickname;
 		this.permalink = permalink;
-		this.email = email; 
+		this.email = email;
 		this.regtime = regtime;
 		this.usergroup = usergroup;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -87,7 +81,8 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", passwd=" + passwd
 				+ ", nickname=" + nickname + ", permalink=" + permalink + ", email=" + email
-				+ ", regtime=" + new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(regtime) + ", usergroup=" + usergroup + "]";
+				+ ", regtime=" + new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(regtime)
+				+ ", usergroup=" + usergroup + "]";
 	}
 
 	public long getUserId() {

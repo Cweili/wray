@@ -18,36 +18,37 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:14:17
- *
+ * 
  */
 public abstract class BaseInterceptor implements HandlerInterceptor {
-	
+
 	protected Log log = LogFactory.getLog(BaseInterceptor.class);
-	
+
 	@Autowired
 	protected ConfigService blogConfig;
-	
+
 	@Autowired
 	protected ArticleService articleService;
-	
+
 	@Autowired
 	protected CategoryService categoryService;
-	
+
 	@Autowired
 	protected TagService tagService;
-	
+
 	@Autowired
 	protected LinkService linkService;
-	
-	@Override
-	public abstract boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;
-	
-	@Override
-	public abstract void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv)
-			throws Exception;
 
 	@Override
-	public abstract void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception;
+	public abstract boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception;
+
+	@Override
+	public abstract void postHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler, ModelAndView mv) throws Exception;
+
+	@Override
+	public abstract void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+			Object handler, Exception ex) throws Exception;
 
 }

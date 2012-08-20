@@ -6,7 +6,7 @@ import java.util.Map;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:07:48
- *
+ * 
  */
 public interface ConfigDao {
 
@@ -16,7 +16,7 @@ public interface ConfigDao {
 	 * @return
 	 */
 	public int saveOrUpdate(String key, String value);
-	
+
 	/**
 	 * @return
 	 */

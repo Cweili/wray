@@ -10,7 +10,7 @@ import org.cweili.wray.domain.Item;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:16:29
- *
+ * 
  */
 public interface CategoryService {
 
@@ -19,7 +19,7 @@ public interface CategoryService {
 	 * @return
 	 */
 	public Item getCategoryById(long id);
-	
+
 	/**
 	 * @param permalink
 	 * @return
@@ -30,47 +30,53 @@ public interface CategoryService {
 	 * @return
 	 */
 	public List<Item> getCategories();
-	
+
 	/**
 	 * @param article
 	 * @return
 	 */
 	public List<Long> getRelatedIdsByArticle(Article article);
-	
+
+	/**
+	 * @param article
+	 * @return
+	 */
+	public List<Item> getCategoriesByArticle(Article article);
+
 	/**
 	 * @param article
 	 * @param relatedItems
 	 */
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems);
-	
+
 	/**
 	 * @param category
 	 * @return
 	 * @throws SQLException
 	 */
 	public long save(Item category) throws SQLException;
-	
+
 	/**
 	 * @param category
 	 * @return
 	 * @throws SQLException
 	 */
 	public boolean update(Item category, boolean updateCache) throws SQLException;
-	
+
 	/**
 	 * @param category
 	 * @return
 	 * @throws SQLException
 	 */
 	public boolean remove(Item category) throws SQLException;
-	
+
 	/**
 	 * @param ids
 	 * @return
 	 * @throws SQLException
 	 */
 	public boolean remove(List<Long> ids) throws SQLException;
-	
+
 	/**
 	 * 
 	 */

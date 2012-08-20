@@ -12,7 +12,6 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
-import org.cweili.wray.util.Paginator;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:39:25
- *
+ * 
  */
 @Controller
 @Scope("prototype")
@@ -52,17 +51,11 @@ public final class AdminPageController extends BaseController {
 			actionName = "页面回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles",
-				articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page, Constant.ADMIN_LIST_SIZE));
+		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page,
+				Constant.ADMIN_LIST_SIZE));
 
-		Paginator pagination = new Paginator(articleService.getCountByTypeStatus(Article.TYPE_PAGE,
-				stat), Constant.ADMIN_LIST_SIZE, page);
-		v.add("paginationOn", pagination.isPageBarOn());
-		v.add("paginationPageNums", pagination.getPageList());
-		v.add("paginationCurrentPageNum", page);
-		v.add("paginationPreviousPageNum", pagination.getPrevious());
-		v.add("paginationNextPageNum", pagination.getNext());
-		v.add("paginationPageCount", pagination.getLast());
+		addPaginator(v, articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), page,
+				Constant.ADMIN_LIST_SIZE);
 		return v;
 	}
 
@@ -173,11 +166,11 @@ public final class AdminPageController extends BaseController {
 		}
 
 		List<Long> ids = new ArrayList<Long>();
-		if(request.getParameterValues("id") != null) {
-			for(String idStr : request.getParameterValues("id")) {
+		if (request.getParameterValues("id") != null) {
+			for (String idStr : request.getParameterValues("id")) {
 				try {
 					ids.add(Long.valueOf(idStr));
-				} catch(Exception e) {
+				} catch (Exception e) {
 					log.error(e.toString());
 				}
 			}
@@ -258,7 +251,7 @@ public final class AdminPageController extends BaseController {
 
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;
-		permalink = Function.stripTags(permalink).trim().toLowerCase();
+		permalink = Function.url(permalink);
 		permalink = "".equals(permalink) ? id.toString() : permalink;
 		byte stat = Article.STAT_PUBLISHED;
 		if ((Article.STAT_DRAFT + "").equals(s)) {

@@ -41,6 +41,22 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see org.cweili.wray.dao.ArticleDao#getCountByRelationship(long, byte,
+	 * byte)
+	 */
+	@Override
+	public int getCountByRelationship(long id, byte type, byte status) {
+		int r = db.queryForInt("SELECT COUNT(*) FROM article a,relationship r "
+				+ "WHERE a.article_id=r.article_id AND r.item_id=? AND a.is_page=? AND a.stat=?",
+				new Object[] { id, type, status }, new int[] { Types.BIGINT, Types.INTEGER,
+						Types.INTEGER });
+		log.info("Count article: " + r);
+		return r;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.dao.ArticleDao#getArticles(byte, byte, int, int)
 	 */
 	@Override
@@ -101,8 +117,7 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 		db.query("SELECT article_id, title, permalink, tag, create_time, stat, "
 				+ "hits, comment_count, comment_status, is_page FROM article "
 				+ "WHERE is_page=? AND stat=? ORDER BY " + order, new Object[] { type, status },
-				new int[] { Types.INTEGER, Types.INTEGER },
-				new RowCallbackHandler() {
+				new int[] { Types.INTEGER, Types.INTEGER }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						Article article = new Article(rs.getLong("article_id"), rs

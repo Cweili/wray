@@ -5,7 +5,7 @@ package org.cweili.wray.domain;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:12:40
- *
+ * 
  */
 public class Item {
 
@@ -18,16 +18,16 @@ public class Item {
 	private byte itemType = Item.TYPE_CATEGORY;
 	private long parrentId = 0;
 	private byte stat = Item.STAT_ON;
-	
+
 	public static final byte TYPE_CATEGORY = 0;
 	public static final byte TYPE_TAG = 1;
 	public static final byte TYPE_LINK = 2;
 	public static final byte TYPE_MENU = 3;
-	
+
 	public static final byte STAT_OFF = 0;
 	public static final byte STAT_ON = 1;
 	public static final byte STAT_SELECTED = 2;
-	
+
 	public Item() {
 		super();
 	}
@@ -158,6 +158,4 @@ public class Item {
 		this.stat = stat;
 	}
 
-	
-	
 }

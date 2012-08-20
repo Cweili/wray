@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:39:44
- *
+ * 
  */
 @Controller
 @Scope("prototype")
 public final class LoginController extends BaseController {
 
 	@Override
-	@RequestMapping(value="/admin-login", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("login");
 		v.add("err", false);
 		return v;
 	}
-	
-	@RequestMapping(value="/admin-login", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/admin-login", method = RequestMethod.POST)
 	public BlogView doPost(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		BlogView v = new BlogView("login");
-		if(request.getParameter("username") != null && request.getParameter("password") != null
+		if (request.getParameter("username") != null && request.getParameter("password") != null
 				&& request.getParameter("username").equals(blogConfig.get("adminName"))
-						&& request.getParameter("password").equals(blogConfig.get("adminPwd"))) {
+				&& request.getParameter("password").equals(blogConfig.get("adminPwd"))) {
 			// TODO cookie or session
 			v.add("err", false);
 			response.sendRedirect("/admin-dashboard.html");
 		} else {
-			if(request.getParameter("username") != null) {
+			if (request.getParameter("username") != null) {
 				v.add("username", request.getParameter("username"));
 			}
 			v.add("err", true);
 		}
 		return v;
 	}
-	
+
 	@Override
 	@RequestMapping("/admin-logout-{security}")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,

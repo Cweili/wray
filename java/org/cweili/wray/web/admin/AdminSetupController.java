@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:39:36
- *
+ * 
  */
 @Controller
 @Scope("prototype")
@@ -35,8 +35,8 @@ public final class AdminSetupController extends BaseController {
 
 		BlogView v = new BlogView("setup-basic");
 		if (saveConfig(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
-				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader", "attachFooter",
-				"attachStat" })) {
+				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",
+				"attachFooter", "attachStat" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");

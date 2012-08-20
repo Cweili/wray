@@ -7,17 +7,17 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:23:55
- *
+ * 
  */
 public class BlogView extends ModelAndView {
-	
+
 	/**
 	 * 
 	 */
 	public BlogView() {
 		super();
 	}
-	
+
 	/**
 	 * @param viewName
 	 */
@@ -35,7 +35,7 @@ public class BlogView extends ModelAndView {
 		super.addObject(attributeName, attributeValue);
 		return this;
 	}
-	
+
 	/**
 	 * @param viewName
 	 */

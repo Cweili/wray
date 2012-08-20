@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:09:20
- *
+ * 
  */
 @Repository("configDao")
 public class ConfigDaoImpl implements ConfigDao {
@@ -33,8 +33,10 @@ public class ConfigDaoImpl implements ConfigDao {
 	 */
 	@Autowired
 	private JdbcTemplate db;
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.dao.ConfigDao#getAll()
 	 */
 	@Override
@@ -49,19 +51,27 @@ public class ConfigDaoImpl implements ConfigDao {
 		return map;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.dao.ConfigDao#saveOrUpdate(java.lang.String, java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.cweili.wray.dao.ConfigDao#saveOrUpdate(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public int saveOrUpdate(String key, String value) {
-//		int rs = db.queryForInt("SELECT COUNT(*) FROM config WHERE config_key=?", new Object[]{ key }, new int[]{ Types.VARCHAR });
-//		if(rs > 0) {
-//			rs = db.update("UPDATE config SET config_value=? WHERE config_key=?", new Object[]{ value, key }, new int[]{ Types.VARCHAR, Types.VARCHAR });
-//			log.info("Update config: " + key + " => " + value);
-//		} else {
-			int rs = db.update("REPLACE INTO config (config_key, config_value) VALUES(?, ?)", new Object[]{ key, value }, new int[]{ Types.VARCHAR, Types.VARCHAR });
-			log.info("Insert config: " + key + " => " + value);
-//		}
+		// int rs =
+		// db.queryForInt("SELECT COUNT(*) FROM config WHERE config_key=?", new
+		// Object[]{ key }, new int[]{ Types.VARCHAR });
+		// if(rs > 0) {
+		// rs = db.update("UPDATE config SET config_value=? WHERE config_key=?",
+		// new Object[]{ value, key }, new int[]{ Types.VARCHAR, Types.VARCHAR
+		// });
+		// log.info("Update config: " + key + " => " + value);
+		// } else {
+		int rs = db.update("REPLACE INTO config (config_key, config_value) VALUES(?, ?)",
+				new Object[] { key, value }, new int[] { Types.VARCHAR, Types.VARCHAR });
+		log.info("Insert config: " + key + " => " + value);
+		// }
 		return rs;
 	}
 

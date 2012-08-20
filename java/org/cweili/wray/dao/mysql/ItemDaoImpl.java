@@ -222,15 +222,15 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 		log.info("Query item for type: " + type);
 		return list;
 	}
-	
+
 	@Override
 	public List<Item> getItemsByRelationship(long id) {
 		final List<Item> list = new ArrayList<Item>();
 		db.query(
 				"SELECT i.item_id, item_name, permalink, description, count, item_order, item_type, "
 						+ "parrent_id, stat FROM item i, relationship r WHERE i.item_id=r.item_id AND "
-						+ "r.article_id=? AND stat>0", new Object[] { id }, new int[] { Types.BIGINT },
-				new RowCallbackHandler() {
+						+ "r.article_id=? AND stat>0", new Object[] { id },
+				new int[] { Types.BIGINT }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
 						Item item = new Item(rs.getLong(1), rs.getString(2), rs.getString(3), rs
@@ -255,8 +255,8 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 		db.query(
 				"SELECT i.item_id, item_name, permalink, description, count, item_order, item_type, "
 						+ "parrent_id, stat FROM item i, relationship r WHERE i.item_id=r.item_id AND "
-						+ "r.article_id=? AND item_type=? AND stat>0 ORDER BY " + order, new Object[] {
-						id, type }, new int[] { Types.BIGINT, Types.INTEGER },
+						+ "r.article_id=? AND item_type=? AND stat>0 ORDER BY " + order,
+				new Object[] { id, type }, new int[] { Types.BIGINT, Types.INTEGER },
 				new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {

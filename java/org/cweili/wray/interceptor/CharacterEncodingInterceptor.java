@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:14:28
- *
+ * 
  */
 public class CharacterEncodingInterceptor extends BaseInterceptor {
 

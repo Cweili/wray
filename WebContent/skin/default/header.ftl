@@ -13,6 +13,13 @@
 				<div id="nav">
 					<ul id="header-navi">
 						<li><a href="${staticServePath}">${homeLabel}</a></li>
+						<#list categories as category>
+						<li>
+							<a href="category/${category.permalink}/">
+								${category.itemName}
+							</a>
+						</li>
+						</#list>
 						<#list pageNavigations as page>
 						<li>
 							<a href="page/${page.permalink}/">

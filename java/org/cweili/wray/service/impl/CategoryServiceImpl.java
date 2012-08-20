@@ -13,76 +13,111 @@ import org.springframework.stereotype.Service;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:22:11
- *
+ * 
  */
 @Service("categoryService")
 public class CategoryServiceImpl extends BaseService implements CategoryService {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.service.CategoryService#getCategoryById(long)
 	 */
 	@Override
 	public Item getCategoryById(long id) {
-		if(categories == null) {
+		if (categories == null) {
 			updateCategoryCache();
 		}
-		for(Item item : categories) {
-			if(item.getItemId() == id) {
+		for (Item item : categories) {
+			if (item.getItemId() == id) {
 				return item;
 			}
 		}
-		return itemDao.getItemById(id);
+		return null;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#getCategoryByPermalink(java.lang.String)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#getCategoryByPermalink(java.lang
+	 * .String)
 	 */
 	@Override
 	public Item getCategoryByPermalink(String permalink) {
-		if(categories == null) {
+		if (categories == null) {
 			updateCategoryCache();
 		}
-		for(Item item : categories) {
-			if(item.getPermalink().equals(permalink)) {
+		for (Item item : categories) {
+			if (item.getPermalink().equals(permalink)) {
 				return item;
 			}
 		}
-		return itemDao.getItemByPermalink(permalink, Item.TYPE_CATEGORY);
+		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.service.CategoryService#getCategories()
 	 */
 	@Override
 	public List<Item> getCategories() {
-		if(categories == null) {
+		if (categories == null) {
 			updateCategoryCache();
 		}
 		return categories;
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#getRelatedIdsByArticle(org.cweili.wray.domain.Article)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#getRelatedIdsByArticle(org.cweili
+	 * .wray.domain.Article)
 	 */
 	public List<Long> getRelatedIdsByArticle(Article article) {
 		return relationshipDao.getRelatedIds(article);
 	}
-	
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#saveRelationshipWithArticle(org.cweili.wray.domain.Article, java.util.List)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#getCategoriesByArticle(org.cweili
+	 * .wray.domain.Article)
+	 */
+	public List<Item> getCategoriesByArticle(Article article) {
+		List<Item> cats = new ArrayList<Item>();
+		Item cat;
+		for (Long id : relationshipDao.getRelatedIds(article)) {
+			cat = getCategoryById(id);
+			if (null != cat) {
+				cats.add(cat);
+			}
+		}
+		return cats;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#saveRelationshipWithArticle(org
+	 * .cweili.wray.domain.Article, java.util.List)
 	 */
 	@Override
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems) {
 		List<Item> old = itemDao.getItemsByRelationship(article.getArticleId());
 		List<Long> relatedIds = new ArrayList<Long>();
-		for(Item item : old) {
-			if(!relatedItems.contains(item)) {
+		for (Item item : old) {
+			if (!relatedItems.contains(item)) {
 				item.setCount(item.getCount() - 1);
 				itemDao.update(item);
 			}
 		}
-		for(Item item : relatedItems) {
-			if(!old.contains(item)) {
+		for (Item item : relatedItems) {
+			if (!old.contains(item)) {
 				item.setCount(item.getCount() + 1);
 				itemDao.update(item);
 			}
@@ -93,13 +128,16 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#save(org.cweili.wray.domain.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#save(org.cweili.wray.domain.Item)
 	 */
 	@Override
 	public long save(Item category) throws SQLException {
 		long rs = itemDao.save(category);
-		if(rs < 1) {
+		if (rs < 1) {
 			throw new SQLException("Category save error");
 		} else {
 			updateCategoryCache();
@@ -107,29 +145,37 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#update(org.cweili.wray.domain.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#update(org.cweili.wray.domain
+	 * .Item)
 	 */
 	@Override
 	public boolean update(Item category, boolean updateCache) throws SQLException {
 		int rs = itemDao.update(category);
-		if(rs < 1) {
+		if (rs < 1) {
 			throw new SQLException("Category update error");
 		} else {
-			if(updateCache) {
+			if (updateCache) {
 				updateCategoryCache();
 			}
 		}
 		return rs > 0;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#remove(org.cweili.wray.domain.Item)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.cweili.wray.service.CategoryService#remove(org.cweili.wray.domain
+	 * .Item)
 	 */
 	@Override
 	public boolean remove(Item category) throws SQLException {
 		int rs = itemDao.remove(category);
-		if(rs < 1) {
+		if (rs < 1) {
 			throw new SQLException("Category remove error");
 		} else {
 			updateCategoryCache();
@@ -137,13 +183,15 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs > 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.service.CategoryService#remove(java.util.List)
 	 */
 	@Override
 	public boolean remove(List<Long> ids) throws SQLException {
 		int rs = itemDao.remove(ids);
-		if(rs < 1) {
+		if (rs < 1) {
 			throw new SQLException("Category remove error");
 		} else {
 			updateCategoryCache();
@@ -151,21 +199,24 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		return rs > 0;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.cweili.wray.service.CategoryService#updateCategoryCache()
 	 */
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.getItems(Item.TYPE_CATEGORY, "item_order");
-		
-//		if(!categories.isEmpty()) {
-//			Collections.sort(categories, new Comparator<Item>() {
-//	
-//				public int compare(Item i1, Item i2) {
-//					return new Integer(i1.getItemOrder()).compareTo(new Integer(i2.getItemOrder()));
-//				}
-//			});
-//		}
+
+		// if(!categories.isEmpty()) {
+		// Collections.sort(categories, new Comparator<Item>() {
+		//
+		// public int compare(Item i1, Item i2) {
+		// return new Integer(i1.getItemOrder()).compareTo(new
+		// Integer(i2.getItemOrder()));
+		// }
+		// });
+		// }
 	}
 
 }

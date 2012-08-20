@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:36:39
- *
+ * 
  */
 @Controller
 @Scope("prototype")
@@ -29,7 +29,7 @@ public final class PageController extends BaseController {
 		v.add("article", page);
 		return v;
 	}
-	
+
 	@Override
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		return null;

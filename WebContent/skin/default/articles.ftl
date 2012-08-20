@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<@head title="${blogTitle}">
-		<meta name="keywords" content="${metaKeywords}"/>
-		<meta name="description" content="<#list articles as article>${article.title?if_exists}<#if article_has_next>,</#if></#list>"/>
+		<@head title="${item.itemName} - ${blogTitle}">
+		<meta name="keywords" content="${metaKeywords},${item.description?if_exists}"/>
+		<meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
 		</@head>
 	</head>
 	<body>

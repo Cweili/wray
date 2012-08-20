@@ -27,7 +27,7 @@
 					<span class="field_desc">/</span>
 				</div>
 					<div class="input_field">
-						<label for="description">分类简介</label>
+						<label for="description">关键词</label>
 						<textarea name="description">${description?if_exists}</textarea>
 					</div>
 					<div class="input_field">

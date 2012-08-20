@@ -8,17 +8,25 @@ import org.cweili.wray.domain.Article;
  * 
  * @author cweili
  * @version 2012-8-16 下午4:55:00
- *
+ * 
  */
-public interface ArticleDao extends BaseDao<Article>{
-	
+public interface ArticleDao extends BaseDao<Article> {
+
 	/**
 	 * @param type
 	 * @param status
 	 * @return
 	 */
 	public int getCountByTypeStatus(byte type, byte status);
-	
+
+	/**
+	 * @param id
+	 * @param type
+	 * @param status
+	 * @return
+	 */
+	public int getCountByRelationship(long id, byte type, byte status);
+
 	/**
 	 * @param type
 	 * @param status
@@ -27,7 +35,7 @@ public interface ArticleDao extends BaseDao<Article>{
 	 * @return
 	 */
 	public List<Article> getArticles(byte type, byte status, int start, int limit);
-	
+
 	/**
 	 * @param type
 	 * @param status
@@ -37,7 +45,7 @@ public interface ArticleDao extends BaseDao<Article>{
 	 * @return
 	 */
 	public List<Article> getArticles(byte type, byte status, int start, int limit, String order);
-	
+
 	/**
 	 * @param type
 	 * @param status
@@ -45,7 +53,7 @@ public interface ArticleDao extends BaseDao<Article>{
 	 * @return
 	 */
 	public List<Article> getMetas(byte type, byte status, String order);
-	
+
 	/**
 	 * @param type
 	 * @param status
@@ -55,7 +63,7 @@ public interface ArticleDao extends BaseDao<Article>{
 	 * @return
 	 */
 	public List<Article> getMetas(byte type, byte status, int start, int limit, String order);
-	
+
 	/**
 	 * @param id
 	 * @param start
@@ -63,27 +71,28 @@ public interface ArticleDao extends BaseDao<Article>{
 	 * @param order
 	 * @return
 	 */
-	public List<Article> getMetasByRelationship(long id, byte type, byte status, int start, int limit, String order);
-	
+	public List<Article> getMetasByRelationship(long id, byte type, byte status, int start,
+			int limit, String order);
+
 	/**
 	 * @param id
 	 * @return
 	 */
 	public Article getArticleById(long id);
-	
+
 	/**
 	 * @param permalink
 	 * @return
 	 */
 	public Article getArticleByPermalink(String permalink);
-	
+
 	/**
 	 * @param ids
 	 * @param type
 	 * @return
 	 */
 	public int remove(List<Long> ids, byte type);
-	
+
 	/**
 	 * @param article
 	 * @param col

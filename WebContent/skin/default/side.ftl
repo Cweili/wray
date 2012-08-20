@@ -46,7 +46,7 @@
 			<#list mostCommentArticles as article>
 				<li class="shortline"><sup>[${article.commentCount}]</sup><a
                     title="${article.title}"
-                    href="article/${article.permalink}/">${article.title}
+                    href="article/${article.permalink?url('UTF-8')}/">${article.title}
 				</a></li>
 			</#list>
 			</ul>
@@ -60,7 +60,7 @@
 			<#list mostViewCountArticles as article>
 				<li class="shortline">
 					<sup>[${article.hits}]</sup>
-					<a title="${article.title}" href="article/${article.permalink}/">
+					<a title="${article.title}" href="article/${article.permalink?url('UTF-8')}/">
 						${article.title}
 					</a>
 				</li>

@@ -39,13 +39,13 @@
 					<span class="field_desc">用于页脚版权链接</span>
 				</div>
 				<div class="input_field">
-					<label for="metaKeywords">关键字</label>
-					<input class="bigfield" name="metaKeywords" type="text" value="${metaKeywords?if_exists}" />
+					<label for="metaKeywords">关键词</label>
+					<textarea name="metaKeywords">${metaKeywords?if_exists}</<textarea>
 					<span class="field_desc">提供给搜索引擎索引用, 逗号分隔</span>
 				</div>
 				<div class="input_field">
 					<label for="metaDescription">简介</label>
-					<input class="bigfield" name="metaDescription" type="text" value="${metaDescription?if_exists}" />
+					<textarea name="metaDescription">${metaDescription?if_exists}</textarea>
 					<span class="field_desc">通常显示在搜索引擎结果页面上</span>
 				</div>
 			</fieldset>

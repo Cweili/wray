@@ -8,7 +8,7 @@ import java.util.Date;
  * 
  * @author cweili
  * @version 2012-8-16 下午5:10:14
- *
+ * 
  */
 public class Article {
 
@@ -23,22 +23,22 @@ public class Article {
 	private int commentCount = 0;
 	private byte commentStatus = Article.COMMENT_ON;
 	private byte isPage = Article.TYPE_ARTICLE;
-	
+
 	public static final byte STAT_PUBLISHED = 4;
 	public static final byte STAT_DRAFT = 2;
 	public static final byte STAT_RECYCLE = 1;
 	public static final byte STAT_REMOVED = 0;
-	
+
 	public static final byte COMMENT_ON = 1;
 	public static final byte COMMENT_OFF = 0;
-	
+
 	public static final byte TYPE_ARTICLE = 0;
 	public static final byte TYPE_PAGE = 1;
-	
-	public Article(){
+
+	public Article() {
 		super();
 	}
-	
+
 	/**
 	 * @param articleId
 	 * @param title
@@ -52,17 +52,8 @@ public class Article {
 	 * @param commentStatus
 	 * @param isPage
 	 */
-	public Article(long articleId,
-			String title,
-			String permalink,
-			String content,
-			String tag,
-			Date createTime,
-			byte stat,
-			int hits,
-			int commentCount,
-			byte commentStatus,
-			byte isPage) {
+	public Article(long articleId, String title, String permalink, String content, String tag,
+			Date createTime, byte stat, int hits, int commentCount, byte commentStatus, byte isPage) {
 		super();
 		this.articleId = articleId;
 		this.title = title;
@@ -75,9 +66,9 @@ public class Article {
 		this.commentCount = commentCount;
 		this.commentStatus = commentStatus;
 		this.isPage = isPage;
-		
+
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -99,11 +90,12 @@ public class Article {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Article [articleId=" + articleId + ", title=" + title + ", permalink=" + permalink
-				+ ", tag=" + tag + ", createTime=" + new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(createTime) + ", stat=" + stat
+				+ ", tag=" + tag + ", createTime="
+				+ new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(createTime) + ", stat=" + stat
 				+ ", isPage=" + isPage + "]";
 	}
 
@@ -194,6 +186,5 @@ public class Article {
 	public void setIsPage(byte isPage) {
 		this.isPage = isPage;
 	}
-
 
 }
