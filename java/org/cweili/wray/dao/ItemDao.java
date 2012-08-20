@@ -43,6 +43,12 @@ public interface ItemDao extends BaseDao<Item> {
 	
 	/**
 	 * @param id
+	 * @return
+	 */
+	public List<Item> getItemsByRelationship(long id);
+	
+	/**
+	 * @param id
 	 * @param type
 	 * @param order
 	 * @return

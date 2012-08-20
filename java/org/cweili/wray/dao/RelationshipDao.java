@@ -10,13 +10,17 @@ import java.util.List;
  */
 public interface RelationshipDao extends BaseDao<long[]> {
 	
-	public int[] saveOrUpdate(Class<?> domain, long id, List<Long> relatedIds);
-	
 	/**
-	 * @param domain
-	 * @param id
+	 * @param object
+	 * @param relatedIds
 	 * @return
 	 */
-	public List<Long> getIds(Class<?> domain, long id);
+	public int[] saveOrUpdate(Object object, List<Long> relatedIds);
+	
+	/**
+	 * @param object
+	 * @return
+	 */
+	public List<Long> getRelatedIds(Object object);
 	
 }

@@ -17,19 +17,19 @@ import org.springframework.stereotype.Service;
 public class TagServiceImpl extends BaseService implements TagService {
 	
 	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.TagService#getIdByName(java.lang.String)
+	 * @see org.cweili.wray.service.TagService#getTagByName(java.lang.String)
 	 */
 	@Override
-	public long getIdByName(String name) {
+	public Item getTagByName(String name) {
 		if(tags == null) {
 			updateTagCache();
 		}
 		for(Item item : tags) {
 			if(item.getItemName().equals(name)) {
-				return item.getItemId();
+				return item;
 			}
 		}
-		return 0;
+		return null;
 	}
 
 	/* (non-Javadoc)

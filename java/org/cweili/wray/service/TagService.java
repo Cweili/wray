@@ -17,7 +17,7 @@ public interface TagService {
 	 * @param name
 	 * @return
 	 */
-	public long getIdByName(String name);
+	public Item getTagByName(String name);
 
 	/**
 	 * @return

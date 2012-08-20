@@ -3,6 +3,7 @@ package org.cweili.wray.service;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 
 /**
@@ -31,16 +32,16 @@ public interface CategoryService {
 	public List<Item> getCategories();
 	
 	/**
-	 * @param id
+	 * @param article
 	 * @return
 	 */
-	public List<Long> getRelatedIdsByArticleId(long id);
+	public List<Long> getRelatedIdsByArticle(Article article);
 	
 	/**
-	 * @param id
-	 * @param relatedIds
+	 * @param article
+	 * @param relatedItems
 	 */
-	public void saveRelationshipWithArticleId(long id, List<Long> relatedIds);
+	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems);
 	
 	/**
 	 * @param category

@@ -1,6 +1,7 @@
 package org.cweili.wray.service.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
@@ -61,17 +62,35 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#getIdsByArticleId(long)
+	 * @see org.cweili.wray.service.CategoryService#getRelatedIdsByArticle(org.cweili.wray.domain.Article)
 	 */
-	public List<Long> getRelatedIdsByArticleId(long id) {
-		return relationshipDao.getIds(Item.class, id);
+	public List<Long> getRelatedIdsByArticle(Article article) {
+		return relationshipDao.getRelatedIds(article);
 	}
 	
 	/* (non-Javadoc)
-	 * @see org.cweili.wray.service.CategoryService#saveRelationshipWithArticleId(long, java.util.List)
+	 * @see org.cweili.wray.service.CategoryService#saveRelationshipWithArticle(org.cweili.wray.domain.Article, java.util.List)
 	 */
-	public void saveRelationshipWithArticleId(long id, List<Long> relatedIds) {
-		relationshipDao.saveOrUpdate(Article.class, id, relatedIds);
+	@Override
+	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems) {
+		List<Item> old = itemDao.getItemsByRelationship(article.getArticleId());
+		List<Long> relatedIds = new ArrayList<Long>();
+		for(Item item : old) {
+			if(!relatedItems.contains(item)) {
+				item.setCount(item.getCount() - 1);
+				itemDao.update(item);
+			}
+		}
+		for(Item item : relatedItems) {
+			if(!old.contains(item)) {
+				item.setCount(item.getCount() + 1);
+				itemDao.update(item);
+			}
+			relatedIds.add(item.getItemId());
+		}
+		relationshipDao.saveOrUpdate(article, relatedIds);
+		updateCategoryCache();
+		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
 	}
 
 	/* (non-Javadoc)

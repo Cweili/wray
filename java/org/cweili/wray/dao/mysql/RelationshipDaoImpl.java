@@ -44,23 +44,38 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 	}
 
 	/* (non-Javadoc)
-	 * @see org.cweili.wray.dao.RelationshipDao#getIds(java.lang.Class, long)
+	 * @see org.cweili.wray.dao.RelationshipDao#getRelatedIds(java.lang.Object)
 	 */
 	@Override
-	public List<Long> getIds(final Class<?> domain, long id) {
-		String select = domain.equals(Item.class) ? "item_id" : "article_id";
-		String where = domain.equals(Item.class) ? "article_id" : "item_id";
+	public List<Long> getRelatedIds(Object o) {
+		long id;
+		String select, where;
+		if(o instanceof Article) {
+			id = ((Article)o).getArticleId();
+			select = "item_id";
+			where = "article_id";
+		} else if(o instanceof Item) {
+			id = ((Item)o).getItemId();
+			select = "article_id";
+			where = "item_id";
+		} else return null;
 		return db.queryForList("SELECT " + select + " FROM relationship WHERE " + where + "=?",
 				new Object[] { id }, Long.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.cweili.wray.dao.RelationshipDao#saveOrUpdate(java.lang.Class, long, java.util.List)
-	 */
 	@Override
-	public int[] saveOrUpdate(Class<?> domain, long id, List<Long> relatedIds) {
-		String where = domain.equals(Article.class) ? "article_id" : "item_id";
-		String notIN = domain.equals(Article.class) ? "item_id" : "article_id";
+	public int[] saveOrUpdate(Object o, List<Long> relatedIds) {
+		long id;
+		String notIN, where;
+		if(o instanceof Article) {
+			id = ((Article)o).getArticleId();
+			notIN = "item_id";
+			where = "article_id";
+		} else if(o instanceof Item) {
+			id = ((Item)o).getItemId();
+			notIN = "article_id";
+			where = "item_id";
+		} else return null;
 		StringBuilder sql = new StringBuilder("DELETE FROM relationship WHERE ")
 				.append(notIN).append(" NOT IN (");
 		List<Object[]> batchArgs = new ArrayList<Object[]>();
@@ -70,7 +85,7 @@ public class RelationshipDaoImpl extends BaseDaoSupport<long[]> implements Relat
 			} else {
 				sql.append("?");
 			}
-			if(domain.equals(Article.class)) {
+			if(o instanceof Article) {
 				batchArgs.add(new Long[]{ id, relatedIds.get(i) });
 			} else {
 				batchArgs.add(new Long[]{ relatedIds.get(i), id });
