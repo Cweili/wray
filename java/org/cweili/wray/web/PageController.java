@@ -1,5 +1,8 @@
 package org.cweili.wray.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +28,12 @@ public final class PageController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
 		BlogView v = new BlogView("page");
+		try {
+			permalink = URLDecoder.decode(permalink, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Article page = articleService.getArticleByPermalink(permalink);
 		v.add("article", page);
 		return v;

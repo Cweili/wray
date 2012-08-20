@@ -1,5 +1,8 @@
 package org.cweili.wray.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,6 +29,12 @@ public final class CategoryController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
 		BlogView v = new BlogView("articles");
+		try {
+			permalink = URLDecoder.decode(permalink, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Item item = categoryService.getCategoryByPermalink(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
@@ -44,6 +53,7 @@ public final class CategoryController extends BaseController {
 		int p = 1;
 		try {
 			p = Integer.valueOf(page);
+			permalink = URLDecoder.decode(permalink, "UTF-8");
 		} catch (Exception e) {
 			log.error(e.toString());
 		}

@@ -770,12 +770,11 @@ div.copyr {
 	position:absolute;
 	top:0px;
 	left:0px;
-	font-family: Microsoft YaHei;
 	color:#000; 
 	text-decoration:none;
 	padding: 3px 6px;
 }
 #tagcloud a:hover {
-	border: 1px solid #eee;
+	border: 1px solid #222;
 	background: #fff;
 }

@@ -30,7 +30,9 @@ public class Function {
 		List<String> list = new ArrayList<String>();
 		for (File f : files) {
 			if (f.isDirectory()) {
-				list.add(f.getPath().substring(f.getPath().lastIndexOf('/') + 1));
+				int beginIndex = f.getPath().lastIndexOf('/');
+				beginIndex = beginIndex > -1 ? beginIndex : f.getPath().lastIndexOf('\\');
+				list.add(f.getPath().substring(beginIndex + 1));
 			}
 		}
 		return list;

@@ -1,5 +1,7 @@
 package org.cweili.wray.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,6 +32,12 @@ public final class ArticleController extends BaseController {
 			@PathVariable String permalink) {
 
 		BlogView v = new BlogView("article");
+		try {
+			permalink = URLDecoder.decode(permalink, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Article article = articleService.getArticleByPermalink(permalink);
 		List<Item> relatedCats = categoryService.getCategoriesByArticle(article);
 		v.add("article", article);

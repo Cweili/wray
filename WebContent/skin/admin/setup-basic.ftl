@@ -40,7 +40,7 @@
 				</div>
 				<div class="input_field">
 					<label for="metaKeywords">关键词</label>
-					<textarea name="metaKeywords">${metaKeywords?if_exists}</<textarea>
+					<textarea name="metaKeywords">${metaKeywords?if_exists}</textarea>
 					<span class="field_desc">提供给搜索引擎索引用, 逗号分隔</span>
 				</div>
 				<div class="input_field">

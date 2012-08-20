@@ -8,7 +8,7 @@ var lasta = 1;
 var lastb = 1;
 var distr = true;
 var tspeed=10;
-var size=8;
+var size=40;
 
 var mouseX=0;
 var mouseY=0;
@@ -55,8 +55,8 @@ window.onload=function ()
 	{
 		var oEvent=window.event || ev;
 		
-		mouseX=oEvent.clientX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
-		mouseY=oEvent.clientY-(oDiv.offsetTop+oDiv.offsetHeight/2);
+		mouseX=oEvent.pageX-(oDiv.offsetLeft+oDiv.offsetWidth/2);
+		mouseY=oEvent.pageY-(oDiv.offsetTop+oDiv.offsetHeight/2);
 		
 		mouseX/=5;
 		mouseY/=5;

@@ -450,7 +450,7 @@ a.close {
 	border:1px solid #555;
 }
 
-li#current_nav a {
+li.current_nav a {
 	background:#333;
 }
 

@@ -49,6 +49,11 @@
 					<input class="smallfield" name="topCommentArticlesSize" type="text" value="${topCommentArticlesSize?if_exists}" />
 					<span class="field_desc">输入0则不显示侧边栏热评文章</span>
 				</div>
+				<div class="input_field">
+					<label for="topCommentArticlesSize">热热门标签数</label>
+					<input class="smallfield" name="mostUsedTagsSize" type="text" value="${mostUsedTagsSize?if_exists}" />
+					<span class="field_desc">输入0则不显示侧边栏热门标签</span>
+				</div>
 			</fieldset>
 			<fieldset><legend>分页条文本</legend>
 				<div class="input_field">
@@ -162,6 +167,11 @@
 						required:true,
 						digits:true,
 						range:[0,100]
+					},
+					mostUsedTagsSize: {
+						required:true,
+						digits:true,
+						range:[0,200]
 					}
 				}
 			});

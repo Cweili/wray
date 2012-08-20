@@ -59,7 +59,18 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 					.valueOf(blogConfig.get("topHitsArticlesSize"))));
 
 			mv.addObject("categories", categoryService.getCategories());
-			mv.addObject("mostUsedTags", tagService.getTags().subList(0, tagService.getTags().size() > 10 ? 10 : tagService.getTags().size()));
+			int mostUsedTagsSize = 20;
+			try {
+				mostUsedTagsSize = Integer.valueOf(blogConfig.get("mostUsedTagsSize"));
+			} catch (Exception e) {
+				log.error(e.toString());
+			}
+			mv.addObject(
+					"mostUsedTags",
+					tagService.getTags().subList(
+							0,
+							tagService.getTags().size() >= mostUsedTagsSize ? mostUsedTagsSize
+									: tagService.getTags().size()));
 			mv.addObject("links", linkService.getLinks());
 		} else {
 			mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);

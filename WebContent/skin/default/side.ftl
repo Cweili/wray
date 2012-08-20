@@ -31,8 +31,8 @@
 			<h4><span>${popTagsLabel}</span></h4>
 			<div id="tagcloud">
 			<#list mostUsedTags as tag>
-					<a href="/tag/${tag.itemName?url('UTF-8')}" title="${tag.itemName}">
-					${tag.itemName}(${tag.count})</a>
+					<a href="tag/${tag.itemName?url('UTF-8')}/" title="${tag.itemName}(${tag.count})">
+					${tag.itemName}</a>
 			 </#list>
 			 </div>
 		</div>
