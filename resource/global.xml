@@ -60,7 +60,6 @@
 		</property>
 	</bean>
 	
-	<bean name="characterEncodingInterceptor" class="org.cweili.wray.interceptor.CharacterEncodingInterceptor" />
 	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
 	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
 	
@@ -68,7 +67,6 @@
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">		
 		<property name="interceptors">
 			<list>
-				<ref bean="characterEncodingInterceptor" />
 				<ref bean="authenticationInterceptor" />
 				<ref bean="pageProcessingInterceptor" />
 			</list>		

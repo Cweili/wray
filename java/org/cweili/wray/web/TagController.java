@@ -1,14 +1,12 @@
 package org.cweili.wray.web;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Function;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,14 +26,9 @@ public final class TagController extends BaseController {
 	@RequestMapping("/tag/{permalink}/")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
-		BlogView v = new BlogView("articles");
-//		try {
-//			permalink = URLDecoder.decode(permalink, "UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		permalink = Function.urlDecode(permalink);
 		System.out.println(permalink);
+		BlogView v = new BlogView("articles");
 		Item item = tagService.getTagByName(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
@@ -54,10 +47,10 @@ public final class TagController extends BaseController {
 		int p = 1;
 		try {
 			p = Integer.valueOf(page);
-			permalink = URLDecoder.decode(permalink, "UTF-8");
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
+		permalink = Function.urlDecode(permalink);
 		BlogView v = new BlogView("articles");
 		Item item = tagService.getTagByName(permalink);
 		v.add("item", item);

@@ -1,7 +1,5 @@
 package org.cweili.wray.web;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Function;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +30,8 @@ public final class ArticleController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
 
+		permalink = Function.urlDecode(permalink);
 		BlogView v = new BlogView("article");
-		try {
-			permalink = URLDecoder.decode(permalink, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		Article article = articleService.getArticleByPermalink(permalink);
 		List<Item> relatedCats = categoryService.getCategoriesByArticle(article);
 		v.add("article", article);

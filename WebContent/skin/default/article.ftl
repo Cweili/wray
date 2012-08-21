@@ -71,7 +71,7 @@
 							<div class="roubcornrcontent">
 								<span class="posttags" title="$`{tagLabel}">
 									<#list article.tag?split(",") as articleTag>
-									<a href="/tag/${articleTag?url('UTF-8')}/">
+									<a href="tag/${articleTag?url('UTF-8')}/">
 											${articleTag}</a><#if articleTag_has_next>,</#if>
 									</#list>
 								</span>

@@ -12,6 +12,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -230,9 +231,15 @@ public final class AdminArticleController extends BaseController {
 
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;
-		permalink = Function.url(permalink);
-		permalink = "".equals(permalink) ? id.toString() : permalink;
+		permalink = Function.permalink(permalink);
+		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
 		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
+		StringBuilder tagSB = new StringBuilder("");
+		for(String tagStr : tag.split(",")) {
+			tagSB.append(CutString.substring(tagStr, 18));
+			tagSB.append(',');
+		}
+		tagSB.deleteCharAt(tagSB.length() - 1);
 		byte stat = Article.STAT_PUBLISHED;
 		if ((Article.STAT_DRAFT + "").equals(s)) {
 			stat = Article.STAT_DRAFT;
@@ -242,13 +249,13 @@ public final class AdminArticleController extends BaseController {
 		if (ori != null) {
 			ori.setTitle(title);
 			ori.setPermalink(permalink);
-			ori.setTag(tag);
+			ori.setTag(tagSB.toString());
 			ori.setContent(content);
 			ori.setStat(stat);
 			ori.setCommentStatus(commentStatus);
 			return ori;
 		}
-		return new Article(id, title, permalink, content, tag, new Date(), stat, 0, 0,
+		return new Article(id, title, permalink, content, tagSB.toString(), new Date(), stat, 0, 0,
 				commentStatus, Article.TYPE_ARTICLE);
 	}
 
@@ -271,12 +278,13 @@ public final class AdminArticleController extends BaseController {
 			String tag = request.getParameter("tag");
 			tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 			for (String tagStr : tag.split(",")) {
+				tagStr = CutString.substring(tagStr, 18);
 				addItem = tagService.getTagByName(tagStr);
 				if (null != addItem) {
 					relatedItems.add(addItem);
 				} else {
-					addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
-							Item.TYPE_TAG, 0L, Item.STAT_ON);
+					addItem = new Item(Function.generateId(), tagStr, "",
+							"", 0, (byte) 0, Item.TYPE_TAG, 0L, Item.STAT_ON);
 					tagService.save(addItem, false);
 					relatedItems.add(addItem);
 				}

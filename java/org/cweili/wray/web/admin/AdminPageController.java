@@ -251,8 +251,8 @@ public final class AdminPageController extends BaseController {
 
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;
-		permalink = Function.url(permalink);
-		permalink = "".equals(permalink) ? id.toString() : permalink;
+		permalink = Function.permalink(permalink);
+		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
 		byte stat = Article.STAT_PUBLISHED;
 		if ((Article.STAT_DRAFT + "").equals(s)) {
 			stat = Article.STAT_DRAFT;

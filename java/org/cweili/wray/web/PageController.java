@@ -1,13 +1,11 @@
 package org.cweili.wray.web;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Function;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +25,8 @@ public final class PageController extends BaseController {
 	@RequestMapping("/page/{permalink}/*")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
+		permalink = Function.urlDecode(permalink);
 		BlogView v = new BlogView("page");
-		try {
-			permalink = URLDecoder.decode(permalink, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		Article page = articleService.getArticleByPermalink(permalink);
 		v.add("article", page);
 		return v;

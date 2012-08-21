@@ -72,6 +72,21 @@ public class Function {
 		}
 		return page;
 	}
+	
+	public static String permalink(String permalink) {
+		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
+				.replaceAll("\\pS", "-").replaceAll("\\pC", "-");
+		while(permalink.indexOf("--") > -1) {
+			permalink = permalink.replace("--", "-");
+		}
+		if(permalink.indexOf('-') == 0) {
+			permalink = permalink.substring(1);
+		}
+		if(!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
+			permalink = permalink.substring(0, permalink.length() - 1);
+		}
+		return new ChineseSpelling(permalink.toLowerCase().trim()).getSpelling();
+	}
 
 	/**
 	 * 取得请求脚本名
@@ -137,6 +152,15 @@ public class Function {
 				.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;")
 				.replace("«", "&laquo;").replace("»", "&raquo;").trim();
 	}
+	
+	public static String urlDecode(String input) {
+		try {
+			input = new String(input.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			input = "";
+		}
+		return input;
+	}
 
 	/**
 	 * url编码
@@ -144,7 +168,7 @@ public class Function {
 	 * @param input
 	 * @return
 	 */
-	public static String url(String input) {
+	public static String urlEncode(String input) {
 		try {
 			input = URLEncoder.encode(Function.stripTags(input).trim().toLowerCase(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
