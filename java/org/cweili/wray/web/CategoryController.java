@@ -26,8 +26,10 @@ public final class CategoryController extends BaseController {
 	@RequestMapping("/category/{permalink}/")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
-		permalink = Function.urlDecode(permalink);
+		
 		BlogView v = new BlogView("articles");
+		v.add("path", "category/" + permalink + "/");
+		permalink = Function.urlDecode(permalink);
 		Item item = categoryService.getCategoryByPermalink(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
@@ -49,8 +51,11 @@ public final class CategoryController extends BaseController {
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		permalink = Function.urlDecode(permalink);
 		BlogView v = new BlogView("articles");
+		
+		v.add("path", "category/" + permalink + "/");
+		permalink = Function.urlDecode(permalink);
+		
 		Item item = categoryService.getCategoryByPermalink(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),

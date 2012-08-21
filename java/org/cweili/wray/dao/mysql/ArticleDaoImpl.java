@@ -266,7 +266,7 @@ public class ArticleDaoImpl extends BaseDaoSupport<Article> implements ArticleDa
 			log.info("Save " + t.toString());
 			return t.getArticleId();
 		} else {
-			log.info("Error saving article");
+			log.info("Error saving " + t.toString());
 			return 0;
 		}
 	}

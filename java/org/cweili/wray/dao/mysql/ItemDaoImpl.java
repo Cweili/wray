@@ -56,7 +56,7 @@ public class ItemDaoImpl extends BaseDaoSupport<Item> implements ItemDao {
 			log.info("Save " + t.toString());
 			return t.getItemId();
 		} else {
-			log.info("Error saving item");
+			log.info("Error saving " + t.toString());
 			return 0;
 		}
 	}

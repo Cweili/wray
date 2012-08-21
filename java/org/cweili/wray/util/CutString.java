@@ -51,7 +51,7 @@ public class CutString {
 
 			}
 			if (count > 0 && count < length) {
-				StringBuffer buff = new StringBuffer();
+				StringBuilder buff = new StringBuilder();
 				char c;
 				for (int i = 0; i < count; i++) {
 					try {

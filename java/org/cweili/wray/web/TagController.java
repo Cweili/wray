@@ -26,9 +26,10 @@ public final class TagController extends BaseController {
 	@RequestMapping("/tag/{permalink}/")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
-		permalink = Function.urlDecode(permalink);
-		System.out.println(permalink);
+		
 		BlogView v = new BlogView("articles");
+		v.add("path", "tag/" + permalink + "/");
+		permalink = Function.urlDecode(permalink);
 		Item item = tagService.getTagByName(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
@@ -50,8 +51,9 @@ public final class TagController extends BaseController {
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		permalink = Function.urlDecode(permalink);
 		BlogView v = new BlogView("articles");
+		v.add("path", "tag/" + permalink + "/");
+		permalink = Function.urlDecode(permalink);
 		Item item = tagService.getTagByName(permalink);
 		v.add("item", item);
 		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),

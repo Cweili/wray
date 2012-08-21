@@ -15,9 +15,9 @@ public class Item {
 	private String description = "";
 	private int count = 0;
 	private byte itemOrder = 0;
-	private byte itemType = Item.TYPE_CATEGORY;
+	private byte itemType = TYPE_CATEGORY;
 	private long parrentId = 0;
-	private byte stat = Item.STAT_ON;
+	private byte stat = STAT_ON;
 
 	public static final byte TYPE_CATEGORY = 0;
 	public static final byte TYPE_TAG = 1;

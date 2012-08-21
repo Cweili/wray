@@ -28,9 +28,7 @@ public class User {
 	public static final byte GROUP_READER = 1;
 	public static final byte GROUP_BLOCK = 0;
 
-	public User() {
-		super();
-	}
+	public User() {}
 
 	/**
 	 * @param userId
@@ -44,7 +42,6 @@ public class User {
 	 */
 	public User(long userId, String username, String passwd, String nickname, String permalink,
 			String email, Date regtime, byte usergroup) {
-		super();
 		this.userId = userId;
 		this.username = username;
 		this.passwd = passwd;
