@@ -11,6 +11,7 @@ import java.util.Date;
 public class Comment {
 
 	private long commentId = 0;
+	private long articleId = 0;
 	private String author = "";
 	private String email = "";
 	private String link = "";
@@ -40,10 +41,11 @@ public class Comment {
 	 * @param parrentId
 	 * @param stat
 	 */
-	public Comment(long commentId, String author, String email, String link, String ip,
+	public Comment(long commentId, long articleId, String author, String email, String link, String ip,
 			Date postTime, String agent, String content, long parrentId, byte stat) {
 
 		this.commentId = commentId;
+		this.setArticleId(articleId);
 		this.author = author;
 		this.email = email;
 		this.link = link;
@@ -91,7 +93,15 @@ public class Comment {
 	public void setCommentId(long commentId) {
 		this.commentId = commentId;
 	}
+	
+	public long getArticleId() {
+		return articleId;
+	}
 
+	public void setArticleId(long articleId) {
+		this.articleId = articleId;
+	}
+	
 	public String getAuthor() {
 		return author;
 	}
@@ -163,6 +173,5 @@ public class Comment {
 	public void setStat(byte stat) {
 		this.stat = stat;
 	}
-	
-	
+
 }

@@ -32,21 +32,22 @@ public class CommentDaoImpl extends BaseDaoSupport<Comment> implements CommentDa
 			t.setCommentId(Function.generateId());
 		}
 		if (db.update(
-				"INSERT INTO comment (comment_id, author, email, link, ip, post_time, "
-				+"agent, content, parrent_id, stat) VALUES (?,?,?,?,?,?,?,?,?,?)",
+				"INSERT INTO comment (comment_id, article_id, author, email, link, ip, post_time, "
+				+"agent, content, parrent_id, stat) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
 				new PreparedStatementSetter() {
 					@Override
 					public void setValues(PreparedStatement ps) throws SQLException {
 						ps.setLong(1, t.getCommentId());
-						ps.setString(2, t.getAuthor());
-						ps.setString(3, t.getEmail());
-						ps.setString(4, t.getLink());
-						ps.setString(5, t.getIp());
-						ps.setTimestamp(6, new Timestamp(t.getPostTime().getTime()));
-						ps.setString(7, t.getAgent());
-						ps.setString(8, t.getContent());
-						ps.setLong(9, t.getStat());
-						ps.setByte(10, t.getStat());
+						ps.setLong(2, t.getArticleId());
+						ps.setString(3, t.getAuthor());
+						ps.setString(4, t.getEmail());
+						ps.setString(5, t.getLink());
+						ps.setString(6, t.getIp());
+						ps.setTimestamp(7, new Timestamp(t.getPostTime().getTime()));
+						ps.setString(8, t.getAgent());
+						ps.setString(9, t.getContent());
+						ps.setLong(10, t.getStat());
+						ps.setByte(11, t.getStat());
 					}
 				}) > 0) {
 			log.info("Save " + t.toString());
@@ -63,21 +64,22 @@ public class CommentDaoImpl extends BaseDaoSupport<Comment> implements CommentDa
 	@Override
 	public int update(final Comment t) {
 		int r = db.update(
-				"UPDATE comment SET comment_id=?, author=?, email=?, link=?, ip=?, post_time=?, "
+				"UPDATE comment SET article_id=?, author=?, email=?, link=?, ip=?, post_time=?, "
 				+"agent=?, content=?, parrent_id=?, stat=? WHERE comment_id=?",
 				new PreparedStatementSetter() {
 					@Override
 					public void setValues(PreparedStatement ps) throws SQLException {
-						ps.setString(1, t.getAuthor());
-						ps.setString(2, t.getEmail());
-						ps.setString(3, t.getLink());
-						ps.setString(4, t.getIp());
-						ps.setTimestamp(5, new Timestamp(t.getPostTime().getTime()));
-						ps.setString(6, t.getAgent());
-						ps.setString(7, t.getContent());
-						ps.setLong(8, t.getStat());
-						ps.setByte(9, t.getStat());
-						ps.setLong(10, t.getCommentId());
+						ps.setLong(1, t.getArticleId());
+						ps.setString(2, t.getAuthor());
+						ps.setString(3, t.getEmail());
+						ps.setString(4, t.getLink());
+						ps.setString(5, t.getIp());
+						ps.setTimestamp(6, new Timestamp(t.getPostTime().getTime()));
+						ps.setString(7, t.getAgent());
+						ps.setString(8, t.getContent());
+						ps.setLong(9, t.getStat());
+						ps.setByte(10, t.getStat());
+						ps.setLong(11, t.getCommentId());
 					}
 				});
 		log.info("Update " + t.toString());
@@ -133,14 +135,14 @@ public class CommentDaoImpl extends BaseDaoSupport<Comment> implements CommentDa
 	@Override
 	public List<Comment> getComments(byte status, int start, int limit, String order) {
 		final List<Comment> list = new ArrayList<Comment>();
-		db.query("SELECT comment_id, author, email, link, ip, post_time, agent, content, parrent_id, "
+		db.query("SELECT comment_id, article_id, author, email, link, ip, post_time, agent, content, parrent_id, "
 		+"stat FROM comment WHERE stat=? ORDER BY " + order + " LIMIT ?,?",
 				new Object[] { status, start, limit }, new int[] { Types.INTEGER, Types.INTEGER, Types.INTEGER }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						Comment comment = new Comment(rs.getLong(1), rs.getString(2), rs.getString(3), rs
-								.getString(4), rs.getString(5), rs.getTimestamp(6), rs.getString(7), rs
-								.getString(8), rs.getLong(9), rs.getByte(10));
+						Comment comment = new Comment(rs.getLong(1), rs.getLong(2), rs.getString(3), rs.getString(4), rs
+								.getString(5), rs.getString(6), rs.getTimestamp(7), rs.getString(8), rs
+								.getString(9), rs.getLong(10), rs.getByte(11));
 						list.add(comment);
 					}
 				});
@@ -154,18 +156,18 @@ public class CommentDaoImpl extends BaseDaoSupport<Comment> implements CommentDa
 	@Override
 	public List<Comment> getCommentsByArticle(Article article, String order) {
 		final List<Comment> list = new ArrayList<Comment>();
-		db.query("SELECT comment_id, author, email, link, ip, post_time, agent, content, parrent_id, "
-		+"stat FROM comment WHERE stat=? ORDER BY " + order,
-				new Object[] { status, start, limit }, new int[] { Types.INTEGER, Types.INTEGER, Types.INTEGER }, new RowCallbackHandler() {
+		db.query("SELECT comment_id, article_id, author, email, link, ip, post_time, agent, content, parrent_id, "
+		+"stat FROM comment WHERE stat>0 and article_id=? ORDER BY " + order,
+				new Object[] { article.getArticleId() }, new int[] { Types.BIGINT }, new RowCallbackHandler() {
 					@Override
 					public void processRow(ResultSet rs) throws SQLException {
-						Comment comment = new Comment(rs.getLong(1), rs.getString(2), rs.getString(3), rs
-								.getString(4), rs.getString(5), rs.getTimestamp(6), rs.getString(7), rs
-								.getString(8), rs.getLong(9), rs.getByte(10));
+						Comment comment = new Comment(rs.getLong(1), rs.getLong(2), rs.getString(3), rs.getString(4), rs
+								.getString(5), rs.getString(6), rs.getTimestamp(7), rs.getString(8), rs
+								.getString(9), rs.getLong(10), rs.getByte(11));
 						list.add(comment);
 					}
 				});
-		log.info("Query comment for status: " + status);
+		log.info("Query comment for article: " + article.getArticleId());
 		return list;
 	}
 
