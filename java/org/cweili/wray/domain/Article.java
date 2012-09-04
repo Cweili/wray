@@ -1,5 +1,6 @@
 package org.cweili.wray.domain;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,8 +11,9 @@ import java.util.Date;
  * @version 2012-8-16 下午5:10:14
  * 
  */
-public class Article {
+public class Article implements Serializable, Cloneable, Comparable<Article> {
 
+	private static final long serialVersionUID = 1970391421601024172L;
 	private long articleId = 0;
 	private String title = "";
 	private String permalink = "";
@@ -94,6 +96,16 @@ public class Article {
 				+ ", tag=" + tag + ", createTime="
 				+ new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(createTime) + ", stat=" + stat
 				+ ", isPage=" + isPage + "]";
+	}
+	
+	@Override
+	public int compareTo(Article article) {
+		if(this.articleId > article.getArticleId()) {
+			return 1;
+		} else if (this.articleId < article.getArticleId()) {
+			return -1;
+		}
+		return 0;
 	}
 
 	public long getArticleId() {

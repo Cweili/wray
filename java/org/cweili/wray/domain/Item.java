@@ -1,5 +1,7 @@
 package org.cweili.wray.domain;
 
+import java.io.Serializable;
+
 /**
  * Item Model
  * 
@@ -7,8 +9,9 @@ package org.cweili.wray.domain;
  * @version 2012-8-16 下午5:12:40
  * 
  */
-public class Item {
+public class Item implements Serializable, Cloneable, Comparable<Item> {
 
+	private static final long serialVersionUID = 644800170130656153L;
 	private long itemId = 0;
 	private String itemName = "";
 	private String permalink = "";
@@ -84,6 +87,16 @@ public class Item {
 		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", permalink=" + permalink
 				+ ", description=" + description + ", count=" + count + ", itemOrder=" + itemOrder
 				+ ", itemType=" + itemType + ", parrentId=" + parrentId + ", stat=" + stat + "]";
+	}
+	
+	@Override
+	public int compareTo(Item item) {
+		if(this.itemId > item.getItemId()) {
+			return 1;
+		} else if (this.itemId < item.getItemId()) {
+			return -1;
+		}
+		return 0;
 	}
 
 	public long getItemId() {

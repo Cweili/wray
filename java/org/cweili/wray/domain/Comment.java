@@ -1,5 +1,6 @@
 package org.cweili.wray.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,9 @@ import java.util.Date;
  * @version 2012-8-21 下午2:18:50
  * 
  */
-public class Comment {
+public class Comment implements Serializable, Cloneable, Comparable<Comment>{
 
+	private static final long serialVersionUID = -767060507781375509L;
 	private long commentId = 0;
 	private long articleId = 0;
 	private String author = "";
@@ -84,6 +86,16 @@ public class Comment {
 		return "Comment [commentId=" + commentId + ", author=" + author + ", email=" + email
 				+ ", link=" + link + ", ip=" + ip + ", agent=" + agent + ", content=" + content
 				+ "]";
+	}
+
+	@Override
+	public int compareTo(Comment comment) {
+		if(this.commentId > comment.getCommentId()) {
+			return 1;
+		} else if (this.commentId < comment.getCommentId()) {
+			return -1;
+		}
+		return 0;
 	}
 
 	public long getCommentId() {
