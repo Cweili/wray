@@ -28,7 +28,8 @@ public class User {
 	public static final byte GROUP_READER = 1;
 	public static final byte GROUP_BLOCK = 0;
 
-	public User() {}
+	public User() {
+	}
 
 	/**
 	 * @param userId

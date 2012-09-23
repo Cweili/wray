@@ -9,7 +9,7 @@ import java.util.Date;
  * @version 2012-8-21 下午2:18:50
  * 
  */
-public class Comment implements Serializable, Cloneable, Comparable<Comment>{
+public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	private static final long serialVersionUID = -767060507781375509L;
 	private long commentId = 0;
@@ -43,8 +43,8 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment>{
 	 * @param parrentId
 	 * @param stat
 	 */
-	public Comment(long commentId, long articleId, String author, String email, String link, String ip,
-			Date postTime, String agent, String content, long parrentId, byte stat) {
+	public Comment(long commentId, long articleId, String author, String email, String link,
+			String ip, Date postTime, String agent, String content, long parrentId, byte stat) {
 
 		this.commentId = commentId;
 		this.setArticleId(articleId);
@@ -90,7 +90,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment>{
 
 	@Override
 	public int compareTo(Comment comment) {
-		if(this.commentId > comment.getCommentId()) {
+		if (this.commentId > comment.getCommentId()) {
 			return 1;
 		} else if (this.commentId < comment.getCommentId()) {
 			return -1;
@@ -105,7 +105,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment>{
 	public void setCommentId(long commentId) {
 		this.commentId = commentId;
 	}
-	
+
 	public long getArticleId() {
 		return articleId;
 	}
@@ -113,7 +113,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment>{
 	public void setArticleId(long articleId) {
 		this.articleId = articleId;
 	}
-	
+
 	public String getAuthor() {
 		return author;
 	}

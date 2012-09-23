@@ -88,10 +88,10 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 				+ ", description=" + description + ", count=" + count + ", itemOrder=" + itemOrder
 				+ ", itemType=" + itemType + ", parrentId=" + parrentId + ", stat=" + stat + "]";
 	}
-	
+
 	@Override
 	public int compareTo(Item item) {
-		if(this.itemId > item.getItemId()) {
+		if (this.itemId > item.getItemId()) {
 			return 1;
 		} else if (this.itemId < item.getItemId()) {
 			return -1;

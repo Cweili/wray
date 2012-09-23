@@ -37,7 +37,8 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	public static final byte TYPE_ARTICLE = 0;
 	public static final byte TYPE_PAGE = 1;
 
-	public Article() {}
+	public Article() {
+	}
 
 	/**
 	 * @param articleId
@@ -97,10 +98,10 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 				+ new SimpleDateFormat("yy-MM-dd hh:mm:ss").format(createTime) + ", stat=" + stat
 				+ ", isPage=" + isPage + "]";
 	}
-	
+
 	@Override
 	public int compareTo(Article article) {
-		if(this.articleId > article.getArticleId()) {
+		if (this.articleId > article.getArticleId()) {
 			return 1;
 		} else if (this.articleId < article.getArticleId()) {
 			return -1;
