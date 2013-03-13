@@ -34,9 +34,8 @@ public final class AdminSetupController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 
 		BlogView v = new BlogView("setup-basic");
-		if (saveConfig(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
-				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",
-				"attachFooter", "attachStat" })) {
+		if (saveConfig(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords", "metaDescription" },
+				new String[] { "blogHost", "noticeBoard", "attachHeader", "attachFooter", "attachStat" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
@@ -48,8 +47,7 @@ public final class AdminSetupController extends BaseController {
 	public BlogView account(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-account");
 		if (saveConfig(request, new String[] { "adminName", "adminNick", "adminEmail" },
-				"".equals(request.getParameter("adminPwd")) ? new String[] {}
-						: new String[] { "adminPwd" })) {
+				"".equals(request.getParameter("adminPwd")) ? new String[] {} : new String[] { "adminPwd" })) {
 			v.add("err", "succ");
 		} else {
 			v.add("err", "数据库更新失败");
@@ -61,8 +59,8 @@ public final class AdminSetupController extends BaseController {
 	public BlogView skin(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-skin");
 		v.add("labels", Arrays.asList(Constant.LABELS));
-		List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("").getFile()
-				+ "../../../../../../../" + Constant.SKIN_PATH));
+		List<String> skinDirs = Function.dirList(new File(request.getSession().getServletContext().getRealPath("/")
+				+ Constant.SKIN_PATH));
 		skinDirs.remove("admin");
 		v.add("skinDirs", skinDirs);
 		int limit = 10;
@@ -71,8 +69,7 @@ public final class AdminSetupController extends BaseController {
 		try {
 			limit = Integer.valueOf(request.getParameter("limit"));
 			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
-			topCommentArticlesSize = Integer
-					.valueOf(request.getParameter("topCommentArticlesSize"));
+			topCommentArticlesSize = Integer.valueOf(request.getParameter("topCommentArticlesSize"));
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -90,15 +87,18 @@ public final class AdminSetupController extends BaseController {
 
 	@Override
 	@RequestMapping(value = "/admin-setup-{type}", method = RequestMethod.GET)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String type) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String type) {
 		BlogView v = new BlogView("msg");
 		if ("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
 			v.setView("setup-" + type);
 			if ("skin".equals(type)) {
-				List<String> skinDirs = Function.dirList(new File(this.getClass().getResource("")
-						.getFile()
-						+ "../../../../../../../" + Constant.SKIN_PATH));
+				// List<String> skinDirs = Function.dirList(new
+				// File(this.getClass().getResource("")
+				// .getFile()
+				// + "../../../../../../../" + Constant.SKIN_PATH));
+				List<String> skinDirs = Function.dirList(new File(request.getSession().getServletContext()
+						.getRealPath("/")
+						+ Constant.SKIN_PATH));
 				skinDirs.remove("admin");
 				v.add("skinDirs", skinDirs);
 				v.add("currentSkinDir", blogConfig.get("skinDir"));

@@ -2,33 +2,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <@head title="${notFoundLabel} - ${blogTitle}">
-        <meta name="keywords" content="${notFoundLabel},${metaKeywords}"/>
-        <meta name="description" content="${sorryLabel},${notFoundLabel},${metaDescription}"/>
+        <@head title="${errMsg} - ${blogTitle}">
+        <meta name="keywords" content="${errMsg},${metaKeywords}"/>
+        <meta name="description" content="${errMsg},${metaDescription}"/>
         <meta name="robots" content="noindex, follow"/>
         </@head>
     </head>
     <body>
-        ${topBarReplacement}
-        <div class="wrapper">
-            <div class="content">
-                <#include "header.ftl">
-                <div class="body">
-                    <div class="left main">
-                        <div class="error-panel">
-                            <h1 class="error-title">${notFoundLabel}</h1>
-                            <a href="http://${staticServePath}">${returnTo1Label}${blogTitle}</a>
+        ${topBarReplacement?if_exists}
+		<div id="wrapper" align="center">
+			<#include "header.ftl">
+			<div id="outerwrapper">
+				<div id="innerwrapper">
+					<div id="rightcol">
+						<#include "side.ftl">
+					</div>
+					<!---->
+					<div id="maincol">
+						<div class="postwrap">
+                            <h1 class="error-msg">${errMsg}</h1>
+                            <a href="${staticServePath}">${returnLabel} ${blogTitle}</a>
                         </div>
-                    </div>
-                    <div class="right">
-                        <#include "side.ftl">
-                    </div>
-                    <div class="clear"></div>
-                </div>
-                <div class="footer">
-                    <#include "footer.ftl">
-                </div>
-            </div>
-        </div>
+						<div class="clr"></div>
+					</div>
+					<div class="clr"></div>
+					<div class="copyr">
+					&copy; ${year}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
+					</div>
+					<div class="clr16"></div>
+					<!---->
+				</div>
+			</div>
+			<#include "footer.ftl">
+		</div>
     </body>
 </html>

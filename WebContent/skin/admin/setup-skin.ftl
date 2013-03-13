@@ -129,6 +129,10 @@
 					<input class="bigfield" name="moreLabel" type="text" value="${moreLabel?if_exists}" />
 				</div>
 				<div class="input_field">
+					<label for="moreLabel">“返回”</label>
+					<input class="bigfield" name="returnLabel" type="text" value="${returnLabel?if_exists}" />
+				</div>
+				<div class="input_field">
 					<label for="tagLabel">“标签”</label>
 					<input class="bigfield" name="tagLabel" type="text" value="${tagLabel?if_exists}" />
 				</div>

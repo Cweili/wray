@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
-	<title>${blogTitle?if_exists}管理面板 - Wray Admin Panel</title>
+	<title>${blogTitle?if_exists} 管理面板 - Wray Admin Panel</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!--base href="${staticServePath}" /-->
 	<style type="text/css" media="all">
@@ -12,7 +12,7 @@
 		img {behavior:url('../js/iepngfix.htc') !important;}
 		.ke-icon-insertmore {background-image: url(default.png);background-position: 0px -1024px;width: 16px;height: 16px;}
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery-ui-1.8.22.custom.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery.validate.min.js" type="text/javascript"></script>
 	<#--

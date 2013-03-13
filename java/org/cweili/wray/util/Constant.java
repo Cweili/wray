@@ -25,11 +25,10 @@ public class Constant {
 	/**
 	 * 皮肤界面 label 数组
 	 */
-	public static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel",
-			"previousPageLabel", "nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel",
-			"recentCommentsLabel", "mostCommentArticlesLabel", "mostViewCountArticlesLabel",
-			"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
-			"moreLabel", "tagLabel", "viewLabel" };
+	public static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel", "previousPageLabel",
+			"nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel", "recentCommentsLabel",
+			"mostCommentArticlesLabel", "mostViewCountArticlesLabel", "popTagsLabel", "archiveLabel", "linkLabel",
+			"atomLabel", "homeLabel", "commentLabel", "moreLabel", "returnLabel", "tagLabel", "viewLabel" };
 
 	/**
 	 * 皮肤扩展名
@@ -37,9 +36,14 @@ public class Constant {
 	public static final String SKIN_EXT = ".ftl";
 
 	/**
-	 * 皮肤目录
+	 * 皮肤路径
 	 */
 	public static final String SKIN_PATH = "skin/";
+
+	/**
+	 * 上传路径
+	 */
+	public static final String UPLOAD_PATH = "upload/";
 
 	/**
 	 * Wray 版本

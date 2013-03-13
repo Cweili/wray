@@ -107,7 +107,7 @@ $(document).ready(function() {
 				indentChar: "",
 				urlType: "relative",
 				emoticonsPath: "include/image/emotion/",
-				uploadJson: "include/editor/jsp/upload_json.jsp",
+				uploadJson: /*"include/editor/jsp/upload_json.jsp"*/"admin-upload-json",
 				fileManagerJson: "include/editor/jsp/file_manager_json.jsp",
 				allowFileManager : true,
 				allowImageUpload: true,
