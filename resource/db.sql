@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.2.2
+-- version 3.5.7
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2012 年 11 月 29 日 15:30
--- 服务器版本: 5.5.25a
--- PHP 版本: 5.4.7
+-- 生成日期: 2013 年 03 月 13 日 10:36
+-- 服务器版本: 5.5.30-MariaDB-log
+-- PHP 版本: 5.4.12
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -1185,6 +1185,7 @@ INSERT INTO `config` (`config_key`, `config_value`) VALUES
 ('popTagsLabel', '热门标签'),
 ('previousPageLabel', '&lt;'),
 ('recentCommentsLabel', '最近评论'),
+('returnLabel', '返回'),
 ('skinDir', 'default'),
 ('sumLabel', '共'),
 ('tagLabel', '标签'),
