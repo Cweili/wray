@@ -65,7 +65,7 @@ public final class AdminUploadController extends BaseController {
 			if (!item.isFormField()) {
 				// 检查文件大小
 				if (item.getSize() > maxSize) {
-					v.add("content", getError("上传文件大小超过限制。"));
+					v.add("content", getError("上传文件大小超过限制。文件最大不能超过15MB。"));
 					return v;
 				}
 				// 检查扩展名

@@ -29,6 +29,9 @@ public class UploadController extends BaseController {
 		if (null != upload && upload.getUploadSize() > 0) {
 			response.setContentType(Upload.TYPE.get(upload.getUploadExt()));
 			response.setContentLength(upload.getUploadSize());
+			response.setHeader("Content-Disposition",
+					"attachment; filename=" + upload.getUploadName() + "." + upload.getUploadExt());
+			response.setHeader("Accept-Ranges", "bytes");
 			try {
 				OutputStream os = response.getOutputStream();
 				os.write(upload.getUploadFile());
