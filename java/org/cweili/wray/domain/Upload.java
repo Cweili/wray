@@ -1,7 +1,11 @@
 package org.cweili.wray.domain;
 
-import java.io.File;
 import java.util.HashMap;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * Upload
@@ -10,17 +14,21 @@ import java.util.HashMap;
  * @version 2013-3-14 上午10:00:54
  * 
  */
+@Document(collection = "upload")
 public class Upload {
 
-	private long uploadId = 0;
+	@Id
+	private String uploadId = "";
 	private String uploadName = "";
 	private String uploadExt = "";
 	private int uploadSize = 0;
-	private File uploadFile = null;
+	private byte[] uploadFile = null;
 
+	@Transient
 	public static final HashMap<String, String> TYPE = new HashMap<String, String>();
 
 	static {
+		TYPE.put("", "text/html");
 		TYPE.put("3gp", "video/3gpp");
 		TYPE.put("7z", "application/x-compress");
 		TYPE.put("apk", "application/vnd.Android.package-archive");
@@ -104,7 +112,8 @@ public class Upload {
 		super();
 	}
 
-	public Upload(long uploadId, String uploadName, String uploadExt, int uploadSize, File uploadFile) {
+	@PersistenceConstructor
+	public Upload(String uploadId, String uploadName, String uploadExt, int uploadSize, byte[] uploadFile) {
 		super();
 		this.uploadId = uploadId;
 		this.uploadName = uploadName;
@@ -113,11 +122,11 @@ public class Upload {
 		this.uploadFile = uploadFile;
 	}
 
-	public long getUploadId() {
+	public String getUploadId() {
 		return uploadId;
 	}
 
-	public void setUploadId(long uploadId) {
+	public void setUploadId(String uploadId) {
 		this.uploadId = uploadId;
 	}
 
@@ -145,11 +154,11 @@ public class Upload {
 		this.uploadSize = uploadSize;
 	}
 
-	public File getUploadFile() {
+	public byte[] getUploadFile() {
 		return uploadFile;
 	}
 
-	public void setUploadFile(File uploadFile) {
+	public void setUploadFile(byte[] uploadFile) {
 		this.uploadFile = uploadFile;
 	}
 

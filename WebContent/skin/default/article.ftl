@@ -115,9 +115,9 @@
         page.tips.externalRelevantArticlesDisplayCount = "$`{externalRelevantArticlesDisplayCount}";
         page.loadRandomArticles();
          page.loadRelevantArticles('$`{article.oId}', '$`{relevantArticles1Label}');
-        <#if 0 != externalRelevantArticlesDisplayCount>
-        page.loadExternalRelevantArticles("<#list article.articleTags?split(",") as articleTag>$`{articleTag}<#if articleTag_has_next>,</#if></#list>");
-        </#if>
-        </@comment_script-->
+        <'#if 0 != externalRelevantArticlesDisplayCount>
+        page.loadExternalRelevantArticles("<'#list article.articleTags?split(",") as articleTag>$`{articleTag}<'#if articleTag_has_next>,<'/#if><'/#list>");
+        <'/#if>
+        <'/@comment_script-->
     </body>
 </html>

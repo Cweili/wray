@@ -10,6 +10,7 @@ import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.service.TagService;
+import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Paginator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +42,12 @@ public abstract class BaseController extends MultiActionController {
 	@Autowired
 	protected LinkService linkService;
 
+	@Autowired
+	protected UploadService uploadService;
+
 	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response);
 
-	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String str);
+	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String str);
 
 	/**
 	 * @param v
