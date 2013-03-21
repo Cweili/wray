@@ -47,7 +47,7 @@ public abstract class BaseService {
 	// protected static List<Article> articles = null;
 
 	/**
-	 * Article 缓存
+	 * 页面缓存
 	 */
 	protected static List<Article> pages = null;
 

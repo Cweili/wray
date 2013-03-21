@@ -22,6 +22,8 @@ public class Upload {
 	private String uploadName = "";
 	private String uploadExt = "";
 	private int uploadSize = 0;
+
+	@Transient
 	private byte[] uploadFile = null;
 
 	@Transient
@@ -113,6 +115,14 @@ public class Upload {
 	}
 
 	@PersistenceConstructor
+	public Upload(String uploadId, String uploadName, String uploadExt, int uploadSize) {
+		super();
+		this.uploadId = uploadId;
+		this.uploadName = uploadName;
+		this.uploadExt = uploadExt;
+		this.uploadSize = uploadSize;
+	}
+
 	public Upload(String uploadId, String uploadName, String uploadExt, int uploadSize, byte[] uploadFile) {
 		super();
 		this.uploadId = uploadId;

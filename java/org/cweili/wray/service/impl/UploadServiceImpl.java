@@ -1,6 +1,7 @@
 package org.cweili.wray.service.impl;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.service.UploadService;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,19 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 	}
 
 	@Override
+	public boolean remove(List<String> ids) {
+		return uploadDao.remove(ids) > 0;
+	}
+
+	@Override
 	public Upload getUploadById(String uploadId) {
-		ObjectId objectId = ObjectId.massageToObjectId(uploadId);
-		if (null != objectId) {
-			return uploadDao.findOne(ObjectId.massageToObjectId(uploadId));
-		}
-		return null;
+		return uploadDao.getUploadById(uploadId);
+	}
+
+	@Override
+	public List<Upload> getUploads(int page, int limit) {
+		int start = (page - 1) * limit;
+		return uploadDao.getUploads(start, limit);
 	}
 
 }

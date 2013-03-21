@@ -1,5 +1,7 @@
 package org.cweili.wray.service;
 
+import java.util.List;
+
 import org.cweili.wray.domain.Upload;
 
 /**
@@ -16,9 +18,18 @@ public interface UploadService {
 	 */
 	public Upload save(Upload upload);
 
+	public boolean remove(List<String> ids);
+
 	/**
 	 * @param uploadId
 	 * @return
 	 */
 	public Upload getUploadById(String uploadId);
+
+	/**
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	public List<Upload> getUploads(int page, int limit);
 }

@@ -6,7 +6,7 @@
 		<script type="text/javascript">
 			function deleteSingle(id) {
 				$("#deleteId").val(id);
-				$("#deleteForm").submit();
+				$("#manageForm").submit();
 			};
 		</script>
 		<form id="manageForm" action="admin-category-manage.html" method="post">
