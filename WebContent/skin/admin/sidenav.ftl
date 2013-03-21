@@ -12,9 +12,9 @@
 				<div class="navhead"><span>文章管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-article-add.html">新增文章</a></li>
 						<li><a href="admin-article-pub.html">已发布文章</a></li>
 						<li><a href="admin-article-draft.html">文章草稿</a></li>
+						<li><a href="admin-article-add.html">新增文章</a></li>
 						<li><a href="admin-article-recycle.html">文章回收站</a></li>
 					</ul>
 				</div>
@@ -27,31 +27,37 @@
 				<div class="navhead"><span>分类管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-category-add.html">新增分类</a></li>
 						<li><a href="admin-category.html">分类管理</a></li>
+						<li><a href="admin-category-add.html">新增分类</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>标签管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="#">新增标签</a></li>
 						<li><a href="#">标签列表</a></li>
+						<li><a href="#">新增标签</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>页面管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-page-add.html">新增页面</a></li>
 						<li><a href="admin-page-pub.html">公开页面</a></li>
 						<li><a href="admin-page-private.html">私密页面</a></li>
+						<li><a href="admin-page-add.html">新增页面</a></li>
 						<li><a href="admin-page-recycle.html">页面回收站</a></li>
+					</ul>
+				</div>
+				<div class="navhead"><span>附件管理</span></div>
+				<div class="subnav">
+					<ul class="submenu">
+						<li><a href="admin-upload.html">附件管理</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>链接管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-link-add.html">新增链接</a></li>
 						<li><a href="admin-link.html">链接管理</a></li>
+						<li><a href="admin-link-add.html">新增链接</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>博客设置</span></div>

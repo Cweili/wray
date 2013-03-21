@@ -19,10 +19,11 @@ $(document).ready(function() {
 	
 	$("div.sidenav:eq(0)> div.subnav").hide();
 	$("div.sidenav:eq(0)> div.navhead").click(function() {
-	$(this).parent().find("div.subnav").slideUp("normal");
-	$(this).parent().find("div.navhead").removeClass("selected");
-	$(this).next().slideToggle("slow");
-	$(this).toggleClass("selected");
+//	$(this).parent().find("div.subnav").slideUp("normal");
+//	$(this).parent().find("div.navhead").removeClass("selected");
+//	$(this).next().slideToggle("slow");
+//	$(this).toggleClass("selected");
+	location.href=$(this).next().children().children(":eq(0)").children().attr("href");
 	});
 	
 	$(".current_nav").parent().parent().slideToggle("slow");
