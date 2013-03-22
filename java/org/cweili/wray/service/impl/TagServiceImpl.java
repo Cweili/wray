@@ -35,6 +35,24 @@ public class TagServiceImpl extends BaseService implements TagService {
 	}
 
 	/*
+	 * （non-Javadoc）
+	 * 
+	 * @see
+	 * org.cweili.wray.service.TagService#getTagByPermalink(java.lang.String)
+	 */
+	public Item getTagByPermalink(String name) {
+		if (tags == null) {
+			updateTagCache();
+		}
+		for (Item item : tags) {
+			if (item.getPermalink().equals(name)) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.cweili.wray.service.TagService#getTags()

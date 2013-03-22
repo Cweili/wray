@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Function {
 
+	public static String cleanUrl(String url) {
+		return url.replace("%", "-");
+	}
+
 	/**
 	 * 取得路径下的文件夹列表
 	 * 
@@ -72,20 +76,24 @@ public class Function {
 		}
 		return page;
 	}
-	
+
 	public static String permalink(String permalink) {
-		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
-				.replaceAll("\\pS", "-").replaceAll("\\pC", "-");
-		while(permalink.indexOf("--") > -1) {
+		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-").replaceAll("\\pS", "-")
+				.replaceAll("\\pC", "-");
+		while (permalink.indexOf("--") > -1) {
 			permalink = permalink.replace("--", "-");
 		}
-		if(permalink.indexOf('-') == 0) {
+		if (permalink.indexOf('-') == 0) {
 			permalink = permalink.substring(1);
 		}
-		if(!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
+		if (!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
 			permalink = permalink.substring(0, permalink.length() - 1);
 		}
-		return new ChineseSpelling(permalink.toLowerCase().trim()).getSpelling();
+		permalink = new ChineseSpelling(permalink.toLowerCase().trim()).getSpelling();
+		if (permalink.length() > 32) {
+			permalink = permalink.substring(0, 32);
+		}
+		return permalink;
 	}
 
 	/**
@@ -116,8 +124,7 @@ public class Function {
 	 * @return
 	 */
 	public static String stripTags(String input) {
-		return input
-				.replaceAll("<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>", "")
+		return input.replaceAll("<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>", "")
 				.replaceAll("<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>", "")
 				.replaceAll("<[^>]+>", "").replaceAll("<[^>]+", "");
 	}
@@ -148,11 +155,10 @@ public class Function {
 	 * @return
 	 */
 	public static String trimAndStripTags(String input) {
-		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;")
-				.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;")
-				.replace("«", "&laquo;").replace("»", "&raquo;").trim();
+		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;").replace("\"", "&quot;")
+				.replace("<", "&lt;").replace(">", "&gt;").replace("«", "&laquo;").replace("»", "&raquo;").trim();
 	}
-	
+
 	public static String urlDecode(String input) {
 		try {
 			input = new String(input.getBytes("ISO-8859-1"), "UTF-8");

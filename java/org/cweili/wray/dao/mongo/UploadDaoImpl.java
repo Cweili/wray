@@ -7,10 +7,10 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Upload;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
@@ -18,7 +18,7 @@ import com.mongodb.gridfs.GridFSInputFile;
 @Repository("uploadDao")
 public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
 
-	private static final String UPLOAD_FILE_GRIDFS = "uploadfile";
+	private static final String UPLOAD_FILE_GRIDFS = "upload";
 	private static GridFS gfs;
 
 	@Override
@@ -29,13 +29,18 @@ public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
 
 	@Override
 	public Upload getUploadById(String id) {
-		Upload upload = db.findById(id, Upload.class);
 		setGfs();
-		GridFSDBFile file = gfs.findOne(id.toString());
+		// GridFSDBFile file = gfs.find(new ObjectId(id));
+		GridFSDBFile file = gfs.findOne(new BasicDBObject("_id", id));
+		if (null == file) {
+			return new Upload();
+		}
+		Upload upload = new Upload(id, (int) file.getLength(), file.getMD5(), file.getFilename(),
+				file.getContentType(), file.getUploadDate());
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
 			file.writeTo(os);
-			upload.setUploadFile(os.toByteArray());
+			upload.setContent(os.toByteArray());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,36 +52,35 @@ public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
 		Query q = new Query();
 		q.skip(start);
 		q.limit(limit);
-		return db.find(q, Upload.class);
+		return db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files");
 	}
 
 	@Override
 	public Upload save(Upload upload) {
-		if ("".equals(upload.getUploadId())) {
-			upload.setUploadId(new ObjectId().toString());
+		if ("".equals(upload.getId())) {
+			upload.setId(new ObjectId().toString());
 		}
-		db.save(upload);
 		setGfs();
-		GridFSInputFile file = gfs.createFile(upload.getUploadFile());
-		file.setFilename(upload.getUploadId());
+		GridFSInputFile file = gfs.createFile(upload.getContent());
+		file.setFilename(upload.getFilename());
+		file.setContentType(upload.getContentType());
+		file.setId(upload.getId());
 		file.save();
 		return upload;
 	}
 
 	@Override
 	public int remove(Upload upload) {
-		db.remove(upload);
 		setGfs();
-		gfs.remove(upload.getUploadId());
+		gfs.remove(new ObjectId(upload.getId()));
 		return 1;
 	}
 
 	@Override
 	public int remove(List<String> ids) {
+		setGfs();
 		for (String id : ids) {
-			db.remove(new Query(Criteria.where("_id").is(id)), Upload.class);
-			setGfs();
-			gfs.remove(id);
+			gfs.remove(new ObjectId(id));
 		}
 		return 1;
 	}

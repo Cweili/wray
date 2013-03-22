@@ -20,6 +20,12 @@ public interface TagService {
 	public Item getTagByName(String name);
 
 	/**
+	 * @param name
+	 * @return
+	 */
+	public Item getTagByPermalink(String name);
+
+	/**
 	 * @return
 	 */
 	public List<Item> getTags();

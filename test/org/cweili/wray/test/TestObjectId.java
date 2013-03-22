@@ -8,10 +8,7 @@ public class TestObjectId {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		for (int i = 0; i < 100; i++) {
-			System.out.println(new ObjectId());
-		}
-
+		System.out.println(new ObjectId("514beeed00457ae92c1171a8"));
 	}
 
 }

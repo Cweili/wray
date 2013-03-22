@@ -1,5 +1,6 @@
 package org.cweili.wray.domain;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
@@ -18,13 +19,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Upload {
 
 	@Id
-	private String uploadId = "";
-	private String uploadName = "";
-	private String uploadExt = "";
-	private int uploadSize = 0;
+	private String id = "";
+	private int length = 0;
+	private String md5 = "";
+	private String filename = "";
+	private String contentType = "";
+	private Date uploadDate = null;
 
 	@Transient
-	private byte[] uploadFile = null;
+	private byte[] content = null;
 
 	@Transient
 	public static final HashMap<String, String> TYPE = new HashMap<String, String>();
@@ -115,61 +118,90 @@ public class Upload {
 	}
 
 	@PersistenceConstructor
-	public Upload(String uploadId, String uploadName, String uploadExt, int uploadSize) {
+	public Upload(String id, int length, String md5, String filename, String contentType, Date uploadDate) {
 		super();
-		this.uploadId = uploadId;
-		this.uploadName = uploadName;
-		this.uploadExt = uploadExt;
-		this.uploadSize = uploadSize;
+		this.id = id;
+		this.length = length;
+		this.md5 = md5;
+		this.filename = filename;
+		this.contentType = contentType;
+		this.uploadDate = uploadDate;
 	}
 
-	public Upload(String uploadId, String uploadName, String uploadExt, int uploadSize, byte[] uploadFile) {
+	public Upload(String id, String filename, String contentType, byte[] content) {
 		super();
-		this.uploadId = uploadId;
-		this.uploadName = uploadName;
-		this.uploadExt = uploadExt;
-		this.uploadSize = uploadSize;
-		this.uploadFile = uploadFile;
+		this.id = id;
+		this.filename = filename;
+		this.contentType = contentType;
+		this.content = content;
 	}
 
-	public String getUploadId() {
-		return uploadId;
+	public Upload(String id, int length, String md5, String filename, String contentType, Date uploadDate,
+			byte[] content) {
+		super();
+		this.id = id;
+		this.length = length;
+		this.md5 = md5;
+		this.filename = filename;
+		this.contentType = contentType;
+		this.uploadDate = uploadDate;
+		this.content = content;
 	}
 
-	public void setUploadId(String uploadId) {
-		this.uploadId = uploadId;
+	public String getId() {
+		return id;
 	}
 
-	public String getUploadName() {
-		return uploadName;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setUploadName(String uploadName) {
-		this.uploadName = uploadName;
+	public int getLength() {
+		return length;
 	}
 
-	public String getUploadExt() {
-		return uploadExt;
+	public void setLength(int length) {
+		this.length = length;
 	}
 
-	public void setUploadExt(String uploadExt) {
-		this.uploadExt = uploadExt;
+	public String getMd5() {
+		return md5;
 	}
 
-	public int getUploadSize() {
-		return uploadSize;
+	public void setMd5(String md5) {
+		this.md5 = md5;
 	}
 
-	public void setUploadSize(int uploadSize) {
-		this.uploadSize = uploadSize;
+	public String getFilename() {
+		return filename;
 	}
 
-	public byte[] getUploadFile() {
-		return uploadFile;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
-	public void setUploadFile(byte[] uploadFile) {
-		this.uploadFile = uploadFile;
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public byte[] getContent() {
+		return content;
+	}
+
+	public void setContent(byte[] content) {
+		this.content = content;
 	}
 
 }

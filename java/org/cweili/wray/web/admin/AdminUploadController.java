@@ -17,6 +17,7 @@ import org.bson.types.ObjectId;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.json.simple.JSONObject;
 import org.springframework.context.annotation.Scope;
@@ -59,20 +60,24 @@ public final class AdminUploadController extends BaseController {
 		Iterator itr = items.iterator();
 		while (itr.hasNext()) {
 			FileItem item = (FileItem) itr.next();
-			String fileName = item.getName();
-			long fileSize = item.getSize();
+			String filename = item.getName();
 			if (!item.isFormField()) {
+				// 检查文件大小 小于256MB
+				if (item.getSize() > 268435456) {
+					v.add("content", getError("上传文件大小必须小于256MB。"));
+					return v;
+				}
+
 				// 检查扩展名
-				String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
-				fileName = fileName.substring(0, fileName.lastIndexOf("."));
+				String fileExt = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 				if (!Upload.TYPE.containsKey(fileExt)) {
 					v.add("content", getError("上传文件扩展名是不允许的扩展名。"));
 					return v;
 				}
 
-				byte[] buffer = new byte[(int) item.getSize()];
+				byte[] content = new byte[(int) item.getSize()];
 				try {
-					item.getInputStream().read(buffer);
+					item.getInputStream().read(content);
 					item.getInputStream().close();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -80,13 +85,16 @@ public final class AdminUploadController extends BaseController {
 					return v;
 				}
 
-				String uploadId = new ObjectId().toString();
-				uploadService.save(new Upload(uploadId, fileName, fileExt, (int) item.getSize(), buffer));
+				String id = new ObjectId().toString();
+				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
+
+				String filenameNew = filename.substring(0, filename.lastIndexOf("."));
 
 				JSONObject obj = new JSONObject();
 				obj.put("error", 0);
-				obj.put("url", request.getContextPath() + "/upload/" + uploadId + "." + fileExt);
-				obj.put("fileName", fileName + "." + fileExt);
+				obj.put("url", request.getContextPath() + "/upload/" + id + "/" + Function.permalink(filenameNew) + "."
+						+ fileExt);
+				obj.put("fileName", filename);
 				v.add("content", obj.toJSONString());
 			}
 		}
