@@ -92,8 +92,9 @@ public final class AdminUploadController extends BaseController {
 
 				JSONObject obj = new JSONObject();
 				obj.put("error", 0);
-				obj.put("url", request.getContextPath() + "/upload/" + id + "/" + Function.permalink(filenameNew) + "."
-						+ fileExt);
+				obj.put("url",
+						request.getContextPath() + "/upload/" + id + "/"
+								+ Function.permalink(filenameNew) + "." + fileExt);
 				obj.put("fileName", filename);
 				v.add("content", obj.toJSONString());
 			}
@@ -108,7 +109,8 @@ public final class AdminUploadController extends BaseController {
 		v.add("actionName", "附件管理");
 		int page = 1;
 		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request.getParameter("page"));
+			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
+					.getParameter("page"));
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
@@ -139,9 +141,7 @@ public final class AdminUploadController extends BaseController {
 			}
 		}
 
-		try {
-			uploadService.remove(ids);
-		} catch (Exception e) {
+		if (!uploadService.remove(ids)) {
 			v.add("err", "数据库更新失败");
 			v.add("msg", "附件删除失败");
 		}
@@ -149,7 +149,8 @@ public final class AdminUploadController extends BaseController {
 	}
 
 	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String str) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String str) {
 		return null;
 	}
 

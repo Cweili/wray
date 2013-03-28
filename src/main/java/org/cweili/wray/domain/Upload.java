@@ -1,5 +1,6 @@
 package org.cweili.wray.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -16,8 +17,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "upload")
-public class Upload {
+public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4128532409330876706L;
 	@Id
 	private String id = "";
 	private int length = 0;
@@ -90,7 +95,8 @@ public class Upload {
 		TYPE.put("png", "image/png");
 		TYPE.put("pps", "application/vnd.ms-powerpoint");
 		TYPE.put("ppt", "application/vnd.ms-powerpoint");
-		TYPE.put("pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation");
+		TYPE.put("pptx",
+				"application/vnd.openxmlformats-officedocument.presentationml.presentation");
 		TYPE.put("prop", "text/plain");
 		TYPE.put("qt", "video/quicktime");
 		TYPE.put("rar", "application/x-rar-compressed");
@@ -118,7 +124,8 @@ public class Upload {
 	}
 
 	@PersistenceConstructor
-	public Upload(String id, int length, String md5, String filename, String contentType, Date uploadDate) {
+	public Upload(String id, int length, String md5, String filename, String contentType,
+			Date uploadDate) {
 		super();
 		this.id = id;
 		this.length = length;
@@ -136,8 +143,8 @@ public class Upload {
 		this.content = content;
 	}
 
-	public Upload(String id, int length, String md5, String filename, String contentType, Date uploadDate,
-			byte[] content) {
+	public Upload(String id, int length, String md5, String filename, String contentType,
+			Date uploadDate, byte[] content) {
 		super();
 		this.id = id;
 		this.length = length;
@@ -202,6 +209,68 @@ public class Upload {
 
 	public void setContent(byte[] content) {
 		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "Upload [id=" + id + ", length=" + length + ", md5=" + md5 + ", filename="
+				+ filename + ", uploadDate=" + uploadDate + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((filename == null) ? 0 : filename.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + length;
+		result = prime * result + ((md5 == null) ? 0 : md5.hashCode());
+		result = prime * result + ((uploadDate == null) ? 0 : uploadDate.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Upload other = (Upload) obj;
+		if (filename == null) {
+			if (other.filename != null)
+				return false;
+		} else if (!filename.equals(other.filename))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (length != other.length)
+			return false;
+		if (md5 == null) {
+			if (other.md5 != null)
+				return false;
+		} else if (!md5.equals(other.md5))
+			return false;
+		if (uploadDate == null) {
+			if (other.uploadDate != null)
+				return false;
+		} else if (!uploadDate.equals(other.uploadDate))
+			return false;
+		return true;
+	}
+
+	@Override
+	public int compareTo(Upload o) {
+		if (this.uploadDate.after(o.getUploadDate())) {
+			return 1;
+		} else if (this.uploadDate.before(o.getUploadDate())) {
+			return -1;
+		}
+		return 0;
 	}
 
 }

@@ -2,7 +2,6 @@ package org.cweili.wray.dao.mongo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
@@ -16,19 +15,70 @@ import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 
 @Repository("uploadDao")
-public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
+public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	private static final String UPLOAD_FILE_GRIDFS = "upload";
 	private static GridFS gfs;
 
 	@Override
-	public int update(Upload t) {
-		// TODO 自动生成的方法存根
-		return 0;
+	public Iterable<Upload> findAll(int start, int limit) {
+		Query q = new Query();
+		q.skip(start);
+		q.limit(limit);
+		return db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files");
 	}
 
 	@Override
-	public Upload getUploadById(String id) {
+	public long count() {
+		return db.count(new Query(), UPLOAD_FILE_GRIDFS + ".files");
+	}
+
+	@Override
+	public void delete(String id) {
+		setGfs();
+		gfs.remove(new ObjectId(id));
+	}
+
+	@Override
+	public void delete(Upload upload) {
+		setGfs();
+		gfs.remove(new ObjectId(upload.getId()));
+	}
+
+	@Override
+	public void delete(Iterable<? extends Upload> uploadList) {
+		setGfs();
+		for (Upload upload : uploadList) {
+			gfs.remove(new ObjectId(upload.getId()));
+		}
+	}
+
+	@Override
+	public void deleteAll() {
+		// TODO 自动生成的方法存根
+
+	}
+
+	@Override
+	public boolean exists(String arg0) {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+
+	@Override
+	public Iterable<Upload> findAll() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public Iterable<Upload> findAll(Iterable<String> arg0) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public Upload findOne(String id) {
 		setGfs();
 		// GridFSDBFile file = gfs.find(new ObjectId(id));
 		GridFSDBFile file = gfs.findOne(new BasicDBObject("_id", id));
@@ -48,15 +98,7 @@ public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
 	}
 
 	@Override
-	public List<Upload> getUploads(int start, int limit) {
-		Query q = new Query();
-		q.skip(start);
-		q.limit(limit);
-		return db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files");
-	}
-
-	@Override
-	public Upload save(Upload upload) {
+	public <S extends Upload> S save(S upload) {
 		if ("".equals(upload.getId())) {
 			upload.setId(new ObjectId().toString());
 		}
@@ -70,19 +112,9 @@ public class UploadDaoImpl extends BaseDaoSupport<Upload> implements UploadDao {
 	}
 
 	@Override
-	public int remove(Upload upload) {
-		setGfs();
-		gfs.remove(new ObjectId(upload.getId()));
-		return 1;
-	}
-
-	@Override
-	public int remove(List<String> ids) {
-		setGfs();
-		for (String id : ids) {
-			gfs.remove(new ObjectId(id));
-		}
-		return 1;
+	public <S extends Upload> Iterable<S> save(Iterable<S> arg0) {
+		// TODO 自动生成的方法存根
+		return null;
 	}
 
 	private void setGfs() {
