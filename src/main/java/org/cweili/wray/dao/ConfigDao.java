@@ -1,6 +1,7 @@
 package org.cweili.wray.dao;
 
-import java.util.Map;
+import org.cweili.wray.domain.Config;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  * 
@@ -8,17 +9,6 @@ import java.util.Map;
  * @version 2012-8-16 下午5:07:48
  * 
  */
-public interface ConfigDao {
+public interface ConfigDao extends MongoRepository<Config, String> {
 
-	/**
-	 * @param key
-	 * @param value
-	 * @return
-	 */
-	public int saveOrUpdate(String key, String value);
-
-	/**
-	 * @return
-	 */
-	public Map<String, String> getAll();
 }

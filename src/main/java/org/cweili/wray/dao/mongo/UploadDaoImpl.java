@@ -3,6 +3,8 @@ package org.cweili.wray.dao.mongo;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Upload;
@@ -18,6 +20,7 @@ import com.mongodb.gridfs.GridFSInputFile;
 public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	private static final String UPLOAD_FILE_GRIDFS = "upload";
+	private Log log = LogFactory.getLog(UploadDaoImpl.class);
 	private static GridFS gfs;
 
 	@Override
@@ -25,24 +28,29 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		Query q = new Query();
 		q.skip(start);
 		q.limit(limit);
+		log.info("Find upload from " + start + " to " + limit);
 		return db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files");
 	}
 
 	@Override
 	public long count() {
-		return db.count(new Query(), UPLOAD_FILE_GRIDFS + ".files");
+		long count = db.count(new Query(), UPLOAD_FILE_GRIDFS + ".files");
+		log.info("Count upload: " + count);
+		return count;
 	}
 
 	@Override
 	public void delete(String id) {
 		setGfs();
 		gfs.remove(new ObjectId(id));
+		log.info("Delete upload " + id);
 	}
 
 	@Override
 	public void delete(Upload upload) {
 		setGfs();
 		gfs.remove(new ObjectId(upload.getId()));
+		log.info("Delete upload " + upload.getId());
 	}
 
 	@Override
@@ -50,30 +58,26 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		setGfs();
 		for (Upload upload : uploadList) {
 			gfs.remove(new ObjectId(upload.getId()));
+			log.info("Delete upload " + upload.getId());
 		}
 	}
 
 	@Override
 	public void deleteAll() {
-		// TODO 自动生成的方法存根
-
 	}
 
 	@Override
 	public boolean exists(String arg0) {
-		// TODO 自动生成的方法存根
 		return false;
 	}
 
 	@Override
 	public Iterable<Upload> findAll() {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 
 	@Override
 	public Iterable<Upload> findAll(Iterable<String> arg0) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 
@@ -92,8 +96,9 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 			file.writeTo(os);
 			upload.setContent(os.toByteArray());
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Write upload content error.", e);
 		}
+		log.info("Find upload " + upload.getFilename());
 		return upload;
 	}
 
@@ -108,12 +113,12 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		file.setContentType(upload.getContentType());
 		file.setId(upload.getId());
 		file.save();
+		log.info("Save upload " + upload.getFilename());
 		return upload;
 	}
 
 	@Override
 	public <S extends Upload> Iterable<S> save(Iterable<S> arg0) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 

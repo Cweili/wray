@@ -2,6 +2,10 @@ package org.cweili.wray.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.cweili.wray.domain.Config;
+
 /**
  * 
  * @author cweili
@@ -22,15 +26,15 @@ public interface ConfigService {
 	public Map<String, String> getConfigMap();
 
 	/**
-	 * 
+	 * @param config
 	 */
-	public void UpdateConfigMap();
+	public void save(Config config);
 
 	/**
-	 * @param key
-	 * @param value
-	 * @return
+	 * @param request
+	 * @param nonHtmlArray
+	 * @param htmlArray
 	 */
-	public boolean saveOrUpdate(String key, String value);
+	public void saveRequest(HttpServletRequest request, String[] nonHtmlArray, String[] htmlArray);
 
 }

@@ -2,13 +2,12 @@ package org.cweili.wray.web.admin;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.cweili.wray.domain.Config;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
@@ -34,24 +33,20 @@ public final class AdminSetupController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 
 		BlogView v = new BlogView("setup-basic");
-		if (saveConfig(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords", "metaDescription" },
-				new String[] { "blogHost", "noticeBoard", "attachHeader", "attachFooter", "attachStat" })) {
-			v.add("err", "succ");
-		} else {
-			v.add("err", "数据库更新失败");
-		}
+		blogConfig.saveRequest(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
+				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",
+				"attachFooter", "attachStat" });
+		v.add("err", "succ");
 		return v;
 	}
 
 	@RequestMapping(value = "/admin-setup-account", method = RequestMethod.POST)
 	public BlogView account(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-account");
-		if (saveConfig(request, new String[] { "adminName", "adminNick", "adminEmail" },
-				"".equals(request.getParameter("adminPwd")) ? new String[] {} : new String[] { "adminPwd" })) {
-			v.add("err", "succ");
-		} else {
-			v.add("err", "数据库更新失败");
-		}
+		blogConfig.saveRequest(request, new String[] { "adminName", "adminNick", "adminEmail" }, ""
+				.equals(request.getParameter("adminPwd")) ? new String[] {}
+				: new String[] { "adminPwd" });
+		v.add("err", "succ");
 		return v;
 	}
 
@@ -59,7 +54,8 @@ public final class AdminSetupController extends BaseController {
 	public BlogView skin(HttpServletRequest request, HttpServletResponse response) {
 		BlogView v = new BlogView("setup-skin");
 		v.add("labels", Arrays.asList(Constant.LABELS));
-		List<String> skinDirs = Function.dirList(new File(request.getSession().getServletContext().getRealPath("/")
+		List<String> skinDirs = Function.dirList(new File(request.getSession().getServletContext()
+				.getRealPath("/")
 				+ Constant.SKIN_PATH));
 		skinDirs.remove("admin");
 		v.add("skinDirs", skinDirs);
@@ -69,25 +65,25 @@ public final class AdminSetupController extends BaseController {
 		try {
 			limit = Integer.valueOf(request.getParameter("limit"));
 			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
-			topCommentArticlesSize = Integer.valueOf(request.getParameter("topCommentArticlesSize"));
+			topCommentArticlesSize = Integer
+					.valueOf(request.getParameter("topCommentArticlesSize"));
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
-		blogConfig.saveOrUpdate("limit", limit + "");
-		blogConfig.saveOrUpdate("topHitsArticlesSize", topHitsArticlesSize + "");
-		blogConfig.saveOrUpdate("topCommentArticlesSize", topCommentArticlesSize + "");
-		if (saveConfig(request, Constant.LABELS, new String[] { "skinDir" })) {
-			v.add("err", "succ");
-		} else {
-			v.add("err", "数据库更新失败");
-		}
+		blogConfig.save(new Config("limit", limit + ""));
+		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize + ""));
+		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize + ""));
+		blogConfig.saveRequest(request, Constant.LABELS, new String[] { "skinDir" });
+		v.add("err", "succ");
+
 		v.add("currentSkinDir", blogConfig.get("skinDir"));
 		return v;
 	}
 
 	@Override
 	@RequestMapping(value = "/admin-setup-{type}", method = RequestMethod.GET)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String type) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String type) {
 		BlogView v = new BlogView("msg");
 		if ("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
 			v.setView("setup-" + type);
@@ -96,8 +92,8 @@ public final class AdminSetupController extends BaseController {
 				// File(this.getClass().getResource("")
 				// .getFile()
 				// + "../../../../../../../" + Constant.SKIN_PATH));
-				List<String> skinDirs = Function.dirList(new File(request.getSession().getServletContext()
-						.getRealPath("/")
+				List<String> skinDirs = Function.dirList(new File(request.getSession()
+						.getServletContext().getRealPath("/")
 						+ Constant.SKIN_PATH));
 				skinDirs.remove("admin");
 				v.add("skinDirs", skinDirs);
@@ -109,30 +105,6 @@ public final class AdminSetupController extends BaseController {
 			v.add("err", "找不到页面");
 		}
 		return v;
-	}
-
-	private boolean saveConfig(HttpServletRequest request, String[] nonHtmlArray, String[] htmlArray) {
-		List<String> nonHtmlList = Arrays.asList(nonHtmlArray);
-		List<String> htmlList = Arrays.asList(htmlArray);
-		Map<String, String[]> map = request.getParameterMap();
-		Map<String, String> values = new HashMap<String, String>();
-		for (Map.Entry<String, String[]> entry : map.entrySet()) {
-			if (nonHtmlList.contains(entry.getKey())) {
-				values.put(entry.getKey(), Function.trimAndStripTags(entry.getValue()[0]));
-			} else if (htmlList.contains(entry.getKey())) {
-				values.put(entry.getKey(), entry.getValue()[0].trim());
-			}
-		}
-		byte failed = 0;
-		for (Map.Entry<String, String> entry : values.entrySet()) {
-			if (!blogConfig.saveOrUpdate(entry.getKey(), entry.getValue())) {
-				++failed;
-			}
-		}
-		if (failed == 0) {
-			blogConfig.UpdateConfigMap();
-		}
-		return failed == 0;
 	}
 
 }
