@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 public abstract class BaseDaoSupport {
 
-	protected Log log = LogFactory.getLog(BaseDaoSupport.class);
+	protected static Log log = LogFactory.getLog(BaseDaoSupport.class);
 
 	@Autowired
 	protected MongoTemplate db;

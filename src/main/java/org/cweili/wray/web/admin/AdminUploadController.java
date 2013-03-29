@@ -19,7 +19,7 @@ import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,15 +51,15 @@ public final class AdminUploadController extends BaseController {
 		FileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		upload.setHeaderEncoding("UTF-8");
-		List items = new ArrayList();
+		List<FileItem> items = new ArrayList<FileItem>();
 		try {
 			items = upload.parseRequest(request);
 		} catch (FileUploadException e1) {
 			e1.printStackTrace();
 		}
-		Iterator itr = items.iterator();
+		Iterator<FileItem> itr = items.iterator();
 		while (itr.hasNext()) {
-			FileItem item = (FileItem) itr.next();
+			FileItem item = itr.next();
 			String filename = item.getName();
 			if (!item.isFormField()) {
 				// 检查文件大小 小于256MB
@@ -96,7 +96,7 @@ public final class AdminUploadController extends BaseController {
 						request.getContextPath() + "/upload/" + id + "/"
 								+ Function.permalink(filenameNew) + "." + fileExt);
 				obj.put("fileName", filename);
-				v.add("content", obj.toJSONString());
+				v.add("content", obj.toString());
 			}
 		}
 
@@ -116,6 +116,7 @@ public final class AdminUploadController extends BaseController {
 		}
 		List<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
 		v.add("uploads", uploads);
+		addPaginator(v, uploadService.get, page, Constant.ADMIN_LIST_SIZE);
 
 		return v;
 	}
@@ -158,7 +159,7 @@ public final class AdminUploadController extends BaseController {
 		JSONObject obj = new JSONObject();
 		obj.put("error", 1);
 		obj.put("message", message);
-		return obj.toJSONString();
+		return obj.toString();
 	}
 
 }

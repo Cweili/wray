@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  */
 public abstract class BaseController extends MultiActionController {
 
-	protected Log log = LogFactory.getLog(BaseController.class);
+	protected static Log log = LogFactory.getLog(BaseController.class);
 
 	@Autowired
 	protected ConfigService blogConfig;
@@ -47,7 +47,8 @@ public abstract class BaseController extends MultiActionController {
 
 	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response);
 
-	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String str);
+	public abstract BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String str);
 
 	/**
 	 * @param v

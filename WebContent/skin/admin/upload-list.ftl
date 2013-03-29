@@ -9,7 +9,7 @@
 				$("#deleteForm").submit();
 			};
 		</script>
-		<form id="deleteForm" action="admin-upload-delete.html" method="post">
+		<form id="deleteForm" action="admin-upload-delete.html?page=${paginationCurrentPageNum}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -44,11 +44,12 @@
 			</table> <!-- END Table -->
 			<fieldset>
 				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="更新排序并删除选中附件" />
+					<input class="submit" type="submit" value="删除选中附件" />
 				</div>
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
 		</form>
+		<#include "pagination.ftl">
 		<#else>
 			<div class="warning">
 				<div class="warn_icon"><!-- --></div>

@@ -20,7 +20,7 @@ import com.mongodb.gridfs.GridFSInputFile;
 public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	private static final String UPLOAD_FILE_GRIDFS = "upload";
-	private Log log = LogFactory.getLog(UploadDaoImpl.class);
+	private static Log log = LogFactory.getLog(UploadDaoImpl.class);
 	private static GridFS gfs;
 
 	@Override

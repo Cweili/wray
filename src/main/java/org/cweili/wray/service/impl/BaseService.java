@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseService {
 
-	protected Log log = LogFactory.getLog(BaseService.class);
+	protected static Log log = LogFactory.getLog(BaseService.class);
 
 	@Autowired
 	protected ConfigDao configDao;

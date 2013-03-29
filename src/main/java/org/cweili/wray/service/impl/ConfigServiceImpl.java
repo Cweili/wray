@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service("blogConfig")
 public class ConfigServiceImpl extends BaseService implements ConfigService {
 
-	private Log log = LogFactory.getLog(ConfigServiceImpl.class);
+	private static Log log = LogFactory.getLog(ConfigServiceImpl.class);
 
 	/*
 	 * (non-Javadoc)
@@ -32,9 +32,9 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	 */
 	@Override
 	public String get(String key) {
-		Config config = configDao.findOne(key);
-		log.info("Find " + config);
-		return config.getValue();
+		String value = getConfigMap().get(key);
+		log.info("Find Config: " + key + " => " + value);
+		return value;
 	}
 
 	/*
