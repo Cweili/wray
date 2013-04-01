@@ -20,13 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class PageProcessingInterceptor extends BaseInterceptor {
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler) throws Exception {
 		return true;
 	}
 
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv)
-			throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response,
+			Object handler, ModelAndView mv) throws Exception {
 		// Map<String, Object> m = mv.getModel();
 		// String title = blogConfig.get("BLOG_TITLE");
 		// if(!m.get("title").equals("")) {
@@ -34,7 +35,8 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// }
 		if (null != mv) {
 			String reqs = Function.requestScript(request);
-			boolean isAdminPanel = Function.requestScript(request).substring(0, 7).equals("/admin-");
+			boolean isAdminPanel = Function.requestScript(request).substring(0, 7)
+					.equals("/admin-");
 
 			mv.addAllObjects(blogConfig.getConfigMap());
 
@@ -44,19 +46,20 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			}
 			String basePath = request.getScheme() + "://" + host + request.getContextPath() + "/";
 			mv.addObject("staticServePath", basePath);
+			blogConfig.getConfigMap().put("staticServePath", basePath);
 			mv.addObject("year", Constant.CURRENT_YEAR);
 			mv.addObject("wrayVersion", Constant.WRAY_VERSION);
 
 			// Not Admin and Admin view
 			if (!isAdminPanel) {
 
-				List<Article> pageNavigations = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE,
-						Article.STAT_PUBLISHED, 1, 0);
+				List<Article> pageNavigations = articleService.getArticlesByTypeStatus(
+						Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 0);
 				mv.addObject("pageNavigations", pageNavigations);
-				mv.addObject("mostCommentArticles",
-						articleService.getTopCommentArticles(Integer.valueOf(blogConfig.get("topCommentArticlesSize"))));
-				mv.addObject("mostViewCountArticles",
-						articleService.getTopHitsArticles(Integer.valueOf(blogConfig.get("topHitsArticlesSize"))));
+				mv.addObject("mostCommentArticles", articleService.getTopCommentArticles(Integer
+						.valueOf(blogConfig.get("topCommentArticlesSize"))));
+				mv.addObject("mostViewCountArticles", articleService.getTopHitsArticles(Integer
+						.valueOf(blogConfig.get("topHitsArticlesSize"))));
 
 				mv.addObject("categories", categoryService.getCategories());
 				int mostUsedTagsSize = 20;
@@ -69,13 +72,13 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 						"mostUsedTags",
 						tagService.getTags().subList(
 								0,
-								tagService.getTags().size() >= mostUsedTagsSize ? mostUsedTagsSize : tagService
-										.getTags().size()));
+								tagService.getTags().size() >= mostUsedTagsSize ? mostUsedTagsSize
+										: tagService.getTags().size()));
 				mv.addObject("links", linkService.getLinks());
 			} else {
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
-				int endIndex = reqs.indexOf(".", 7) > 0 ? reqs.indexOf(".", 7) : reqs.indexOf("/", 7) > 0 ? reqs
-						.indexOf("/", 7) : reqs.length();
+				int endIndex = reqs.indexOf(".", 7) > 0 ? reqs.indexOf(".", 7) : reqs.indexOf("/",
+						7) > 0 ? reqs.indexOf("/", 7) : reqs.length();
 				mv.addObject("adminAction", reqs.substring(7, endIndex));
 				log.info("Admin Action: " + reqs.substring(7, endIndex));
 			}
@@ -88,8 +91,8 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	}
 
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+			Object handler, Exception ex) throws Exception {
 
 	}
 

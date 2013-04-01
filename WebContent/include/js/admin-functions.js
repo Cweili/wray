@@ -95,10 +95,10 @@ $(document).ready(function() {
 	reSizeMain();
 	
 	KindEditor.plugin('insertmore', function(K) {
-				var editor = this;
-				editor.clickToolbar("insertmore", function() {
-								editor.insertHtml('<a name="more"></a>');
-				});
+		var editor = this;
+		editor.clickToolbar("insertmore", function() {
+			editor.insertHtml('<a name="more"></a>');
+		});
 	});
 	
 	KindEditor.ready(function(K) {
@@ -157,7 +157,7 @@ function reSizeMain() {
 	});
 }
 
-jQuery.extend(jQuery.validator.messages, {
+$.extend($.validator.messages, {
 	required: "必须填写",
 	remote: "请修正此处",
 	email: "请输入正确格式的电子邮件",
@@ -169,12 +169,12 @@ jQuery.extend(jQuery.validator.messages, {
 	creditcard: "请输入合法的信用卡号",
 	equalTo: "两次输入的密码不同",
 	accept: "扩展名不合法",
-	maxlength: jQuery.validator.format("长度最长为 {0}"),
-	minlength: jQuery.validator.format("长度最短为 {0}"),
-	rangelength: jQuery.validator.format("长度在 {0} 和 {1} 之间"),
-	range: jQuery.validator.format("数值范围 {0} 到 {1}"),
-	max: jQuery.validator.format("数值最大为 {0}"),
-	min: jQuery.validator.format("数值最小为 {0}")
+	maxlength: $.validator.format("长度最长为 {0}"),
+	minlength: $.validator.format("长度最短为 {0}"),
+	rangelength: $.validator.format("长度在 {0} 和 {1} 之间"),
+	range: $.validator.format("数值范围 {0} 到 {1}"),
+	max: $.validator.format("数值最大为 {0}"),
+	min: $.validator.format("数值最小为 {0}")
 });
 
 /*$(function(){ prettyPrint(); });*/

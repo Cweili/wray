@@ -17,7 +17,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	 * 
 	 */
 	private static final long serialVersionUID = -4128532409330876706L;
-	private long id = 0;
+	private String id = "";
 	private int length = 0;
 	private String md5 = "";
 	private String filename = "";
@@ -114,7 +114,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		super();
 	}
 
-	public Upload(long id, int length, String md5, String filename, String contentType,
+	public Upload(String id, int length, String md5, String filename, String contentType,
 			Date uploadDate) {
 		super();
 		this.id = id;
@@ -125,7 +125,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.uploadDate = uploadDate;
 	}
 
-	public Upload(long id, String filename, String contentType, byte[] content) {
+	public Upload(String id, String filename, String contentType, byte[] content) {
 		super();
 		this.id = id;
 		this.filename = filename;
@@ -133,7 +133,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public Upload(long id, int length, String md5, String filename, String contentType,
+	public Upload(String id, int length, String md5, String filename, String contentType,
 			Date uploadDate, byte[] content) {
 		super();
 		this.id = id;
@@ -145,11 +145,11 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -213,7 +213,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		int result = 1;
 		result = prime * result + ((contentType == null) ? 0 : contentType.hashCode());
 		result = prime * result + ((filename == null) ? 0 : filename.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + length;
 		result = prime * result + ((md5 == null) ? 0 : md5.hashCode());
 		result = prime * result + ((uploadDate == null) ? 0 : uploadDate.hashCode());
@@ -239,7 +239,10 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 				return false;
 		} else if (!filename.equals(other.filename))
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (length != other.length)
 			return false;

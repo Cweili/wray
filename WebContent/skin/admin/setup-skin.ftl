@@ -141,6 +141,40 @@
 					<input class="bigfield" name="viewLabel" type="text" value="${viewLabel?if_exists}" />
 				</div>
 			</fieldset>
+			<fieldset><legend>评论框提示文本</legend>
+				<div class="input_field">
+					<label for="commentAuthorLabel">评论者用户名</label>
+					<input class="bigfield" name="commentAuthorLabel" type="text" value="${commentAuthorLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="commentEmailLabel">评论者E-mail</label>
+					<input class="bigfield" name="commentEmailLabel" type="text" value="${commentEmailLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="commentLinkLabel">评论者链接</label>
+					<input class="bigfield" name="commentLinkLabel" type="text" value="${commentLinkLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="submmitCommentLabel">提交评论</label>
+					<input class="bigfield" name="submmitCommentLabel" type="text" value="${submmitCommentLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="requiredErrorLabel">必须填写提示</label>
+					<input class="bigfield" name="requiredErrorLabel" type="text" value="${requiredErrorLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="emailErrorLabel">E-mail错误提示</label>
+					<input class="bigfield" name="emailErrorLabel" type="text" value="${emailErrorLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="urlErrorLabel">链接错误提示</label>
+					<input class="bigfield" name="urlErrorLabel" type="text" value="${urlErrorLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="maxlengthErrorLabel">超长错误提示</label>
+					<input class="bigfield" name="maxlengthErrorLabel" type="text" value="${maxlengthErrorLabel?if_exists}" />
+				</div>
+			</fieldset>
 			<fieldset><legend>保存设置</legend>
 				<div class="input_field no_margin_bottom">
 					<span class="form_line"><input class="submit" type="submit" value="保存设置" /></span>

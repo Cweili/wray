@@ -42,8 +42,8 @@ $(document).ready(function() {
 });
 
 var replyTo = function (id) {
-    var commentFormHTML = "<table class='marginTop12 comment-form' id='replyForm'>";
-    page.addReplyForm(id, commentFormHTML);
+    var commentFormHTML = '<table class="marginTop12 comment-form" id="replyForm">';
+    $("#" + id).append(commentFormHTML + $("#commentForm").children().html() + '</table>');
 };
 
 var showComment = function (it, id) {

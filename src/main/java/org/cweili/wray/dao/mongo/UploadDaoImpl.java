@@ -41,9 +41,9 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		setGfs();
-		gfs.remove(new ObjectId("" + id));
+		gfs.remove(new ObjectId(id));
 		log.info("Delete upload " + id);
 	}
 
@@ -68,7 +68,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public boolean exists(Long id) {
+	public boolean exists(String id) {
 		return false;
 	}
 
@@ -78,12 +78,12 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public Iterable<Upload> findAll(Iterable<Long> ids) {
+	public Iterable<Upload> findAll(Iterable<String> ids) {
 		return null;
 	}
 
 	@Override
-	public Upload findOne(Long id) {
+	public Upload findOne(String id) {
 		setGfs();
 		// GridFSDBFile file = gfs.find(new ObjectId(id));
 		GridFSDBFile file = gfs.findOne(new BasicDBObject("_id", id));
@@ -105,8 +105,8 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	@Override
 	public <S extends Upload> S save(S upload) {
-		if (0 == upload.getId()) {
-			upload.setId(Function.generateId());
+		if ("".equals(upload.getId())) {
+			upload.setId(Function.shortId(Function.generateId()));
 		}
 		setGfs();
 		GridFSInputFile file = gfs.createFile(upload.getContent());

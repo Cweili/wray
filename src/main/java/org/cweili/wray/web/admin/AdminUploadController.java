@@ -84,15 +84,16 @@ public final class AdminUploadController extends BaseController {
 					return v;
 				}
 
-				long id = Function.generateId();
+				String id = Function.shortId(Function.generateId());
 				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
 
 				String filenameNew = filename.substring(0, filename.lastIndexOf("."));
 
 				JSONObject obj = new JSONObject();
 				obj.put("error", 0);
-				obj.put("url", request.getContextPath() + "/upload/" + Function.shortId(id) + "/"
-						+ Function.permalink(filenameNew) + "." + fileExt);
+				obj.put("url",
+						request.getContextPath() + "/upload/" + id + "/"
+								+ Function.permalink(filenameNew) + "." + fileExt);
 				obj.put("fileName", filename);
 				v.add("content", obj.toString());
 			}

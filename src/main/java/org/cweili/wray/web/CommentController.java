@@ -36,7 +36,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "/comment/", method = RequestMethod.POST)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		Comment comment = new Comment();
-		comment.setArticleId(Long.parseLong(request.getParameter("article")));
+		comment.setArticleId(Long.parseLong(request.getParameter("articleId")));
 		comment.setAuthor(request.getParameter("author"));
 		comment.setAgent(request.getHeader("User-Agent"));
 		comment.setContent(request.getParameter("content"));
@@ -46,7 +46,8 @@ public class CommentController extends BaseController {
 		comment.setStat(Comment.STAT_DISPLAY);
 		commentService.save(comment);
 		try {
-			response.sendRedirect("article/" + request.getParameter("permalink") + "/");
+			response.sendRedirect(blogConfig.get("staticServePath") + "article/"
+					+ request.getParameter("permalink") + "/");
 		} catch (IOException e) {
 			log.error("Redirect error.", e);
 		}

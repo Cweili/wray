@@ -1,5 +1,5 @@
 <#include "macro-head.ftl">
-<#--include "macro-comments.ftl"-->
+<#include "macro-comments.ftl">
 <!DOCTYPE html>
 <html>
     <head>
@@ -97,7 +97,7 @@
 							<div class="clr"></div>
 						</div>
 						<div class="clr"></div>
-						<#--@comments commentList=articleComments permalink=article.articlePermalink></@comments-->
+						<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
 					</div>
 					<div class="clr"></div>
 					<div class="copyr">
@@ -109,13 +109,6 @@
 			</div>
 			<#include "footer.ftl">
 		</div>
-        <!--@comment_script oId=article.oId>
-        page.tips.externalRelevantArticlesDisplayCount = "$`{externalRelevantArticlesDisplayCount}";
-        page.loadRandomArticles();
-         page.loadRelevantArticles('$`{article.oId}', '$`{relevantArticles1Label}');
-        <'#if 0 != externalRelevantArticlesDisplayCount>
-        page.loadExternalRelevantArticles("<'#list article.articleTags?split(",") as articleTag>$`{articleTag}<'#if articleTag_has_next>,<'/#if><'/#list>");
-        <'/#if>
-        <'/@comment_script-->
+        <@comment_script></@comment_script>
     </body>
 </html>

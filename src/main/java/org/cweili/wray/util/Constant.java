@@ -25,10 +25,13 @@ public class Constant {
 	/**
 	 * 皮肤界面 label 数组
 	 */
-	public static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel", "previousPageLabel",
-			"nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel", "recentCommentsLabel",
-			"mostCommentArticlesLabel", "mostViewCountArticlesLabel", "popTagsLabel", "archiveLabel", "linkLabel",
-			"atomLabel", "homeLabel", "commentLabel", "moreLabel", "returnLabel", "tagLabel", "viewLabel" };
+	public static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel",
+			"previousPageLabel", "nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel",
+			"recentCommentsLabel", "mostCommentArticlesLabel", "mostViewCountArticlesLabel",
+			"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
+			"moreLabel", "returnLabel", "tagLabel", "viewLabel", "commentAuthorLabel",
+			"commentEmailLabel", "commentLinkLabel", "submmitCommentLabel", "requiredErrorLabel",
+			"emailErrorLabel", "urlErrorLabel", "maxlengthErrorLabel" };
 
 	/**
 	 * 皮肤扩展名

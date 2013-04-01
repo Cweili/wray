@@ -1,6 +1,7 @@
 package org.cweili.wray.web.admin;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +28,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @Scope("prototype")
 public final class AdminSetupController extends BaseController {
+
+	private static final List<String> TYPE = new ArrayList<String>();
+
+	static {
+		TYPE.add("basic");
+		TYPE.add("account");
+		TYPE.add("skin");
+	};
 
 	@Override
 	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)
@@ -85,13 +94,9 @@ public final class AdminSetupController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String type) {
 		BlogView v = new BlogView("msg");
-		if ("basic".equals(type) || "account".equals(type) || "skin".equals(type)) {
+		if (TYPE.contains(type)) {
 			v.setView("setup-" + type);
 			if ("skin".equals(type)) {
-				// List<String> skinDirs = Function.dirList(new
-				// File(this.getClass().getResource("")
-				// .getFile()
-				// + "../../../../../../../" + Constant.SKIN_PATH));
 				List<String> skinDirs = Function.dirList(new File(request.getSession()
 						.getServletContext().getRealPath("/")
 						+ Constant.SKIN_PATH));
@@ -106,5 +111,4 @@ public final class AdminSetupController extends BaseController {
 		}
 		return v;
 	}
-
 }

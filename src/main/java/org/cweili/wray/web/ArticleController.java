@@ -36,6 +36,7 @@ public final class ArticleController extends BaseController {
 		List<Item> relatedCats = categoryService.getCategoriesByArticle(article);
 		v.add("article", article);
 		v.add("relatedCats", relatedCats);
+		v.add("commentList", commentService.getCommentsByArticle(article));
 		article.setHits(article.getHits() + 1);
 		try {
 			articleService.updateHits(article);
