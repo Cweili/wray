@@ -13,7 +13,6 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.bson.types.ObjectId;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -85,16 +84,15 @@ public final class AdminUploadController extends BaseController {
 					return v;
 				}
 
-				String id = new ObjectId().toString();
+				long id = Function.generateId();
 				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
 
 				String filenameNew = filename.substring(0, filename.lastIndexOf("."));
 
 				JSONObject obj = new JSONObject();
 				obj.put("error", 0);
-				obj.put("url",
-						request.getContextPath() + "/upload/" + id + "/"
-								+ Function.permalink(filenameNew) + "." + fileExt);
+				obj.put("url", request.getContextPath() + "/upload/" + Function.shortId(id) + "/"
+						+ Function.permalink(filenameNew) + "." + fileExt);
 				obj.put("fileName", filename);
 				v.add("content", obj.toString());
 			}
@@ -116,7 +114,7 @@ public final class AdminUploadController extends BaseController {
 		}
 		List<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
 		v.add("uploads", uploads);
-		addPaginator(v, uploadService.get, page, Constant.ADMIN_LIST_SIZE);
+		addPaginator(v, uploadService.getCount(), page, Constant.ADMIN_LIST_SIZE);
 
 		return v;
 	}

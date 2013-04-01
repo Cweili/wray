@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Upload;
+import org.cweili.wray.util.Function;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -40,16 +41,16 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public void delete(String id) {
+	public void delete(Long id) {
 		setGfs();
-		gfs.remove(new ObjectId(id));
+		gfs.remove(new ObjectId("" + id));
 		log.info("Delete upload " + id);
 	}
 
 	@Override
 	public void delete(Upload upload) {
 		setGfs();
-		gfs.remove(new ObjectId(upload.getId()));
+		gfs.remove(new ObjectId("" + upload.getId()));
 		log.info("Delete upload " + upload.getId());
 	}
 
@@ -57,7 +58,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	public void delete(Iterable<? extends Upload> uploadList) {
 		setGfs();
 		for (Upload upload : uploadList) {
-			gfs.remove(new ObjectId(upload.getId()));
+			gfs.remove(new ObjectId("" + upload.getId()));
 			log.info("Delete upload " + upload.getId());
 		}
 	}
@@ -67,7 +68,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public boolean exists(String arg0) {
+	public boolean exists(Long id) {
 		return false;
 	}
 
@@ -77,12 +78,12 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	}
 
 	@Override
-	public Iterable<Upload> findAll(Iterable<String> arg0) {
+	public Iterable<Upload> findAll(Iterable<Long> ids) {
 		return null;
 	}
 
 	@Override
-	public Upload findOne(String id) {
+	public Upload findOne(Long id) {
 		setGfs();
 		// GridFSDBFile file = gfs.find(new ObjectId(id));
 		GridFSDBFile file = gfs.findOne(new BasicDBObject("_id", id));
@@ -104,8 +105,8 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	@Override
 	public <S extends Upload> S save(S upload) {
-		if ("".equals(upload.getId())) {
-			upload.setId(new ObjectId().toString());
+		if (0 == upload.getId()) {
+			upload.setId(Function.generateId());
 		}
 		setGfs();
 		GridFSInputFile file = gfs.createFile(upload.getContent());

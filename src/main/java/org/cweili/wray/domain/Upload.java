@@ -4,11 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.PersistenceConstructor;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  * Upload
  * 
@@ -16,25 +11,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @version 2013-3-14 上午10:00:54
  * 
  */
-@Document(collection = "upload")
 public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4128532409330876706L;
-	@Id
-	private String id = "";
+	private long id = 0;
 	private int length = 0;
 	private String md5 = "";
 	private String filename = "";
 	private String contentType = "";
 	private Date uploadDate = null;
 
-	@Transient
 	private byte[] content = null;
 
-	@Transient
 	public static final HashMap<String, String> TYPE = new HashMap<String, String>();
 
 	static {
@@ -123,8 +114,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		super();
 	}
 
-	@PersistenceConstructor
-	public Upload(String id, int length, String md5, String filename, String contentType,
+	public Upload(long id, int length, String md5, String filename, String contentType,
 			Date uploadDate) {
 		super();
 		this.id = id;
@@ -135,7 +125,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.uploadDate = uploadDate;
 	}
 
-	public Upload(String id, String filename, String contentType, byte[] content) {
+	public Upload(long id, String filename, String contentType, byte[] content) {
 		super();
 		this.id = id;
 		this.filename = filename;
@@ -143,7 +133,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public Upload(String id, int length, String md5, String filename, String contentType,
+	public Upload(long id, int length, String md5, String filename, String contentType,
 			Date uploadDate, byte[] content) {
 		super();
 		this.id = id;
@@ -155,11 +145,11 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -221,8 +211,9 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((contentType == null) ? 0 : contentType.hashCode());
 		result = prime * result + ((filename == null) ? 0 : filename.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + length;
 		result = prime * result + ((md5 == null) ? 0 : md5.hashCode());
 		result = prime * result + ((uploadDate == null) ? 0 : uploadDate.hashCode());
@@ -238,15 +229,17 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		if (getClass() != obj.getClass())
 			return false;
 		Upload other = (Upload) obj;
+		if (contentType == null) {
+			if (other.contentType != null)
+				return false;
+		} else if (!contentType.equals(other.contentType))
+			return false;
 		if (filename == null) {
 			if (other.filename != null)
 				return false;
 		} else if (!filename.equals(other.filename))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
+		if (id != other.id)
 			return false;
 		if (length != other.length)
 			return false;

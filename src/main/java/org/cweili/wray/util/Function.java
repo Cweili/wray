@@ -19,8 +19,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Function {
 
+	private static final CharSequence CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
 	public static String cleanUrl(String url) {
 		return url.replace("%", "-");
+	}
+
+	public static long decodeShortId(String id) {
+		long out = 0;
+		for (int i = id.length() - 1; i >= 0; --i) {
+			out *= 62;
+			out += CHARS.toString().indexOf(id.charAt(i));
+		}
+		return out;
 	}
 
 	/**
@@ -78,8 +89,8 @@ public class Function {
 	}
 
 	public static String permalink(String permalink) {
-		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-").replaceAll("\\pS", "-")
-				.replaceAll("\\pC", "-");
+		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
+				.replaceAll("\\pS", "-").replaceAll("\\pC", "-");
 		while (permalink.indexOf("--") > -1) {
 			permalink = permalink.replace("--", "-");
 		}
@@ -117,6 +128,16 @@ public class Function {
 		return (((double) a / (double) b) > (a / b) ? a / b + 1 : a / b);
 	}
 
+	public static String shortId(long id) {
+		StringBuilder sb = new StringBuilder();
+		long ori = id;
+		while (ori > 0) {
+			sb.append(CHARS.charAt((int) (ori % CHARS.length())));
+			ori /= CHARS.length();
+		}
+		return sb.toString();
+	}
+
 	/**
 	 * 去除 html 标签
 	 * 
@@ -124,7 +145,8 @@ public class Function {
 	 * @return
 	 */
 	public static String stripTags(String input) {
-		return input.replaceAll("<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>", "")
+		return input
+				.replaceAll("<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>", "")
 				.replaceAll("<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>", "")
 				.replaceAll("<[^>]+>", "").replaceAll("<[^>]+", "");
 	}
@@ -155,8 +177,9 @@ public class Function {
 	 * @return
 	 */
 	public static String trimAndStripTags(String input) {
-		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;").replace("\"", "&quot;")
-				.replace("<", "&lt;").replace(">", "&gt;").replace("«", "&laquo;").replace("»", "&raquo;").trim();
+		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;")
+				.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+				.replace("«", "&laquo;").replace("»", "&raquo;").trim();
 	}
 
 	public static String urlDecode(String input) {

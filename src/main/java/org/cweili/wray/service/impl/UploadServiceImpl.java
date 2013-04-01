@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.service.UploadService;
+import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;
 
 @Service("uploadService")
@@ -21,7 +22,7 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 		List<Upload> uploadList = new ArrayList<Upload>();
 		for (String id : ids) {
 			Upload upload = new Upload();
-			upload.setId(id);
+			upload.setId(Long.parseLong(id));
 			uploadList.add(upload);
 		}
 		uploadDao.delete(uploadList);
@@ -29,14 +30,19 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 	}
 
 	@Override
-	public Upload getUploadById(String uploadId) {
-		return uploadDao.findOne(uploadId);
+	public Upload getUploadById(String id) {
+		return uploadDao.findOne(Function.decodeShortId(id));
 	}
 
 	@Override
 	public List<Upload> getUploads(int page, int limit) {
 		int start = (page - 1) * limit;
 		return (List<Upload>) uploadDao.findAll(start, limit);
+	}
+
+	@Override
+	public int getCount() {
+		return (int) uploadDao.count();
 	}
 
 }

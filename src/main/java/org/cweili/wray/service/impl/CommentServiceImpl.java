@@ -1,11 +1,14 @@
 package org.cweili.wray.service.impl;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.service.CommentService;
+import org.cweili.wray.util.Function;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 /**
  * 
@@ -13,67 +16,38 @@ import org.cweili.wray.service.CommentService;
  * @version 2012-11-25 下午3:23:57
  * 
  */
+@Service("commentService")
 public class CommentServiceImpl extends BaseService implements CommentService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.CommentService#getCommentsByArticle(org.cweili
-	 * .wray.domain.Article)
-	 */
 	@Override
 	public List<Comment> getCommentsByArticle(Article article) {
-		// TODO Auto-generated method stub
-		return null;
+		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.CommentService#getComments(int, int)
-	 */
 	@Override
 	public List<Comment> getComments(int page, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		return commentDao.findAll(new PageRequest(page, limit)).getContent();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.CommentService#save(org.cweili.wray.domain.Comment
-	 * )
-	 */
 	@Override
-	public long save(Comment comment) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public Comment save(Comment comment) {
+		if (0 == comment.getId()) {
+			comment.setId(Function.generateId());
+		}
+		return commentDao.save(comment);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.CommentService#update(org.cweili.wray.domain.
-	 * Comment)
-	 */
 	@Override
-	public boolean update(Comment comment) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.CommentService#remove(java.util.List)
-	 */
-	@Override
-	public boolean remove(List<Long> ids) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean remove(List<Long> ids) {
+		long before = commentDao.count();
+		List<Comment> comments = new ArrayList<Comment>();
+		for (long id : ids) {
+			Comment comment = new Comment();
+			comment.setId(id);
+			comments.add(comment);
+		}
+		commentDao.delete(comments);
+		return commentDao.count() < before;
 	}
 
 }

@@ -7,8 +7,6 @@
         <meta name="keywords" content="${article.tag}"/>
         <meta name="description" content="${article.content?html}"/>
         </@head>
-		<link type="text/css" rel="stylesheet" href="include/editor/plugins/code/prettify.css" charset="utf-8" />
-		<script src="include/editor/plugins/code/prettify.css" type="text/javascript"></script>
     </head>
     <body>
         $`{topBarReplacement}

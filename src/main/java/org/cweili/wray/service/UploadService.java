@@ -18,13 +18,22 @@ public interface UploadService {
 	 */
 	public Upload save(Upload upload);
 
+	/**
+	 * @param ids
+	 * @return
+	 */
 	public boolean remove(List<String> ids);
 
 	/**
-	 * @param uploadId
 	 * @return
 	 */
-	public Upload getUploadById(String uploadId);
+	public int getCount();
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Upload getUploadById(String id);
 
 	/**
 	 * @param page

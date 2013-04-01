@@ -25,7 +25,8 @@ public class UploadController extends BaseController {
 
 	@Override
 	@RequestMapping("/upload/{id}/*")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String id) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String id) {
 		Upload upload = uploadService.getUploadById(id);
 		if (null != upload && upload.getLength() > 0) {
 			response.setContentType(upload.getContentType());

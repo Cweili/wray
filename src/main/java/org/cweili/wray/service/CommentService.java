@@ -1,6 +1,5 @@
 package org.cweili.wray.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
@@ -30,21 +29,12 @@ public interface CommentService {
 	/**
 	 * @param comment
 	 * @return
-	 * @throws SQLException
 	 */
-	public long save(Comment comment) throws SQLException;
-
-	/**
-	 * @param comment
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean update(Comment comment) throws SQLException;
+	public Comment save(Comment comment);
 
 	/**
 	 * @param ids
 	 * @return
-	 * @throws SQLException
 	 */
-	public boolean remove(List<Long> ids) throws SQLException;
+	public boolean remove(List<Long> ids);
 }

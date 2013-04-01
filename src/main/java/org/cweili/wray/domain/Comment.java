@@ -3,16 +3,26 @@ package org.cweili.wray.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * 
  * @author cweili
  * @version 2012-8-21 下午2:18:50
  * 
  */
+@Document(collection = "comment")
 public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
+	@Transient
 	private static final long serialVersionUID = -767060507781375509L;
-	private long commentId = 0;
+	@Id
+	private long id = 0;
+	@Indexed
 	private long articleId = 0;
 	private String author = "";
 	private String email = "";
@@ -32,7 +42,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	}
 
 	/**
-	 * @param commentId
+	 * @param id
 	 * @param author
 	 * @param email
 	 * @param link
@@ -43,10 +53,11 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	 * @param parrentId
 	 * @param stat
 	 */
-	public Comment(long commentId, long articleId, String author, String email, String link,
-			String ip, Date postTime, String agent, String content, long parrentId, byte stat) {
+	@PersistenceConstructor
+	public Comment(long id, long articleId, String author, String email, String link, String ip,
+			Date postTime, String agent, String content, long parrentId, byte stat) {
 
-		this.commentId = commentId;
+		this.id = id;
 		this.setArticleId(articleId);
 		this.author = author;
 		this.email = email;
@@ -63,7 +74,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (commentId ^ (commentId >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -76,34 +87,33 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
-		if (commentId != other.commentId)
+		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Comment [commentId=" + commentId + ", author=" + author + ", email=" + email
-				+ ", link=" + link + ", ip=" + ip + ", agent=" + agent + ", content=" + content
-				+ "]";
+		return "Comment [id=" + id + ", author=" + author + ", email=" + email + ", link=" + link
+				+ ", ip=" + ip + ", agent=" + agent + ", content=" + content + "]";
 	}
 
 	@Override
 	public int compareTo(Comment comment) {
-		if (this.commentId > comment.getCommentId()) {
+		if (this.id > comment.getId()) {
 			return 1;
-		} else if (this.commentId < comment.getCommentId()) {
+		} else if (this.id < comment.getId()) {
 			return -1;
 		}
 		return 0;
 	}
 
-	public long getCommentId() {
-		return commentId;
+	public long getId() {
+		return id;
 	}
 
-	public void setCommentId(long commentId) {
-		this.commentId = commentId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public long getArticleId() {
