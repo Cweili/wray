@@ -25,10 +25,10 @@ public class Function {
 		return url.replace("%", "-");
 	}
 
-	public static long decodeShortId(String id) {
+	public static long decodeId(String id) {
 		long out = 0;
 		for (int i = id.length() - 1; i >= 0; --i) {
-			out *= 62;
+			out *= CHARS.length();
 			out += CHARS.toString().indexOf(id.charAt(i));
 		}
 		return out;

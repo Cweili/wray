@@ -19,7 +19,7 @@ public class TestShortId {
 	public static void main(String[] args) {
 		long id = Function.generateId();
 		System.out.println(id + "\n" + Function.shortId(id) + "\n"
-				+ Function.decodeShortId(Function.shortId(id)));
+				+ Function.decodeId(Function.shortId(id)));
 	}
 
 }
