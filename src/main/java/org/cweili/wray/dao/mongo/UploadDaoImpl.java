@@ -50,7 +50,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	@Override
 	public void delete(Upload upload) {
 		setGfs();
-		gfs.remove(new ObjectId("" + upload.getId()));
+		gfs.remove(new BasicDBObject("_id", upload.getId()));
 		log.info("Delete upload " + upload.getId());
 	}
 
@@ -58,7 +58,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	public void delete(Iterable<? extends Upload> uploadList) {
 		setGfs();
 		for (Upload upload : uploadList) {
-			gfs.remove(new ObjectId("" + upload.getId()));
+			gfs.remove(new BasicDBObject("_id", upload.getId()));
 			log.info("Delete upload " + upload.getId());
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.service.UploadService;
+import org.cweili.wray.util.Zlib;
 import org.springframework.stereotype.Service;
 
 @Service("uploadService")
@@ -12,6 +13,10 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 
 	@Override
 	public Upload save(Upload upload) {
+		byte[] commpressed = Zlib.compress(upload.getContent());
+		if (commpressed.length < upload.getContent().length) {
+			upload.setContent(commpressed);
+		}
 		return uploadDao.save(upload);
 	}
 
@@ -30,7 +35,12 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 
 	@Override
 	public Upload getUploadById(String id) {
-		return uploadDao.findOne(id);
+		Upload upload = uploadDao.findOne(id);
+		if (null != upload) {
+			upload.setContent(Zlib.decompress(upload.getContent()));
+			upload.setLength(upload.getContent().length);
+		}
+		return upload;
 	}
 
 	@Override

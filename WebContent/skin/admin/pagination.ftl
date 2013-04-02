@@ -15,7 +15,7 @@
 			<li><a href="admin-${adminAction}.html?page=${paginationPageNum?c}">${paginationPageNum?c}</a></li>
 		</#if>
 	</#list>
-	<#if paginationPageNums?last != paginationPageCount>
+	<#if paginationPageNums?last != paginationCurrentPageNum>
 		<li><a href="admin-${adminAction}.html?page=${paginationNextPageNum?c}">${nextPageLabel}</a></li>
 		<li><a href="admin-${adminAction}.html?page=${paginationPageCount?c}">${lastPageLabel}</a></li>
 	<#else>

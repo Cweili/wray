@@ -3,6 +3,9 @@ package org.cweili.wray.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Upload
@@ -26,7 +29,8 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
 	private byte[] content = null;
 
-	public static final HashMap<String, String> TYPE = new HashMap<String, String>();
+	public static final Map<String, String> TYPE = new HashMap<String, String>();
+	public static final Set<String> COMPRESSED = new HashSet<String>();
 
 	static {
 		TYPE.put("", "text/html");
@@ -52,6 +56,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		TYPE.put("gif", "image/gif");
 		TYPE.put("gtar", "application/x-gtar");
 		TYPE.put("gz", "application/x-gzip");
+		TYPE.put("gzip", "application/x-gzip");
 		TYPE.put("h", "text/plain");
 		TYPE.put("htm", "text/html");
 		TYPE.put("html", "text/html");
@@ -96,10 +101,10 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		TYPE.put("rmvb", "audio/x-pn-realaudio");
 		TYPE.put("rpm", "application/octet-stream");
 		TYPE.put("rtf", "application/rtf");
-		TYPE.put("sh", "text/plain");
+		TYPE.put("sh", "application/octet-stream");
 		TYPE.put("swf", "application/x-shockwave-flash");
 		TYPE.put("tar", "application/x-tar");
-		TYPE.put("tgz", "application/x-compressed");
+		TYPE.put("tgz", "application/x-gzip");
 		TYPE.put("txt", "text/plain");
 		TYPE.put("wav", "audio/x-wav");
 		TYPE.put("wma", "audio/x-ms-wma");
@@ -108,6 +113,34 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		TYPE.put("xml", "text/xml");
 		TYPE.put("z", "application/x-compress");
 		TYPE.put("zip", "application/x-zip-compressed");
+
+		COMPRESSED.add("video/3gpp");
+		COMPRESSED.add("application/x-compress");
+		COMPRESSED.add("application/vnd.Android.package-archive");
+		COMPRESSED.add("video/x-ms-asf");
+		COMPRESSED.add("video/x-msvideo");
+		COMPRESSED.add("application/x-bzip2");
+		COMPRESSED.add("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+		COMPRESSED.add("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		COMPRESSED.add("application/vnd.openxmlformats-officedocument.presentationml.presentation");
+		COMPRESSED.add("application/x-gtar");
+		COMPRESSED.add("application/x-gzip");
+		COMPRESSED.add("application/java-archive");
+		COMPRESSED.add("audio/mp4a-latm");
+		COMPRESSED.add("video/x-m4v");
+		COMPRESSED.add("video/quicktime");
+		COMPRESSED.add("audio/x-mpeg");
+		COMPRESSED.add("video/mp4");
+		COMPRESSED.add("video/mpeg");
+		COMPRESSED.add("audio/mpeg");
+		COMPRESSED.add("audio/ogg");
+		COMPRESSED.add("application/x-rar-compressed");
+		COMPRESSED.add("audio/x-pn-realaudio");
+		COMPRESSED.add("application/x-tar");
+		COMPRESSED.add("audio/x-ms-wma");
+		COMPRESSED.add("audio/x-ms-wmv");
+		COMPRESSED.add("application/x-compress");
+		COMPRESSED.add("application/x-zip-compressed");
 	}
 
 	public Upload() {

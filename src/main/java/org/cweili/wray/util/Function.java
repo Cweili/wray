@@ -27,7 +27,7 @@ public class Function {
 
 	public static long decodeId(String id) {
 		long out = 0;
-		for (int i = id.length() - 1; i >= 0; --i) {
+		for (int i = 0; i < id.length(); ++i) {
 			out *= CHARS.length();
 			out += CHARS.toString().indexOf(id.charAt(i));
 		}
@@ -132,7 +132,7 @@ public class Function {
 		StringBuilder sb = new StringBuilder();
 		long ori = id;
 		while (ori > 0) {
-			sb.append(CHARS.charAt((int) (ori % CHARS.length())));
+			sb.insert(0, CHARS.charAt((int) (ori % CHARS.length())));
 			ori /= CHARS.length();
 		}
 		return sb.toString();

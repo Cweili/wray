@@ -30,7 +30,7 @@ public class UploadController extends BaseController {
 		Upload upload = uploadService.getUploadById(id);
 		if (null != upload && upload.getLength() > 0) {
 			response.setContentType(upload.getContentType());
-			response.setContentLength(upload.getLength());
+			// response.setContentLength(upload.getLength());
 			response.setHeader("Content-Disposition",
 					"attachment; filename=" + Function.urlEncode(upload.getFilename()));
 			response.setHeader("Accept-Ranges", "bytes");
@@ -42,6 +42,8 @@ public class UploadController extends BaseController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 		}
 		return null;
 	}

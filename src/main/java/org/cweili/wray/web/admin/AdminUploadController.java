@@ -79,7 +79,7 @@ public final class AdminUploadController extends BaseController {
 					item.getInputStream().read(content);
 					item.getInputStream().close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					log.error("InputStream Error.", e);
 					v.add("content", getError("文件保存错误"));
 					return v;
 				}
