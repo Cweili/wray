@@ -61,7 +61,7 @@ public class Function {
 	 * @return
 	 */
 	public synchronized static long generateId() {
-		long time = timestamp();
+		long time = timestamp() / 1000;
 		if (id < time) {
 			id = time;
 		} else {

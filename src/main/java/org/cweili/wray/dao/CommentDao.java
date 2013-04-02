@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @version 2012-8-21 下午4:07:20
  * 
  */
-public interface CommentDao extends MongoRepository<Comment, Long> {
+public interface CommentDao extends MongoRepository<Comment, String> {
 
 	public List<Comment> findByArticleIdAndStat(long articleId, byte stat);
 

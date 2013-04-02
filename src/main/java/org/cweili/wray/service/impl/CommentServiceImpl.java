@@ -31,17 +31,17 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public Comment save(Comment comment) {
-		if (0 == comment.getId()) {
-			comment.setId(Function.generateId());
+		if ("".equals(comment.getId())) {
+			comment.setId(Function.shortId(Function.generateId()));
 		}
 		return commentDao.save(comment);
 	}
 
 	@Override
-	public boolean remove(List<Long> ids) {
+	public boolean remove(List<String> ids) {
 		long before = commentDao.count();
 		List<Comment> comments = new ArrayList<Comment>();
-		for (long id : ids) {
+		for (String id : ids) {
 			Comment comment = new Comment();
 			comment.setId(id);
 			comments.add(comment);

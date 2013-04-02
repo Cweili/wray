@@ -15,7 +15,7 @@
             </div>
             <div class="left comment-info">
                 <div class="left">
-                    ${comment.postTime?string("yyyy-MM-dd HH:mm:ss")}
+                    ${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}
                     <#if (comment.parrentId > 0)>
                     @
                     <a href="${permalink}#${comment.parrentId}"

@@ -36,5 +36,5 @@ public interface CommentService {
 	 * @param ids
 	 * @return
 	 */
-	public boolean remove(List<Long> ids);
+	public boolean remove(List<String> ids);
 }

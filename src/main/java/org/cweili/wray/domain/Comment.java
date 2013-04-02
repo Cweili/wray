@@ -21,14 +21,14 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	@Transient
 	private static final long serialVersionUID = -767060507781375509L;
 	@Id
-	private long id = 0;
+	private String id = "";
 	@Indexed
 	private long articleId = 0;
 	private String author = "";
 	private String email = "";
 	private String link = "";
 	private String ip = "";
-	private Date postTime = new Date();
+	private Date postDate = new Date();
 	private String agent = "";
 	private String content = "";
 	private long parrentId = 0;
@@ -47,15 +47,15 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	 * @param email
 	 * @param link
 	 * @param ip
-	 * @param postTime
+	 * @param postDate
 	 * @param agent
 	 * @param content
 	 * @param parrentId
 	 * @param stat
 	 */
 	@PersistenceConstructor
-	public Comment(long id, long articleId, String author, String email, String link, String ip,
-			Date postTime, String agent, String content, long parrentId, byte stat) {
+	public Comment(String id, long articleId, String author, String email, String link, String ip,
+			Date postDate, String agent, String content, long parrentId, byte stat) {
 
 		this.id = id;
 		this.setArticleId(articleId);
@@ -63,7 +63,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.email = email;
 		this.link = link;
 		this.ip = ip;
-		this.postTime = postTime;
+		this.postDate = postDate;
 		this.agent = agent;
 		this.content = content;
 		this.parrentId = parrentId;
@@ -74,7 +74,17 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((agent == null) ? 0 : agent.hashCode());
+		result = prime * result + (int) (articleId ^ (articleId >>> 32));
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((ip == null) ? 0 : ip.hashCode());
+		result = prime * result + ((link == null) ? 0 : link.hashCode());
+		result = prime * result + (int) (parrentId ^ (parrentId >>> 32));
+		result = prime * result + ((postDate == null) ? 0 : postDate.hashCode());
+		result = prime * result + stat;
 		return result;
 	}
 
@@ -87,7 +97,51 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		if (getClass() != obj.getClass())
 			return false;
 		Comment other = (Comment) obj;
-		if (id != other.id)
+		if (agent == null) {
+			if (other.agent != null)
+				return false;
+		} else if (!agent.equals(other.agent))
+			return false;
+		if (articleId != other.articleId)
+			return false;
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
+			return false;
+		if (content == null) {
+			if (other.content != null)
+				return false;
+		} else if (!content.equals(other.content))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (ip == null) {
+			if (other.ip != null)
+				return false;
+		} else if (!ip.equals(other.ip))
+			return false;
+		if (link == null) {
+			if (other.link != null)
+				return false;
+		} else if (!link.equals(other.link))
+			return false;
+		if (parrentId != other.parrentId)
+			return false;
+		if (postDate == null) {
+			if (other.postDate != null)
+				return false;
+		} else if (!postDate.equals(other.postDate))
+			return false;
+		if (stat != other.stat)
 			return false;
 		return true;
 	}
@@ -100,19 +154,19 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	@Override
 	public int compareTo(Comment comment) {
-		if (this.id > comment.getId()) {
+		if (this.getPostDate().after(comment.getPostDate())) {
 			return 1;
-		} else if (this.id < comment.getId()) {
+		} else if (this.getPostDate().before(comment.getPostDate())) {
 			return -1;
 		}
 		return 0;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -156,12 +210,12 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.ip = ip;
 	}
 
-	public Date getPostTime() {
-		return postTime;
+	public Date getPostDate() {
+		return postDate;
 	}
 
-	public void setPostTime(Date postTime) {
-		this.postTime = postTime;
+	public void setPostDate(Date postDate) {
+		this.postDate = postDate;
 	}
 
 	public String getAgent() {
