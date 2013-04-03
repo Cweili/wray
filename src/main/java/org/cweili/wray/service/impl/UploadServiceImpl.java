@@ -47,7 +47,7 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 
 	@Override
 	public List<Upload> getUploads(int page, int size) {
-		return uploadDao.findAll(new PageRequest(page, size, new Sort(Sort.Direction.DESC, "_id")))
+		return uploadDao.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "_id"))
 				.getContent();
 	}
 

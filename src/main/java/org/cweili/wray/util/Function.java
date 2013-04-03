@@ -114,7 +114,7 @@ public class Function {
 	 * @return
 	 */
 	public static String requestScript(HttpServletRequest request) {
-		return request.getRequestURI().replaceFirst(request.getContextPath(), "").toLowerCase();
+		return request.getRequestURI().replaceFirst(request.getContextPath(), "");
 	}
 
 	/**

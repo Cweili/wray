@@ -23,7 +23,7 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="articleForm" action="admin-${adminAction}<#if adminAction="page-edit">-${articleId?if_exists?c}</#if>.html" method="post">
+		<form id="articleForm" action="admin-${adminAction}.html" method="post">
 			<fieldset><legend>页面信息</legend>
 				<div class="input_field">
 					<label for="title">页面标题</label>

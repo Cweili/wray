@@ -18,8 +18,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "article")
-@CompoundIndexes({ @CompoundIndex(def = "{'stat': 1, 'isPage': 1}"),
-		@CompoundIndex(def = "{'permalink': 1, 'isPage': 1}", unique = true) })
+@CompoundIndexes({
+		@CompoundIndex(name = "index_stat_isPage", def = "{'stat': 1, 'isPage': 1}"),
+		@CompoundIndex(name = "index_permalink_isPage", def = "{'permalink': 1, 'isPage': 1}", unique = true) })
 public class Article implements Serializable, Cloneable, Comparable<Article> {
 
 	private static final long serialVersionUID = 5085621145317473821L;

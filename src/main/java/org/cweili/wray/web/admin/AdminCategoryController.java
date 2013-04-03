@@ -43,7 +43,6 @@ public final class AdminCategoryController extends BaseController {
 			@PathVariable String categoryid) {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "编辑分类");
-		v.add("itemId", categoryid);
 		Item category = categoryService.findById(categoryid);
 		if (null != category) {
 			v.add("itemName", category.getItemName());
@@ -73,7 +72,6 @@ public final class AdminCategoryController extends BaseController {
 				categoryService.save(category);
 			} catch (Exception e) {
 				v.setView("category-edit");
-				v.add("itemId", categoryid);
 				v.add("itemName", category.getItemName());
 				v.add("description", category.getDescription());
 				v.add("itemOrder", category.getItemOrder());
@@ -167,7 +165,7 @@ public final class AdminCategoryController extends BaseController {
 		itemName = Function.trimAndStripTags(itemName);
 		itemName = "".equals(itemName) ? "未命名" + id : itemName;
 		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(itemName) + id : permalink;
+		permalink = "".equals(permalink) ? Function.permalink(itemName) + "-" + id : permalink;
 		description = Function.trimAndStripTags(description);
 
 		if (ori != null) {

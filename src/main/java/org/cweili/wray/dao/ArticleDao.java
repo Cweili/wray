@@ -1,5 +1,7 @@
 package org.cweili.wray.dao;
 
+import java.util.List;
+
 import org.cweili.wray.domain.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +19,7 @@ public interface ArticleDao extends BaseDao<Article> {
 	 * @param stat
 	 * @return
 	 */
-	public long countByIsPageAndStat(byte isPage, byte stat);
+	public List<Article> findByIsPageAndStat(byte isPage, byte stat);
 
 	/**
 	 * @param isPage

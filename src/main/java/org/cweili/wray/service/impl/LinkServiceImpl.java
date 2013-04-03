@@ -1,6 +1,5 @@
 package org.cweili.wray.service.impl;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.cweili.wray.domain.Item;
@@ -82,10 +81,7 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	@Override
 	public void updateLinkCache() {
 		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
-				new PageRequest(1, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
-		if (!links.isEmpty()) {
-			Collections.sort(links);
-		}
+				new PageRequest(0, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
 	}
 
 }

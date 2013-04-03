@@ -23,7 +23,7 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="articleForm" action="admin-${adminAction}<#if adminAction="article-edit">-${articleId?if_exists}</#if>.html" method="post">
+		<form id="articleForm" action="admin-${adminAction}.html" method="post">
 			<fieldset><legend>文章信息</legend>
 				<div class="input_field">
 					<label for="title">文章标题</label>
@@ -44,7 +44,7 @@
 					<label for="permalink">文章分类</label>
 					<span class="category">
 						<#list categories as category>
-							<input type="checkbox" name="category" value="${category.itemId?c}" <#if category.stat=2>checked="checked" </#if>/>
+							<input type="checkbox" name="category" value="${category.itemId}" <#if category.stat=2>checked="checked" </#if>/>
 							${category.itemName} &nbsp;
 						</#list>
 					</span>

@@ -14,7 +14,7 @@
 			<div class="clearboth"><!-- --></div>
 			<div style="height:400px"><!-- --></div>
 		<#else>
-			<form id="itemForm" action="admin-${adminAction}<#if adminAction="category-edit">-${itemId?if_exists?c}</#if>.html" method="post">
+			<form id="itemForm" action="admin-${adminAction}.html" method="post">
 				<fieldset><legend>分类信息</legend>
 					<div class="input_field">
 						<label for="itemName">分类名称</label>
@@ -37,7 +37,7 @@
 				</fieldset>
 				<fieldset><legend>保存分类</legend>
 					<div class="input_field no_margin_bottom">
-						<input class="submit" type="submit" value="保存链接" />
+						<input class="submit" type="submit" value="保存分类" />
 					</div>
 				</fieldset>
 			</form>

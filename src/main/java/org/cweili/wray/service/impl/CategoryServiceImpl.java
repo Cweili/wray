@@ -97,7 +97,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		}
 		updateCategoryCache();
 		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(1, 65536, Sort.Direction.DESC, "count")).getContent();
+				new PageRequest(0, 65536, Sort.Direction.DESC, "count")).getContent();
 	}
 
 	@Override
@@ -142,6 +142,6 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
-				new PageRequest(1, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
+				new PageRequest(0, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
 	}
 }

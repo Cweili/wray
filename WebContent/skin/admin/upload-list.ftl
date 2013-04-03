@@ -24,13 +24,13 @@
 					<#assign i = 0>
 					<#list uploads as upload>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
-						<td><input type="checkbox" name="id" value="${upload.id}" /></td>
-						<td><a href="${staticServePath}upload/${upload.id}/${upload.filename}">${upload.filename}</a></td>
+						<td><input type="checkbox" name="id" value="${upload.uploadId}" /></td>
+						<td><a href="${staticServePath}upload/${upload.uploadId}/${upload.filename}">${upload.filename}</a></td>
 						<td>${upload.uploadDate?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${(upload.length / 1024)?int} KB</td>
 						<td>
-							<a href="javascript:void(0)" onclick="deleteSingle('${upload.id}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
-							<a href="${staticServePath}upload/${upload.id}/${upload.filename}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="打开" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle('${upload.uploadId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="${staticServePath}upload/${upload.uploadId}/${upload.filename}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="打开" /></a>
 						</td>
 					</tr>
 					</#list>

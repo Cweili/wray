@@ -68,12 +68,12 @@ public abstract class BaseService {
 	/**
 	 * 回复排行数
 	 */
-	protected static int topCommentArticlesSize = 0;
+	protected static int topCommentArticlesSize = 1;
 
 	/**
 	 * 点击排行数
 	 */
-	protected static int topHitsArticlesSize = 0;
+	protected static int topHitsArticlesSize = 1;
 
 	/**
 	 * 已发布 Article 数

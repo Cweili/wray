@@ -24,13 +24,13 @@
 					<#assign i = 0>
 					<#list items as item>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
-						<td><input type="checkbox" name="id" value="${item.itemId?c}" /></td>
-						<td><a href="admin-link-edit-${item.itemId?c}.html">${item.itemName}</a></td>
+						<td><input type="checkbox" name="id" value="${item.itemId}" /></td>
+						<td><a href="admin-link-edit-${item.itemId}.html">${item.itemName}</a></td>
 						<td>${item.count}</td>
-						<td><input class="tinyfield" type="text" name="order${item.itemId?c}" value="${item.itemOrder}" /></td>
+						<td><input class="tinyfield" type="text" name="order${item.itemId}" value="${item.itemOrder}" /></td>
 						<td>
-							<a href="admin-category-edit-${item.itemId?c}.html"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${item.itemId?c});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="admin-category-edit-${item.itemId}.html"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle(${item.itemId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="category/${item.permalink}/" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>
@@ -55,7 +55,7 @@
 			$("#manageForm").validate({
 				rules: {
 					<#list items as item>
-					order${item.itemId?c}: {
+					order${item.itemId}: {
 						required:true,
 						digits:true,
 						range:[0,99]

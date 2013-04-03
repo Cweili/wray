@@ -26,7 +26,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public List<Comment> getComments(int page, int limit) {
-		return commentDao.findAll(new PageRequest(page, limit)).getContent();
+		return commentDao.findAll(new PageRequest(page - 1, limit)).getContent();
 	}
 
 	@Override

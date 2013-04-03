@@ -1,6 +1,5 @@
 package org.cweili.wray.web.admin;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -82,10 +81,8 @@ public final class AdminArticleController extends BaseController {
 		v.add("err", "succ");
 		v.add("msg", "文章保存成功");
 		v.add("succ", "恭喜您，您的文章已成功保存。");
-		try {
-			categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
-			articleService.save(article);
-		} catch (Exception e) {
+		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
+		if (null == articleService.save(article)) {
 			v.setView("article-edit");
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
@@ -139,27 +136,23 @@ public final class AdminArticleController extends BaseController {
 		v.add("articleId", articleid);
 		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
-		try {
-			List<Item> relatedItems = getRelatedItems(request);
-			List<Item> categories = categoryService.getCategories();
-			for (int i = 0; i < categories.size(); ++i) {
-				if (relatedItems.contains(categories.get(i))) {
-					Item category = categories.get(i);
-					category.setStat(Item.STAT_SELECTED);
-					categories.set(i, category);
-				}
+		List<Item> relatedItems = getRelatedItems(request);
+		List<Item> categories = categoryService.getCategories();
+		for (Item category : categories) {
+			if (relatedItems.contains(category)) {
+				category.setStat(Item.STAT_SELECTED);
 			}
-			v.add("categories", categories);
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("tag", article.getTag());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "succ");
-			categoryService.saveRelationshipWithArticle(article, relatedItems);
-			articleService.save(article);
-		} catch (Exception e) {
+		}
+		v.add("categories", categories);
+		v.add("title", article.getTitle());
+		v.add("permalink", article.getPermalink());
+		v.add("tag", article.getTag());
+		v.add("content", article.getContent());
+		v.add("commentStatus", article.getCommentStatus());
+		v.add("stat", article.getStat());
+		v.add("err", "succ");
+		categoryService.saveRelationshipWithArticle(article, relatedItems);
+		if (null == articleService.save(article)) {
 			v.add("err", "数据库更新失败");
 		}
 		return v;
@@ -211,7 +204,7 @@ public final class AdminArticleController extends BaseController {
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;
 		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
+		permalink = "".equals(permalink) ? Function.permalink(title) + "-" + id : permalink;
 		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 		StringBuilder tagSB = new StringBuilder("");
 		for (String tagStr : tag.split(",")) {
@@ -238,18 +231,14 @@ public final class AdminArticleController extends BaseController {
 				commentStatus, Article.TYPE_ARTICLE);
 	}
 
-	private List<Item> getRelatedItems(HttpServletRequest request) throws SQLException {
+	private List<Item> getRelatedItems(HttpServletRequest request) {
 		List<Item> relatedItems = new ArrayList<Item>();
 		Item addItem;
 		if (request.getParameterValues("category") != null) {
 			for (String catStr : request.getParameterValues("category")) {
-				try {
-					addItem = categoryService.findById(catStr);
-					if (null != addItem) {
-						relatedItems.add(addItem);
-					}
-				} catch (Exception e) {
-					log.error(e.toString());
+				addItem = categoryService.findById(catStr);
+				if (null != addItem) {
+					relatedItems.add(addItem);
 				}
 			}
 		}

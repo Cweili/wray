@@ -16,7 +16,7 @@
 						<a href="${path}page-${paginationPageNum?c}/">${paginationPageNum?c}</a>
 					</#if>
 				</#list>
-				<#if paginationPageNums?last != paginationPageCount>
+				<#if paginationCurrentPageNum != paginationPageCount>
 					<a id="nextPage" href="${path}page-${paginationNextPageNum?c}/">${nextPageLabel}</a>
 					<a href="${path}page-${paginationPageCount?c}/">${lastPageLabel}</a>
 				<#else>

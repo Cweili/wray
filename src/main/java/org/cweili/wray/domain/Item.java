@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "item")
-@CompoundIndex(def = "{'permalink': 1, 'itemType': 1}", unique = true)
+@CompoundIndex(name = "index_permalink_itemType", def = "{'permalink': 1, 'itemType': 1}", unique = true)
 public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	private static final long serialVersionUID = 644800170130656153L;

@@ -84,7 +84,7 @@
 	                <button id="submitCommentButton">${submmitCommentLabel}</button>
 	            </td>
 	        </tr>
-	        <input type="hidden" name="articleId" value="${articleId?c}">
+	        <input type="hidden" name="articleId" value="${articleId}">
 	        <input type="hidden" name="permalink" value="${permalink}">
 	    </tbody>
 	</table>
