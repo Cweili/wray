@@ -53,8 +53,8 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			// Not Admin and Admin view
 			if (!isAdminPanel) {
 
-				List<Article> pageNavigations = articleService.getArticlesByTypeStatus(
-						Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1, 0);
+				List<Article> pageNavigations = articleService.findByTypeStatus(Article.TYPE_PAGE,
+						Article.STAT_PUBLISHED, 1, 0);
 				mv.addObject("pageNavigations", pageNavigations);
 				mv.addObject("mostCommentArticles", articleService.getTopCommentArticles(Integer
 						.valueOf(blogConfig.get("topCommentArticlesSize"))));

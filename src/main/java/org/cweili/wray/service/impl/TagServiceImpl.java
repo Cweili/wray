@@ -1,10 +1,12 @@
 package org.cweili.wray.service.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.TagService;
+import org.cweili.wray.util.Function;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,13 +18,8 @@ import org.springframework.stereotype.Service;
 @Service("tagService")
 public class TagServiceImpl extends BaseService implements TagService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.TagService#getTagByName(java.lang.String)
-	 */
 	@Override
-	public Item getTagByName(String name) {
+	public Item findByName(String name) {
 		if (tags == null) {
 			updateTagCache();
 		}
@@ -34,13 +31,8 @@ public class TagServiceImpl extends BaseService implements TagService {
 		return null;
 	}
 
-	/*
-	 * （non-Javadoc）
-	 * 
-	 * @see
-	 * org.cweili.wray.service.TagService#getTagByPermalink(java.lang.String)
-	 */
-	public Item getTagByPermalink(String name) {
+	@Override
+	public Item findByPermalink(String name) {
 		if (tags == null) {
 			updateTagCache();
 		}
@@ -52,11 +44,6 @@ public class TagServiceImpl extends BaseService implements TagService {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.TagService#getTags()
-	 */
 	@Override
 	public List<Item> getTags() {
 		if (tags == null) {
@@ -65,92 +52,49 @@ public class TagServiceImpl extends BaseService implements TagService {
 		return tags;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.TagService#save(org.cweili.wray.domain.Item)
-	 */
 	@Override
-	public long save(Item tag, boolean updateCache) throws SQLException {
-		long rs = itemDao.save(tag);
-		if (rs < 1) {
-			throw new SQLException("Tag save error");
-		} else {
-			if (updateCache) {
+	public Item save(Item item) {
+		if ("".equals(item.getItemId())) {
+			item.setItemId(Function.generateId());
+		}
+		Item itemNew = itemDao.save(item);
+		if (null != itemNew) {
+			updateTagCache();
+		}
+		return itemNew;
+	}
+
+	@Override
+	public boolean remove(Item item) {
+		item = itemDao.findOne(item.getItemId());
+		if (null != item) {
+			item.setStat(Item.STAT_OFF);
+			Item itemNew = itemDao.save(item);
+			if (null != itemNew) {
 				updateTagCache();
 			}
+			return null != itemNew;
 		}
-		return rs;
+		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.TagService#update(org.cweili.wray.domain.Item)
-	 */
 	@Override
-	public boolean update(Item tag) throws SQLException {
-		int rs = itemDao.update(tag);
-		if (rs < 1) {
-			throw new SQLException("Tag update error");
-		} else {
+	public boolean remove(List<String> ids) {
+		Iterable<Item> items = itemDao.findAll(ids);
+		for (Item item : items) {
+			item.setStat(Item.STAT_OFF);
+		}
+		items = itemDao.save(items);
+		if (null != items) {
 			updateTagCache();
 		}
-		return rs > 0;
+		return null != items;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.TagService#remove(org.cweili.wray.domain.Item)
-	 */
-	@Override
-	public boolean remove(Item tag) throws SQLException {
-		int rs = itemDao.remove(tag);
-		if (rs < 1) {
-			throw new SQLException("Tag remove error");
-		} else {
-			updateTagCache();
-		}
-		return rs > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.TagService#remove(java.util.List)
-	 */
-	@Override
-	public boolean remove(List<Long> ids) throws SQLException {
-		int rs = itemDao.remove(ids);
-		if (rs < 1) {
-			throw new SQLException("Tag remove error");
-		} else {
-			updateTagCache();
-		}
-		return rs > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.TagService#updateTagCache()
-	 */
 	@Override
 	public void updateTagCache() {
-		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
-
-		// if(!tags.isEmpty()) {
-		// Collections.sort(tags, new Comparator<Item>() {
-		//
-		// public int compare(Item i1, Item i2) {
-		// return new Integer(i2.getCount()).compareTo(new
-		// Integer(i1.getCount()));
-		// }
-		// });
-		// }
+		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
+				new PageRequest(1, 65535, Sort.Direction.DESC, "count")).getContent();
 	}
 
 }

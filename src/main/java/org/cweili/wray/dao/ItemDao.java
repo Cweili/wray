@@ -1,8 +1,8 @@
 package org.cweili.wray.dao;
 
-import java.util.List;
-
 import org.cweili.wray.domain.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * 
@@ -12,9 +12,9 @@ import org.cweili.wray.domain.Item;
  */
 public interface ItemDao extends BaseDao<Item> {
 
-	public Item findByPermalinkAndItemType(String permalink, byte itemType);
+	public Item findByPermalinkAndItemTypeAndStat(String permalink, byte itemType, byte stat);
 
-	public List<Item> findByItemType(byte itemType);
+	public Page<Item> findByItemTypeAndStat(byte itemType, byte stat, Pageable page);
 
 	// /**
 	// * @param id

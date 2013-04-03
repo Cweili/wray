@@ -32,7 +32,7 @@ public interface ArticleDao extends BaseDao<Article> {
 	 * @param isPage
 	 * @return
 	 */
-	public Article findByPermalinkAndIsPage(String permalink, byte isPage);
+	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
 
 	// /**
 	// * @param type

@@ -24,4 +24,11 @@ public interface RelationshipDao extends BaseDao<Relationship> {
 	 */
 	public List<Relationship> findByItemId(String itemId);
 
+	/**
+	 * @param articleId
+	 * @param itemId
+	 * @return
+	 */
+	public Relationship findByArticleIdAndItemId(String articleId, String itemId);
+
 }

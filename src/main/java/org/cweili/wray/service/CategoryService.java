@@ -23,7 +23,7 @@ public interface CategoryService {
 
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems);
 
-	public Item save(Item category, boolean updateCache);
+	public Item save(Item category);
 
 	public boolean remove(Item category);
 

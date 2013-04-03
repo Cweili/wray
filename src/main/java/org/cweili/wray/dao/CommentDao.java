@@ -17,6 +17,6 @@ public interface CommentDao extends BaseDao<Comment> {
 	 * @param stat
 	 * @return
 	 */
-	public List<Comment> findByArticleIdAndStat(long articleId, byte stat);
+	public List<Comment> findByArticleIdAndStat(String articleId, byte stat);
 
 }

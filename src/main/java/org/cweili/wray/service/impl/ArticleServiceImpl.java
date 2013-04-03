@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 /**
  * 
  * @author cweili
- * @version 2012-8-16 下午5:17:58
+ * @version 2013-4-3 下午3:41:01
  * 
  */
 @Service("articleService")
@@ -63,8 +63,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				return pages;
 			} else {
 				return articleDao.findByIsPageAndStat(type, status,
-						new PageRequest(page, size, new Sort(Sort.Direction.ASC, "hits")))
-						.getContent();
+						new PageRequest(page, size, Sort.Direction.ASC, "hits")).getContent();
 			}
 		}
 	}
@@ -96,11 +95,14 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public Article findByPermalink(String permalink, byte type) {
-		return articleDao.findByPermalinkAndIsPage(permalink, type);
+		return articleDao.findByPermalinkAndIsPageAndStat(permalink, type, Article.STAT_PUBLISHED);
 	}
 
 	@Override
 	public Article save(Article article) {
+		if ("".equals(article.getArticleId())) {
+			article.setArticleId(Function.generateId());
+		}
 		Article articleNew = articleDao.save(article);
 		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
 			updateArticleCache();
@@ -162,7 +164,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public void updateArticleCache() {
 		pages = articleDao.findByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
-				new PageRequest(1, 65535, new Sort(Sort.Direction.ASC, "hits"))).getContent();
+				new PageRequest(1, 65535, Sort.Direction.ASC, "hits")).getContent();
 		publishedArticleCount = (int) articleDao.countByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED);
 	}
@@ -170,15 +172,13 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public void updateSidebarArticleCache() {
 
-		topCommentArticles = articleDao.findByIsPageAndStat(
-				Article.TYPE_ARTICLE,
+		topCommentArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED,
-				new PageRequest(1, topCommentArticlesSize, new Sort(Sort.Direction.DESC,
-						"comment_count"))).getContent();
+				new PageRequest(1, topCommentArticlesSize, Sort.Direction.DESC, "comment_count"))
+				.getContent();
 		topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED,
-				new PageRequest(1, topHitsArticlesSize, new Sort(Sort.Direction.DESC, "hits")))
-				.getContent();
+				new PageRequest(1, topHitsArticlesSize, Sort.Direction.DESC, "hits")).getContent();
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	 */
 	private List<Article> findByTypeStatusInDao(byte type, byte status, int page, int size) {
 		return articleDao.findByIsPageAndStat(type, status,
-				new PageRequest(page, size, new Sort(Sort.Direction.DESC, "_id"))).getContent();
+				new PageRequest(page, size, Sort.Direction.DESC, "_id")).getContent();
 	}
 
 	/**

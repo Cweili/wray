@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -22,7 +23,9 @@ public class Relationship implements Serializable, Cloneable {
 	private static final long serialVersionUID = -198625132517703178L;
 	@Id
 	private String id;
+	@Indexed
 	private String articleId;
+	@Indexed
 	private String itemId;
 
 	public Relationship() {

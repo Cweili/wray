@@ -31,8 +31,8 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public Comment save(Comment comment) {
-		if ("".equals(comment.getId())) {
-			comment.setId(Function.shortId(Function.generateId()));
+		if ("".equals(comment.getCommentId())) {
+			comment.setCommentId(Function.generateId());
 		}
 		return commentDao.save(comment);
 	}
@@ -43,7 +43,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		List<Comment> comments = new ArrayList<Comment>();
 		for (String id : ids) {
 			Comment comment = new Comment();
-			comment.setId(id);
+			comment.setCommentId(id);
 			comments.add(comment);
 		}
 		commentDao.delete(comments);

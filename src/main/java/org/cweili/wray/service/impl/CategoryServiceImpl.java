@@ -1,6 +1,5 @@
 package org.cweili.wray.service.impl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +7,15 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.CategoryService;
+import org.cweili.wray.util.Function;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
  * 
  * @author cweili
- * @version 2012-8-16 下午5:22:11
+ * @version 2013-4-3 下午3:40:51
  * 
  */
 @Service("categoryService")
@@ -69,85 +71,77 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems) {
 		List<Relationship> relationships = relationshipDao.findByArticleId(article.getArticleId());
-		List<Item> old = itemDao.getItemsByRelationship(article.getArticleId());
-		List<Long> relatedIds = new ArrayList<Long>();
+		List<Item> old = new ArrayList<Item>();
+		Item itemOld;
+		for (Relationship relationship : relationships) {
+			itemOld = itemDao.findOne(relationship.getItemId());
+			if (null != itemOld) {
+				old.add(itemOld);
+			}
+		}
 		for (Item item : old) {
 			if (!relatedItems.contains(item)) {
 				item.setCount(item.getCount() - 1);
-				itemDao.update(item);
+				itemDao.save(item);
+				relationshipDao.delete(relationshipDao.findByArticleIdAndItemId(
+						article.getArticleId(), item.getItemId()));
 			}
 		}
 		for (Item item : relatedItems) {
 			if (!old.contains(item)) {
 				item.setCount(item.getCount() + 1);
-				itemDao.update(item);
+				itemDao.save(item);
 			}
-			relatedIds.add(item.getItemId());
+			relationshipDao.save(new Relationship(Function.generateId(), article.getArticleId(),
+					item.getItemId()));
 		}
-		relationshipDao.saveOrUpdate(article, relatedIds);
 		updateCategoryCache();
-		tags = itemDao.getItems(Item.TYPE_TAG, "count DESC");
+		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
+				new PageRequest(1, 65536, Sort.Direction.DESC, "count")).getContent();
 	}
 
 	@Override
-	public long save(Item category) throws SQLException {
-		long rs = itemDao.save(category);
-		if (rs < 1) {
-			throw new SQLException("Category save error");
-		} else {
+	public Item save(Item item) {
+		if ("".equals(item.getItemId())) {
+			item.setItemId(Function.generateId());
+		}
+		Item itemNew = itemDao.save(item);
+		if (null != itemNew) {
 			updateCategoryCache();
 		}
-		return rs;
+		return itemNew;
 	}
 
 	@Override
-	public boolean update(Item category, boolean updateCache) throws SQLException {
-		int rs = itemDao.update(category);
-		if (rs < 1) {
-			throw new SQLException("Category update error");
-		} else {
-			if (updateCache) {
+	public boolean remove(Item item) {
+		item = itemDao.findOne(item.getItemId());
+		if (null != item) {
+			item.setStat(Item.STAT_OFF);
+			Item itemNew = itemDao.save(item);
+			if (null != itemNew) {
 				updateCategoryCache();
 			}
+			return null != itemNew;
 		}
-		return rs > 0;
+		return false;
 	}
 
 	@Override
-	public boolean remove(Item category) throws SQLException {
-		int rs = itemDao.remove(category);
-		if (rs < 1) {
-			throw new SQLException("Category remove error");
-		} else {
+	public boolean remove(List<String> ids) {
+		Iterable<Item> items = itemDao.findAll(ids);
+		for (Item item : items) {
+			item.setStat(Item.STAT_OFF);
+		}
+		items = itemDao.save(items);
+		if (null != items) {
 			updateCategoryCache();
 		}
-		return rs > 0;
-	}
-
-	@Override
-	public boolean remove(List<Long> ids) throws SQLException {
-		int rs = itemDao.remove(ids);
-		if (rs < 1) {
-			throw new SQLException("Category remove error");
-		} else {
-			updateCategoryCache();
-		}
-		return rs > 0;
+		return null != items;
 	}
 
 	@Override
 	public void updateCategoryCache() {
-		categories = itemDao.getItems(Item.TYPE_CATEGORY, "item_order");
-
-		// if(!categories.isEmpty()) {
-		// Collections.sort(categories, new Comparator<Item>() {
-		//
-		// public int compare(Item i1, Item i2) {
-		// return new Integer(i1.getItemOrder()).compareTo(new
-		// Integer(i2.getItemOrder()));
-		// }
-		// });
-		// }
+		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
+				new PageRequest(1, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
 	}
-
 }

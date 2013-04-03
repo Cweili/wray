@@ -1,46 +1,37 @@
 package org.cweili.wray.service.impl;
 
-import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.LinkService;
+import org.cweili.wray.util.Function;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
  * 
  * @author cweili
- * @version 2012-8-16 下午5:23:06
+ * @version 2013-4-3 下午3:40:41
  * 
  */
 @Service("linkService")
 public class LinkServiceImpl extends BaseService implements LinkService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.LinkService#getLinkById(long)
-	 */
 	@Override
-	public Item getLinkById(long id) {
+	public Item findById(String itemId) {
 		if (links == null) {
 			updateLinkCache();
 		}
 		for (Item item : links) {
-			if (item.getItemId() == id) {
+			if (item.getItemId().equals(itemId)) {
 				return item;
 			}
 		}
-		return itemDao.getItemById(id);
+		return itemDao.findOne(itemId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.LinkService#getLinks()
-	 */
 	@Override
 	public List<Item> getLinks() {
 		if (links == null) {
@@ -49,90 +40,51 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 		return links;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.LinkService#save(org.cweili.wray.domain.Item)
-	 */
 	@Override
-	public long save(Item link) throws SQLException {
-		long rs = itemDao.save(link);
-		if (rs < 1) {
-			throw new SQLException("Link save error");
-		} else {
+	public Item save(Item item) {
+		if ("".equals(item.getItemId())) {
+			item.setItemId(Function.generateId());
+		}
+		Item itemNew = itemDao.save(item);
+		if (null != itemNew) {
 			updateLinkCache();
 		}
-		return rs;
+		return itemNew;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.LinkService#update(org.cweili.wray.domain.Item)
-	 */
 	@Override
-	public boolean update(Item link, boolean updateCache) throws SQLException {
-		int rs = itemDao.update(link);
-		if (rs < 1) {
-			throw new SQLException("Link update error");
-		} else {
-			if (updateCache) {
+	public boolean remove(Item item) {
+		item = itemDao.findOne(item.getItemId());
+		if (null != item) {
+			item.setStat(Item.STAT_OFF);
+			Item itemNew = itemDao.save(item);
+			if (null != itemNew) {
 				updateLinkCache();
 			}
+			return null != itemNew;
 		}
-		return rs > 0;
+		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.LinkService#remove(org.cweili.wray.domain.Item)
-	 */
 	@Override
-	public boolean remove(Item link) throws SQLException {
-		int rs = itemDao.remove(link);
-		if (rs < 1) {
-			throw new SQLException("Link remove error");
-		} else {
+	public boolean remove(List<String> ids) {
+		Iterable<Item> items = itemDao.findAll(ids);
+		for (Item item : items) {
+			item.setStat(Item.STAT_OFF);
+		}
+		items = itemDao.save(items);
+		if (null != items) {
 			updateLinkCache();
 		}
-		return rs > 0;
+		return null != items;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.LinkService#remove(java.util.List)
-	 */
-	@Override
-	public boolean remove(List<Long> ids) throws SQLException {
-		int rs = itemDao.remove(ids);
-		if (rs < 1) {
-			throw new SQLException("Link remove error");
-		} else {
-			updateLinkCache();
-		}
-		return rs > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.LinkService#updateLinkCache()
-	 */
 	@Override
 	public void updateLinkCache() {
-		links = itemDao.getItems(Item.TYPE_LINK, "item_order");
+		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
+				new PageRequest(1, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
 		if (!links.isEmpty()) {
-			Collections.sort(links, new Comparator<Item>() {
-
-				public int compare(Item i1, Item i2) {
-					return new Integer(i1.getItemOrder()).compareTo(new Integer(i2.getItemOrder()));
-				}
-			});
+			Collections.sort(links);
 		}
 	}
 
