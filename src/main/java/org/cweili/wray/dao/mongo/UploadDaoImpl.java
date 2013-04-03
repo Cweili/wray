@@ -9,6 +9,9 @@ import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.Function;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -24,16 +27,6 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	private static final String UPLOAD_FILE_GRIDFS = "upload";
 	private static Log log = LogFactory.getLog(UploadDaoImpl.class);
 	private static GridFS gfs;
-
-	@Override
-	public Iterable<Upload> findAll(int start, int limit) {
-		Query q = new Query();
-		q.with(new Sort(Sort.Direction.DESC, "_id"));
-		q.skip(start);
-		q.limit(limit);
-		log.info("Find upload from " + start + " to " + limit);
-		return db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files");
-	}
 
 	@Override
 	public long count() {
@@ -52,16 +45,16 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	@Override
 	public void delete(Upload upload) {
 		setGfs();
-		gfs.remove(new BasicDBObject("_id", upload.getId()));
-		log.info("Delete upload " + upload.getId());
+		gfs.remove(new BasicDBObject("_id", upload.getUploadId()));
+		log.info("Delete upload " + upload.getUploadId());
 	}
 
 	@Override
 	public void delete(Iterable<? extends Upload> uploadList) {
 		setGfs();
 		for (Upload upload : uploadList) {
-			gfs.remove(new BasicDBObject("_id", upload.getId()));
-			log.info("Delete upload " + upload.getId());
+			gfs.remove(new BasicDBObject("_id", upload.getUploadId()));
+			log.info("Delete upload " + upload.getUploadId());
 		}
 	}
 
@@ -107,14 +100,14 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	@Override
 	public <S extends Upload> S save(S upload) {
-		if ("".equals(upload.getId())) {
-			upload.setId(Function.shortId(Function.generateId()));
+		if ("".equals(upload.getUploadId())) {
+			upload.setUploadId(Function.generateId());
 		}
 		setGfs();
 		GridFSInputFile file = gfs.createFile(upload.getContent());
 		file.setFilename(upload.getFilename());
 		file.setContentType(upload.getContentType());
-		file.setId(upload.getId());
+		file.setId(upload.getUploadId());
 		file.save();
 		log.info("Save upload " + upload.getFilename());
 		return upload;
@@ -129,6 +122,22 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		if (null == gfs) {
 			gfs = new GridFS(db.getDb(), UPLOAD_FILE_GRIDFS);
 		}
+	}
+
+	@Override
+	public Iterable<Upload> findAll(Sort arg0) {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+	@Override
+	public Page<Upload> findAll(Pageable page) {
+		Query q = new Query();
+		q.with(page.getSort());
+		q.skip(page.getOffset());
+		q.limit(page.getPageSize());
+		log.info("Find upload from " + page.getOffset() + " to " + page.getOffset());
+		return new PageImpl<Upload>(db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files"));
 	}
 
 }

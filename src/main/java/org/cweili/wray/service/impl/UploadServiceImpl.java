@@ -6,6 +6,8 @@ import java.util.List;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.Zlib;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service("uploadService")
@@ -26,7 +28,7 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 		List<Upload> uploadList = new ArrayList<Upload>();
 		for (String id : ids) {
 			Upload upload = new Upload();
-			upload.setId(id);
+			upload.setUploadId(id);
 			uploadList.add(upload);
 		}
 		uploadDao.delete(uploadList);
@@ -44,9 +46,9 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 	}
 
 	@Override
-	public List<Upload> getUploads(int page, int limit) {
-		int start = (page - 1) * limit;
-		return (List<Upload>) uploadDao.findAll(start, limit);
+	public List<Upload> getUploads(int page, int size) {
+		return uploadDao.findAll(new PageRequest(page, size, new Sort(Sort.Direction.DESC, "_id")))
+				.getContent();
 	}
 
 	@Override
