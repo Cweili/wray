@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package org.cweili.wray.service;
 
 import java.util.List;
@@ -7,10 +10,10 @@ import org.cweili.wray.domain.Article;
 /**
  * 
  * @author cweili
- * @version 2013-4-3 下午12:52:59
+ * @version 2013-4-3 下午2:09:36
  * 
  */
-public interface ArticleService {
+public interface PageService {
 
 	public int countByTypeStatus(byte type, byte status);
 
@@ -38,6 +41,4 @@ public interface ArticleService {
 	public List<Article> getTopHitsArticles(int num);
 
 	public void updateArticleCache();
-
-	public void updateSidebarArticleCache();
 }

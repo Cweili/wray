@@ -84,7 +84,7 @@ public final class AdminUploadController extends BaseController {
 					return v;
 				}
 
-				String id = Function.shortId(Function.generateId());
+				String id = Function.generateId();
 				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
 
 				String filenameNew = filename.substring(0, filename.lastIndexOf("."));

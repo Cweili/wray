@@ -2,6 +2,11 @@ package org.cweili.wray.domain;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Item Model
  * 
@@ -9,10 +14,13 @@ import java.io.Serializable;
  * @version 2012-8-16 下午5:12:40
  * 
  */
+@Document(collection = "item")
+@CompoundIndex(def = "{'permalink': 1, 'itemType': 1}", unique = true)
 public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	private static final long serialVersionUID = 644800170130656153L;
-	private long itemId = 0;
+	@Id
+	private String itemId = "";
 	private String itemName = "";
 	private String permalink = "";
 	private String description = "";
@@ -20,6 +28,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	private byte itemOrder = 0;
 	private byte itemType = TYPE_CATEGORY;
 	private long parrentId = 0;
+	@Indexed
 	private byte stat = STAT_ON;
 
 	public static final byte TYPE_CATEGORY = 0;
@@ -46,7 +55,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	 * @param parrentId
 	 * @param stat
 	 */
-	public Item(long itemId, String itemName, String permalink, String description, int count,
+	public Item(String itemId, String itemName, String permalink, String description, int count,
 			byte itemOrder, byte itemType, long parrentId, byte stat) {
 		super();
 		this.itemId = itemId;
@@ -64,7 +73,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (itemId ^ (itemId >>> 32));
+		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
 		return result;
 	}
 
@@ -77,7 +86,10 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		if (getClass() != obj.getClass())
 			return false;
 		Item other = (Item) obj;
-		if (itemId != other.itemId)
+		if (itemId == null) {
+			if (other.itemId != null)
+				return false;
+		} else if (!itemId.equals(other.itemId))
 			return false;
 		return true;
 	}
@@ -91,19 +103,19 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	@Override
 	public int compareTo(Item item) {
-		if (this.itemId > item.getItemId()) {
+		if (this.getItemOrder() > item.getItemOrder()) {
 			return 1;
-		} else if (this.itemId < item.getItemId()) {
+		} else if (this.getItemOrder() < item.getItemOrder()) {
 			return -1;
 		}
 		return 0;
 	}
 
-	public long getItemId() {
+	public String getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(long itemId) {
+	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 

@@ -1,6 +1,5 @@
 package org.cweili.wray.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
@@ -9,76 +8,26 @@ import org.cweili.wray.domain.Item;
 /**
  * 
  * @author cweili
- * @version 2012-8-16 下午5:16:29
+ * @version 2013-4-3 下午2:04:55
  * 
  */
 public interface CategoryService {
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	public Item getCategoryById(long id);
+	public Item findById(String itemId);
 
-	/**
-	 * @param permalink
-	 * @return
-	 */
-	public Item getCategoryByPermalink(String permalink);
+	public Item findByPermalink(String permalink);
 
-	/**
-	 * @return
-	 */
 	public List<Item> getCategories();
 
-	/**
-	 * @param article
-	 * @return
-	 */
-	public List<Long> getRelatedIdsByArticle(Article article);
+	public List<Item> findByArticle(Article article);
 
-	/**
-	 * @param article
-	 * @return
-	 */
-	public List<Item> getCategoriesByArticle(Article article);
-
-	/**
-	 * @param article
-	 * @param relatedItems
-	 */
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems);
 
-	/**
-	 * @param category
-	 * @return
-	 * @throws SQLException
-	 */
-	public long save(Item category) throws SQLException;
+	public Item save(Item category, boolean updateCache);
 
-	/**
-	 * @param category
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean update(Item category, boolean updateCache) throws SQLException;
+	public boolean remove(Item category);
 
-	/**
-	 * @param category
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean remove(Item category) throws SQLException;
+	public boolean remove(List<String> ids);
 
-	/**
-	 * @param ids
-	 * @return
-	 * @throws SQLException
-	 */
-	public boolean remove(List<Long> ids) throws SQLException;
-
-	/**
-	 * 
-	 */
 	public void updateCategoryCache();
 }

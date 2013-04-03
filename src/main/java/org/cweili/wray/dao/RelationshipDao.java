@@ -2,25 +2,26 @@ package org.cweili.wray.dao;
 
 import java.util.List;
 
+import org.cweili.wray.domain.Relationship;
+
 /**
  * 
  * @author Cweili
- * @version 2012-8-16 下午10:55:52
+ * @version 2013-4-3 上午11:20:43
  * 
  */
-public interface RelationshipDao extends BaseDao<long[]> {
+public interface RelationshipDao extends BaseDao<Relationship> {
 
 	/**
-	 * @param object
-	 * @param relatedIds
+	 * @param articleId
 	 * @return
 	 */
-	public int[] saveOrUpdate(Object object, List<Long> relatedIds);
+	public List<Relationship> findByArticleId(String articleId);
 
 	/**
-	 * @param object
+	 * @param itemId
 	 * @return
 	 */
-	public List<Long> getRelatedIds(Object object);
+	public List<Relationship> findByItemId(String itemId);
 
 }

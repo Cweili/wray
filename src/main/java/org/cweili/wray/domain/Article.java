@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  * Article Model
  * 
@@ -11,12 +17,17 @@ import java.util.Date;
  * @version 2012-8-16 下午5:10:14
  * 
  */
+@Document(collection = "article")
+@CompoundIndexes({ @CompoundIndex(def = "{'stat': 1, 'isPage': 1}"),
+		@CompoundIndex(def = "{'permalink': 1, 'isPage': 1}", unique = true) })
 public class Article implements Serializable, Cloneable, Comparable<Article> {
 
-	private static final long serialVersionUID = 1970391421601024172L;
-	private long articleId = 0;
+	private static final long serialVersionUID = 5085621145317473821L;
+	@Id
+	private String articleId = "";
 	private String title = "";
 	private String permalink = "";
+	@Transient
 	private String content = "";
 	private String tag = "";
 	private Date createTime = new Date();
@@ -53,7 +64,7 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	 * @param commentStatus
 	 * @param isPage
 	 */
-	public Article(long articleId, String title, String permalink, String content, String tag,
+	public Article(String articleId, String title, String permalink, String content, String tag,
 			Date createTime, byte stat, int hits, int commentCount, byte commentStatus, byte isPage) {
 		this.articleId = articleId;
 		this.title = title;
@@ -73,7 +84,7 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (articleId ^ (articleId >>> 32));
+		result = prime * result + ((articleId == null) ? 0 : articleId.hashCode());
 		return result;
 	}
 
@@ -86,7 +97,10 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 		if (getClass() != obj.getClass())
 			return false;
 		Article other = (Article) obj;
-		if (articleId != other.articleId)
+		if (articleId == null) {
+			if (other.articleId != null)
+				return false;
+		} else if (!articleId.equals(other.articleId))
 			return false;
 		return true;
 	}
@@ -101,19 +115,19 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 
 	@Override
 	public int compareTo(Article article) {
-		if (this.articleId > article.getArticleId()) {
+		if (this.getCreateTime().after(article.getCreateTime())) {
 			return 1;
-		} else if (this.articleId < article.getArticleId()) {
+		} else if (this.getCreateTime().before(article.getCreateTime())) {
 			return -1;
 		}
 		return 0;
 	}
 
-	public long getArticleId() {
+	public String getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(long articleId) {
+	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 

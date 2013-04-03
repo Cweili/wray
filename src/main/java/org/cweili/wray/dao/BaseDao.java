@@ -1,29 +1,16 @@
-package org.cweili.wray.dao;
-
 /**
  * 
- * @author cweili
- * @version 2012-8-16 下午5:07:27
- * 
- * @param <T>
  */
-public interface BaseDao<T> {
+package org.cweili.wray.dao;
 
-	/**
-	 * @param t
-	 * @return
-	 */
-	public long save(final T t);
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-	/**
-	 * @param t
-	 * @return
-	 */
-	public int update(final T t);
+/**
+ *
+ * @author Cweili
+ * @version 2013-4-3 上午11:27:37
+ *
+ */
+public interface BaseDao<T> extends MongoRepository<T, String> {
 
-	/**
-	 * @param t
-	 * @return
-	 */
-	public int remove(final T t);
 }

@@ -11,7 +11,7 @@ import org.cweili.wray.domain.User;
  * @version 2012-8-16 下午5:08:39
  * 
  */
-public interface UserDao extends BaseDao<User> {
+public interface UserDao extends OldBaseDao<User> {
 
 	/**
 	 * @param start

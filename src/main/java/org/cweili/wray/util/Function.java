@@ -60,14 +60,14 @@ public class Function {
 	 * 
 	 * @return
 	 */
-	public synchronized static long generateId() {
+	public synchronized static String generateId() {
 		long time = timestamp() / 1000;
 		if (id < time) {
 			id = time;
 		} else {
 			++id;
 		}
-		return id;
+		return shortId(id);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class Function {
 		return (((double) a / (double) b) > (a / b) ? a / b + 1 : a / b);
 	}
 
-	public static String shortId(long id) {
+	private static String shortId(long id) {
 		StringBuilder sb = new StringBuilder();
 		long ori = id;
 		while (ori > 0) {

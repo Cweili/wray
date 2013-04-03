@@ -1,12 +1,16 @@
 package org.cweili.wray.service.impl;
 
-import java.sql.SQLException;
-import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Function;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,346 +22,175 @@ import org.springframework.stereotype.Service;
 @Service("articleService")
 public class ArticleServiceImpl extends BaseService implements ArticleService {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getCountByTypeStatus(byte,
-	 * byte)
-	 */
 	@Override
-	public int getCountByTypeStatus(byte type, byte status) {
+	public int countByTypeStatus(byte type, byte status) {
 
 		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED
 				&& publishedArticleCount == 0) {
 			updateArticleCache();
 		} else if (type != Article.TYPE_ARTICLE || status != Article.STAT_PUBLISHED) {
-			return articleDao.getCountByTypeStatus(type, status);
+			return (int) articleDao.countByIsPageAndStat(type, status);
 		}
 		return publishedArticleCount;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getCountByrelationship(long,
-	 * byte, byte)
-	 */
 	@Override
-	public int getCountByrelationship(long id, byte type, byte status) {
-		return articleDao.getCountByRelationship(id, type, status);
+	public int countByRelationship(String itemId, byte type, byte status) {
+		List<Relationship> relationships = relationshipDao.findByArticleId(itemId);
+		List<Article> articles = new ArrayList<Article>();
+		Article article;
+		for (Relationship relationship : relationships) {
+			article = articleDao.findOne(relationship.getArticleId());
+			if (null != article && type == article.getIsPage() && status == article.getStat()) {
+				articles.add(articleDao.findOne(relationship.getArticleId()));
+			}
+		}
+		return articles.size();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getArticlesByTypeStatus(byte,
-	 * byte, int, int)
-	 */
 	@Override
-	public List<Article> getArticlesByTypeStatus(byte type, byte status, int page, int limit) {
-		int start = (page - 1) * limit;
-		// List<Article> list;
-
-		// switch (status) {
-		// case Article.STAT_PUBLISHED:
-		// if(type == Article.TYPE_ARTICLE) {
-		// if (articles == null) {
-		// updateArticleCache();
-		// }
-		// if(!articles.isEmpty()) {
-		// start = start < articles.size() ? start : articles.size() - 1;
-		// limit = (start + limit) < articles.size() ? (start + limit) :
-		// articles.size();
-		// return dealList(articles.subList(start, limit));
-		// } else {
-		// return articles;
-		// }
-		// } else {
-		// if (pages == null) {
-		// updateArticleCache();
-		// }
-		// if(!pages.isEmpty()) {
-		// start = start < pages.size() ? start : pages.size() - 1;
-		// limit = (start + limit) < pages.size() ? (start + limit) :
-		// pages.size();
-		// return dealList(pages.subList(start, limit));
-		// } else {
-		// return pages;
-		// }
-		// }
-		// default:
-		// list = articleDao.getArticlesByTypeStatus(type, status);
-		// }
-		// if(!list.isEmpty()) {
-		// Collections.reverse(list);
-		// start = start < list.size() ? start : list.size() - 1;
-		// limit = (start + limit) < list.size() ? (start + limit) :
-		// list.size();
-		// return dealList(list.subList(start, limit));
-		// } else {
-		// return list;
-		// }
+	public List<Article> findByTypeStatus(byte type, byte status, int page, int size) {
 		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED) {
-			return dealList(articleDao.getArticles(type, status, start, limit));
+			return dealList(findByTypeStatusInDao(type, status, page, size));
 		} else if (type == Article.TYPE_ARTICLE) {
-			return articleDao.getMetas(type, status, start, limit, "article_id DESC");
+			return findByTypeStatusInDao(type, status, page, size);
 		} else {
-			if (limit < 1 && status == Article.STAT_PUBLISHED) {
+			if (size < 1 && status == Article.STAT_PUBLISHED) {
 				if (pages == null) {
 					updateArticleCache();
 					return pages;
 				}
 				return pages;
 			} else {
-				return articleDao.getMetas(type, status, start, limit, "hits");
+				return articleDao.findByIsPageAndStat(type, status,
+						new PageRequest(page, size, new Sort(Sort.Direction.ASC, "hits")))
+						.getContent();
 			}
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#getArticlesByRelationship(long,
-	 * byte, byte, int, int)
-	 */
 	@Override
-	public List<Article> getArticlesByRelationship(long id, byte type, byte status, int page,
-			int limit) {
-		int start = (page - 1) * limit;
-		return articleDao.getMetasByRelationship(id, type, status, start, limit, "article_id DESC");
+	public List<Article> findByRelationship(String itemId, byte type, byte status, int page,
+			int size) {
+		page = page > 0 ? page : 1;
+		size = size > 0 ? size : 1;
+		List<Relationship> relationships = relationshipDao.findByArticleId(itemId);
+		List<Article> articles = new LinkedList<Article>();
+		Article article;
+		for (Relationship relationship : relationships) {
+			article = articleDao.findOne(relationship.getArticleId());
+			if (null != article && type == article.getIsPage() && status == article.getStat()) {
+				articles.add(articleDao.findOne(relationship.getArticleId()));
+			}
+		}
+		Collections.sort(articles);
+		int end = size * page - 1;
+		end = end < articles.size() ? end : articles.size() - 1;
+		return articles.subList(size * (page - 1), end);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getArticleById(long)
-	 */
 	@Override
-	public Article getArticleById(long id) {
-		return articleDao.getArticleById(id);
+	public Article findById(String articleId) {
+		return articleDao.findOne(articleId);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#getArticleByPermalink(java.lang
-	 * .String)
-	 */
 	@Override
-	public Article getArticleByPermalink(String Permalink) {
-		return articleDao.getArticleByPermalink(Permalink);
+	public Article findByPermalink(String permalink, byte type) {
+		return articleDao.findByPermalinkAndIsPage(permalink, type);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#save(org.cweili.wray.domain.Article
-	 * )
-	 */
 	@Override
-	public long save(Article article) throws SQLException {
-		long rs = articleDao.save(article);
-		if (rs < 1) {
-			throw new SQLException("Article save error");
-		} else if (article.getStat() == Article.STAT_PUBLISHED) {
+	public Article save(Article article) {
+		Article articleNew = articleDao.save(article);
+		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
 			updateArticleCache();
 			updateSidebarArticleCache();
 		}
-		return rs;
+		return articleNew;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#update(org.cweili.wray.domain.
-	 * Article)
-	 */
 	@Override
-	public boolean update(Article article) throws SQLException {
-		int rs = articleDao.update(article);
-		if (rs == 0) {
-			throw new SQLException("Article update error");
-		} else {
+	public boolean updateHits(Article article) {
+		article.setHits(article.getHits() + 1);
+		Article articleNew = articleDao.save(article);
+		return null != articleNew;
+	}
+
+	@Override
+	public boolean remove(Article article) {
+		article.setStat(Article.STAT_REMOVED);
+		Article articleNew = articleDao.save(article);
+		if (null != articleNew) {
 			updateArticleCache();
 			updateSidebarArticleCache();
 		}
-		return rs > 0;
+		return null != articleNew;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#updateHits(org.cweili.wray.domain
-	 * .Article)
-	 */
 	@Override
-	public boolean updateHits(Article article) throws SQLException {
-		int rs = articleDao.updateColumn(article, "hits", Types.INTEGER, article.getHits());
-		if (rs == 0) {
-			throw new SQLException("Article update error");
+	public boolean updateStatus(List<String> ids, byte status) {
+		Iterable<Article> articles = articleDao.findAll(ids);
+		for (Article article : articles) {
+			article.setStat(status);
 		}
-		return rs > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.cweili.wray.service.ArticleService#remove(org.cweili.wray.domain.
-	 * Article)
-	 */
-	@Override
-	public boolean remove(Article article) throws SQLException {
-		int rs = articleDao.remove(article);
-		if (rs == 0) {
-			throw new SQLException("Article remove error");
-		} else {
+		articles = articleDao.save(articles);
+		if (null != articles) {
 			updateArticleCache();
 			updateSidebarArticleCache();
 		}
-		return rs > 0;
+		return null != articles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#remove(java.util.List, byte)
-	 */
-	@Override
-	public boolean remove(List<Long> ids, byte type) throws SQLException {
-		int rs = articleDao.remove(ids, type);
-		if (rs == 0) {
-			throw new SQLException("Article remove error");
-		} else {
-			updateArticleCache();
-			updateSidebarArticleCache();
-		}
-		return 0 > 0;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getTopCommentArticles(int)
-	 */
 	@Override
 	public List<Article> getTopCommentArticles(int num) {
 		if (topCommentArticlesSize != num) {
 			topCommentArticlesSize = num;
-			log.info("fffffffffffff");
 			updateSidebarArticleCache();
 		}
 		return topCommentArticles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#getTopHitsArticles(int)
-	 */
 	@Override
 	public List<Article> getTopHitsArticles(int num) {
 		if (topHitsArticlesSize != num) {
 			topHitsArticlesSize = num;
-			log.info("ddddddddddddddddddd");
 			updateSidebarArticleCache();
 		}
 		return topHitsArticles;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#updateArticleCache()
-	 */
 	@Override
 	public void updateArticleCache() {
-		// articles = articleDao.getArticlesByTypeStatus(Article.TYPE_ARTICLE,
-		// Article.STAT_PUBLISHED);
-		// pages = articleDao.getArticlesByTypeStatus(Article.TYPE_PAGE,
-		// Article.STAT_PUBLISHED);
-
-		// if(!articles.isEmpty()) {
-		// Collections.sort(articles, new Comparator<Article>() {
-		//
-		// public int compare(Article a1, Article a2) {
-		// return new Long(a2.getArticleId()).compareTo(new
-		// Long(a1.getArticleId()));
-		// }
-		// });
-		// //Collections.reverse(articles);
-		// }
-		// if(!pages.isEmpty()) {
-		// Collections.sort(pages, new Comparator<Article>() {
-		//
-		// public int compare(Article a1, Article a2) {
-		// return new Integer(a2.getHits()).compareTo(new
-		// Integer(a1.getHits()));
-		// }
-		// });
-		// }
-
-		pages = articleDao.getMetas(Article.TYPE_PAGE, Article.STAT_PUBLISHED, "hits");
-
-		publishedArticleCount = articleDao.getCountByTypeStatus(Article.TYPE_ARTICLE,
+		pages = articleDao.findByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
+				new PageRequest(1, 65535, new Sort(Sort.Direction.ASC, "hits"))).getContent();
+		publishedArticleCount = (int) articleDao.countByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.service.ArticleService#updateSidebarArticleCache()
-	 */
 	@Override
 	public void updateSidebarArticleCache() {
-		// if (articles == null) {
-		// updateArticleCache();
-		// }
-		// List<Article> tmp;
-		// if (!articles.isEmpty() && topCommentArticlesSize > 0) {
-		// tmp = new ArrayList<Article>();
-		// tmp.addAll(articles);
-		// Collections.sort(tmp, new Comparator<Article>() {
-		//
-		// public int compare(Article a1, Article a2) {
-		// if (a1.getCommentCount() > a2.getCommentCount())
-		// return 1;
-		// else
-		// return 0;
-		// }
-		// });
-		// topCommentArticles = new ArrayList<Article>(tmp.subList(0,
-		// (topCommentArticlesSize - 1) < tmp
-		// .size() ? (topCommentArticlesSize - 1) : tmp.size()));
-		//
-		// }
-		//
-		// if (!articles.isEmpty() && topHitsArticlesSize > 0) {
-		// tmp = new ArrayList<Article>();
-		// tmp.addAll(articles);
-		// Collections.sort(tmp, new Comparator<Article>() {
-		//
-		// public int compare(Article a1, Article a2) {
-		// if (a1.getHits() > a2.getHits())
-		// return 1;
-		// else
-		// return 0;
-		// }
-		// });
-		// topHitsArticles = new ArrayList<Article>(tmp.subList(0,
-		// (topHitsArticlesSize - 1) < tmp
-		// .size() ? (topHitsArticlesSize - 1) : tmp.size()));
-		// }
 
-		topCommentArticles = articleDao.getMetas(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 0,
-				topCommentArticlesSize, "comment_count DESC");
-		topHitsArticles = articleDao.getMetas(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 0,
-				topHitsArticlesSize, "hits DESC");
+		topCommentArticles = articleDao.findByIsPageAndStat(
+				Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED,
+				new PageRequest(1, topCommentArticlesSize, new Sort(Sort.Direction.DESC,
+						"comment_count"))).getContent();
+		topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED,
+				new PageRequest(1, topHitsArticlesSize, new Sort(Sort.Direction.DESC, "hits")))
+				.getContent();
+	}
+
+	/**
+	 * @param type
+	 * @param status
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	private List<Article> findByTypeStatusInDao(byte type, byte status, int page, int size) {
+		return articleDao.findByIsPageAndStat(type, status,
+				new PageRequest(page, size, new Sort(Sort.Direction.DESC, "_id"))).getContent();
 	}
 
 	/**

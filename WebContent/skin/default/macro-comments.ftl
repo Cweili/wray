@@ -1,7 +1,7 @@
 <#macro comments commentList articleId permalink>
 <div class="comments" id="comments">
     <#list commentList as comment>
-    <div id="${comment.id}" class="comment-body">
+    <div id="${comment.commentId}" class="comment-body">
         <div class="comment-panel">
             <div class="left comment-author">
                 <div>
