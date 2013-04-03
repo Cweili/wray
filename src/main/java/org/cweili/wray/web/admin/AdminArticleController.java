@@ -2,6 +2,7 @@ package org.cweili.wray.web.admin;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -53,10 +54,10 @@ public final class AdminArticleController extends BaseController {
 			actionName = "文章回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE, stat, page,
+		v.add("articles", articleService.findByTypeStatus(Article.TYPE_ARTICLE, stat, page,
 				Constant.ADMIN_LIST_SIZE));
 
-		addPaginator(v, articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, stat), page,
+		addPaginator(v, articleService.countByTypeStatus(Article.TYPE_ARTICLE, stat), page,
 				Constant.ADMIN_LIST_SIZE);
 		return v;
 	}
@@ -103,21 +104,13 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "编辑文章");
 		v.add("articleId", articleid);
-		long id = 0;
-		try {
-			id = Long.valueOf(articleid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.findById(articleid);
 
-		List<Long> relatedIds = categoryService.getRelatedIdsByArticle(article);
+		List<Item> relatedCategories = categoryService.findByArticle(article);
 		List<Item> categories = categoryService.getCategories();
-		for (int i = 0; i < categories.size(); ++i) {
-			if (relatedIds.contains(categories.get(i).getItemId())) {
-				Item category = categories.get(i);
+		for (Item category : categories) {
+			if (relatedCategories.contains(category)) {
 				category.setStat(Item.STAT_SELECTED);
-				categories.set(i, category);
 			}
 		}
 		v.add("categories", categories);
@@ -144,13 +137,7 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "编辑文章");
 		v.add("articleId", articleid);
-		long id = 0;
-		try {
-			id = Long.valueOf(articleid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
 		try {
 			List<Item> relatedItems = getRelatedItems(request);
@@ -171,7 +158,7 @@ public final class AdminArticleController extends BaseController {
 			v.add("stat", article.getStat());
 			v.add("err", "succ");
 			categoryService.saveRelationshipWithArticle(article, relatedItems);
-			articleService.update(article);
+			articleService.save(article);
 		} catch (Exception e) {
 			v.add("err", "数据库更新失败");
 		}
@@ -193,20 +180,12 @@ public final class AdminArticleController extends BaseController {
 			v.add("succ", "恭喜您，您选中的文章已成功删除。");
 		}
 
-		List<Long> ids = new ArrayList<Long>();
+		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
-			for (String idStr : request.getParameterValues("id")) {
-				try {
-					ids.add(Long.valueOf(idStr));
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-			}
+			Collections.addAll(ids, request.getParameterValues("id"));
 		}
 
-		try {
-			articleService.remove(ids, type);
-		} catch (Exception e) {
+		if (!articleService.updateStatus(ids, type)) {
 			v.add("err", "数据库更新失败");
 			v.add("msg", "文章删除失败");
 		}
@@ -227,7 +206,7 @@ public final class AdminArticleController extends BaseController {
 		}
 		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
 
-		Long id = Function.generateId();
+		String id = Function.generateId();
 
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;
@@ -235,7 +214,7 @@ public final class AdminArticleController extends BaseController {
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
 		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 		StringBuilder tagSB = new StringBuilder("");
-		for(String tagStr : tag.split(",")) {
+		for (String tagStr : tag.split(",")) {
 			tagSB.append(CutString.substring(tagStr, 18));
 			tagSB.append(',');
 		}
@@ -265,7 +244,7 @@ public final class AdminArticleController extends BaseController {
 		if (request.getParameterValues("category") != null) {
 			for (String catStr : request.getParameterValues("category")) {
 				try {
-					addItem = categoryService.getCategoryById(Long.valueOf(catStr));
+					addItem = categoryService.findById(catStr);
 					if (null != addItem) {
 						relatedItems.add(addItem);
 					}
@@ -279,13 +258,13 @@ public final class AdminArticleController extends BaseController {
 			tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 			for (String tagStr : tag.split(",")) {
 				tagStr = CutString.substring(tagStr, 18);
-				addItem = tagService.getTagByName(tagStr);
+				addItem = tagService.findByName(tagStr);
 				if (null != addItem) {
 					relatedItems.add(addItem);
 				} else {
-					addItem = new Item(Function.generateId(), tagStr, "",
-							"", 0, (byte) 0, Item.TYPE_TAG, 0L, Item.STAT_ON);
-					tagService.save(addItem, false);
+					addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
+							Item.TYPE_TAG, 0L, Item.STAT_ON);
+					tagService.save(addItem);
 					relatedItems.add(addItem);
 				}
 			}

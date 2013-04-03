@@ -26,18 +26,21 @@ public final class CategoryController extends BaseController {
 	@RequestMapping("/category/{permalink}/")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
-		
+
 		BlogView v = new BlogView("articles");
 		v.add("path", "category/" + permalink + "/");
 		permalink = Function.urlDecode(permalink);
-		Item item = categoryService.getCategoryByPermalink(permalink);
+		Item item = categoryService.findByPermalink(permalink);
+		if (null == item) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
 		v.add("item", item);
-		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
-				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 1,
-				Integer.valueOf(blogConfig.get("limit"))));
+		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED, 1, Integer.valueOf(blogConfig.get("limit"))));
 
-		addPaginator(v, articleService.getCountByrelationship(item.getItemId(),
-				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED), 1);
+		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED), 1);
 
 		return v;
 	}
@@ -52,18 +55,20 @@ public final class CategoryController extends BaseController {
 			log.error(e.toString());
 		}
 		BlogView v = new BlogView("articles");
-		
 		v.add("path", "category/" + permalink + "/");
 		permalink = Function.urlDecode(permalink);
-		
-		Item item = categoryService.getCategoryByPermalink(permalink);
-		v.add("item", item);
-		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(),
-				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, p,
-				Integer.valueOf(blogConfig.get("limit"))));
 
-		addPaginator(v, articleService.getCountByrelationship(item.getItemId(),
-				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED), p);
+		Item item = categoryService.findByPermalink(permalink);
+		if (null == item) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		v.add("item", item);
+		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED, p, Integer.valueOf(blogConfig.get("limit"))));
+
+		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED), p);
 
 		return v;
 	}

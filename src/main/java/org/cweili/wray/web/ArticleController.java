@@ -1,6 +1,5 @@
 package org.cweili.wray.web;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,18 +30,18 @@ public final class ArticleController extends BaseController {
 			@PathVariable String permalink) {
 
 		permalink = Function.urlDecode(permalink);
+		Article article = articleService.findByPermalink(permalink, Article.TYPE_ARTICLE);
+		if (null == article) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
+		List<Item> relatedCats = categoryService.findByArticle(article);
 		BlogView v = new BlogView("article");
-		Article article = articleService.getArticleByPermalink(permalink);
-		List<Item> relatedCats = categoryService.getCategoriesByArticle(article);
 		v.add("article", article);
 		v.add("relatedCats", relatedCats);
 		v.add("commentList", commentService.getCommentsByArticle(article));
 		article.setHits(article.getHits() + 1);
-		try {
-			articleService.updateHits(article);
-		} catch (SQLException e) {
-			log.error(e.toString());
-		}
+		articleService.updateHits(article);
 		return v;
 	}
 

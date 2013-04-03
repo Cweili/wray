@@ -1,7 +1,7 @@
 package org.cweili.wray.web.admin;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +44,7 @@ public final class AdminLinkController extends BaseController {
 		BlogView v = new BlogView("link-edit");
 		v.add("actionName", "编辑博客链接");
 		v.add("itemId", linkid);
-		long id = 0;
-		try {
-			id = Long.valueOf(linkid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Item link = linkService.getLinkById(id);
+		Item link = linkService.findById(linkid);
 		if (link != null) {
 			v.add("itemName", link.getItemName());
 			v.add("description", link.getDescription());
@@ -68,26 +62,24 @@ public final class AdminLinkController extends BaseController {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "编辑博客链接");
 		v.add("redirect", "admin-link");
-		long id = 0;
-		try {
-			id = Long.valueOf(linkid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Item link = linkService.getLinkById(id);
-		link = getLink(request, link);
-		v.add("err", "succ");
-		v.add("msg", "链接保存成功");
-		v.add("succ", "恭喜您，您的链接已成功保存。");
-		try {
-			linkService.update(link, true);
-		} catch (Exception e) {
-			v.setView("link-edit");
-			v.add("itemId", linkid);
-			v.add("itemName", link.getItemName());
-			v.add("description", link.getDescription());
-			v.add("itemOrder", link.getItemOrder());
-			v.add("err", "数据库更新失败");
+		Item link = linkService.findById(linkid);
+		if (null != link) {
+			link = getLink(request, link);
+			v.add("err", "succ");
+			v.add("msg", "链接保存成功");
+			v.add("succ", "恭喜您，您的链接已成功保存。");
+			try {
+				linkService.save(link);
+			} catch (Exception e) {
+				v.setView("link-edit");
+				v.add("itemId", linkid);
+				v.add("itemName", link.getItemName());
+				v.add("description", link.getDescription());
+				v.add("itemOrder", link.getItemOrder());
+				v.add("err", "数据库更新失败");
+			}
+		} else {
+			v.add("err", "链接未找到");
 		}
 		return v;
 	}
@@ -129,54 +121,29 @@ public final class AdminLinkController extends BaseController {
 		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已删除。");
 		v.add("redirect", "admin-link");
 
-		List<Long> ids = new ArrayList<Long>();
+		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
-			for (String idStr : request.getParameterValues("id")) {
-				try {
-					ids.add(Long.valueOf(idStr));
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-			}
+			Collections.addAll(ids, request.getParameterValues("id"));
 		}
-
-		boolean orderUpdated = false;
 
 		List<Item> items = linkService.getLinks();
 		byte order = 0;
 		Item item;
 
-		try {
-			for (int i = 0; i < items.size(); ++i) {
-				if (request.getParameter("order" + items.get(i).getItemId()) != null) {
-					order = Byte.valueOf(request.getParameter("order" + items.get(i).getItemId()));
-					item = items.get(i);
-					if (item.getItemOrder() != order) {
-						orderUpdated = true;
-						item.setItemOrder(order);
-						linkService.update(item, false);
-					}
+		for (int i = 0; i < items.size(); ++i) {
+			if (request.getParameter("order" + items.get(i).getItemId()) != null) {
+				order = Byte.valueOf(request.getParameter("order" + items.get(i).getItemId()));
+				item = items.get(i);
+				if (item.getItemOrder() != order) {
+					item.setItemOrder(order);
+					linkService.save(item);
 				}
 			}
-			if (orderUpdated && ids.isEmpty()) {
-				linkService.updateLinkCache();
-			}
-		} catch (SQLException se) {
-			if (orderUpdated) {
-				v.add("err", "数据库更新失败");
-				v.add("msg", "链接排序失败");
-			}
-		} catch (Exception e) {
-			log.error(e.toString());
 		}
 
-		if (!ids.isEmpty()) {
-			try {
-				linkService.remove(ids);
-			} catch (Exception e) {
-				v.add("err", "数据库更新失败");
-				v.add("msg", "链接删除失败");
-			}
+		if (!ids.isEmpty() && !linkService.remove(ids)) {
+			v.add("err", "数据库更新失败");
+			v.add("msg", "链接删除失败");
 		}
 		return v;
 	}
@@ -193,7 +160,7 @@ public final class AdminLinkController extends BaseController {
 			log.error(e.toString());
 		}
 
-		Long id = Function.generateId();
+		String id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
 		itemName = "".equals(itemName) ? "未命名" + id : itemName;
 		description = Function.trimAndStripTags(description);

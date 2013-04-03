@@ -26,8 +26,12 @@ public final class PageController extends BaseController {
 	public BlogView index(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String permalink) {
 		permalink = Function.urlDecode(permalink);
+		Article page = articleService.findByPermalink(permalink, Article.TYPE_PAGE);
+		if (null == page) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
 		BlogView v = new BlogView("page");
-		Article page = articleService.getArticleByPermalink(permalink);
 		v.add("article", page);
 		return v;
 	}

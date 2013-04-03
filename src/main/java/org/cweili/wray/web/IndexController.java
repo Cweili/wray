@@ -47,13 +47,12 @@ public final class IndexController extends BaseController {
 		// Article.COMMENT_ON, Article.TYPE_ARTICLE));
 		// }
 
-		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_ARTICLE,
+		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED, p, Integer.valueOf(blogConfig.get("limit")));
 		v.add("articles", articles);
 
 		addPaginator(v,
-				articleService.getCountByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED),
-				p);
+				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED), p);
 
 		v.add("path", "");
 

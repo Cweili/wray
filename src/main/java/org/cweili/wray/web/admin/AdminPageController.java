@@ -1,7 +1,7 @@
 package org.cweili.wray.web.admin;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -51,10 +51,10 @@ public final class AdminPageController extends BaseController {
 			actionName = "页面回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat, page,
+		v.add("articles", articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
 				Constant.ADMIN_LIST_SIZE));
 
-		addPaginator(v, articleService.getCountByTypeStatus(Article.TYPE_PAGE, stat), page,
+		addPaginator(v, articleService.countByTypeStatus(Article.TYPE_PAGE, stat), page,
 				Constant.ADMIN_LIST_SIZE);
 		return v;
 	}
@@ -99,13 +99,7 @@ public final class AdminPageController extends BaseController {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
 		v.add("articleId", articleid);
-		long id = 0;
-		try {
-			id = Long.valueOf(articleid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.findById(articleid);
 		if (article != null) {
 			v.add("title", article.getTitle());
 			v.add("permalink", article.getPermalink());
@@ -127,13 +121,7 @@ public final class AdminPageController extends BaseController {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
 		v.add("articleId", articleid);
-		long id = 0;
-		try {
-			id = Long.valueOf(articleid);
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
-		Article article = articleService.getArticleById(id);
+		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
 		v.add("title", article.getTitle());
 		v.add("permalink", article.getPermalink());
@@ -143,7 +131,7 @@ public final class AdminPageController extends BaseController {
 		v.add("stat", article.getStat());
 		v.add("err", "succ");
 		try {
-			articleService.update(article);
+			articleService.save(article);
 		} catch (Exception e) {
 			v.add("err", "数据库更新失败");
 		}
@@ -165,15 +153,9 @@ public final class AdminPageController extends BaseController {
 			v.add("succ", "恭喜您，您的页面排序已成功更新，选中页面已成功删除。");
 		}
 
-		List<Long> ids = new ArrayList<Long>();
+		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
-			for (String idStr : request.getParameterValues("id")) {
-				try {
-					ids.add(Long.valueOf(idStr));
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-			}
+			Collections.addAll(ids, request.getParameterValues("id"));
 		}
 
 		int page = 1;
@@ -191,45 +173,26 @@ public final class AdminPageController extends BaseController {
 			stat = Article.STAT_RECYCLE;
 		}
 
-		boolean orderUpdated = false;
-
-		List<Article> articles = articleService.getArticlesByTypeStatus(Article.TYPE_PAGE, stat,
-				page, Constant.ADMIN_LIST_SIZE);
+		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
+				Constant.ADMIN_LIST_SIZE);
 		int order = 0;
 		Article article;
 
-		try {
-			for (int i = 0; i < articles.size(); ++i) {
-				if (request.getParameter("order" + articles.get(i).getArticleId()) != null) {
-					order = Integer.valueOf(request.getParameter("order"
-							+ articles.get(i).getArticleId()));
-					article = articles.get(i);
-					if (article.getHits() != order) {
-						orderUpdated = true;
-						article.setHits(order);
-						articleService.updateHits(article);
-					}
+		for (int i = 0; i < articles.size(); ++i) {
+			if (request.getParameter("order" + articles.get(i).getArticleId()) != null) {
+				order = Integer.valueOf(request.getParameter("order"
+						+ articles.get(i).getArticleId()));
+				article = articles.get(i);
+				if (article.getHits() != order) {
+					article.setHits(order);
+					articleService.updateHits(article);
 				}
 			}
-			if (orderUpdated) {
-				articleService.updateArticleCache();
-			}
-		} catch (SQLException se) {
-			if (orderUpdated) {
-				v.add("err", "数据库更新失败");
-				v.add("msg", "页面排序失败");
-			}
-		} catch (Exception e) {
-			log.error(e.toString());
 		}
 
-		if (!ids.isEmpty()) {
-			try {
-				articleService.remove(ids, type);
-			} catch (Exception e) {
-				v.add("err", "数据库更新失败");
-				v.add("msg", "页面删除失败");
-			}
+		if (!ids.isEmpty() && !articleService.updateStatus(ids, type)) {
+			v.add("err", "数据库更新失败");
+			v.add("msg", "页面删除失败");
 		}
 		return v;
 	}
@@ -247,7 +210,7 @@ public final class AdminPageController extends BaseController {
 		}
 		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
 
-		Long id = Function.generateId();
+		String id = Function.generateId();
 
 		title = Function.trimAndStripTags(title);
 		title = "".equals(title) ? "未命名" + id : title;

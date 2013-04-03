@@ -24,26 +24,30 @@ public final class TagController extends BaseController {
 
 	@Override
 	@RequestMapping("/tag/{permalink}/")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String permalink) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String permalink) {
 
 		BlogView v = new BlogView("articles");
 		v.add("path", "tag/" + permalink + "/");
 		permalink = Function.urlDecode(permalink);
-		Item item = tagService.getTagByName(permalink);
+		Item item = tagService.findByName(permalink);
+		if (null == item) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
 		v.add("item", item);
-		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED, 1, Integer.valueOf(blogConfig.get("limit"))));
 
-		addPaginator(v,
-				articleService.getCountByrelationship(item.getItemId(), Article.TYPE_ARTICLE, Article.STAT_PUBLISHED),
-				1);
+		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED), 1);
 
 		return v;
 	}
 
 	@RequestMapping("/tag/{permalink}/page-{page}/")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String permalink,
-			@PathVariable String page) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String permalink, @PathVariable String page) {
 		int p = 1;
 		try {
 			p = Integer.valueOf(page);
@@ -53,14 +57,17 @@ public final class TagController extends BaseController {
 		BlogView v = new BlogView("articles");
 		v.add("path", "tag/" + permalink + "/");
 		permalink = Function.urlDecode(permalink);
-		Item item = tagService.getTagByName(permalink);
+		Item item = tagService.findByName(permalink);
+		if (null == item) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return null;
+		}
 		v.add("item", item);
-		v.add("articles", articleService.getArticlesByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED, p, Integer.valueOf(blogConfig.get("limit"))));
 
-		addPaginator(v,
-				articleService.getCountByrelationship(item.getItemId(), Article.TYPE_ARTICLE, Article.STAT_PUBLISHED),
-				p);
+		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED), p);
 
 		return v;
 	}
