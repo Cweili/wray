@@ -68,6 +68,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems) {
+		List<Relationship> relationships = relationshipDao.findByArticleId(article.getArticleId());
 		List<Item> old = itemDao.getItemsByRelationship(article.getArticleId());
 		List<Long> relatedIds = new ArrayList<Long>();
 		for (Item item : old) {
