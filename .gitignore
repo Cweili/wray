@@ -1,3 +1,9 @@
 /build
 /.settings
 /.hibernateSynchronizer3
+
+*.class
+
+# Package Files #
+*.war
+*.ear

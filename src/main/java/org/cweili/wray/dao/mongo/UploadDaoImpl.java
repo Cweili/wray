@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.Function;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 	@Override
 	public Iterable<Upload> findAll(int start, int limit) {
 		Query q = new Query();
+		q.with(new Sort(Sort.Direction.DESC, "_id"));
 		q.skip(start);
 		q.limit(limit);
 		log.info("Find upload from " + start + " to " + limit);
