@@ -24,7 +24,7 @@
                     </#if>
                 </div>
                 <div class="right">
-                    <a class="no-underline" href="javascript:replyTo('${comment.id}');">${replyLabel}</a>
+                    <a class="no-underline" href="javascript:replyTo('${comment.commentId}');">${replyLabel}</a>
                 </div>
                 <div class="clear"></div>
                 <div class="comment-content">
@@ -105,6 +105,7 @@
 			indentChar: "",
 			urlType: "relative",
 			emoticonsPath: "${staticServePath}include/image/emotion/",
+			filterMode: true,
 			allowFileManager : false,
 			allowImageUpload: false,
 			allowFlashUpload: false,

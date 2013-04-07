@@ -355,7 +355,6 @@ div.postwrap h2.posttitle {
 div.postwrap div.postcontent {
 	font-size:14px;
 	letter-spacing:1px;
-	line-height:160%;
 	white-space:normal;
 	overflow: hidden;
 }

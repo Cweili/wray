@@ -10,6 +10,7 @@ import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.service.TagService;
+import org.cweili.wray.util.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,5 +51,10 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	@Override
 	public abstract void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception ex) throws Exception;
+
+	protected boolean isAdminPanel(HttpServletRequest request) {
+		return Function.requestScript(request).length() > 7 ? Function.requestScript(request)
+				.substring(0, 7).equals("/admin-") : false;
+	}
 
 }

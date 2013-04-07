@@ -6,9 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.ArticleContent;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Function;
+import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -90,12 +92,25 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public Article findById(String articleId) {
-		return articleDao.findOne(articleId);
+		Article article = articleDao.findOne(articleId);
+		if (null != article) {
+			article.setContent(articleContentDao.findOne(articleId).getContent());
+			return article;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
 	public Article findByPermalink(String permalink, byte type) {
-		return articleDao.findByPermalinkAndIsPageAndStat(permalink, type, Article.STAT_PUBLISHED);
+		Article article = articleDao.findByPermalinkAndIsPageAndStat(permalink, type,
+				Article.STAT_PUBLISHED);
+		if (null != article) {
+			article.setContent(articleContentDao.findOne(article.getArticleId()).getContent());
+			return article;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -105,6 +120,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 		Article articleNew = articleDao.save(article);
 		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
+			articleContentDao.save(new ArticleContent(articleNew.getArticleId(), article
+					.getContent()));
 			updateArticleCache();
 			updateSidebarArticleCache();
 		}
@@ -197,17 +214,17 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	 * @return
 	 */
 	private List<Article> dealList(List<Article> list) {
-		Article a;
 		List<Article> articles = new ArrayList<Article>();
 		for (Article article : list) {
+			article.setContent(articleContentDao.findOne(article.getArticleId()).getContent());
 			if (article.getContent().contains("<a name=\"more\"></a>")) {
-				article.setContent(Function.stripTags(article.getContent().substring(0,
-						article.getContent().indexOf("<a name=\"more\"></a>") - 1))
+				article.setContent(HtmlFixer.fix(article.getContent().substring(0,
+						article.getContent().indexOf("<a name=\"more\"></a>")))
 						+ "<!--more-->");
 			} else {
-				article.setContent(Function.stripTags(article.getContent()));
 				if (article.getContent().length() >= 300) {
-					article.setContent(article.getContent().substring(0, 300) + "<!--more-->");
+					article.setContent(HtmlFixer.substring(article.getContent(), 300)
+							+ "<!--more-->");
 				}
 			}
 			articles.add(article);

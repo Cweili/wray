@@ -6,7 +6,9 @@ import java.util.List;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.service.CommentService;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
+import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		if ("".equals(comment.getCommentId())) {
 			comment.setCommentId(Function.generateId());
 		}
+		comment.setContent(filterContent(comment.getContent()));
 		return commentDao.save(comment);
 	}
 
@@ -48,6 +51,11 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		}
 		commentDao.delete(comments);
 		return commentDao.count() < before;
+	}
+
+	private String filterContent(String content) {
+		return HtmlFixer.fix(Function.stripTags(content, Constant.DANGEROUS_TAGS).replace(
+				"javascript:", ""));
 	}
 
 }

@@ -23,6 +23,13 @@ public class Constant {
 	public static final String CURRENT_YEAR = new SimpleDateFormat("yyyy").format(new Date());
 
 	/**
+	 * 危险 html 标签
+	 */
+	public static final String[] DANGEROUS_TAGS = new String[] { "applet", "body", "embed",
+			"frame", "script", "frameset", "html", "iframe", "object", "meta", "style", "layer",
+			"link", "ilayer", "form", "input", "textarea", "select", "button" };
+
+	/**
 	 * 皮肤界面 label 数组
 	 */
 	public static final String[] LABELS = new String[] { "firstPageLabel", "lastPageLabel",

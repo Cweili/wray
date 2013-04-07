@@ -61,7 +61,7 @@ public class Function {
 	 * @return
 	 */
 	public synchronized static String generateId() {
-		long time = timestamp() / 1000;
+		long time = timestamp() / 100;
 		if (id < time) {
 			id = time;
 		} else {
@@ -145,10 +145,28 @@ public class Function {
 	 * @return
 	 */
 	public static String stripTags(String input) {
-		return input
-				.replaceAll("<[\\s]*?script[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?script[\\s]*?>", "")
-				.replaceAll("<[\\s]*?style[^>]*?>[\\s\\S]*?<[\\s]*?\\/[\\s]*?style[\\s]*?>", "")
-				.replaceAll("<[^>]+>", "").replaceAll("<[^>]+", "");
+		return input.replaceAll("<[^>]+>", "");
+	}
+
+	public static String stripTags(String input, String[] tags) {
+		StringBuilder sb = new StringBuilder("(");
+		for (String tag : tags) {
+			sb.append('|').append(tag);
+		}
+		sb.deleteCharAt(1);
+		sb.append(')');
+		return stripTag(input, sb.toString());
+	}
+
+	/**
+	 * 去除指定 html 标签
+	 * 
+	 * @param input
+	 * @param tag
+	 * @return
+	 */
+	public static String stripTag(String input, String tag) {
+		return input.replaceAll("<[//]?" + tag + "[^>]*>", "");
 	}
 
 	/**

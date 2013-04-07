@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cweili.wray.dao.ArticleContentDao;
 import org.cweili.wray.dao.ArticleDao;
 import org.cweili.wray.dao.CommentDao;
 import org.cweili.wray.dao.ConfigDao;
@@ -30,6 +31,9 @@ public abstract class BaseService {
 
 	@Autowired
 	protected ArticleDao articleDao;
+
+	@Autowired
+	protected ArticleContentDao articleContentDao;
 
 	@Autowired
 	protected CommentDao commentDao;

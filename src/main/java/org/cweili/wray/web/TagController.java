@@ -7,6 +7,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Function;
+import org.cweili.wray.util.NotFoundException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,18 +23,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Scope("prototype")
 public final class TagController extends BaseController {
 
-	@Override
 	@RequestMapping("/tag/{permalink}/")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String permalink) {
+	public BlogView permalink(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String permalink) throws NotFoundException {
 
 		BlogView v = new BlogView("articles");
 		v.add("path", "tag/" + permalink + "/");
 		permalink = Function.urlDecode(permalink);
 		Item item = tagService.findByName(permalink);
 		if (null == item) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			throw new NotFoundException();
 		}
 		v.add("item", item);
 		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
@@ -46,8 +45,8 @@ public final class TagController extends BaseController {
 	}
 
 	@RequestMapping("/tag/{permalink}/page-{page}/")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String permalink, @PathVariable String page) {
+	public BlogView permalink(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String permalink, @PathVariable String page) throws NotFoundException {
 		int p = 1;
 		try {
 			p = Integer.valueOf(page);
@@ -59,8 +58,7 @@ public final class TagController extends BaseController {
 		permalink = Function.urlDecode(permalink);
 		Item item = tagService.findByName(permalink);
 		if (null == item) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			throw new NotFoundException();
 		}
 		v.add("item", item);
 		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
@@ -74,6 +72,12 @@ public final class TagController extends BaseController {
 
 	@Override
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+		return null;
+	}
+
+	@Override
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String str) {
 		return null;
 	}
 

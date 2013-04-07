@@ -3,7 +3,6 @@ package org.cweili.wray.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.cweili.wray.util.Function;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -18,7 +17,7 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-		boolean isAdminPanel = Function.requestScript(request).substring(0, 7).equals("/admin-");
+		boolean isAdminPanel = isAdminPanel(request);
 		// FIXME continue...
 		return true;
 	}

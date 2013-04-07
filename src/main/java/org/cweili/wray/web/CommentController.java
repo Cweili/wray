@@ -36,7 +36,7 @@ public class CommentController extends BaseController {
 	@RequestMapping(value = "/comment/", method = RequestMethod.POST)
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
 		Comment comment = new Comment();
-		comment.setArticleId(Long.parseLong(request.getParameter("articleId")));
+		comment.setArticleId(request.getParameter("articleId"));
 		comment.setAuthor(request.getParameter("author"));
 		comment.setAgent(request.getHeader("User-Agent"));
 		comment.setContent(request.getParameter("content"));

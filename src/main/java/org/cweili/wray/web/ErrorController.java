@@ -31,9 +31,7 @@ public class ErrorController extends BaseController {
 	@Override
 	@RequestMapping(value = "/error")
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		BlogView v = new BlogView("error");
-		v.add("errMsg", request.getParameter("msg"));
-		return v;
+		return new BlogView("error");
 	}
 
 	/*
@@ -44,7 +42,8 @@ public class ErrorController extends BaseController {
 	 * java.lang.String)
 	 */
 	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response, @PathVariable String msg) {
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String msg) {
 		BlogView v = new BlogView("error");
 		v.add("errMsg", msg);
 		return v;

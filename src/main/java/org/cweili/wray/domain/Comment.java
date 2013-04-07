@@ -21,7 +21,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	@Id
 	private String commentId = "";
 	@Indexed
-	private long articleId = 0;
+	private String articleId = "";
 	private String author = "";
 	private String email = "";
 	private String link = "";
@@ -52,11 +52,11 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	 * @param stat
 	 */
 	@PersistenceConstructor
-	public Comment(String commentId, long articleId, String author, String email, String link,
+	public Comment(String commentId, String articleId, String author, String email, String link,
 			String ip, Date postDate, String agent, String content, long parrentId, byte stat) {
 
 		this.commentId = commentId;
-		this.setArticleId(articleId);
+		this.articleId = articleId;
 		this.author = author;
 		this.email = email;
 		this.link = link;
@@ -117,11 +117,11 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.commentId = commentId;
 	}
 
-	public long getArticleId() {
+	public String getArticleId() {
 		return articleId;
 	}
 
-	public void setArticleId(long articleId) {
+	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 

@@ -9,6 +9,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Function;
+import org.cweili.wray.util.NotFoundException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,16 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Scope("prototype")
 public final class ArticleController extends BaseController {
 
-	@Override
 	@RequestMapping("/article/{permalink}/*")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String permalink) {
+	public BlogView permalink(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String permalink) throws Exception {
 
 		permalink = Function.urlDecode(permalink);
 		Article article = articleService.findByPermalink(permalink, Article.TYPE_ARTICLE);
 		if (null == article) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return null;
+			throw new NotFoundException();
 		}
 		List<Item> relatedCats = categoryService.findByArticle(article);
 		BlogView v = new BlogView("article");
@@ -47,6 +46,12 @@ public final class ArticleController extends BaseController {
 
 	@Override
 	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+		return null;
+	}
+
+	@Override
+	public BlogView index(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String str) {
 		return null;
 	}
 

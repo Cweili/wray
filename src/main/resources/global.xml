@@ -92,21 +92,14 @@
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings"> 
 			<props> 
-			<!-- 上传文件大于最大尺寸后转向出错页面 --> 
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException"> 
+				<prop key="org.springframework.web.multipart."> 
 					redirect:/uploadError.jsp
 				</prop> 
 			</props> 
 		</property>
-		<property name="defaultErrorView">  
-		 	<value>forward:/error.jsp</value>
-		</property>
-		<property name="defaultStatusCode">  
-		 	<value>200</value>
-		</property>		 	
-		<property name="warnLogCategory">  
-		 	<value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
-		</property>		 	
+		<property name="defaultErrorView" value="forward:/error"/>  
+		<property name="defaultStatusCode" value="200"/>  
+		<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>  
 	</bean> 
 	
 	<!-- 允许对静态资源文件的访问 --> 

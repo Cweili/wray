@@ -35,8 +35,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// }
 		if (null != mv) {
 			String reqs = Function.requestScript(request);
-			boolean isAdminPanel = Function.requestScript(request).substring(0, 7)
-					.equals("/admin-");
+			boolean isAdminPanel = isAdminPanel(request);
 
 			mv.addAllObjects(blogConfig.getConfigMap());
 

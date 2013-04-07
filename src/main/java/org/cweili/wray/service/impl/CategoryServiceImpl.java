@@ -58,11 +58,14 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public List<Item> findByArticle(Article article) {
 		List<Item> cats = new ArrayList<Item>();
-		Item cat;
-		for (Relationship relationship : relationshipDao.findByArticleId(article.getArticleId())) {
-			cat = findById(relationship.getItemId());
-			if (null != cat) {
-				cats.add(cat);
+		if (null != article) {
+			Item cat;
+			for (Relationship relationship : relationshipDao
+					.findByArticleId(article.getArticleId())) {
+				cat = findById(relationship.getItemId());
+				if (null != cat) {
+					cats.add(cat);
+				}
 			}
 		}
 		return cats;
