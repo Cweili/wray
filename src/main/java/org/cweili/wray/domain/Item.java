@@ -69,6 +69,18 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		this.stat = stat;
 	}
 
+	public <S extends Item> Item(S item) {
+		this.setItemId(item.getItemId());
+		this.setItemName(item.getItemName());
+		this.setPermalink(item.getPermalink());
+		this.setDescription(item.getDescription());
+		this.setCount(item.getCount());
+		this.setItemOrder(item.getItemOrder());
+		this.setItemType(item.getItemType());
+		this.setParrentId(item.getParrentId());
+		this.setStat(item.getStat());
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

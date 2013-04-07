@@ -162,7 +162,7 @@ public final class AdminLinkController extends BaseController {
 
 		String id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
-		itemName = "".equals(itemName) ? "未命名" + id : itemName;
+		itemName = "".equals(itemName) ? Function.timeString() : itemName;
 		description = Function.trimAndStripTags(description);
 
 		if (ori != null) {

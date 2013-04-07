@@ -163,9 +163,9 @@ public final class AdminCategoryController extends BaseController {
 
 		String id = Function.generateId();
 		itemName = Function.trimAndStripTags(itemName);
-		itemName = "".equals(itemName) ? "未命名" + id : itemName;
+		itemName = "".equals(itemName) ? Function.timeString() : itemName;
 		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(itemName) + "-" + id : permalink;
+		permalink = "".equals(permalink) ? Function.permalink(itemName) : permalink;
 		description = Function.trimAndStripTags(description);
 
 		if (ori != null) {

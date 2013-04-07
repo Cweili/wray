@@ -21,6 +21,8 @@ public interface CategoryService {
 
 	public List<Item> findByArticle(Article article);
 
+	public List<Item> getSelectedCategories(Article article);
+
 	public void saveRelationshipWithArticle(Article article, List<Item> relatedItems);
 
 	public Item save(Item category);

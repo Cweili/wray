@@ -73,7 +73,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 			int size) {
 		page = page > 0 ? page : 1;
 		size = size > 0 ? size : 1;
-		List<Relationship> relationships = relationshipDao.findByArticleId(itemId);
+		List<Relationship> relationships = relationshipDao.findByItemId(itemId);
 		List<Article> articles = new LinkedList<Article>();
 		Article article;
 		for (Relationship relationship : relationships) {
@@ -84,7 +84,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 		Collections.sort(articles);
 		int end = size * page - 1;
-		end = end < articles.size() ? end : articles.size() - 1;
+		end = end < articles.size() ? end : articles.size();
 		return articles.subList(size * (page - 1), end);
 	}
 
@@ -113,7 +113,6 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public boolean updateHits(Article article) {
-		article.setHits(article.getHits() + 1);
 		Article articleNew = articleDao.save(article);
 		return null != articleNew;
 	}

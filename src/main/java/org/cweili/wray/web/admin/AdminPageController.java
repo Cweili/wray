@@ -176,13 +176,10 @@ public final class AdminPageController extends BaseController {
 		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
 				Constant.ADMIN_LIST_SIZE);
 		int order = 0;
-		Article article;
 
-		for (int i = 0; i < articles.size(); ++i) {
-			if (request.getParameter("order" + articles.get(i).getArticleId()) != null) {
-				order = Integer.valueOf(request.getParameter("order"
-						+ articles.get(i).getArticleId()));
-				article = articles.get(i);
+		for (Article article : articles) {
+			if (request.getParameter("order" + article.getArticleId()) != null) {
+				order = Integer.valueOf(request.getParameter("order" + article.getArticleId()));
 				if (article.getHits() != order) {
 					article.setHits(order);
 					articleService.updateHits(article);
@@ -213,7 +210,7 @@ public final class AdminPageController extends BaseController {
 		String id = Function.generateId();
 
 		title = Function.trimAndStripTags(title);
-		title = "".equals(title) ? "未命名" + id : title;
+		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
 		byte stat = Article.STAT_PUBLISHED;

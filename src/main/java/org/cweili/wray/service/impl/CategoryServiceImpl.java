@@ -91,9 +91,9 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 			if (!old.contains(item)) {
 				item.setCount(item.getCount() + 1);
 				itemDao.save(item);
+				relationshipDao.save(new Relationship(Function.generateId(),
+						article.getArticleId(), item.getItemId()));
 			}
-			relationshipDao.save(new Relationship(Function.generateId(), article.getArticleId(),
-					item.getItemId()));
 		}
 		updateCategoryCache();
 		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
@@ -140,8 +140,24 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	}
 
 	@Override
+	public List<Item> getSelectedCategories(Article article) {
+		List<Item> selectedCategories = new ArrayList<Item>();
+		List<Item> relatedCategories = findByArticle(article);
+		List<Item> categories = getCategories();
+		for (Item category : categories) {
+			Item selectedCategory = new Item(category);
+			if (relatedCategories.contains(category)) {
+				selectedCategory.setStat(Item.STAT_SELECTED);
+			}
+			selectedCategories.add(selectedCategory);
+		}
+		return selectedCategories;
+	}
+
+	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
 				new PageRequest(0, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
 	}
+
 }

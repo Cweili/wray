@@ -90,7 +90,7 @@ public class Function {
 
 	public static String permalink(String permalink) {
 		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
-				.replaceAll("\\pS", "-").replaceAll("\\pC", "-");
+				.replaceAll("\\pS", "-").replaceAll("\\pC", "-").replace(' ', '-');
 		while (permalink.indexOf("--") > -1) {
 			permalink = permalink.replace("--", "-");
 		}
@@ -159,6 +159,15 @@ public class Function {
 	 */
 	public static String timeString(long timestamp) {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(timestamp));
+	}
+
+	/**
+	 * 取得时间字符串
+	 * 
+	 * @return
+	 */
+	public static String timeString() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 	}
 
 	/**

@@ -103,14 +103,7 @@ public final class AdminArticleController extends BaseController {
 		v.add("articleId", articleid);
 		Article article = articleService.findById(articleid);
 
-		List<Item> relatedCategories = categoryService.findByArticle(article);
-		List<Item> categories = categoryService.getCategories();
-		for (Item category : categories) {
-			if (relatedCategories.contains(category)) {
-				category.setStat(Item.STAT_SELECTED);
-			}
-		}
-		v.add("categories", categories);
+		v.add("categories", categoryService.getSelectedCategories(article));
 
 		if (article != null) {
 			v.add("title", article.getTitle());
@@ -136,25 +129,20 @@ public final class AdminArticleController extends BaseController {
 		v.add("articleId", articleid);
 		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
-		List<Item> relatedItems = getRelatedItems(request);
-		List<Item> categories = categoryService.getCategories();
-		for (Item category : categories) {
-			if (relatedItems.contains(category)) {
-				category.setStat(Item.STAT_SELECTED);
-			}
+		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
+		if (null == articleService.save(article)) {
+			v.add("err", "数据库更新失败");
+		} else {
+			v.add("err", "succ");
 		}
-		v.add("categories", categories);
+		v.add("categories", categoryService.getSelectedCategories(article));
 		v.add("title", article.getTitle());
 		v.add("permalink", article.getPermalink());
 		v.add("tag", article.getTag());
 		v.add("content", article.getContent());
 		v.add("commentStatus", article.getCommentStatus());
 		v.add("stat", article.getStat());
-		v.add("err", "succ");
-		categoryService.saveRelationshipWithArticle(article, relatedItems);
-		if (null == articleService.save(article)) {
-			v.add("err", "数据库更新失败");
-		}
+		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
 		return v;
 	}
 
@@ -202,9 +190,9 @@ public final class AdminArticleController extends BaseController {
 		String id = Function.generateId();
 
 		title = Function.trimAndStripTags(title);
-		title = "".equals(title) ? "未命名" + id : title;
+		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(title) + "-" + id : permalink;
+		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
 		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 		StringBuilder tagSB = new StringBuilder("");
 		for (String tagStr : tag.split(",")) {
@@ -244,17 +232,19 @@ public final class AdminArticleController extends BaseController {
 		}
 		if (request.getParameter("tag") != null) {
 			String tag = request.getParameter("tag");
-			tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
-			for (String tagStr : tag.split(",")) {
-				tagStr = CutString.substring(tagStr, 18);
-				addItem = tagService.findByName(tagStr);
-				if (null != addItem) {
-					relatedItems.add(addItem);
-				} else {
-					addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
-							Item.TYPE_TAG, 0L, Item.STAT_ON);
-					tagService.save(addItem);
-					relatedItems.add(addItem);
+			if (!"".equals(tag)) {
+				tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
+				for (String tagStr : tag.split(",")) {
+					tagStr = CutString.substring(tagStr, 18);
+					addItem = tagService.findByName(tagStr);
+					if (null != addItem) {
+						relatedItems.add(addItem);
+					} else {
+						addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
+								Item.TYPE_TAG, 0L, Item.STAT_ON);
+						tagService.save(addItem);
+						relatedItems.add(addItem);
+					}
 				}
 			}
 		}
