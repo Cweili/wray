@@ -26,7 +26,8 @@ public class UploadController extends BaseController {
 		Upload upload = uploadService.getUploadById(id);
 		if (null != upload && upload.getLength() > 0) {
 			HttpHeaders header = new HttpHeaders();
-			header.setContentType(new MediaType(upload.getContentType()));
+			String[] type = upload.getContentType().split("/");
+			header.setContentType(new MediaType(type[0], type[1]));
 			header.setContentLength(upload.getLength());
 			header.set("Content-Disposition",
 					"attachment; filename=" + Function.urlEncode(upload.getFilename()));

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Scope("prototype")
 public final class AdminDashboardController extends BaseController {
 
-	@RequestMapping("/admin-dashboard")
+	@RequestMapping("/admin/dashboard")
 	public BlogView index() {
 		BlogView v = new BlogView("dashboard");
 		return v;

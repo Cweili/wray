@@ -23,7 +23,7 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="articleForm" action="admin-${adminAction}.html" method="post">
+		<form id="articleForm" action="admin/${adminAction}/" method="post">
 			<fieldset><legend>文章信息</legend>
 				<div class="input_field">
 					<label for="title">文章标题</label>

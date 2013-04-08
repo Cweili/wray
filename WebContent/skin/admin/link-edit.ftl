@@ -14,7 +14,7 @@
 			<div class="clearboth"><!-- --></div>
 			<div style="height:400px"><!-- --></div>
 		<#else>
-			<form id="itemForm" action="admin-${adminAction}.html" method="post">
+			<form id="itemForm" action="admin/${adminAction}/" method="post">
 				<fieldset><legend>链接信息</legend>
 					<div class="input_field">
 						<label for="itemName">链接名称</label>

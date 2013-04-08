@@ -9,7 +9,7 @@
 				$("#deleteForm").submit();
 			};
 		</script>
-		<form id="deleteForm" action="admin-article-delete-${adminAction?replace('article-','')}.html" method="post">
+		<form id="deleteForm" action="admin/article-delete-${adminAction?replace('article-','')}/" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -27,13 +27,13 @@
 					<#list articles as article>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
 						<td><input type="checkbox" name="id" value="${article.articleId}" /></td>
-						<td><a href="admin-article-edit-${article.articleId}.html">${article.title}</a></td>
+						<td><a href="admin/article-edit-${article.articleId}/">${article.title}</a></td>
 						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${article.tag}</td>
 						<td>${article.hits}</td>
 						<td>${article.commentCount}</td>
 						<td>
-							<a href="admin-article-edit-${article.articleId}.html"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
+							<a href="admin/article-edit-${article.articleId}/"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
 							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="article/${article.permalink}/" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
@@ -50,10 +50,11 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="删除选中文章" />
-					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin-article-add.html'" />
+					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin/article-add/'" />
 				</div>
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
+			<input name="page" value="${paginationCurrentPageNum}" type="hidden" />
 		</form>
 		<#include "pagination.ftl">
 		<#else>
@@ -61,7 +62,7 @@
 				<div class="warn_icon"><!-- --></div>
 				<div class="desc">
 					<span>${actionName?if_exists}列表是空的呢</span>
-					<p>赶快 <a class="button" href="admin-article-add.html">添加新的文章</a> 吧!</p>
+					<p>赶快 <a class="button" href="admin/article-add/">添加新的文章</a> 吧!</p>
 				</div>
 			</div>
 			<div class="clearboth"><!-- --></div>

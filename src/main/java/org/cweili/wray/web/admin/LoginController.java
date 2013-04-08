@@ -21,14 +21,14 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class LoginController extends BaseController {
 
-	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/login", method = RequestMethod.GET)
 	public BlogView logIn() {
 		BlogView v = new BlogView("login");
 		v.add("err", false);
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-login", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
 	public BlogView doPost(WebRequest request, HttpServletResponse response) throws Exception {
 		BlogView v = new BlogView("login");
 		if (request.getParameter("username") != null && request.getParameter("password") != null
@@ -36,7 +36,7 @@ public final class LoginController extends BaseController {
 				&& request.getParameter("password").equals(blogConfig.get("adminPwd"))) {
 			// TODO cookie or session
 			v.add("err", false);
-			response.sendRedirect("/admin-dashboard.html");
+			response.sendRedirect("/admin/dashboard/");
 		} else {
 			if (request.getParameter("username") != null) {
 				v.add("username", request.getParameter("username"));
@@ -46,7 +46,7 @@ public final class LoginController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping("/admin-logout-{security}")
+	@RequestMapping("/admin/logout-{security}")
 	public BlogView logOut(@PathVariable("security") String str) {
 		// TODO Auto-generated method stub
 		return null;

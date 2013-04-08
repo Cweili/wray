@@ -36,7 +36,7 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class AdminUploadController extends BaseController {
 
-	@RequestMapping(value = "/admin-upload-json", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@RequestMapping(value = "/admin/upload-json", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	public @ResponseBody
 	String uploadJson(HttpServletRequest request) {
 
@@ -96,7 +96,7 @@ public final class AdminUploadController extends BaseController {
 		return getError("没有上传的文件");
 	}
 
-	@RequestMapping("/admin-upload")
+	@RequestMapping("/admin/upload")
 	public BlogView uploadManager(WebRequest request) {
 		BlogView v = new BlogView("upload-list");
 		v.add("actionName", "附件管理");
@@ -114,11 +114,11 @@ public final class AdminUploadController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-upload-delete", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/upload-delete", method = RequestMethod.POST)
 	public BlogView del(WebRequest request) {
 
 		BlogView v = new BlogView("msg");
-		v.add("redirect", "admin-upload");
+		v.add("redirect", "admin/upload/?page=" + request.getParameter("page"));
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {

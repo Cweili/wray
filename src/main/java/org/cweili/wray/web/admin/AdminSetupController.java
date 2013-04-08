@@ -36,7 +36,7 @@ public final class AdminSetupController extends BaseController {
 		TYPE.add("skin");
 	};
 
-	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/setup-basic", method = RequestMethod.POST)
 	public BlogView basic(WebRequest request) {
 
 		BlogView v = new BlogView("setup-basic");
@@ -47,7 +47,7 @@ public final class AdminSetupController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-setup-account", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/setup-account", method = RequestMethod.POST)
 	public BlogView account(WebRequest request) {
 		BlogView v = new BlogView("setup-account");
 		blogConfig.saveRequest(request, new String[] { "adminName", "adminNick", "adminEmail" }, ""
@@ -57,7 +57,7 @@ public final class AdminSetupController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/setup-skin", method = RequestMethod.POST)
 	public BlogView skin(WebRequest request) {
 		BlogView v = new BlogView("setup-skin");
 		v.add("labels", Arrays.asList(Constant.LABELS));
@@ -87,7 +87,7 @@ public final class AdminSetupController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-setup-{type}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/setup-{type}", method = RequestMethod.GET)
 	public BlogView doGet(@PathVariable("type") String type) {
 		BlogView v = new BlogView("msg");
 		if (TYPE.contains(type)) {

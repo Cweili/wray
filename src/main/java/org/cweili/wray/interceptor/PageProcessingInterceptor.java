@@ -76,8 +76,8 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				mv.addObject("links", linkService.getLinks());
 			} else {
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
-				int endIndex = reqs.indexOf(".", 7) > 0 ? reqs.indexOf(".", 7) : reqs.indexOf("/",
-						7) > 0 ? reqs.indexOf("/", 7) : reqs.length();
+				int endIndex = reqs.indexOf("/", 7) > 0 ? reqs.indexOf("/", 7) : reqs.indexOf(".",
+						7) > 0 ? reqs.indexOf(".", 7) : reqs.length();
 				mv.addObject("adminAction", reqs.substring(7, endIndex));
 				log.info("Admin Action: " + reqs.substring(7, endIndex));
 			}

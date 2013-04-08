@@ -51,11 +51,6 @@ public class Constant {
 	public static final String SKIN_PATH = "skin/";
 
 	/**
-	 * 上传路径
-	 */
-	public static final String UPLOAD_PATH = "upload/";
-
-	/**
 	 * Wray 版本
 	 */
 	public static final String WRAY_VERSION = "0.1.0";

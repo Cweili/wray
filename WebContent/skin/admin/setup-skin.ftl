@@ -23,7 +23,7 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="setupForm" action="admin-${adminAction}.html" method="post">
+		<form id="setupForm" action="admin/${adminAction}/" method="post">
 			<fieldset><legend>外观选项</legend>
 				<div class="input_field">
 					<label for="skinDir">博客皮肤</label>

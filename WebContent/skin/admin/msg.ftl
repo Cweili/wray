@@ -24,7 +24,7 @@
 	</div> <!-- END Content -->
 	<#if redirect?default('') != ''>
 		<script type="text/javascript">
-			setTimeout('window.location.href="${staticServePath}${redirect?default('')}.html"', 3000);
+			//setTimeout('window.location.href="${staticServePath}${redirect?default('')}"', 3000);
 		</script>
 	</#if>
 </div> 	

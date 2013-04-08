@@ -28,7 +28,7 @@
 						</li>
 						</#list>
 						<li>
-							<a href="/tags.html">$`{allTagsLabel}</a>
+							<a href="/tags/">$`{allTagsLabel}</a>
 						</li>
 						<li class="lastNavi">
 							<a href="javascript:void(0);"></a>

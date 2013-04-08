@@ -25,7 +25,7 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class AdminLinkController extends BaseController {
 
-	@RequestMapping("/admin-link")
+	@RequestMapping("/admin/link")
 	public BlogView linkList() {
 		BlogView v = new BlogView("link-list");
 		v.add("actionName", "博客链接");
@@ -34,7 +34,7 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-link-edit-{linkid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/link-edit-{linkid}", method = RequestMethod.GET)
 	public BlogView editGet(@PathVariable("linkid") String linkid) {
 		BlogView v = new BlogView("link-edit");
 		v.add("actionName", "编辑博客链接");
@@ -51,11 +51,11 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-link-edit-{linkid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/link-edit-{linkid}", method = RequestMethod.POST)
 	public BlogView editPost(WebRequest request, @PathVariable("linkid") String linkid) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "编辑博客链接");
-		v.add("redirect", "admin-link");
+		v.add("redirect", "admin/link/");
 		Item link = linkService.findById(linkid);
 		if (null != link) {
 			link = getLink(request, link);
@@ -78,7 +78,7 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-link-add", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/link-add", method = RequestMethod.GET)
 	public BlogView addGet() {
 		BlogView v = new BlogView("link-edit");
 		v.add("actionName", "新增博客链接");
@@ -86,12 +86,12 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-link-add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/link-add", method = RequestMethod.POST)
 	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增博客链接");
 		Item link = getLink(request, null);
-		v.add("redirect", "admin-link");
+		v.add("redirect", "admin/link/");
 		v.add("err", "succ");
 		v.add("msg", "链接保存成功");
 		v.add("succ", "恭喜您，您的链接已成功保存。");
@@ -107,13 +107,13 @@ public final class AdminLinkController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/link-manage", method = RequestMethod.POST)
 	public BlogView manage(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "链接更新成功");
 		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已删除。");
-		v.add("redirect", "admin-link");
+		v.add("redirect", "admin/link/");
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {

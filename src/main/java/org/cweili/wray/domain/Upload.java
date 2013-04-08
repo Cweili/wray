@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+
 /**
  * Upload
  * 
@@ -17,6 +20,7 @@ import java.util.Set;
 public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
 	private static final long serialVersionUID = -4128532409330876706L;
+	@Id
 	private String uploadId = "";
 	private int length = 0;
 	private String md5 = "";
@@ -24,6 +28,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	private String contentType = "";
 	private Date uploadDate = null;
 
+	@Transient
 	private byte[] content = null;
 
 	public static final Map<String, String> TYPE = new HashMap<String, String>();
@@ -163,7 +168,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public Upload(String iduploadId, int length, String md5, String filename, String contentType,
+	public Upload(String uploadId, int length, String md5, String filename, String contentType,
 			Date uploadDate, byte[] content) {
 		super();
 		this.uploadId = uploadId;
@@ -179,7 +184,7 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		return uploadId;
 	}
 
-	public void setUploadId(String id) {
+	public void setUploadId(String uploadId) {
 		this.uploadId = uploadId;
 	}
 
