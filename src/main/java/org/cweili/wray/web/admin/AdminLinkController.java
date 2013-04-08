@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Function;
@@ -111,7 +108,7 @@ public final class AdminLinkController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)
-	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView manage(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "链接更新成功");

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -24,6 +23,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -36,15 +36,12 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class AdminUploadController extends BaseController {
 
-	@RequestMapping(value = "/admin-upload-json", method = RequestMethod.POST)
-	public BlogView uploadJson(HttpServletRequest request, HttpServletResponse response) {
-
-		BlogView v = new BlogView("empty");
-		response.setContentType("application/json; charset=UTF-8");
+	@RequestMapping(value = "/admin-upload-json", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	public @ResponseBody
+	String uploadJson(HttpServletRequest request) {
 
 		if (!ServletFileUpload.isMultipartContent(request)) {
-			v.add("content", getError("请选择文件。"));
-			return v;
+			return getError("请选择文件。");
 		}
 
 		FileItemFactory factory = new DiskFileItemFactory();
@@ -63,15 +60,13 @@ public final class AdminUploadController extends BaseController {
 			if (!item.isFormField()) {
 				// 检查文件大小 小于256MB
 				if (item.getSize() > 268435456) {
-					v.add("content", getError("上传文件大小必须小于256MB。"));
-					return v;
+					return getError("上传文件大小必须小于256MB。");
 				}
 
 				// 检查扩展名
 				String fileExt = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
 				if (!Upload.TYPE.containsKey(fileExt)) {
-					v.add("content", getError("上传文件扩展名是不允许的扩展名。"));
-					return v;
+					return getError("上传文件扩展名是不允许的扩展名。");
 				}
 
 				byte[] content = new byte[(int) item.getSize()];
@@ -80,8 +75,7 @@ public final class AdminUploadController extends BaseController {
 					item.getInputStream().close();
 				} catch (IOException e) {
 					log.error("InputStream Error.", e);
-					v.add("content", getError("文件保存错误"));
-					return v;
+					return getError("文件保存错误");
 				}
 
 				String id = Function.generateId();
@@ -95,11 +89,11 @@ public final class AdminUploadController extends BaseController {
 						request.getContextPath() + "/upload/" + id + "/"
 								+ Function.permalink(filenameNew) + "." + fileExt);
 				obj.put("fileName", filename);
-				v.add("content", obj.toString());
+				return obj.toString();
 			}
 		}
 
-		return v;
+		return getError("没有上传的文件");
 	}
 
 	@RequestMapping("/admin-upload")

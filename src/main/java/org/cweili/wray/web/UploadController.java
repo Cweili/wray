@@ -1,8 +1,5 @@
 package org.cweili.wray.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.Function;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UploadController extends BaseController {
 
 	@RequestMapping("/upload/{id}/*")
-	public ResponseEntity<byte[]> upload(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("id") String id) {
+	public ResponseEntity<byte[]> upload(@PathVariable("id") String id) {
 		Upload upload = uploadService.getUploadById(id);
 		if (null != upload && upload.getLength() > 0) {
 			HttpHeaders header = new HttpHeaders();
