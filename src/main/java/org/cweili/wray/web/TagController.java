@@ -1,8 +1,5 @@
 package org.cweili.wray.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
@@ -24,8 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public final class TagController extends BaseController {
 
 	@RequestMapping("/tag/{permalink}/")
-	public BlogView permalink(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String permalink) throws NotFoundException {
+	public BlogView permalink(@PathVariable("permalink") String permalink) throws NotFoundException {
 
 		BlogView v = new BlogView("articles");
 		v.add("path", "tag/" + permalink + "/");
@@ -45,8 +41,8 @@ public final class TagController extends BaseController {
 	}
 
 	@RequestMapping("/tag/{permalink}/page-{page}/")
-	public BlogView permalink(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String permalink, @PathVariable String page) throws NotFoundException {
+	public BlogView permalink(@PathVariable("permalink") String permalink,
+			@PathVariable("page") String page) throws NotFoundException {
 		int p = 1;
 		try {
 			p = Integer.valueOf(page);
@@ -68,17 +64,6 @@ public final class TagController extends BaseController {
 				Article.STAT_PUBLISHED), p);
 
 		return v;
-	}
-
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		return null;
-	}
-
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String str) {
-		return null;
 	}
 
 }

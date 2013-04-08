@@ -3,13 +3,9 @@
  */
 package org.cweili.wray.web;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.util.BlogView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,33 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @Scope("prototype")
-public class ErrorController extends BaseController {
+public final class ErrorController extends BaseController {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.web.BaseController#index(javax.servlet.http.
-	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
 	@RequestMapping(value = "/error")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView error() {
 		return new BlogView("error");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.web.BaseController#index(javax.servlet.http.
-	 * HttpServletRequest, javax.servlet.http.HttpServletResponse,
-	 * java.lang.String)
-	 */
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String msg) {
-		BlogView v = new BlogView("error");
-		v.add("errMsg", msg);
-		return v;
 	}
 
 }

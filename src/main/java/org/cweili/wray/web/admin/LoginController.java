@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public final class LoginController extends BaseController {
 
-	@Override
 	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView logIn() {
 		BlogView v = new BlogView("login");
 		v.add("err", false);
 		return v;
@@ -48,10 +47,8 @@ public final class LoginController extends BaseController {
 		return v;
 	}
 
-	@Override
 	@RequestMapping("/admin-logout-{security}")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String str) {
+	public BlogView logOut(@PathVariable("security") String str) {
 		// TODO Auto-generated method stub
 		return null;
 	}

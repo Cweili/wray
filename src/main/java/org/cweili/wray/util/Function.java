@@ -40,7 +40,8 @@ public class Function {
 	 * @param file
 	 * @return
 	 */
-	public static List<String> dirList(File file) {
+	public static List<String> dirList(String pathname) {
+		File file = new File(pathname);
 		File[] files = file.listFiles();
 		List<String> list = new ArrayList<String>();
 		for (File f : files) {

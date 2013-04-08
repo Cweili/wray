@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
@@ -20,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -31,10 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public final class AdminArticleController extends BaseController {
 
-	@Override
 	@RequestMapping("/admin-article-{status}")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String status) {
+	public BlogView articleList(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("article-list");
 		byte stat = Article.STAT_PUBLISHED;
 		String actionName = "已发布文章";
@@ -62,7 +58,7 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-add", method = RequestMethod.GET)
-	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addGet() {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "新增文章");
 		v.add("categories", categoryService.getCategories());
@@ -73,7 +69,7 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-add", method = RequestMethod.POST)
-	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增文章");
 		Article article = getArticle(request, null);
@@ -96,8 +92,7 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-edit-{articleid}", method = RequestMethod.GET)
-	public BlogView editGet(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
+	public BlogView editGet(@PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "编辑文章");
 		v.add("articleId", articleid);
@@ -122,8 +117,7 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-edit-{articleid}", method = RequestMethod.POST)
-	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
+	public BlogView editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "编辑文章");
 		v.add("articleId", articleid);
@@ -147,8 +141,7 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-delete-{status}", method = RequestMethod.POST)
-	public BlogView del(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String status) {
+	public BlogView del(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "文章删除成功");
@@ -173,7 +166,7 @@ public final class AdminArticleController extends BaseController {
 		return v;
 	}
 
-	private Article getArticle(HttpServletRequest request, Article ori) {
+	private Article getArticle(WebRequest request, Article ori) {
 		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
 		String permalink = request.getParameter("permalink") != null ? request
 				.getParameter("permalink") : "";
@@ -219,7 +212,7 @@ public final class AdminArticleController extends BaseController {
 				commentStatus, Article.TYPE_ARTICLE);
 	}
 
-	private List<Item> getRelatedItems(HttpServletRequest request) {
+	private List<Item> getRelatedItems(WebRequest request) {
 		List<Item> relatedItems = new ArrayList<Item>();
 		Item addItem;
 		if (request.getParameterValues("category") != null) {
@@ -250,11 +243,6 @@ public final class AdminArticleController extends BaseController {
 		}
 
 		return relatedItems;
-	}
-
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		return null;
 	}
 
 }

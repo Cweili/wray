@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Function;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -27,9 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public final class AdminCategoryController extends BaseController {
 
-	@Override
 	@RequestMapping("/admin-category")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView categoryList() {
 		BlogView v = new BlogView("category-list");
 		v.add("actionName", "分类");
 		List<Item> items = categoryService.getCategories();
@@ -37,10 +34,8 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@Override
 	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.GET)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String categoryid) {
+	public BlogView editGet(@PathVariable("categoryid") String categoryid) {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "编辑分类");
 		Item category = categoryService.findById(categoryid);
@@ -57,8 +52,7 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.POST)
-	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String categoryid) {
+	public BlogView editPost(WebRequest request, @PathVariable("categoryid") String categoryid) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "编辑分类");
 		v.add("redirect", "admin-category");
@@ -84,7 +78,7 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-add", method = RequestMethod.GET)
-	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addGet() {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "新增分类");
 		v.add("itemOrder", 0);
@@ -92,7 +86,7 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-add", method = RequestMethod.POST)
-	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增分类");
 		Item category = getCategory(request, null);
@@ -113,7 +107,7 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.POST)
-	public BlogView manage(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView manage(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "分类更新成功");
@@ -147,7 +141,7 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	private Item getCategory(HttpServletRequest request, Item ori) {
+	private Item getCategory(WebRequest request, Item ori) {
 		String itemName = request.getParameter("itemName") != null ? request
 				.getParameter("itemName") : "";
 		String permalink = request.getParameter("permalink") != null ? request

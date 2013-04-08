@@ -2,6 +2,7 @@ package org.cweili.wray.web.admin;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,9 +22,9 @@ import org.cweili.wray.web.BaseController;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -35,9 +36,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public final class AdminUploadController extends BaseController {
 
-	@Override
 	@RequestMapping(value = "/admin-upload-json", method = RequestMethod.POST)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView uploadJson(HttpServletRequest request, HttpServletResponse response) {
 
 		BlogView v = new BlogView("empty");
 		response.setContentType("application/json; charset=UTF-8");
@@ -103,7 +103,7 @@ public final class AdminUploadController extends BaseController {
 	}
 
 	@RequestMapping("/admin-upload")
-	public BlogView uploadManager(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView uploadManager(WebRequest request) {
 		BlogView v = new BlogView("upload-list");
 		v.add("actionName", "附件管理");
 		int page = 1;
@@ -121,37 +121,26 @@ public final class AdminUploadController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-upload-delete", method = RequestMethod.POST)
-	public BlogView del(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView del(WebRequest request) {
 
 		BlogView v = new BlogView("msg");
-		v.add("err", "succ");
-		v.add("msg", "附件删除成功");
 		v.add("redirect", "admin-upload");
-
-		v.add("succ", "恭喜您，您选中的附件已成功删除。");
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
-			for (String id : request.getParameterValues("id")) {
-				try {
-					ids.add(id);
-				} catch (Exception e) {
-					log.error(e.toString());
-				}
-			}
+			Collections.addAll(ids, request.getParameterValues("id"));
 		}
 
-		if (!uploadService.remove(ids)) {
+		if (uploadService.remove(ids)) {
+			v.add("err", "succ");
+			v.add("msg", "附件删除成功");
+			v.add("succ", "恭喜您，您选中的附件已成功删除。");
+		} else {
 			v.add("err", "数据库更新失败");
 			v.add("msg", "附件删除失败");
 		}
-		return v;
-	}
 
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String str) {
-		return null;
+		return v;
 	}
 
 	private String getError(String message) {

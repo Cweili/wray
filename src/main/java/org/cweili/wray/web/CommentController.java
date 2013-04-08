@@ -3,18 +3,22 @@
  */
 package org.cweili.wray.web;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.cweili.wray.domain.Comment;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Function;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
  * 
@@ -24,46 +28,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @Scope("prototype")
-public class CommentController extends BaseController {
+public final class CommentController extends BaseController {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.web.BaseController#index(javax.servlet.http.
-	 * HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
 	@RequestMapping(value = "/comment/", method = RequestMethod.POST)
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<String> index(@RequestParam("articleId") String articleId,
+			@RequestParam("author") String author, @RequestHeader("User-Agent") String userAgent,
+			@RequestParam("content") String content, @RequestParam("email") String email,
+			@RequestParam("link") String link, @RequestParam("permalink") String permalink) {
+		String id = Function.generateId();
 		Comment comment = new Comment();
-		comment.setArticleId(request.getParameter("articleId"));
-		comment.setAuthor(request.getParameter("author"));
-		comment.setAgent(request.getHeader("User-Agent"));
-		comment.setContent(request.getParameter("content"));
-		comment.setEmail(request.getParameter("email"));
-		comment.setIp(request.getRemoteAddr());
-		comment.setLink(request.getParameter("link"));
+		comment.setCommentId(id);
+		comment.setArticleId(articleId);
+		comment.setAuthor(author);
+		comment.setAgent(userAgent);
+		comment.setContent(content);
+		comment.setEmail(email);
+		comment.setIp(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest().getRemoteAddr());
+		comment.setLink(link);
 		comment.setStat(Comment.STAT_DISPLAY);
 		commentService.save(comment);
-		try {
-			response.sendRedirect(blogConfig.get("staticServePath") + "article/"
-					+ request.getParameter("permalink") + "/");
-		} catch (IOException e) {
-			log.error("Redirect error.", e);
-		}
-		return null;
-	}
+		HttpHeaders header = new HttpHeaders();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.cweili.wray.web.BaseController#index(javax.servlet.http.
-	 * HttpServletRequest, javax.servlet.http.HttpServletResponse,
-	 * java.lang.String)
-	 */
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
-		return null;
+		try {
+			header.setLocation(new URI(blogConfig.get("staticServePath") + "article/" + permalink
+					+ "/#" + id));
+		} catch (URISyntaxException e) {
+			log.error("URISyntaxException", e);
+		}
+
+		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);
 	}
 }

@@ -2,9 +2,8 @@ package org.cweili.wray.service;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.cweili.wray.domain.Config;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -35,6 +34,6 @@ public interface ConfigService {
 	 * @param nonHtmlArray
 	 * @param htmlArray
 	 */
-	public void saveRequest(HttpServletRequest request, String[] nonHtmlArray, String[] htmlArray);
+	public void saveRequest(WebRequest request, String[] nonHtmlArray, String[] htmlArray);
 
 }

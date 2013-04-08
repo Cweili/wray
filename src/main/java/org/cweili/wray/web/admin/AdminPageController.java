@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -29,10 +27,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Scope("prototype")
 public final class AdminPageController extends BaseController {
 
-	@Override
 	@RequestMapping("/admin-page-{status}")
-	public BlogView index(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String status) {
+	public BlogView pageList(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("page-list");
 		byte stat = Article.STAT_PUBLISHED;
 		String actionName = "公开页面";
@@ -60,7 +56,7 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-add", method = RequestMethod.GET)
-	public BlogView addGet(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addGet() {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "新增页面");
 		v.add("commentStatus", Article.COMMENT_ON);
@@ -70,7 +66,7 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-add", method = RequestMethod.POST)
-	public BlogView addPost(HttpServletRequest request, HttpServletResponse response) {
+	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增页面");
 		Article article = getArticle(request, null);
@@ -94,8 +90,7 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.GET)
-	public BlogView editGet(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
+	public BlogView editGet(@PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
 		v.add("articleId", articleid);
@@ -116,8 +111,7 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
-	public BlogView editPost(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String articleid) {
+	public BlogView editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
 		v.add("articleId", articleid);
@@ -139,8 +133,7 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-manage-{status}", method = RequestMethod.POST)
-	public BlogView manage(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable String status) {
+	public BlogView manage(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "页面更新成功");
@@ -194,7 +187,7 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	private Article getArticle(HttpServletRequest request, Article ori) {
+	private Article getArticle(WebRequest request, Article ori) {
 		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
 		String permalink = request.getParameter("permalink") != null ? request
 				.getParameter("permalink") : "";
@@ -229,11 +222,6 @@ public final class AdminPageController extends BaseController {
 		}
 		return new Article(id, title, permalink, content, "", new Date(), stat, 0, 0,
 				commentStatus, Article.TYPE_PAGE);
-	}
-
-	@Override
-	public BlogView index(HttpServletRequest request, HttpServletResponse response) {
-		return null;
 	}
 
 }

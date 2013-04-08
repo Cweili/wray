@@ -5,14 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.domain.Config;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -63,7 +62,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	}
 
 	@Override
-	public void saveRequest(HttpServletRequest request, String[] nonHtmlArray, String[] htmlArray) {
+	public void saveRequest(WebRequest request, String[] nonHtmlArray, String[] htmlArray) {
 		List<String> nonHtmlList = Arrays.asList(nonHtmlArray);
 		List<String> htmlList = Arrays.asList(htmlArray);
 		Map<String, String[]> map = request.getParameterMap();
