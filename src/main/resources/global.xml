@@ -101,7 +101,8 @@
 		<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>  
 	</bean> 
 	
-	<!-- 允许对静态资源文件的访问 --> 
+	<!-- 允许对静态资源文件的访问 -->
+	<!-- mvc:resources location="/" mapping="#{}" cache-period="31536000"/-->
 	<mvc:default-servlet-handler/>
 	
 	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->  
