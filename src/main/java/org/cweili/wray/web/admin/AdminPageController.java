@@ -27,7 +27,7 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class AdminPageController extends BaseController {
 
-	@RequestMapping("/admin/page-{status}")
+	@RequestMapping("/admin-page-{status}")
 	public BlogView pageList(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("page-list");
 		byte stat = Article.STAT_PUBLISHED;
@@ -55,7 +55,7 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/page-add", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-page-add", method = RequestMethod.GET)
 	public BlogView addGet() {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "新增页面");
@@ -65,12 +65,12 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/page-add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-page-add", method = RequestMethod.POST)
 	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增页面");
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin/page-edit-" + article.getArticleId() + "/");
+		v.add("redirect", "admin-page-edit-" + article.getArticleId() + "/");
 		v.add("err", "succ");
 		v.add("msg", "页面保存成功");
 		v.add("succ", "恭喜您，您的页面已成功保存。");
@@ -89,7 +89,7 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/page-edit-{articleid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.GET)
 	public BlogView editGet(@PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
@@ -110,7 +110,7 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/page-edit-{articleid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
 	public BlogView editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "编辑页面");
@@ -132,13 +132,13 @@ public final class AdminPageController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/page-manage-{status}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-page-manage-{status}", method = RequestMethod.POST)
 	public BlogView manage(WebRequest request, @PathVariable("status") String status) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "页面更新成功");
 		v.add("succ", "恭喜您，您的页面排序已成功更新，选中页面已成功移入回收站。");
-		v.add("redirect", "admin/page-" + status + "/");
+		v.add("redirect", "admin-page-" + status + "/");
 
 		byte type = Article.STAT_RECYCLE;
 		if ("recycle".equals(status)) {

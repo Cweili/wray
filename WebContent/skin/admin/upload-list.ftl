@@ -9,7 +9,7 @@
 				$("#deleteForm").submit();
 			};
 		</script>
-		<form id="deleteForm" action="admin/upload-delete/" method="post">
+		<form id="deleteForm" action="admin-upload-delete" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>

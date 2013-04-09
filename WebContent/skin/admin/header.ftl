@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
 <head>
 	<title>${blogTitle?if_exists} 管理面板 - Wray Admin Panel</title>
-	<base href="${staticServePath}" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<!--base href="${staticServePath}" /-->
+	<base href="${staticServePath}" />
 	<style type="text/css" media="all">
 		@import url('${staticServePath}include/css/admin-style.css');
 		<#--@import url('${staticServePath}include/css/jquery.wysiwyg.css');-->

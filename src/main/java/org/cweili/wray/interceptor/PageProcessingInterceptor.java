@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
+import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
-import org.cweili.wray.util.Function;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -22,6 +23,12 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
+		String host = request.getServerName();
+		if (request.getServerPort() != 80) {
+			host += ":" + request.getServerPort();
+		}
+		String basePath = request.getScheme() + "://" + host + request.getContextPath() + "/";
+		blogConfig.getConfigMap().put("staticServePath", basePath);
 		return true;
 	}
 
@@ -34,18 +41,11 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 		// title = m.get("title") + " - " + title;
 		// }
 		if (null != mv) {
-			String reqs = Function.requestScript(request);
+			String reqs = requestScript(request);
 			boolean isAdminPanel = isAdminPanel(request);
 
 			mv.addAllObjects(blogConfig.getConfigMap());
 
-			String host = request.getServerName();
-			if (request.getServerPort() != 80) {
-				host += ":" + request.getServerPort();
-			}
-			String basePath = request.getScheme() + "://" + host + request.getContextPath() + "/";
-			mv.addObject("staticServePath", basePath);
-			blogConfig.getConfigMap().put("staticServePath", basePath);
 			mv.addObject("year", Constant.CURRENT_YEAR);
 			mv.addObject("wrayVersion", Constant.WRAY_VERSION);
 
@@ -76,10 +76,9 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				mv.addObject("links", linkService.getLinks());
 			} else {
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
-				int endIndex = reqs.indexOf("/", 7) > 0 ? reqs.indexOf("/", 7) : reqs.indexOf(".",
-						7) > 0 ? reqs.indexOf(".", 7) : reqs.length();
-				mv.addObject("adminAction", reqs.substring(7, endIndex));
-				log.info("Admin Action: " + reqs.substring(7, endIndex));
+				String adminAction = reqs.substring(7);
+				mv.addObject("adminAction", adminAction);
+				log.info("Admin Action: " + adminAction);
 			}
 
 			// Skin Dir
@@ -92,6 +91,18 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception ex) throws Exception {
+
+	}
+
+	@Override
+	public boolean preHandle(ServletWebRequest request, Object handler) throws Exception {
+		// TODO 自动生成的方法存根
+		return false;
+	}
+
+	@Override
+	public void postHandle(ServletWebRequest request, Object handler, BlogView v) throws Exception {
+		// TODO 自动生成的方法存根
 
 	}
 

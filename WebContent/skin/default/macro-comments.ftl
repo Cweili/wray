@@ -7,7 +7,7 @@
                 <div>
                     <img alt="${comment.author}" src="" onerror="this.src='include/image/pencil_48.png'"/>
                 </div>
-                <#if "http://" == comment.link>
+                <#if "http:/" == comment.link>
                 <a>${comment.author}</a>
                 <#else>
                 <a href="${comment.link}" target="_blank" rel="nofollow">${comment.author}</a>
@@ -36,7 +36,7 @@
     </div>
     </#list>
 </div>
-<form id="commentForm" action="comment/" method="post">
+<form id="commentForm" action="comment" method="post">
 	<table class="comment-form">
 	    <tbody>
 	        <tr>
@@ -104,7 +104,7 @@
 			wellFormatMode: true,
 			indentChar: "",
 			urlType: "relative",
-			emoticonsPath: "${staticServePath}include/image/emotion/",
+			emoticonsPath: "${staticServePath}include/image/emotion",
 			filterMode: true,
 			allowFileManager : false,
 			allowImageUpload: false,
@@ -127,7 +127,7 @@
 			],
 			items: [
 				"formatblock", "fontsize", "forecolor", "hilitecolor", "|", "bold", "italic", "underline", "strikethrough", "superscript", "subscript", "|",
-				"link", "unlink", "hr", "|", "image", "flash", "media", "table", "emoticons", "code", "baidumap", "/",
+				"link", "unlink", "hr", "|", "image", "flash", "media", "table", "emoticons", "code", "baidumap", "",
 				"undo", "redo", "|", "insertunorderedlist", "insertorderedlist", "indent", "outdent", "|",
 				"justifyleft", "justifycenter", "justifyright", "justifyfull", "|", "selectall", "cut", "copy", "paste", "|",
 				"insertmore", "quickformat", "removeformat", "clearhtml", "source", "preview", "fullscreen"

@@ -39,7 +39,7 @@
 								</div>
 							</div>
 							<h2 class="posttitle breakline">
-								<a href="article/${article.permalink}/">${article.title}</a>
+								<a href="article/${article.permalink}">${article.title}</a>
 							</h2>
 							<div class="postmeta">
 								<#--if article.articlePutTop>
@@ -50,10 +50,10 @@
 								</#if-->
 								${adminNick} post on
 								<#list relatedCats as cat>
-									<a href="/category/${cat.permalink}/">
+									<a href="/category/${cat.permalink}">
 											${cat.itemName}</a><#if cat_has_next>,</#if>
 								</#list>
-								<a href="article/${article.permalink}/">${article.createTime?string("HH:mm:ss")}</a>
+								<a href="article/${article.permalink}">${article.createTime?string("HH:mm:ss")}</a>
 								${article.hits} ${viewLabel}
 							</div>
 							<div class="clr16"></div>
@@ -69,7 +69,7 @@
 							<div class="roubcornrcontent">
 								<span class="posttags" title="$`{tagLabel}">
 									<#list article.tag?split(",") as articleTag>
-									<a href="tag/${articleTag?url('UTF-8')}/">
+									<a href="tag/${articleTag?url('UTF-8')}">
 											${articleTag}</a><#if articleTag_has_next>,</#if>
 									</#list>
 								</span>

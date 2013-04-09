@@ -15,20 +15,20 @@
 						<li><a href="${staticServePath}">${homeLabel}</a></li>
 						<#list categories as category>
 						<li>
-							<a href="category/${category.permalink}/">
+							<a href="category/${category.permalink}">
 								${category.itemName}
 							</a>
 						</li>
 						</#list>
 						<#list pageNavigations as page>
 						<li>
-							<a href="page/${page.permalink}/">
+							<a href="page/${page.permalink}">
 								${page.title}
 							</a>
 						</li>
 						</#list>
 						<li>
-							<a href="/tags/">$`{allTagsLabel}</a>
+							<a href="/tags">$`{allTagsLabel}</a>
 						</li>
 						<li class="lastNavi">
 							<a href="javascript:void(0);"></a>

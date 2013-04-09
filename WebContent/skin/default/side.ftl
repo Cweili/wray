@@ -31,7 +31,7 @@
 			<h4><span>${popTagsLabel}</span></h4>
 			<div id="tagcloud">
 			<#list mostUsedTags as tag>
-					<a href="tag/${tag.itemName?url('UTF-8')}/" title="${tag.itemName}(${tag.count})">
+					<a href="tag/${tag.itemName?url('UTF-8')}" title="${tag.itemName}(${tag.count})">
 					${tag.itemName}</a>
 			 </#list>
 			 </div>
@@ -45,7 +45,7 @@
 			<#list mostCommentArticles as article>
 				<li class="shortline"><sup>[${article.commentCount}]</sup><a
                     title="${article.title}"
-                    href="article/${article.permalink?url('UTF-8')}/">${article.title}
+                    href="article/${article.permalink?url('UTF-8')}">${article.title}
 				</a></li>
 			</#list>
 			</ul>
@@ -59,7 +59,7 @@
 			<#list mostViewCountArticles as article>
 				<li class="shortline">
 					<sup>[${article.hits}]</sup>
-					<a title="${article.title}" href="article/${article.permalink?url('UTF-8')}/">
+					<a title="${article.title}" href="article/${article.permalink?url('UTF-8')}">
 						${article.title}
 					</a>
 				</li>

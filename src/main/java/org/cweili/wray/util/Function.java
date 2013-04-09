@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * Wray 公用函数
  * 
@@ -106,16 +104,6 @@ public class Function {
 			permalink = permalink.substring(0, 32);
 		}
 		return permalink;
-	}
-
-	/**
-	 * 取得请求脚本名
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String requestScript(HttpServletRequest request) {
-		return request.getRequestURI().replaceFirst(request.getContextPath(), "");
 	}
 
 	/**

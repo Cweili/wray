@@ -63,7 +63,7 @@
 			};
 			*/
 		</script>
-		<form id="setupForm" action="admin/${adminAction}/" method="post">
+		<form id="setupForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>博客管理员帐户</legend>
 				<div class="input_field">
 					<label for="adminName">登录名</label>

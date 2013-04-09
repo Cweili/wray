@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Scope("prototype")
 public final class TagController extends BaseController {
 
-	@RequestMapping("/tag/{permalink}/")
+	@RequestMapping("/tag/{permalink}")
 	public BlogView permalink(@PathVariable("permalink") String permalink) throws NotFoundException {
 
 		BlogView v = new BlogView("articles");
@@ -40,7 +40,7 @@ public final class TagController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping("/tag/{permalink}/page-{page}/")
+	@RequestMapping("/tag/{permalink}/page-{page}")
 	public BlogView permalink(@PathVariable("permalink") String permalink,
 			@PathVariable("page") String page) throws NotFoundException {
 		int p = 1;

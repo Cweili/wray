@@ -9,7 +9,7 @@
 				$("#manageForm").submit();
 			};
 		</script>
-		<form id="manageForm" action="admin/page-manage-${adminAction?replace('page-','')}/?page=${paginationCurrentPageNum}" method="post">
+		<form id="manageForm" action="admin-page-manage-${adminAction?replace('page-','')}/?page=${paginationCurrentPageNum}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -26,14 +26,14 @@
 					<#list articles as article>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
 						<td><input type="checkbox" name="id" value="${article.articleId}" /></td>
-						<td><a href="admin/page-edit-${article.articleId}/">${article.title}</a></td>
+						<td><a href="admin-page-edit-${article.articleId}">${article.title}</a></td>
 						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${article.commentCount}</td>
 						<td><input class="tinyfield" type="text" name="order${article.articleId}" value="${article.hits}" /></td>
 						<td>
-							<a href="admin/page-edit-${article.articleId}/"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
+							<a href="admin-page-edit-${article.articleId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
 							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
-							<a href="page/${article.permalink}/" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
+							<a href="page/${article.permalink}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>
 					</#list>
@@ -48,7 +48,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="更新排序并删除选中页面" />
-					<input class="submit" type="button" value="添加新的页面" onclick="location.href='admin/page-add/'" />
+					<input class="submit" type="button" value="添加新的页面" onclick="location.href='admin-page-add/'" />
 				</div>
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />
@@ -72,7 +72,7 @@
 				<div class="warn_icon"><!-- --></div>
 				<div class="desc">
 					<span>${actionName?if_exists}列表是空的呢</span>
-					<p>赶快 <a class="button" href="admin/page-add/">添加新的页面</a> 吧!</p>
+					<p>赶快 <a class="button" href="admin-page-add">添加新的页面</a> 吧!</p>
 				</div>
 			</div>
 			<div class="clearboth"><!-- --></div>

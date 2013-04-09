@@ -31,7 +31,7 @@ public final class ArticleController extends BaseController {
 	 * @return
 	 * @throws NotFoundException
 	 */
-	@RequestMapping("/article/{permalink}/*")
+	@RequestMapping("/article/{permalink}")
 	public BlogView article(@PathVariable("permalink") String permalink) throws NotFoundException {
 
 		permalink = Function.urlDecode(permalink);
@@ -58,7 +58,7 @@ public final class ArticleController extends BaseController {
 	 * @return
 	 * @throws NotFoundException
 	 */
-	@RequestMapping("/page/{permalink}/*")
+	@RequestMapping("/page/{permalink}")
 	public BlogView page(@PathVariable("permalink") String permalink) throws NotFoundException {
 		permalink = Function.urlDecode(permalink);
 		Article page = articleService.findByPermalink(permalink, Article.TYPE_PAGE);
@@ -70,7 +70,7 @@ public final class ArticleController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping("/page-{page}/")
+	@RequestMapping("/page-{page}")
 	public BlogView index(@PathVariable("page") String page) {
 		BlogView v = new BlogView("index");
 		int p = 1;

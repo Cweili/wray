@@ -9,7 +9,7 @@
 	<div id="container">
 		<h1>${blogTitle?if_exists}管理面板 - Wray Admin Panel</h1>
 		<div id="box">
-			<form action="admin/login/" method="post">
+			<form action="admin-login" method="post">
 			<p class="main">
 				<label>用户名: </label>
 				<input name="username" value="${username?if_exists}" /> 

@@ -53,17 +53,8 @@
 		</property>
 	</bean>
 	
-	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
-	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
-	
 	<!-- 注解请求映射  -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">		
-		<property name="interceptors">
-			<list>
-				<ref bean="authenticationInterceptor" />
-				<ref bean="pageProcessingInterceptor" />
-			</list>		
-		</property>		
 	</bean>
 	
 	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
@@ -127,7 +118,23 @@
 		<property name="defaultErrorView" value="forward:/error"/>  
 		<property name="defaultStatusCode" value="200"/>  
 		<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>  
-	</bean> 
+	</bean>
+	
+	<!-- 拦截器 -->
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
+	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
+	
+	<mvc:interceptors>
+	<!-- This XML will intercept all URIs -->
+		<ref bean="pageProcessingInterceptor"/>	
+	<!-- This XML will apply interceptor to only certain URIs -->
+	<!--
+	<mvc:interceptor>
+	     <mvc:mapping path="/users"/>
+	     <bean class="com.howtodoinjava.interceptor.DemoInterceptor" />
+	</mvc:interceptor>
+	 -->
+	</mvc:interceptors>
 	
 	<!-- 允许对静态资源文件的访问 -->
 	<!-- mvc:resources location="/" mapping="#{}" cache-period="31536000"/-->

@@ -23,7 +23,7 @@
 			</div>
 			<div class="clearboth"><!-- --></div>
 		</#if>
-		<form id="setupForm" action="admin/${adminAction}/" method="post">
+		<form id="setupForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>博客基本信息</legend>
 				<div class="input_field">
 					<label for="blogTitle">博客名称</label>

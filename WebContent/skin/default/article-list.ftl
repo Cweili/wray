@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<h2 class="posttitle shortline">
-			<a href="article/${article.permalink}/">${article.title}</a>
+			<a href="article/${article.permalink}">${article.title}</a>
 		</h2>
 		<div class="postmeta">
 			<!--``#if article.articlePutTop>
@@ -29,8 +29,8 @@
 			<``#if article.hasUpdated>
 				${updatedLabel}
 			<``/#if-->
-			<!--a href="author/$`{article.userId}/">$`{article.userId}</a-->
-			${adminNick} <a href="article/${article.permalink}/">${article.createTime?string("HH:mm:ss")}</a>
+			<!--a href="author/$`{article.userId}">$`{article.userId}</a-->
+			${adminNick} <a href="article/${article.permalink}">${article.createTime?string("HH:mm:ss")}</a>
 			${article.hits} ${viewLabel}
 		</div>
 		<div class="clr16"></div>
@@ -41,7 +41,7 @@
 		<div class="roubcornrcontent">
 			<span class="posttags" title="${tagLabel}">
 				<#list article.tag?split(",") as articleTag>
-				<a href="tag/${articleTag?url('UTF-8')}/">
+				<a href="tag/${articleTag?url('UTF-8')}">
 						${articleTag}</a><#if articleTag_has_next>,</#if>
 				</#list>
 			</span>

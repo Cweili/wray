@@ -25,7 +25,7 @@ import org.springframework.web.context.request.WebRequest;
 @Scope("prototype")
 public final class AdminCategoryController extends BaseController {
 
-	@RequestMapping("/admin/category")
+	@RequestMapping("/admin-category")
 	public BlogView categoryList() {
 		BlogView v = new BlogView("category-list");
 		v.add("actionName", "分类");
@@ -34,7 +34,7 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/category-edit-{categoryid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.GET)
 	public BlogView editGet(@PathVariable("categoryid") String categoryid) {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "编辑分类");
@@ -51,11 +51,11 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/category-edit-{categoryid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.POST)
 	public BlogView editPost(WebRequest request, @PathVariable("categoryid") String categoryid) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "编辑分类");
-		v.add("redirect", "admin/category/");
+		v.add("redirect", "admin-category/");
 		Item category = categoryService.findById(categoryid);
 		if (null != category) {
 			category = getCategory(request, category);
@@ -77,7 +77,7 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/category-add", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin-category-add", method = RequestMethod.GET)
 	public BlogView addGet() {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "新增分类");
@@ -85,12 +85,12 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/category-add", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-category-add", method = RequestMethod.POST)
 	public BlogView addPost(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增分类");
 		Item category = getCategory(request, null);
-		v.add("redirect", "admin/category/");
+		v.add("redirect", "admin-category/");
 		v.add("err", "succ");
 		v.add("msg", "分类保存成功");
 		v.add("succ", "恭喜您，您的分类已成功保存。");
@@ -106,13 +106,13 @@ public final class AdminCategoryController extends BaseController {
 		return v;
 	}
 
-	@RequestMapping(value = "/admin/category-manage", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.POST)
 	public BlogView manage(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "分类更新成功");
 		v.add("succ", "恭喜您，您的分类排序已成功更新，选中分类已删除。");
-		v.add("redirect", "admin/category/");
+		v.add("redirect", "admin-category/");
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {

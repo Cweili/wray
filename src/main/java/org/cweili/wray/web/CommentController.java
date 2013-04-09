@@ -30,7 +30,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Scope("prototype")
 public final class CommentController extends BaseController {
 
-	@RequestMapping(value = "/comment/", method = RequestMethod.POST)
+	@RequestMapping(value = "/comment", method = RequestMethod.POST)
 	public ResponseEntity<String> index(@RequestParam("articleId") String articleId,
 			@RequestParam("author") String author, @RequestHeader("User-Agent") String userAgent,
 			@RequestParam("content") String content, @RequestParam("email") String email,
