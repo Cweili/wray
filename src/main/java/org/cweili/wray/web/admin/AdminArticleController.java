@@ -73,7 +73,7 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增文章");
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin-article-edit-" + article.getArticleId() + "/");
+		v.add("redirect", "admin-article-edit-" + article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "文章保存成功");
 		v.add("succ", "恭喜您，您的文章已成功保存。");

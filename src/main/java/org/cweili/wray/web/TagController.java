@@ -24,7 +24,7 @@ public final class TagController extends BaseController {
 	public BlogView permalink(@PathVariable("permalink") String permalink) throws NotFoundException {
 
 		BlogView v = new BlogView("articles");
-		v.add("path", "tag/" + permalink + "/");
+		v.add("path", "tag/" + permalink);
 		permalink = Function.urlDecode(permalink);
 		Item item = tagService.findByName(permalink);
 		if (null == item) {
@@ -50,7 +50,7 @@ public final class TagController extends BaseController {
 			log.error(e.toString());
 		}
 		BlogView v = new BlogView("articles");
-		v.add("path", "tag/" + permalink + "/");
+		v.add("path", "tag/" + permalink);
 		permalink = Function.urlDecode(permalink);
 		Item item = tagService.findByName(permalink);
 		if (null == item) {

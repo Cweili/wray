@@ -24,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public abstract class BaseService {
 
-	protected static Log log = LogFactory.getLog(BaseService.class);
+	protected static final Log log = LogFactory.getLog(BaseService.class);
 
 	@Autowired
 	protected ConfigDao configDao;
@@ -72,12 +72,17 @@ public abstract class BaseService {
 	/**
 	 * 回复排行数
 	 */
-	protected static int topCommentArticlesSize = 1;
+	protected static int topCommentArticlesSize = 0;
 
 	/**
 	 * 点击排行数
 	 */
-	protected static int topHitsArticlesSize = 1;
+	protected static int topHitsArticlesSize = 0;
+
+	/**
+	 * 热门标签数
+	 */
+	protected static int mostUsedTagsSize = 0;
 
 	/**
 	 * 已发布 Article 数

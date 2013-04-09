@@ -7,7 +7,7 @@ import java.util.Date;
  * Wray 常量
  * 
  * @author cweili
- * @version 2012-8-16 下午5:25:21
+ * @version 2013-4-9 下午4:16:00
  * 
  */
 public class Constant {
@@ -21,6 +21,16 @@ public class Constant {
 	 * 当前年份
 	 */
 	public static final String CURRENT_YEAR = new SimpleDateFormat("yyyy").format(new Date());
+
+	/**
+	 * 登陆验证字段
+	 */
+	public static final String AUTHORITY_KEY = "wray_k";
+
+	/**
+	 * COOKIE 登陆验证
+	 */
+	public static final boolean AUTHORITY_COOKIE = true;
 
 	/**
 	 * 危险 html 标签

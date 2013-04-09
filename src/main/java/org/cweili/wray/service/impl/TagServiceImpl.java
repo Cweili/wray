@@ -28,7 +28,7 @@ public class TagServiceImpl extends BaseService implements TagService {
 				return item;
 			}
 		}
-		return null;
+		return itemDao.findByItemNameAndItemTypeAndStat(name, Item.TYPE_TAG, Item.STAT_ON);
 	}
 
 	@Override
@@ -41,12 +41,21 @@ public class TagServiceImpl extends BaseService implements TagService {
 				return item;
 			}
 		}
-		return null;
+		return itemDao.findByPermalinkAndItemTypeAndStat(name, Item.TYPE_TAG, Item.STAT_ON);
 	}
 
 	@Override
-	public List<Item> getTags() {
-		if (tags == null) {
+	public List<Item> getTags(int page, int size) {
+		page = page > 0 ? page : 1;
+		size = size > 0 ? size : 1;
+		return itemDao.findAll(new PageRequest(page - 1, size, Sort.Direction.DESC, "count"))
+				.getContent();
+	}
+
+	@Override
+	public List<Item> getmostUsedTags(int num) {
+		if (num >= 0 && mostUsedTagsSize != num) {
+			mostUsedTagsSize = num;
 			updateTagCache();
 		}
 		return tags;
@@ -94,7 +103,7 @@ public class TagServiceImpl extends BaseService implements TagService {
 	@Override
 	public void updateTagCache() {
 		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(0, 65535, Sort.Direction.DESC, "count")).getContent();
+				new PageRequest(0, mostUsedTagsSize, Sort.Direction.DESC, "count")).getContent();
 	}
 
 }

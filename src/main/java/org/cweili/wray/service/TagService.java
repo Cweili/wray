@@ -16,7 +16,9 @@ public interface TagService {
 
 	public Item findByPermalink(String name);
 
-	public List<Item> getTags();
+	public List<Item> getTags(int page, int size);
+
+	public List<Item> getmostUsedTags(int num);
 
 	public Item save(Item tag);
 

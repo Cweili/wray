@@ -6,13 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.Article;
-import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
-import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Do Page Processing
+ * 页面处理
  * 
  * @author cweili
  * @version 2012-8-16 下午5:15:25
@@ -23,6 +21,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
+		// 添加服务器路径
 		String host = request.getServerName();
 		if (request.getServerPort() != 80) {
 			host += ":" + request.getServerPort();
@@ -35,6 +34,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler, ModelAndView mv) throws Exception {
+
 		// Map<String, Object> m = mv.getModel();
 		// String title = blogConfig.get("BLOG_TITLE");
 		// if(!m.get("title").equals("")) {
@@ -52,30 +52,46 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			// Not Admin and Admin view
 			if (!isAdminPanel) {
 
+				// 添加页面
 				List<Article> pageNavigations = articleService.findByTypeStatus(Article.TYPE_PAGE,
 						Article.STAT_PUBLISHED, 1, 0);
 				mv.addObject("pageNavigations", pageNavigations);
-				mv.addObject("mostCommentArticles", articleService.getTopCommentArticles(Integer
-						.valueOf(blogConfig.get("topCommentArticlesSize"))));
-				mv.addObject("mostViewCountArticles", articleService.getTopHitsArticles(Integer
-						.valueOf(blogConfig.get("topHitsArticlesSize"))));
 
-				mv.addObject("categories", categoryService.getCategories());
-				int mostUsedTagsSize = 20;
-				try {
-					mostUsedTagsSize = Integer.valueOf(blogConfig.get("mostUsedTagsSize"));
-				} catch (Exception e) {
-					log.error(e.toString());
+				// 添加侧栏
+				int topCommentArticlesSize = 0;
+				int topHitsArticlesSize = 0;
+				int mostUsedTagsSize = 0;
+
+				topCommentArticlesSize = Integer.valueOf(blogConfig.get("topCommentArticlesSize"));
+				topHitsArticlesSize = Integer.valueOf(blogConfig.get("topHitsArticlesSize"));
+				mostUsedTagsSize = Integer.valueOf(blogConfig.get("mostUsedTagsSize"));
+				if (topCommentArticlesSize > 0) {
+					mv.addObject("mostCommentArticles",
+							articleService.getTopCommentArticles(topCommentArticlesSize));
 				}
-				mv.addObject(
-						"mostUsedTags",
-						tagService.getTags().subList(
-								0,
-								tagService.getTags().size() >= mostUsedTagsSize ? mostUsedTagsSize
-										: tagService.getTags().size()));
+				if (topHitsArticlesSize > 0) {
+					mv.addObject("mostViewCountArticles",
+							articleService.getTopHitsArticles(topHitsArticlesSize));
+				}
+				if (mostUsedTagsSize > 0) {
+					mv.addObject("mostUsedTags", tagService.getmostUsedTags(mostUsedTagsSize));
+				}
+
+				// 添加分类和链接
+				mv.addObject("categories", categoryService.getCategories());
 				mv.addObject("links", linkService.getLinks());
 			} else {
+
+				// 添加验证
+				if (null != getAuthoritySession(request)) {
+					mv.addObject("authority", getAuthoritySession(request));
+					request.setAttribute(Constant.AUTHORITY_KEY, getAuthoritySession(request));
+				}
+
+				// 添加列表大小设置
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
+
+				// 添加管理员动作
 				String adminAction = reqs.substring(7);
 				mv.addObject("adminAction", adminAction);
 				log.info("Admin Action: " + adminAction);
@@ -91,19 +107,5 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception ex) throws Exception {
-
 	}
-
-	@Override
-	public boolean preHandle(ServletWebRequest request, Object handler) throws Exception {
-		// TODO 自动生成的方法存根
-		return false;
-	}
-
-	@Override
-	public void postHandle(ServletWebRequest request, Object handler, BlogView v) throws Exception {
-		// TODO 自动生成的方法存根
-
-	}
-
 }

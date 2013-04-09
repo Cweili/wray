@@ -50,7 +50,7 @@
 					<span class="field_desc">输入0则不显示侧边栏热评文章</span>
 				</div>
 				<div class="input_field">
-					<label for="topCommentArticlesSize">热热门标签数</label>
+					<label for="mostUsedTagsSize">热门标签数</label>
 					<input class="smallfield" name="mostUsedTagsSize" type="text" value="${mostUsedTagsSize?if_exists}" />
 					<span class="field_desc">输入0则不显示侧边栏热门标签</span>
 				</div>

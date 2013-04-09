@@ -70,7 +70,7 @@ public final class AdminPageController extends BaseController {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "新增页面");
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin-page-edit-" + article.getArticleId() + "/");
+		v.add("redirect", "admin-page-edit-" + article.getArticleId());
 		v.add("err", "succ");
 		v.add("msg", "页面保存成功");
 		v.add("succ", "恭喜您，您的页面已成功保存。");
@@ -138,7 +138,7 @@ public final class AdminPageController extends BaseController {
 		v.add("err", "succ");
 		v.add("msg", "页面更新成功");
 		v.add("succ", "恭喜您，您的页面排序已成功更新，选中页面已成功移入回收站。");
-		v.add("redirect", "admin-page-" + status + "/");
+		v.add("redirect", "admin-page-" + status);
 
 		byte type = Article.STAT_RECYCLE;
 		if ("recycle".equals(status)) {

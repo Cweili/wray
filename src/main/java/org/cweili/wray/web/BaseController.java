@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  */
 public abstract class BaseController extends MultiActionController {
 
-	protected static Log log = LogFactory.getLog(BaseController.class);
+	protected static final Log log = LogFactory.getLog(BaseController.class);
 
 	@Autowired
 	protected ConfigService blogConfig;

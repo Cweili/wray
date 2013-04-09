@@ -17,7 +17,7 @@
 				<input type="password" name="password" value="" />	
 			</p>
 			<p class="space">
-				<span><input type="checkbox" name="rememberme" value="1" />记住我</span>
+				<span><input type="checkbox" name="rememberme" value="true" />记住我</span>
 				<input type="submit" value="登 &nbsp; 录" class="login" />
 			</p>
 			</form>

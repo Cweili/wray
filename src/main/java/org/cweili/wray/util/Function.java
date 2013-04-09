@@ -3,10 +3,14 @@ package org.cweili.wray.util;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Wray 公用函数
@@ -17,17 +21,36 @@ import java.util.List;
  */
 public class Function {
 
+	private static final Log log = LogFactory.getLog(Function.class);
+
 	private static final CharSequence CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-	public static String cleanUrl(String url) {
-		return url.replace("%", "-");
+	private static long id = 0;
+
+	// public static String cookieSecrityKey(String src) {
+	// String sha256 = sha256(src);
+	// StringBuilder sb = new StringBuilder();
+	// for (int i = 0; i < sha256.length(); i += 16) {
+	// sb.append(encode(Long.parseLong(sha256.substring(i, i + 15), 16)));
+	// }
+	// return sb.toString();
+	// }
+
+	public static String authorityKey(String time, String name, String password) {
+		return sha256(name + time + password);
 	}
 
-	public static long decodeId(String id) {
+	/**
+	 * 将字符串还原为数值
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static long decode(CharSequence src) {
 		long out = 0;
-		for (int i = 0; i < id.length(); ++i) {
+		for (int i = 0; i < src.length(); ++i) {
 			out *= CHARS.length();
-			out += CHARS.toString().indexOf(id.charAt(i));
+			out += CHARS.toString().indexOf(src.charAt(i));
 		}
 		return out;
 	}
@@ -52,7 +75,21 @@ public class Function {
 		return list;
 	}
 
-	private static long id = 0;
+	/**
+	 * 数值编码为字符串
+	 * 
+	 * @param src
+	 * @return
+	 */
+	public static String encode(long src) {
+		StringBuilder sb = new StringBuilder();
+		long tmp = src;
+		while (tmp > 0) {
+			sb.insert(0, CHARS.charAt((int) (tmp % CHARS.length())));
+			tmp /= CHARS.length();
+		}
+		return sb.toString();
+	}
 
 	/**
 	 * 创建实体唯一id
@@ -66,7 +103,35 @@ public class Function {
 		} else {
 			++id;
 		}
-		return shortId(id);
+		return encode(id);
+	}
+
+	/**
+	 * SHA-256
+	 * 
+	 * @param source
+	 * @return
+	 */
+	public static String sha256(String source) {
+		String s = null;
+		CharSequence hexDigits = "0123456789abcdef";
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			md.update(source.getBytes());
+			byte tmp[] = md.digest();
+			char str[] = new char[64];
+			int k = 0;
+			for (int i = 0; i < 32; i++) {
+				byte byte0 = tmp[i];
+				str[k++] = hexDigits.charAt(byte0 >>> 4 & 0xf);
+				str[k++] = hexDigits.charAt(byte0 & 0xf);
+			}
+			s = new String(str);
+
+		} catch (Exception e) {
+			log.error(e, e);
+		}
+		return s;
 	}
 
 	/**
@@ -87,6 +152,12 @@ public class Function {
 		return page;
 	}
 
+	/**
+	 * 将字符串转换成 permalink
+	 * 
+	 * @param permalink
+	 * @return
+	 */
 	public static String permalink(String permalink) {
 		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
 				.replaceAll("\\pS", "-").replaceAll("\\pC", "-").replace(' ', '-');
@@ -115,16 +186,6 @@ public class Function {
 	 */
 	public static int round(int a, int b) {
 		return (((double) a / (double) b) > (a / b) ? a / b + 1 : a / b);
-	}
-
-	private static String shortId(long id) {
-		StringBuilder sb = new StringBuilder();
-		long ori = id;
-		while (ori > 0) {
-			sb.insert(0, CHARS.charAt((int) (ori % CHARS.length())));
-			ori /= CHARS.length();
-		}
-		return sb.toString();
 	}
 
 	/**

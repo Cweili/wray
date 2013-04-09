@@ -14,6 +14,8 @@ public interface ItemDao extends BaseDao<Item> {
 
 	public Item findByPermalinkAndItemTypeAndStat(String permalink, byte itemType, byte stat);
 
+	public Item findByItemNameAndItemTypeAndStat(String itemName, byte itemType, byte stat);
+
 	public Page<Item> findByItemTypeAndStat(byte itemType, byte stat, Pageable page);
 
 	// /**

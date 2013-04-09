@@ -15,42 +15,32 @@ import org.springframework.web.servlet.ModelAndView;
  * @version 2012-8-16 下午5:14:05
  * 
  */
-public class AuthenticationInterceptor extends BaseInterceptor {
+public class LoginInterceptor extends BaseInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-
-		// Session
-		if (null != getAuthoritySession(request)) {
-			return true;
-		}
-
-		// Cookie
-		String key = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (Constant.AUTHORITY_KEY.equals(cookie.getName())) {
-				key = cookie.getValue();
-			}
-		}
-		if (null != key) {
-			String[] keys = key.split("|");
-			if (keys.length == 2
-					&& keys[0].equals(Function.authorityKey(keys[1], blogConfig.get("adminName"),
-							blogConfig.get("adminPwd")))) {
-				request.getSession().setAttribute(Constant.AUTHORITY_KEY, keys[0]);
-				return true;
-			}
-		}
-
-		response.sendRedirect("admin-login");
-		return false;
+		return true;
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler, ModelAndView mv) throws Exception {
+		// 保存登陆状态
+		if (null != request.getAttribute(Constant.AUTHORITY_KEY)) {
+			String time = Function.encode(Function.timestamp());
+			String key = Function.authorityKey(time, blogConfig.get("adminName"),
+					blogConfig.get("adminPwd"));
+			request.getSession().setAttribute(Constant.AUTHORITY_KEY, key);
+			if (request.getAttribute(Constant.AUTHORITY_KEY).equals(Constant.AUTHORITY_COOKIE)) {
 
+				Cookie cookie = new Cookie(Constant.AUTHORITY_KEY, key + "|" + time);
+				cookie.setDomain(request.getServerName());
+				cookie.setPath(request.getContextPath() + "/");
+				cookie.setMaxAge(31536000);
+				response.addCookie(cookie);
+			}
+		}
 	}
 
 	@Override

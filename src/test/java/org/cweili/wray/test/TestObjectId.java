@@ -18,7 +18,7 @@ public class TestObjectId {
 		log.info(new Date(Function.timestamp() + 4000000000000L).toString());
 		for (int i = 0; i < 20; i++) {
 			String id = Function.generateId();
-			log.info(Function.timestamp() + "//" + id + "//" + Function.decodeId(id));
+			log.info(Function.timestamp() + "//" + id + "//" + Function.decode(id));
 		}
 		log.info(new ObjectId("514beeed00457ae92c1171a8"));
 	}

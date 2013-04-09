@@ -125,15 +125,14 @@
 	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
 	
 	<mvc:interceptors>
-	<!-- This XML will intercept all URIs -->
+		<!-- This XML will intercept all URIs -->
 		<ref bean="pageProcessingInterceptor"/>	
-	<!-- This XML will apply interceptor to only certain URIs -->
-	<!--
-	<mvc:interceptor>
-	     <mvc:mapping path="/users"/>
-	     <bean class="com.howtodoinjava.interceptor.DemoInterceptor" />
-	</mvc:interceptor>
-	 -->
+		<!-- This XML will apply interceptor to only certain URIs -->
+		<mvc:interceptor>
+		     <mvc:mapping path="/admin-*"/>
+		     <mvc:exclude-mapping path="/admin-login"/>
+		     <ref bean="authenticationInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 	
 	<!-- 允许对静态资源文件的访问 -->

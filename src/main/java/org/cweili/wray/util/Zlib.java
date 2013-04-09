@@ -19,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class Zlib {
 
-	private static Log log = LogFactory.getLog(Zlib.class);
+	private static final Log log = LogFactory.getLog(Zlib.class);
 
 	/**
 	 * @param data
