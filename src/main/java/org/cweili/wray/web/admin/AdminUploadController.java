@@ -3,16 +3,9 @@ package org.cweili.wray.web.admin;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -24,7 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * 
@@ -38,62 +35,48 @@ public final class AdminUploadController extends BaseController {
 
 	@RequestMapping(value = "/admin/upload-json", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	public @ResponseBody
-	String uploadJson(HttpServletRequest request) {
+	String uploadJson(NativeWebRequest request) {
 
-		if (!ServletFileUpload.isMultipartContent(request)) {
-			return getError("请选择文件。");
-		}
+		MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request.getNativeRequest();
+		Map<String, MultipartFile> fileMap = mpr.getFileMap();
 
-		FileItemFactory factory = new DiskFileItemFactory();
-		ServletFileUpload upload = new ServletFileUpload(factory);
-		upload.setHeaderEncoding("UTF-8");
-		List<FileItem> items = new ArrayList<FileItem>();
-		try {
-			items = upload.parseRequest(request);
-		} catch (FileUploadException e1) {
-			e1.printStackTrace();
-		}
-		Iterator<FileItem> itr = items.iterator();
-		while (itr.hasNext()) {
-			FileItem item = itr.next();
-			String filename = item.getName();
-			if (!item.isFormField()) {
-				// 检查文件大小 小于256MB
-				if (item.getSize() > 268435456) {
-					return getError("上传文件大小必须小于256MB。");
-				}
+		for (String filename : fileMap.keySet()) {
+			MultipartFile file = fileMap.get(filename);
 
-				// 检查扩展名
-				String fileExt = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
-				if (!Upload.TYPE.containsKey(fileExt)) {
-					return getError("上传文件扩展名是不允许的扩展名。");
-				}
+			filename = file.getOriginalFilename();
 
-				byte[] content = new byte[(int) item.getSize()];
-				try {
-					item.getInputStream().read(content);
-					item.getInputStream().close();
-				} catch (IOException e) {
-					log.error("InputStream Error.", e);
-					return getError("文件保存错误");
-				}
-
-				String id = Function.generateId();
-				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
-
-				String filenameNew = filename.substring(0, filename.lastIndexOf("."));
-
-				JSONObject obj = new JSONObject();
-				obj.put("error", 0);
-				obj.put("url",
-						request.getContextPath() + "/upload/" + id + "/"
-								+ Function.permalink(filenameNew) + "." + fileExt);
-				obj.put("fileName", filename);
-				return obj.toString();
+			// 检查文件大小 小于256MB
+			if (file.getSize() > 268435456) {
+				throw new MaxUploadSizeExceededException(file.getSize());
 			}
+
+			// 检查扩展名
+			String fileExt = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+			if (!Upload.TYPE.containsKey(fileExt)) {
+				return multipartErrorMessage("上传文件扩展名是不允许的扩展名。");
+			}
+
+			String id = Function.generateId();
+			try {
+				byte[] content = file.getBytes();
+				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
+			} catch (IOException e) {
+				return multipartErrorMessage("文件保存错误");
+			}
+
+			String filenameNew = filename.substring(0, filename.lastIndexOf("."));
+
+			JSONObject obj = new JSONObject();
+			obj.put("error", 0);
+			obj.put("url",
+					request.getContextPath() + "/upload/" + id + "/"
+							+ Function.permalink(filenameNew) + "." + fileExt);
+			obj.put("fileName", filename);
+			return obj.toString();
+
 		}
 
-		return getError("没有上传的文件");
+		return multipartErrorMessage("没有上传的文件");
 	}
 
 	@RequestMapping("/admin/upload")
@@ -135,13 +118,6 @@ public final class AdminUploadController extends BaseController {
 		}
 
 		return v;
-	}
-
-	private String getError(String message) {
-		JSONObject obj = new JSONObject();
-		obj.put("error", 1);
-		obj.put("message", message);
-		return obj.toString();
 	}
 
 }

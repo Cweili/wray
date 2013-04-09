@@ -7,6 +7,7 @@ import org.cweili.wray.util.BlogView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 
@@ -21,6 +22,12 @@ public final class ErrorController extends BaseController {
 	@RequestMapping(value = "/error")
 	public BlogView error() {
 		return new BlogView("error");
+	}
+
+	@RequestMapping(value = "/error/MaxUploadSizeExceeded")
+	public @ResponseBody
+	String maxUploadSizeExceede() {
+		return multipartErrorMessage("上传文件大小必须小于256MB。");
 	}
 
 }

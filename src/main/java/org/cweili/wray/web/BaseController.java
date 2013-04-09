@@ -11,6 +11,7 @@ import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Paginator;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -80,5 +81,12 @@ public abstract class BaseController extends MultiActionController {
 		v.add("paginationPreviousPageNum", pagination.getPrevious());
 		v.add("paginationNextPageNum", pagination.getNext());
 		v.add("paginationPageCount", pagination.getLast());
+	}
+
+	protected String multipartErrorMessage(String message) {
+		JSONObject obj = new JSONObject();
+		obj.put("error", 1);
+		obj.put("message", message);
+		return obj.toString();
 	}
 }
