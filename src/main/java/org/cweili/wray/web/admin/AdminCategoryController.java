@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -52,29 +54,16 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-edit-{categoryid}", method = RequestMethod.POST)
-	public BlogView editPost(WebRequest request, @PathVariable("categoryid") String categoryid) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "编辑分类");
-		v.add("redirect", "admin-category/");
+	public @ResponseBody
+	String editPost(WebRequest request, @PathVariable("categoryid") String categoryid) {
 		Item category = categoryService.findById(categoryid);
 		if (null != category) {
 			category = getCategory(request, category);
-			v.add("err", "succ");
-			v.add("msg", "分类保存成功");
-			v.add("succ", "恭喜您，您的分类已成功保存。");
-			try {
-				categoryService.save(category);
-			} catch (Exception e) {
-				v.setView("category-edit");
-				v.add("itemName", category.getItemName());
-				v.add("description", category.getDescription());
-				v.add("itemOrder", category.getItemOrder());
-				v.add("err", "数据库更新失败");
+			if (null != categoryService.save(category)) {
+				return Constant.SUBMIT_SUCCESS;
 			}
-		} else {
-			v.add("err", "分类未找到");
 		}
-		return v;
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping(value = "/admin-category-add", method = RequestMethod.GET)
@@ -86,24 +75,13 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-category-add", method = RequestMethod.POST)
-	public BlogView addPost(WebRequest request) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "新增分类");
+	public @ResponseBody
+	String addPost(WebRequest request) {
 		Item category = getCategory(request, null);
-		v.add("redirect", "admin-category/");
-		v.add("err", "succ");
-		v.add("msg", "分类保存成功");
-		v.add("succ", "恭喜您，您的分类已成功保存。");
-		try {
-			categoryService.save(category);
-		} catch (Exception e) {
-			v.setView("category-edit");
-			v.add("itemName", category.getItemName());
-			v.add("description", category.getDescription());
-			v.add("itemOrder", category.getItemOrder());
-			v.add("err", "数据库更新失败");
+		if (null != categoryService.save(category)) {
+			return "admin-category-edit-" + category.getItemId();
 		}
-		return v;
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.POST)

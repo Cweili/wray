@@ -2,68 +2,24 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>管理员帐户设置</h2>
-		<#if err="succ">
-			<div class="succes">
-				<div class="succes_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>设置保存成功!</span>
-					<p>恭喜您，您的设置已成功保存。</p>
-				</div>
-			</div>
-			<div class="clearboth"><!-- --></div>
-		<#elseif err!="">
-			<div class="err">
-				<div class="err_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>${err}</span>
-					<p>实在抱歉，${err}, 请联系管理员。</p>
-				</div>
-			</div>
-			<div class="clearboth"><!-- --></div>
-		</#if>
-		<div id="error" class="err" style="display:none;">
-			<div class="err_icon"><!-- --></div>
+		<div class="succes hide">
+			<div class="succes_icon"><!-- --></div>
 			<a href="#" class="close" title="关闭">x</a>
 			<div class="desc">
-				<span></span>
-				<p>保存错误, 请检查表单</p>
+				<span>设置保存成功!</span>
+				<p>恭喜您，您的设置已成功保存。</p>
 			</div>
 		</div>
 		<div class="clearboth"><!-- --></div>
-		<script type="text/javascript">
-		/*
-			function checkForm(form) {
-				if($("#adminName").val() == "") {
-					err("登录名不能为空");
-					$("#adminName").focus();
-					return false;
-				} else if($("#adminNick").val() == "") {
-					err("显示名不能为空");
-					$("#adminNick").focus();
-					return false;
-				} else if($("#adminEmail").val() == "") {
-					err("邮箱不能为空");
-					$("#adminEmail").focus();
-					return false;
-				} else if($("#adminPwd").val() != "" && $("#adminPwd").val() != $("#newPwdCheck").val()) {
-					err("两次输入的密码不同, 请确认输入");
-					$("#adminPwd").focus();
-					return false;
-				}
-				return true;
-			};
-			function err(errorText) {
-				$("#error").css({
-					display: "block"
-				});
-				$("#error").find("span").text(errorText);
-				$("input.submit").attr("disabled",false);
-			};
-			*/
-		</script>
-		<form id="setupForm" action="admin-${adminAction}" method="post">
+		<div class="err hide">
+			<div class="err_icon"><!-- --></div>
+			<a href="#" class="close" title="关闭">x</a>
+			<div class="desc">
+				<span>设置保存失败</span>
+				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
+			</div>
+		</div>
+		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>博客管理员帐户</legend>
 				<div class="input_field">
 					<label for="adminName">登录名</label>
@@ -97,7 +53,7 @@
 			</fieldset>
 		</form>
 		<script type="text/javascript">
-			$("#setupForm").validate({
+			$("#editForm").validate({
 				rules: {
 					adminName: {
 						required:true,

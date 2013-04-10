@@ -25,17 +25,17 @@
 			<input id="hash" type="hidden" name="hash" />
 			</form>
 			<br />
-			<div id="err" class="err">
+			<div class="err">
 				<div class="err_icon"><!-- --></div>
 				<div class="desc">
 					<span>Error!</span>
 					<p>请确认您的用户名和密码正确.</p>
 				</div>
 			</div>
-			<div id="succes" class="succes">
+			<div class="succes">
 				<div class="succes_icon"><!-- --></div>
 				<div class="desc">
-					<span>Seccess!</span>
+					<span>Success!</span>
 					<p>登录成功！正在进入管理页面.</p>
 				</div>
 			</div>

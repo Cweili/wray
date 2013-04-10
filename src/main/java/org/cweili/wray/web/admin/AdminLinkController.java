@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -52,30 +54,16 @@ public final class AdminLinkController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-link-edit-{linkid}", method = RequestMethod.POST)
-	public BlogView editPost(WebRequest request, @PathVariable("linkid") String linkid) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "编辑博客链接");
-		v.add("redirect", "admin-link/");
+	public @ResponseBody
+	String editPost(WebRequest request, @PathVariable("linkid") String linkid) {
 		Item link = linkService.findById(linkid);
 		if (null != link) {
 			link = getLink(request, link);
-			v.add("err", "succ");
-			v.add("msg", "链接保存成功");
-			v.add("succ", "恭喜您，您的链接已成功保存。");
-			try {
-				linkService.save(link);
-			} catch (Exception e) {
-				v.setView("link-edit");
-				v.add("itemId", linkid);
-				v.add("itemName", link.getItemName());
-				v.add("description", link.getDescription());
-				v.add("itemOrder", link.getItemOrder());
-				v.add("err", "数据库更新失败");
+			if (null != linkService.save(link)) {
+				return Constant.SUBMIT_SUCCESS;
 			}
-		} else {
-			v.add("err", "链接未找到");
 		}
-		return v;
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping(value = "/admin-link-add", method = RequestMethod.GET)
@@ -87,24 +75,13 @@ public final class AdminLinkController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-link-add", method = RequestMethod.POST)
-	public BlogView addPost(WebRequest request) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "新增博客链接");
+	public @ResponseBody
+	String addPost(WebRequest request) {
 		Item link = getLink(request, null);
-		v.add("redirect", "admin-link/");
-		v.add("err", "succ");
-		v.add("msg", "链接保存成功");
-		v.add("succ", "恭喜您，您的链接已成功保存。");
-		try {
-			linkService.save(link);
-		} catch (Exception e) {
-			v.setView("link-edit");
-			v.add("itemName", link.getItemName());
-			v.add("description", link.getDescription());
-			v.add("itemOrder", link.getItemOrder());
-			v.add("err", "数据库更新失败");
+		if (null != linkService.save(link)) {
+			return "admin-link-edit-" + link.getItemId();
 		}
-		return v;
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.POST)

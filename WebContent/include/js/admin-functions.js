@@ -1,5 +1,8 @@
 // JQUERY CONFIGURATION FILE FOR BLACKADMINV2 
 
+var editor = null;
+var slideToggleDelay = 6000;
+
 $(document).ready(function() {
 
  //NAVIGATION MENU
@@ -28,8 +31,7 @@ $(document).ready(function() {
 	
 	$(".current_nav").parent().parent().slideToggle("slow");
 	$(".current_nav").parent().parent().prev().toggleClass("selected");
-
-
+	
  //DATE PICKER
 	$("#datepicker").datepicker();
 
@@ -43,6 +45,11 @@ $(document).ready(function() {
 			return false;
 		}
 	);
+	
+	if (window.location.hash == "#succ") {
+		$(".succes").slideToggle();
+		setTimeout('$(".succes").slideToggle()', slideToggleDelay);
+	}
 	
 /*
  //Initialize WYSIWYG editor
@@ -79,11 +86,18 @@ $(document).ready(function() {
 //		}
 //	);
 	
-	$.validator.setDefaults({
-		 submitHandler: function(form) {
-			 $(".submit").attr("disabled",true);
-			 form.submit();
+//	$.validator.setDefaults({
+//		 submitHandler: function(form) {
+//			 $(".submit").attr("disabled", true);
+//			 submitForm($("#editForm"));
+//		}
+//	});
+	
+	$("#editForm").on("submit", function() {
+		if($("#editForm").valid()) {
+			submitForm($("#editForm"));
 		}
+		return false;
 	});
 	
 	if($("#main").height() < 570) {
@@ -102,7 +116,7 @@ $(document).ready(function() {
 	});
 	
 	KindEditor.ready(function(K) {
-		K.create(".wysiwyg", {
+		editor = K.create(".wysiwyg", {
 			themeType: "default",
 			wellFormatMode: true,
 			indentChar: "",
@@ -143,6 +157,26 @@ $(document).ready(function() {
 $(window).resize(function() {
 	reSizeMain();
 });
+
+function submitForm(form) {
+	if(editor != null) {
+		editor.sync();
+	}
+	$(".submit").attr("disabled", true);
+	$.post(form.attr("action"), form.serialize(), function(data) {
+		if (data == "success") {
+			$(".err").hide();
+			$(".succes").slideToggle();
+			setTimeout('$(".succes").slideToggle()', slideToggleDelay);
+		} else if(data != "") {
+			window.location.href = data + "#succ";
+		} else {
+			$(".err").slideToggle();
+			setTimeout('$(".err").slideToggle()', slideToggleDelay);
+		}
+		$(".submit").attr("disabled", false);
+	});
+}
 
 function reSizeMain() {
 	var containerwidth = $(window).width();

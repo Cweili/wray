@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
@@ -37,35 +38,27 @@ public final class AdminSetupController extends BaseController {
 	};
 
 	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)
-	public BlogView basic(WebRequest request) {
+	public @ResponseBody
+	String basic(WebRequest request) {
 
-		BlogView v = new BlogView("setup-basic");
 		blogConfig.saveRequest(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
 				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",
 				"attachFooter", "attachStat" });
-		v.add("err", "succ");
-		return v;
+		return Constant.SUBMIT_SUCCESS;
 	}
 
 	@RequestMapping(value = "/admin-setup-account", method = RequestMethod.POST)
-	public BlogView account(WebRequest request) {
-		BlogView v = new BlogView("setup-account");
+	public @ResponseBody
+	String account(WebRequest request) {
 		blogConfig.saveRequest(request, new String[] { "adminName", "adminNick", "adminEmail" }, ""
 				.equals(request.getParameter("adminPwd")) ? new String[] {}
 				: new String[] { "adminPwd" });
-		v.add("err", "succ");
-		return v;
+		return Constant.SUBMIT_SUCCESS;
 	}
 
 	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
-	public BlogView skin(WebRequest request) {
-		BlogView v = new BlogView("setup-skin");
-		v.add("labels", Arrays.asList(Constant.LABELS));
-		List<String> skinDirs = Function
-				.dirList(getSkinPath((ServletRequestAttributes) RequestContextHolder
-						.currentRequestAttributes()));
-		skinDirs.remove("admin");
-		v.add("skinDirs", skinDirs);
+	public @ResponseBody
+	String skin(WebRequest request) {
 		int limit = 10;
 		int topHitsArticlesSize = 10;
 		int topCommentArticlesSize = 10;
@@ -81,10 +74,8 @@ public final class AdminSetupController extends BaseController {
 		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize + ""));
 		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize + ""));
 		blogConfig.saveRequest(request, Constant.LABELS, new String[] { "skinDir" });
-		v.add("err", "succ");
 
-		v.add("currentSkinDir", blogConfig.get("skinDir"));
-		return v;
+		return Constant.SUBMIT_SUCCESS;
 	}
 
 	@RequestMapping(value = "/admin-setup-{type}", method = RequestMethod.GET)
@@ -101,7 +92,6 @@ public final class AdminSetupController extends BaseController {
 				v.add("currentSkinDir", blogConfig.get("skinDir"));
 				v.add("labels", Arrays.asList(Constant.LABELS));
 			}
-			v.add("err", "");
 		} else {
 			v.add("err", "找不到页面");
 		}

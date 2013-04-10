@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -66,27 +67,13 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-add", method = RequestMethod.POST)
-	public BlogView addPost(WebRequest request) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "新增页面");
+	public @ResponseBody
+	String addPost(WebRequest request) {
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin-page-edit-" + article.getArticleId());
-		v.add("err", "succ");
-		v.add("msg", "页面保存成功");
-		v.add("succ", "恭喜您，您的页面已成功保存。");
-		try {
-			articleService.save(article);
-		} catch (Exception e) {
-			v.setView("page-edit");
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "数据库更新失败");
-			v.add("msg", "页面保存失败");
+		if (null == articleService.save(article)) {
+			return Constant.SUBMIT_FAILED;
 		}
-		return v;
+		return "admin-page-edit-" + article.getArticleId();
 	}
 
 	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.GET)
@@ -111,25 +98,14 @@ public final class AdminPageController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-page-edit-{articleid}", method = RequestMethod.POST)
-	public BlogView editPost(WebRequest request, @PathVariable("articleid") String articleid) {
-		BlogView v = new BlogView("page-edit");
-		v.add("actionName", "编辑页面");
-		v.add("articleId", articleid);
+	public @ResponseBody
+	String editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
-		v.add("title", article.getTitle());
-		v.add("permalink", article.getPermalink());
-		v.add("tag", article.getTag());
-		v.add("content", article.getContent());
-		v.add("commentStatus", article.getCommentStatus());
-		v.add("stat", article.getStat());
-		v.add("err", "succ");
-		try {
-			articleService.save(article);
-		} catch (Exception e) {
-			v.add("err", "数据库更新失败");
+		if (null == articleService.save(article)) {
+			return Constant.SUBMIT_FAILED;
 		}
-		return v;
+		return Constant.SUBMIT_SUCCESS;
 	}
 
 	@RequestMapping(value = "/admin-page-manage-{status}", method = RequestMethod.POST)

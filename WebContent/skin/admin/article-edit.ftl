@@ -2,28 +2,25 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<#if err="succ">
-			<div class="succes">
-				<div class="succes_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>文章保存成功!</span>
-					<p>恭喜您，您的文章已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}article/${permalink?if_exists}" target="_blank">查看效果</a>。</p>
-				</div>
+		<div class="succes hide">
+			<div class="succes_icon"><!-- --></div>
+			<a href="#" class="close" title="关闭">x</a>
+			<div class="desc">
+				<span>文章保存成功!</span>
+				<p>恭喜您，您的文章已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}article/${permalink?if_exists}" target="_blank">查看效果</a>。</p>
 			</div>
-			<div class="clearboth"><!-- --></div>
-		<#elseif err!="">
-			<div class="err">
-				<div class="err_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>${err}</span>
-					<p>实在抱歉，${err}, 请联系管理员。</p>
-				</div>
+		</div>
+		<div class="clearboth"><!-- --></div>
+		<div class="err hide">
+			<div class="err_icon"><!-- --></div>
+			<a href="#" class="close" title="关闭">x</a>
+			<div class="desc">
+				<span>文章保存失败</span>
+				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
 			</div>
-			<div class="clearboth"><!-- --></div>
-		</#if>
-		<form id="articleForm" action="admin-${adminAction}" method="post">
+		</div>
+		<div class="clearboth"><!-- --></div>
+		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>文章信息</legend>
 				<div class="input_field">
 					<label for="title">文章标题</label>
@@ -66,7 +63,7 @@
 			</fieldset>
 		</form>
 		<script type="text/javascript">
-			$("#articleForm").validate({
+			$("#editForm").validate({
 				rules: {
 					title: {
 						required:true,

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -69,26 +70,14 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-add", method = RequestMethod.POST)
-	public BlogView addPost(WebRequest request) {
-		BlogView v = new BlogView("msg");
-		v.add("actionName", "新增文章");
+	public @ResponseBody
+	String addPost(WebRequest request) {
 		Article article = getArticle(request, null);
-		v.add("redirect", "admin-article-edit-" + article.getArticleId());
-		v.add("err", "succ");
-		v.add("msg", "文章保存成功");
-		v.add("succ", "恭喜您，您的文章已成功保存。");
 		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
-		if (null == articleService.save(article)) {
-			v.setView("article-edit");
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("tag", article.getTag());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "数据库更新失败");
+		if (null != articleService.save(article)) {
+			return "admin-article-edit-" + article.getArticleId();
 		}
-		return v;
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping(value = "/admin-article-edit-{articleid}", method = RequestMethod.GET)
@@ -117,27 +106,15 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	@RequestMapping(value = "/admin-article-edit-{articleid}", method = RequestMethod.POST)
-	public BlogView editPost(WebRequest request, @PathVariable("articleid") String articleid) {
-		BlogView v = new BlogView("article-edit");
-		v.add("actionName", "编辑文章");
-		v.add("articleId", articleid);
+	public @ResponseBody
+	String editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
-		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
 		if (null == articleService.save(article)) {
-			v.add("err", "数据库更新失败");
-		} else {
-			v.add("err", "succ");
+			return Constant.SUBMIT_FAILED;
 		}
-		v.add("categories", categoryService.getSelectedCategories(article));
-		v.add("title", article.getTitle());
-		v.add("permalink", article.getPermalink());
-		v.add("tag", article.getTag());
-		v.add("content", article.getContent());
-		v.add("commentStatus", article.getCommentStatus());
-		v.add("stat", article.getStat());
 		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
-		return v;
+		return Constant.SUBMIT_SUCCESS;
 	}
 
 	@RequestMapping(value = "/admin-article-delete-{status}", method = RequestMethod.POST)

@@ -23,6 +23,16 @@ public class Constant {
 	public static final String CURRENT_YEAR = new SimpleDateFormat("yyyy").format(new Date());
 
 	/**
+	 * 
+	 */
+	public static final String SUBMIT_SUCCESS = "success";
+
+	/**
+	 * 
+	 */
+	public static final String SUBMIT_FAILED = "";
+
+	/**
 	 * 登陆验证字段
 	 */
 	public static final String AUTHORITY_KEY = "wray_k";

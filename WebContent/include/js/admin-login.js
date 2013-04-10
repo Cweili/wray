@@ -6,12 +6,12 @@ $(document).ready(function() {
 		var password = $("#password").val();
 		$("#password").val(SHA256(password + $("#hash").val()));
 		$.post("admin-login", $("#admin-login").serialize(), function(data) {
-			if (data == "true") {
-				$("#err").css({display:"none"});
-				$("#succes").css({display:"block"});
+			if (data == "success") {
+				$(".err").hide();
+				$(".succes").slideToggle();
 				setTimeout("window.location.href='admin-dashboard'", 3000);
 			} else {
-				$("#err").css({display:"block"});
+				$(".err").slideToggle();
 			}
 		});
 		$("#password").val(password);

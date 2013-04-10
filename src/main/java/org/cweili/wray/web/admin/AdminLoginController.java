@@ -71,11 +71,11 @@ public final class AdminLoginController extends BaseController {
 				}
 				log.info(blogConfig.get("adminName") + " login successful.");
 
-				return "true";
+				return Constant.SUBMIT_SUCCESS;
 			}
 		}
 
-		return "";
+		return Constant.SUBMIT_FAILED;
 	}
 
 	@RequestMapping("/admin-logout-{authority}")

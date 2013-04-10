@@ -2,28 +2,24 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>外观设置</h2>
-		<#if err="succ">
-			<div class="succes">
-				<div class="succes_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>设置保存成功!</span>
-					<p>恭喜您，您的设置已成功保存。</p>
-				</div>
+		<div class="succes hide">
+			<div class="succes_icon"><!-- --></div>
+			<a href="#" class="close" title="关闭">x</a>
+			<div class="desc">
+				<span>设置保存成功!</span>
+				<p>恭喜您，您的设置已成功保存。</p>
 			</div>
-			<div class="clearboth"><!-- --></div>
-		<#elseif err!="">
-			<div class="err">
-				<div class="err_icon"><!-- --></div>
-				<a href="#" class="close" title="关闭">x</a>
-				<div class="desc">
-					<span>${err}</span>
-					<p>实在抱歉，${err}, 请联系管理员。</p>
-				</div>
+		</div>
+		<div class="clearboth"><!-- --></div>
+		<div class="err hide">
+			<div class="err_icon"><!-- --></div>
+			<a href="#" class="close" title="关闭">x</a>
+			<div class="desc">
+				<span>设置保存失败</span>
+				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
 			</div>
-			<div class="clearboth"><!-- --></div>
-		</#if>
-		<form id="setupForm" action="admin-${adminAction}" method="post">
+		</div>
+		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>外观选项</legend>
 				<div class="input_field">
 					<label for="skinDir">博客皮肤</label>
@@ -183,7 +179,7 @@
 		</form>
 		<script type="text/javascript">
 			$("#skinDir").val("${currentSkinDir}");
-			$("#setupForm").validate({
+			$("#editForm").validate({
 				rules: {
 					<#list labels as lab>
 					${lab}: {
