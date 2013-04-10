@@ -10,11 +10,11 @@ $(document).ready(function() {
 		if (i < $(".submenu li").length - 1) {
 			var $it = $(this),
 			locationURL = window.location.pathname + window.location.search;
-			if (i === 0 && (locationURL === "/")) {
-					$it.addClass("current_nav");
-					return;
-			}
-			if (locationURL.indexOf($it.find("a").attr("href")) > -1 && i !== 0) {
+//			if (i === 0 && (locationURL === "/")) {
+//					$it.addClass("current_nav");
+//					return;
+//			}
+			if (locationURL.indexOf($it.find("a").attr("href")) > -1) {// && i !== 0) {
 					$it.addClass("current_nav");
 			}
 		}

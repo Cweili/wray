@@ -93,7 +93,6 @@
 
 <#macro comment_script>
 <script src="include/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="include/js/jquery-ui-1.8.22.custom.min.js" type="text/javascript"></script>
 <script src="include/editor/kindeditor-min.js" type="text/javascript"></script>
 <script src="include/editor/zh_CN.js" type="text/javascript"></script>
 <script type="text/javascript">

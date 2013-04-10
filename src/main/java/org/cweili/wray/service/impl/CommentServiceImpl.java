@@ -3,6 +3,7 @@ package org.cweili.wray.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cweili.ipseeker.IPSeeker;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.service.CommentService;
@@ -22,13 +23,19 @@ import org.springframework.stereotype.Service;
 public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
+	public int count() {
+		return (int) commentDao.count();
+	}
+
+	@Override
 	public List<Comment> getCommentsByArticle(Article article) {
-		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY);
+		return seekIp(commentDao.findByArticleIdAndStat(article.getArticleId(),
+				Comment.STAT_DISPLAY));
 	}
 
 	@Override
 	public List<Comment> getComments(int page, int limit) {
-		return commentDao.findAll(new PageRequest(page - 1, limit)).getContent();
+		return seekIp(commentDao.findAll(new PageRequest(page - 1, limit)).getContent());
 	}
 
 	@Override
@@ -42,20 +49,31 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public boolean remove(List<String> ids) {
-		long before = commentDao.count();
-		List<Comment> comments = new ArrayList<Comment>();
+		boolean result = false;
 		for (String id : ids) {
-			Comment comment = new Comment();
-			comment.setCommentId(id);
-			comments.add(comment);
+			Comment comment = commentDao.findOne(id);
+			if (null != comment) {
+				comment.setStat(Comment.STAT_BLOCK);
+				commentDao.save(comment);
+				result = true;
+			}
 		}
-		commentDao.delete(comments);
-		return commentDao.count() < before;
+		return result;
 	}
 
 	private String filterContent(String content) {
 		return HtmlFixer.fix(Function.stripTags(content, Constant.DANGEROUS_TAGS).replace(
 				"javascript:", ""));
+	}
+
+	private List<Comment> seekIp(List<Comment> before) {
+		List<Comment> comments = new ArrayList<Comment>();
+		for (Comment comment : before) {
+			comment.setOrigin(IPSeeker.getInstance().getCountry(comment.getIp()) + " "
+					+ IPSeeker.getInstance().getArea(comment.getIp()));
+			comments.add(comment);
+		}
+		return comments;
 	}
 
 }

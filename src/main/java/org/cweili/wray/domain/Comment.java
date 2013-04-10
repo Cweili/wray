@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,6 +32,8 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	private String content = "";
 	private long parrentId = 0;
 	private byte stat = STAT_DISPLAY;
+	@Transient
+	private String origin = "";
 
 	public static final byte STAT_REMOVED = 0;
 	public static final byte STAT_BLOCK = 1;
@@ -195,6 +198,14 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	public void setStat(byte stat) {
 		this.stat = stat;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 
 }

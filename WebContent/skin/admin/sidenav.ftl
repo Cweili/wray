@@ -5,8 +5,8 @@
 				<div class="navhead"><span>首页</span></div>
 				<div class="subnav">
 					<ul class="submenu">
+						<li><a href="admin-dashboard">管理首页</a></li>
 						<li><a href="${staticServePath}" title="博客首页" target="_blank">博客首页</a></li>
-						<li<#if adminAction="dashboard"> id="current_nav"</#if>><a href="admin-dashboard">管理首页</a></li>
 					</ul>
 				</div>
 				<div class="navhead"><span>文章管理</span></div>

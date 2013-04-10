@@ -24,7 +24,7 @@ public class Function {
 
 	private static final Log log = LogFactory.getLog(Function.class);
 
-	private static final String CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
+	private static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
 	private static long id = 0;
 
@@ -103,7 +103,7 @@ public class Function {
 	 * @return
 	 */
 	public synchronized static String generateId() {
-		long time = timestamp() / 100;
+		long time = timestamp() >>> 6;
 		if (id < time) {
 			id = time;
 		} else {

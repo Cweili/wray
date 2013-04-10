@@ -14,6 +14,11 @@ import org.cweili.wray.domain.Comment;
 public interface CommentService {
 
 	/**
+	 * @return
+	 */
+	public int count();
+
+	/**
 	 * @param article
 	 * @return
 	 */

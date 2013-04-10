@@ -13,7 +13,7 @@
 		.ke-icon-insertmore {background-image: url(default.png);background-position: 0px -1024px;width: 16px;height: 16px;}
 	</style>
 	<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
-	<script src="${staticServePath}include/js/jquery-ui-1.8.22.custom.min.js" type="text/javascript"></script>
+	<script src="${staticServePath}include/js/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery.validate.min.js" type="text/javascript"></script>
 	<#--
 	<script src="${staticServePath}include/js/jquery.wysiwyg.js" type="text/javascript"></script>
