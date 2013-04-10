@@ -89,14 +89,24 @@ span input {
 	color:#fff;
 }
 
+.err, .succes {
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
 .err {
-	float:left;
-	width:100%;
-	margin-bottom:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
 	background:#e28b65;
 	border:1px solid #a5260f;
+	display:none;
+}
+
+.succes {
+	background: #b9e57b;
+	border: 1px solid #41a808;
+	display:none;
 }
 
 .err .err_icon {
@@ -106,6 +116,15 @@ span input {
 	margin:14px;
 	background:url('../image/fail.png') no-repeat 0 0;
 	behavior:url('..js/iepngfix.htc') !important;
+}
+
+.succes .succes_icon {
+	float: left;
+	width: 48px;
+	height: 48px;
+	margin: 14px;
+	background: url('../image/success.png') no-repeat 0 0;
+	behavior: url('../js/iepngfic.htc') !important;
 }
 
 .desc {
@@ -125,5 +144,12 @@ span input {
 	font-size:1.2em;
 	padding-bottom:2px;
 	margin-top:15px;
-	color:#981d05;
+}
+
+.err .desc span {
+	color: #981d05;
+}
+
+.succes .desc span {
+	color: #3a9805;
 }

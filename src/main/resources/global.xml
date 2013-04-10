@@ -121,8 +121,8 @@
 	</bean>
 	
 	<!-- 拦截器 -->
-	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
-	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype"/>
+	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype"/>
 	
 	<mvc:interceptors>
 		<!-- This XML will intercept all URIs -->

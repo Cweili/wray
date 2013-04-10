@@ -102,8 +102,11 @@ public class TagServiceImpl extends BaseService implements TagService {
 
 	@Override
 	public void updateTagCache() {
-		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(0, mostUsedTagsSize, Sort.Direction.DESC, "count")).getContent();
+		if (mostUsedTagsSize > 0) {
+			tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
+					new PageRequest(0, mostUsedTagsSize, Sort.Direction.DESC, "count"))
+					.getContent();
+		}
 	}
 
 }

@@ -36,7 +36,9 @@
 		</div>
 		<div class="logged">
 			<p style="height:40px"><!-- --></p>
-			<p style="font-size:16px">欢迎您, ${adminNick}! | <a href="${staticServePath}" target="_blank">博客首页</a> | <a href="admin-logout-${authority?if_exists}" >退出登录</a></p>
+			<p style="font-size:16px">
+				欢迎您, ${adminNick}! | <a href="${staticServePath}" target="_blank">博客首页</a> | <a href="admin-logout-${authority?if_exists}" >退出登录</a>
+			</p>
 		</div>
 	</div>
 	<#include "sidenav.ftl">

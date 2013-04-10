@@ -85,7 +85,6 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				// 添加验证
 				if (null != getAuthoritySession(request)) {
 					mv.addObject("authority", getAuthoritySession(request));
-					request.setAttribute(Constant.AUTHORITY_KEY, getAuthoritySession(request));
 				}
 
 				// 添加列表大小设置

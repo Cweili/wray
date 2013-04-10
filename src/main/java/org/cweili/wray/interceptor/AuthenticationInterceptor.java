@@ -1,6 +1,5 @@
 package org.cweili.wray.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,24 +20,22 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
 
-		// Session
+		// Session 登录
 		if (null != getAuthoritySession(request)) {
 			return true;
 		}
 
-		// Cookie
-		String key = null;
-		for (Cookie cookie : request.getCookies()) {
-			if (Constant.AUTHORITY_KEY.equals(cookie.getName())) {
-				key = cookie.getValue();
-			}
-		}
+		// Cookie 登录
+		String key = findCookie(request, Constant.AUTHORITY_KEY);
 		if (null != key) {
-			String[] keys = key.split("|");
+			String[] keys = key.split("@");
+			log.error(Function.authorityKey(keys[1], blogConfig.get("adminName"),
+					blogConfig.get("adminPwd")));
 			if (keys.length == 2
 					&& keys[0].equals(Function.authorityKey(keys[1], blogConfig.get("adminName"),
 							blogConfig.get("adminPwd")))) {
 				request.getSession().setAttribute(Constant.AUTHORITY_KEY, keys[0]);
+				log.info(blogConfig.get("adminName") + " login by cookie successful.");
 				return true;
 			}
 		}

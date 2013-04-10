@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -23,21 +24,25 @@ public class Function {
 
 	private static final Log log = LogFactory.getLog(Function.class);
 
-	private static final CharSequence CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static final String CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_";
 
 	private static long id = 0;
 
-	// public static String cookieSecrityKey(String src) {
-	// String sha256 = sha256(src);
-	// StringBuilder sb = new StringBuilder();
-	// for (int i = 0; i < sha256.length(); i += 16) {
-	// sb.append(encode(Long.parseLong(sha256.substring(i, i + 15), 16)));
-	// }
-	// return sb.toString();
-	// }
-
+	/**
+	 * 生成验证串
+	 * 
+	 * @param time
+	 * @param name
+	 * @param password
+	 * @return
+	 */
 	public static String authorityKey(String time, String name, String password) {
-		return sha256(name + time + password);
+		String sha256 = sha256(name + time + password);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < sha256.length(); i += 16) {
+			sb.append(encode(Long.parseLong(sha256.substring(i, i + 15), 16)));
+		}
+		return sb.toString();
 	}
 
 	/**
@@ -49,8 +54,8 @@ public class Function {
 	public static long decode(CharSequence src) {
 		long out = 0;
 		for (int i = 0; i < src.length(); ++i) {
-			out *= CHARS.length();
-			out += CHARS.toString().indexOf(src.charAt(i));
+			out <<= 6;
+			out += CHARS.indexOf(src.charAt(i));
 		}
 		return out;
 	}
@@ -82,13 +87,14 @@ public class Function {
 	 * @return
 	 */
 	public static String encode(long src) {
-		StringBuilder sb = new StringBuilder();
+		char[] c = new char[64];
 		long tmp = src;
-		while (tmp > 0) {
-			sb.insert(0, CHARS.charAt((int) (tmp % CHARS.length())));
-			tmp /= CHARS.length();
+		int i = 64;
+		while (tmp > 0 && i >= 0) {
+			c[--i] = CHARS.charAt((int) tmp & 0x3f);
+			tmp >>>= 6;
 		}
-		return sb.toString();
+		return new String(Arrays.copyOfRange(c, i, 64));
 	}
 
 	/**
@@ -118,15 +124,15 @@ public class Function {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			md.update(source.getBytes());
-			byte tmp[] = md.digest();
-			char str[] = new char[64];
+			byte[] digest = md.digest();
+			char[] c = new char[64];
 			int k = 0;
 			for (int i = 0; i < 32; i++) {
-				byte byte0 = tmp[i];
-				str[k++] = hexDigits.charAt(byte0 >>> 4 & 0xf);
-				str[k++] = hexDigits.charAt(byte0 & 0xf);
+				byte b = digest[i];
+				c[k++] = hexDigits.charAt(b >>> 4 & 0xf);
+				c[k++] = hexDigits.charAt(b & 0xf);
 			}
-			s = new String(str);
+			s = new String(c);
 
 		} catch (Exception e) {
 			log.error(e, e);

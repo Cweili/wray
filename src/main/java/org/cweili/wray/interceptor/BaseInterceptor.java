@@ -1,5 +1,6 @@
 package org.cweili.wray.interceptor;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -57,6 +58,17 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	 */
 	protected String requestScript(HttpServletRequest request) {
 		return request.getRequestURI().replaceFirst(request.getContextPath(), "");
+	}
+
+	protected String findCookie(HttpServletRequest request, String find) {
+		if (null != request.getCookies()) {
+			for (Cookie cookie : request.getCookies()) {
+				if (find.equals(cookie.getName())) {
+					return cookie.getValue();
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

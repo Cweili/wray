@@ -188,13 +188,20 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public void updateSidebarArticleCache() {
 
-		topCommentArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED,
-				new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC, "comment_count"))
-				.getContent();
-		topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED,
-				new PageRequest(0, topHitsArticlesSize, Sort.Direction.DESC, "hits")).getContent();
+		if (topCommentArticlesSize > 0) {
+			topCommentArticles = articleDao
+					.findByIsPageAndStat(
+							Article.TYPE_ARTICLE,
+							Article.STAT_PUBLISHED,
+							new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC,
+									"comment_count")).getContent();
+		}
+		if (topHitsArticlesSize > 0) {
+			topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+					Article.STAT_PUBLISHED,
+					new PageRequest(0, topHitsArticlesSize, Sort.Direction.DESC, "hits"))
+					.getContent();
+		}
 	}
 
 	/**

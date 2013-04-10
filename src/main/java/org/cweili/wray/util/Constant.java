@@ -28,9 +28,19 @@ public class Constant {
 	public static final String AUTHORITY_KEY = "wray_k";
 
 	/**
+	 * 
+	 */
+	public static final String AUTHORITY_LOGIN = "wray_login";
+
+	/**
+	 * 
+	 */
+	public static final String AUTHORITY_LOGOUT = "wray_logout";
+
+	/**
 	 * COOKIE 登陆验证
 	 */
-	public static final boolean AUTHORITY_COOKIE = true;
+	public static final String AUTHORITY_COOKIE = "wray_c";
 
 	/**
 	 * 危险 html 标签
