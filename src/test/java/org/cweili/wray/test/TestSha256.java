@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,12 +14,12 @@ import org.junit.Test;
 /**
  * 
  * @author cweili
- * @version 2013-4-11 上午9:51:27
+ * @version 2013-4-11 上午9:51:42
  * 
  */
-public class TestRegex {
+public class TestSha256 {
 
-	private static final Log log = LogFactory.getLog(TestRegex.class);
+	private static final Log log = LogFactory.getLog(TestSha256.class);
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -40,12 +39,10 @@ public class TestRegex {
 
 	@Test
 	public final void test() {
-		String html = "<script type=\"text/javascript\">alert();</script>";
-		String expected = "alert();";
-		log.info(html.replaceAll("<[//]?" + "script" + "[^>]*>", ""));
-		assertEquals(expected, html.replaceAll("<[//]?" + "script" + "[^>]*>", ""));
-		log.info(Function.stripTags(html, Constant.DANGEROUS_TAGS));
-		assertEquals(expected, Function.stripTags(html, Constant.DANGEROUS_TAGS));
+		String s = "a";
+		log.info(Function.sha256(s) + "////" + Function.sha256(s).length());
+		assertEquals("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+				Function.sha256(s));
 	}
 
 }

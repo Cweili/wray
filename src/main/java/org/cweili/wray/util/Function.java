@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -149,10 +150,18 @@ public class Function {
 	public static int page(String uri) {
 		int page = 1;
 		if (uri.contains("/page-")) {
-			String p = uri.substring(uri.lastIndexOf("/page-") + 6, uri.lastIndexOf("/"));
+			String p;
+			if (uri.lastIndexOf("/") > uri.lastIndexOf("/page-") + 6) {
+				p = uri.substring(uri.lastIndexOf("/page-") + 6, uri.lastIndexOf("/"));
+			} else if (uri.lastIndexOf(".") > uri.lastIndexOf("/page-") + 6) {
+				p = uri.substring(uri.lastIndexOf("/page-") + 6, uri.lastIndexOf("/"));
+			} else {
+				p = uri.substring(uri.lastIndexOf("/page-") + 6);
+			}
 			try {
 				page = Integer.valueOf(p);
 			} catch (Exception e) {
+				log.error(e, e);
 			}
 		}
 		return page;
@@ -168,7 +177,7 @@ public class Function {
 		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
 				.replaceAll("\\pS", "-").replaceAll("\\pC", "-").replace(' ', '-');
 		while (permalink.indexOf("--") > -1) {
-			permalink = permalink.replace("--", "-");
+			permalink = StringUtils.replace(permalink, "--", "-");
 		}
 		if (permalink.indexOf('-') == 0) {
 			permalink = permalink.substring(1);
@@ -260,9 +269,19 @@ public class Function {
 	 * @return
 	 */
 	public static String trimAndStripTags(String input) {
-		return input.replace("&amp;", "&").replace("&", "&amp;").replace("\'", "&apos;")
-				.replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;")
-				.replace("«", "&laquo;").replace("»", "&raquo;").trim();
+
+		input = StringUtils.replace(input, "&amp;", "&");
+		input = StringUtils.replace(input, "&", "&amp;");
+		input = StringUtils.replace(input, "\'", "&apos;");
+		input = StringUtils.replace(input, "\"", "&quot;");
+		input = StringUtils.replace(input, "<", "&lt;");
+		input = StringUtils.replace(input, ">", "&gt;");
+		input = StringUtils.replace(input, "«", "&laquo;");
+		input = StringUtils.replace(input, "&", "&amp;");
+		input = StringUtils.replace(input, "»", "&raquo;");
+		input = StringUtils.stripToEmpty(input);
+
+		return input;
 	}
 
 	public static String urlDecode(String input) {
@@ -282,7 +301,7 @@ public class Function {
 	 */
 	public static String urlEncode(String input) {
 		try {
-			input = URLEncoder.encode(Function.stripTags(input).trim().toLowerCase(), "UTF-8");
+			input = URLEncoder.encode(stripTags(input).trim().toLowerCase(), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			input = "";
 		}

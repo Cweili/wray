@@ -19,17 +19,23 @@ public interface CommentService {
 	public int count();
 
 	/**
+	 * @param commentId
+	 * @return
+	 */
+	public Comment findById(String commentId);
+
+	/**
 	 * @param article
 	 * @return
 	 */
-	public List<Comment> getCommentsByArticle(Article article);
+	public List<Comment> findByArticle(Article article);
 
 	/**
 	 * @param page
 	 * @param limit
 	 * @return
 	 */
-	public List<Comment> getComments(int page, int limit);
+	public List<Comment> find(int page, int limit);
 
 	/**
 	 * @param comment

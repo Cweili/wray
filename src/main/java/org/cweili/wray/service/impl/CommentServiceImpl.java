@@ -3,6 +3,7 @@ package org.cweili.wray.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.ipseeker.IPSeeker;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
@@ -28,22 +29,48 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	}
 
 	@Override
-	public List<Comment> getCommentsByArticle(Article article) {
-		return seekIp(commentDao.findByArticleIdAndStat(article.getArticleId(),
-				Comment.STAT_DISPLAY));
+	public Comment findById(String commentId) {
+		return commentDao.findOne(commentId);
 	}
 
 	@Override
-	public List<Comment> getComments(int page, int limit) {
-		return seekIp(commentDao.findAll(new PageRequest(page - 1, limit)).getContent());
+	public List<Comment> findByArticle(Article article) {
+		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY);
+	}
+
+	@Override
+	public List<Comment> find(int page, int limit) {
+		return dealCommentList(commentDao.findAll(new PageRequest(page - 1, limit)).getContent());
 	}
 
 	@Override
 	public Comment save(Comment comment) {
+		String author = Function.trimAndStripTags(comment.getAuthor());
+		if ("".equals(author)) {
+			return null;
+		}
+		String email = Function.trimAndStripTags(comment.getEmail());
+		if ("".equals(email)) {
+			return null;
+		}
+		String link = Function.trimAndStripTags(comment.getLink());
+		if ("".equals(link)) {
+			return null;
+		}
+		String content = filterContent(comment.getContent());
+		if ("".equals(content)) {
+			return null;
+		}
+
+		comment.setAuthor(author);
+		comment.setEmail(email);
+		comment.setLink(link);
+		comment.setContent(content);
+
 		if ("".equals(comment.getCommentId())) {
 			comment.setCommentId(Function.generateId());
 		}
-		comment.setContent(filterContent(comment.getContent()));
+
 		return commentDao.save(comment);
 	}
 
@@ -62,15 +89,19 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	}
 
 	private String filterContent(String content) {
-		return HtmlFixer.fix(Function.stripTags(content, Constant.DANGEROUS_TAGS).replace(
-				"javascript:", ""));
+		return HtmlFixer.fix(StringUtils.replace(
+				Function.stripTags(content, Constant.DANGEROUS_TAGS), "javascript:", ""));
 	}
 
-	private List<Comment> seekIp(List<Comment> before) {
+	private List<Comment> dealCommentList(List<Comment> before) {
 		List<Comment> comments = new ArrayList<Comment>();
 		for (Comment comment : before) {
 			comment.setOrigin(IPSeeker.getInstance().getCountry(comment.getIp()) + " "
 					+ IPSeeker.getInstance().getArea(comment.getIp()));
+			Article article = articleDao.findOne(comment.getArticleId());
+			if (null != article) {
+				comment.setArtilceTitle(article.getTitle());
+			}
 			comments.add(comment);
 		}
 		return comments;

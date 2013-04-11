@@ -43,7 +43,7 @@ public final class ArticleController extends BaseController {
 		BlogView v = new BlogView("article");
 		v.add("article", article);
 		v.add("relatedCats", relatedCats);
-		v.add("commentList", commentService.getCommentsByArticle(article));
+		v.add("commentList", commentService.findByArticle(article));
 		article.setHits(article.getHits() + 1);
 		articleService.updateHits(article);
 		return v;

@@ -1,24 +1,11 @@
+<#include "macro-message.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>管理员帐户设置</h2>
-		<div class="succes hide">
-			<div class="succes_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>设置保存成功!</span>
-				<p>恭喜您，您的设置已成功保存。</p>
-			</div>
-		</div>
-		<div class="clearboth"><!-- --></div>
-		<div class="err hide">
-			<div class="err_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>设置保存失败</span>
-				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
-			</div>
-		</div>
+		<@message type="设置">
+			恭喜您，您的设置已成功保存。
+		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>博客管理员帐户</legend>
 				<div class="input_field">

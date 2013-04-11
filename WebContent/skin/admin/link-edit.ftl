@@ -1,37 +1,24 @@
+<#include "macro-message.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<div class="succes hide">
-			<div class="succes_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>链接保存成功!</span>
-				<p>恭喜您，您的链接已成功保存。</p>
-			</div>
-		</div>
-		<div class="clearboth"><!-- --></div>
-		<div class="err hide">
-			<div class="err_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>链接保存失败</span>
-				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
-			</div>
-		</div>
+		<@message type="链接">
+			恭喜您，您的链接已成功保存。
+		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>链接信息</legend>
 				<div class="input_field">
 					<label for="itemName">链接名称</label>
-					<input class="bigfield" name="itemName" type="text" value="${itemName?if_exists}" />
+					<input class="bigfield" name="itemName" type="text" value="${link.itemName?if_exists}" />
 				</div>
 				<div class="input_field">
 					<label for="description">链接地址</label>
-					<textarea name="description">${description?if_exists}</textarea>
+					<textarea name="description">${link.description?if_exists}</textarea>
 				</div>
 				<div class="input_field">
 					<label for="itemOrder">链接排序</label>
-					<input class="smallfield" name="itemOrder" type="text" value="${itemOrder?if_exists}" />
+					<input class="smallfield" name="itemOrder" type="text" value="${link.itemOrder?if_exists}" />
 				</div>
 			</fieldset>
 			<fieldset><legend>保存链接</legend>

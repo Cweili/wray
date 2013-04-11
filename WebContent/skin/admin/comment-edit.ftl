@@ -1,79 +1,57 @@
+<#include "macro-message.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<div class="succes hide">
-			<div class="succes_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>评论编辑成功!</span>
-				<p>恭喜您，您的评论已编辑成功。</p>
-			</div>
-		</div>
-		<div class="clearboth"><!-- --></div>
-		<div class="err hide">
-			<div class="err_icon"><!-- --></div>
-			<a href="#" class="close" title="关闭">x</a>
-			<div class="desc">
-				<span>评论编辑失败</span>
-				<p>实在抱歉，数据库更新失败, 请联系管理员。</p>
-			</div>
-		</div>
+		<@message type="评论">
+			恭喜您，您的评论已编辑成功。
+		</@message>
 		<div class="clearboth"><!-- --></div>
 		<form id="editForm" action="admin-${adminAction}" method="post">
-			<fieldset><legend>文章信息</legend>
+			<fieldset><legend>作者信息</legend>
 				<div class="input_field">
-					<label for="title">文章标题</label>
-					<input class="bigfield" name="title" type="text" value="${title?if_exists}" />
+					<label for="author">作者</label>
+					<input class="bigfield" name="author" type="text" value="${comment.author?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="permalink">永久链接</label>
+					<label for="email">E-mail</label>
 					<span class="field_desc">${staticServePath}article/</span>
-					<input class="mediumfield" name="permalink" type="text" value="${permalink?if_exists}" />
+					<input class="mediumfield" name="email" type="text" value="${comment.email?if_exists}" />
 					<span class="field_desc">/</span>
 				</div>
 				<div class="input_field">
-					<label for="tag">文章标签</label>
-					<input class="bigfield" name="tag" type="text" value="${tag?if_exists}" />
+					<label for="link">链接</label>
+					<input class="bigfield" name="link" type="text" value="${comment.link?if_exists}" />
 					<span class="field_desc">使用逗号或空格分隔，每个标签不长于18字节</span>
 				</div>
+			</fieldset>
+			<fieldset><legend>评论内容</legend>
 				<div class="input_field">
-					<label for="permalink">文章分类</label>
-					<span class="category">
-						<#list categories as category>
-							<input type="checkbox" name="category" value="${category.itemId}" <#if category.stat=2>checked="checked" </#if>/>
-							${category.itemName} &nbsp;
-						</#list>
-					</span>
+					<textarea class="wysiwyg" name="content" style="width:100%;">${comment.content?if_exists}</textarea>
 				</div>
 			</fieldset>
-			<fieldset><legend>文章正文</legend>
-				<div class="input_field">
-					<textarea class="wysiwyg" name="content" style="width:100%;">${content?if_exists}</textarea>
-				</div>
-			</fieldset>
-			<fieldset><legend>发布选项</legend>
+			<fieldset><legend>评论状态</legend>
 				<div class="input_field no_margin_bottom">
-					<span class="form_line"><input type="checkbox" name="commentStatus" class="checkbox" value="1" <#if commentStatus=1>checked="checked" </#if>/>允许评论</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if stat=4>checked="checked" </#if>/>已发布</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if stat=2>checked="checked" </#if>/>草稿</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if stat=1>checked="checked" </#if>/>回收站</span>
-					<span class="form_line"><input class="submit" type="submit" value="保存文章" /></span>
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if comment.stat=2>checked="checked" </#if>/>正常</span>
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if comment.stat=1>checked="checked" </#if>/>屏蔽</span>
+					<span class="form_line"><input class="submit" type="submit" value="保存评论" /></span>
 				</div>
 			</fieldset>
 		</form>
 		<script type="text/javascript">
 			$("#editForm").validate({
 				rules: {
-					title: {
+					author: {
 						required:true,
-						maxlength:340
+						maxlength:200
 					},
-					permalink: {
-						maxlength:150
+					email: {
+						required:true,
+						email:true,
+						maxlength:200
 					},
-					tag: {
-						maxlength:150
+					link: {
+						maxlength:200
 					}
 				}
 			});

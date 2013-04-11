@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -41,15 +42,10 @@ public final class AdminCategoryController extends BaseController {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "编辑分类");
 		Item category = categoryService.findById(categoryid);
-		if (null != category) {
-			v.add("itemName", category.getItemName());
-			v.add("permalink", category.getPermalink());
-			v.add("description", category.getDescription());
-			v.add("itemOrder", category.getItemOrder());
-			v.add("err", "");
-		} else {
-			v.add("err", "分类未找到");
+		if (null == category) {
+			category = new Item();
 		}
+		v.add("category", category);
 		return v;
 	}
 
@@ -70,7 +66,7 @@ public final class AdminCategoryController extends BaseController {
 	public BlogView addGet() {
 		BlogView v = new BlogView("category-edit");
 		v.add("actionName", "新增分类");
-		v.add("itemOrder", 0);
+		v.add("category", new Item());
 		return v;
 	}
 
@@ -120,12 +116,9 @@ public final class AdminCategoryController extends BaseController {
 	}
 
 	private Item getCategory(WebRequest request, Item ori) {
-		String itemName = request.getParameter("itemName") != null ? request
-				.getParameter("itemName") : "";
-		String permalink = request.getParameter("permalink") != null ? request
-				.getParameter("permalink") : "";
-		String description = request.getParameter("description") != null ? request
-				.getParameter("description") : "";
+		String itemName = StringUtils.trimToEmpty(request.getParameter("itemName"));
+		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
+		String description = StringUtils.trimToEmpty(request.getParameter("description"));
 		byte itemOrder = 0;
 		try {
 			itemOrder = Byte.valueOf(request.getParameter("itemOrder"));

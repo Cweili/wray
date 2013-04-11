@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -42,14 +43,10 @@ public final class AdminLinkController extends BaseController {
 		v.add("actionName", "编辑博客链接");
 		v.add("itemId", linkid);
 		Item link = linkService.findById(linkid);
-		if (link != null) {
-			v.add("itemName", link.getItemName());
-			v.add("description", link.getDescription());
-			v.add("itemOrder", link.getItemOrder());
-			v.add("err", "");
-		} else {
-			v.add("err", "链接未找到");
+		if (link == null) {
+			link = new Item();
 		}
+		v.add("link", link);
 		return v;
 	}
 
@@ -70,7 +67,6 @@ public final class AdminLinkController extends BaseController {
 	public BlogView addGet() {
 		BlogView v = new BlogView("link-edit");
 		v.add("actionName", "新增博客链接");
-		v.add("itemOrder", 0);
 		return v;
 	}
 
@@ -122,8 +118,7 @@ public final class AdminLinkController extends BaseController {
 	private Item getLink(WebRequest request, Item ori) {
 		if (request.getParameter("itemName") != null) {
 			String itemName = request.getParameter("itemName");
-			String description = request.getParameter("description") != null ? request
-					.getParameter("description") : "";
+			String description = StringUtils.trimToEmpty(request.getParameter("description"));
 			byte itemOrder = 0;
 			try {
 				itemOrder = Byte.valueOf(request.getParameter("itemOrder"));

@@ -32,6 +32,9 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	private String content = "";
 	private long parrentId = 0;
 	private byte stat = STAT_DISPLAY;
+
+	@Transient
+	private String artilceTitle = "";
 	@Transient
 	private String origin = "";
 
@@ -198,6 +201,14 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	public void setStat(byte stat) {
 		this.stat = stat;
+	}
+
+	public String getArtilceTitle() {
+		return artilceTitle;
+	}
+
+	public void setArtilceTitle(String artilceTitle) {
+		this.artilceTitle = artilceTitle;
 	}
 
 	public String getOrigin() {

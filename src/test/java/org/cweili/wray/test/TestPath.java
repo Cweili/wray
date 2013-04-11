@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * 
- * @author Cweili
+ * @author cweili
  * @version 2013-4-8 下午12:13:56
  * 
  */

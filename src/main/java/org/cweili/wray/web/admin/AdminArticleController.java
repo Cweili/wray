@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
@@ -63,9 +64,7 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("article-edit");
 		v.add("actionName", "新增文章");
 		v.add("categories", categoryService.getCategories());
-		v.add("commentStatus", Article.COMMENT_ON);
-		v.add("stat", Article.STAT_PUBLISHED);
-		v.add("err", "");
+		v.add("article", new Article());
 		return v;
 	}
 
@@ -89,19 +88,10 @@ public final class AdminArticleController extends BaseController {
 
 		v.add("categories", categoryService.getSelectedCategories(article));
 
-		if (article != null) {
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("tag", article.getTag());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "");
-		} else {
-			v.add("commentStatus", Article.COMMENT_ON);
-			v.add("stat", Article.STAT_PUBLISHED);
-			v.add("err", "文章未找到");
+		if (null == article) {
+			article = new Article();
 		}
+		v.add("article", article);
 		return v;
 	}
 
@@ -144,18 +134,16 @@ public final class AdminArticleController extends BaseController {
 	}
 
 	private Article getArticle(WebRequest request, Article ori) {
-		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
-		String permalink = request.getParameter("permalink") != null ? request
-				.getParameter("permalink") : "";
-		String tag = request.getParameter("tag") != null ? request.getParameter("tag") : "";
-		String content = request.getParameter("content") != null ? request.getParameter("content")
-				: "";
+		String title = StringUtils.trimToEmpty(request.getParameter("title"));
+		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
+		String tag = StringUtils.trimToEmpty(request.getParameter("tag"));
+		String content = StringUtils.trimToEmpty(request.getParameter("content"));
+		String s = StringUtils.trimToEmpty(request.getParameter("stat"));
 		byte commentStatus = Article.COMMENT_OFF;
 		if (request.getParameterValues("commentStatus") != null
 				&& request.getParameterValues("commentStatus").length > 0) {
 			commentStatus = Article.COMMENT_ON;
 		}
-		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
 
 		String id = Function.generateId();
 
@@ -163,7 +151,8 @@ public final class AdminArticleController extends BaseController {
 		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
-		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
+		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
+				new String[] { ",", "," }));
 		StringBuilder tagSB = new StringBuilder("");
 		for (String tagStr : tag.split(",")) {
 			tagSB.append(CutString.substring(tagStr, 18));

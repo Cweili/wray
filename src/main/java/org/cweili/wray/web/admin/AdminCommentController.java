@@ -2,15 +2,12 @@ package org.cweili.wray.web.admin;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
+import org.apache.commons.lang3.StringUtils;
+import org.cweili.wray.domain.Comment;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
-import org.cweili.wray.util.CutString;
-import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -33,7 +30,6 @@ public final class AdminCommentController extends BaseController {
 	@RequestMapping("/admin-comment")
 	public BlogView articleList(WebRequest request) {
 		BlogView v = new BlogView("comment-list");
-		byte stat = Article.STAT_PUBLISHED;
 		String actionName = "评论管理";
 		int page = 1;
 		try {
@@ -43,7 +39,7 @@ public final class AdminCommentController extends BaseController {
 			log.error(e.toString());
 		}
 		v.add("actionName", actionName);
-		v.add("comments", commentService.getComments(page, Constant.ADMIN_LIST_SIZE));
+		v.add("comments", commentService.find(page, Constant.ADMIN_LIST_SIZE));
 
 		addPaginator(v, commentService.count(), page, Constant.ADMIN_LIST_SIZE);
 		return v;
@@ -51,36 +47,25 @@ public final class AdminCommentController extends BaseController {
 
 	@RequestMapping(value = "/admin-comment-edit-{commentid}", method = RequestMethod.GET)
 	public BlogView editGet(@PathVariable("commentid") String commentid) {
-		BlogView v = new BlogView("article-edit");
-		v.add("actionName", "编辑文章");
-		v.add("commentId", commentid);
-		Article article = articleService.findById(commentid);
-
-		if (article != null) {
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("tag", article.getTag());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "");
-		} else {
-			v.add("commentStatus", Article.COMMENT_ON);
-			v.add("stat", Article.STAT_PUBLISHED);
-			v.add("err", "文章未找到");
+		BlogView v = new BlogView("comment-edit");
+		v.add("actionName", "编辑评论");
+		Comment comment = commentService.findById(commentid);
+		if (null == comment) {
+			comment = new Comment();
 		}
+		v.add("comment", comment);
 		return v;
 	}
 
-	@RequestMapping(value = "/admin-comment-edit-{articleid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-comment-edit-{commentid}", method = RequestMethod.POST)
 	public @ResponseBody
-	String editPost(WebRequest request, @PathVariable("articleid") String articleid) {
-		Article article = articleService.findById(articleid);
-		article = getArticle(request, article);
-		if (null == articleService.save(article)) {
+	String editPost(WebRequest request, @PathVariable("commentid") String commentid) {
+		Comment comment = commentService.findById(commentid);
+		comment = getComment(request, comment);
+
+		if (null == commentService.save(comment)) {
 			return Constant.SUBMIT_FAILED;
 		}
-		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
 		return Constant.SUBMIT_SUCCESS;
 	}
 
@@ -88,9 +73,9 @@ public final class AdminCommentController extends BaseController {
 	public BlogView del(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
-		v.add("msg", "文章删除成功");
-		v.add("succ", "恭喜您，您选中的文章已成功移入回收站。");
-		v.add("redirect", "admin-article-" + "?page=" + request.getParameter("page"));
+		v.add("msg", "评论屏蔽成功");
+		v.add("succ", "恭喜您，您选中的评论已成功屏蔽。");
+		v.add("redirect", "admin-comment-" + "?page=" + request.getParameter("page"));
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
@@ -100,83 +85,26 @@ public final class AdminCommentController extends BaseController {
 		return v;
 	}
 
-	private Article getArticle(WebRequest request, Article ori) {
-		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
-		String permalink = request.getParameter("permalink") != null ? request
-				.getParameter("permalink") : "";
-		String tag = request.getParameter("tag") != null ? request.getParameter("tag") : "";
-		String content = request.getParameter("content") != null ? request.getParameter("content")
-				: "";
-		byte commentStatus = Article.COMMENT_OFF;
-		if (request.getParameterValues("commentStatus") != null
-				&& request.getParameterValues("commentStatus").length > 0) {
-			commentStatus = Article.COMMENT_ON;
-		}
-		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
+	private Comment getComment(WebRequest request, Comment ori) {
+		String author = StringUtils.trimToEmpty(request.getParameter("author"));
+		String email = StringUtils.trimToEmpty(request.getParameter("email"));
+		String link = StringUtils.trimToEmpty(request.getParameter("link"));
+		String content = StringUtils.trimToEmpty(request.getParameter("content"));
+		String s = StringUtils.trimToEmpty(request.getParameter("stat"));
 
-		String id = Function.generateId();
+		byte stat = Comment.STAT_DISPLAY;
+		if ((Comment.STAT_DISPLAY + "").equals(s)) {
+			stat = Comment.STAT_DISPLAY;
+		} else if ((Comment.STAT_BLOCK + "").equals(s)) {
+			stat = Comment.STAT_BLOCK;
+		}
+		ori.setAuthor(author);
+		ori.setEmail(email);
+		ori.setLink(link);
+		ori.setContent(content);
+		ori.setStat(stat);
 
-		title = Function.trimAndStripTags(title);
-		title = "".equals(title) ? Function.timeString() : title;
-		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
-		tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
-		StringBuilder tagSB = new StringBuilder("");
-		for (String tagStr : tag.split(",")) {
-			tagSB.append(CutString.substring(tagStr, 18));
-			tagSB.append(',');
-		}
-		tagSB.deleteCharAt(tagSB.length() - 1);
-		byte stat = Article.STAT_PUBLISHED;
-		if ((Article.STAT_DRAFT + "").equals(s)) {
-			stat = Article.STAT_DRAFT;
-		} else if ((Article.STAT_RECYCLE + "").equals(s)) {
-			stat = Article.STAT_RECYCLE;
-		}
-		if (ori != null) {
-			ori.setTitle(title);
-			ori.setPermalink(permalink);
-			ori.setTag(tagSB.toString());
-			ori.setContent(content);
-			ori.setStat(stat);
-			ori.setCommentStatus(commentStatus);
-			return ori;
-		}
-		return new Article(id, title, permalink, content, tagSB.toString(), new Date(), stat, 0, 0,
-				commentStatus, Article.TYPE_ARTICLE);
-	}
-
-	private List<Item> getRelatedItems(WebRequest request) {
-		List<Item> relatedItems = new ArrayList<Item>();
-		Item addItem;
-		if (request.getParameterValues("category") != null) {
-			for (String catStr : request.getParameterValues("category")) {
-				addItem = categoryService.findById(catStr);
-				if (null != addItem) {
-					relatedItems.add(addItem);
-				}
-			}
-		}
-		if (request.getParameter("tag") != null) {
-			String tag = request.getParameter("tag");
-			if (!"".equals(tag)) {
-				tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
-				for (String tagStr : tag.split(",")) {
-					tagStr = CutString.substring(tagStr, 18);
-					addItem = tagService.findByName(tagStr);
-					if (null != addItem) {
-						relatedItems.add(addItem);
-					} else {
-						addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
-								Item.TYPE_TAG, 0L, Item.STAT_ON);
-						tagService.save(addItem);
-						relatedItems.add(addItem);
-					}
-				}
-			}
-		}
-
-		return relatedItems;
+		return ori;
 	}
 
 }

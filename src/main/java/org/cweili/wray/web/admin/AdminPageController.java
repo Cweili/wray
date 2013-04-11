@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -60,9 +61,7 @@ public final class AdminPageController extends BaseController {
 	public BlogView addGet() {
 		BlogView v = new BlogView("page-edit");
 		v.add("actionName", "新增页面");
-		v.add("commentStatus", Article.COMMENT_ON);
-		v.add("stat", Article.STAT_PUBLISHED);
-		v.add("err", "");
+		v.add("article", new Article());
 		return v;
 	}
 
@@ -82,18 +81,10 @@ public final class AdminPageController extends BaseController {
 		v.add("actionName", "编辑页面");
 		v.add("articleId", articleid);
 		Article article = articleService.findById(articleid);
-		if (article != null) {
-			v.add("title", article.getTitle());
-			v.add("permalink", article.getPermalink());
-			v.add("content", article.getContent());
-			v.add("commentStatus", article.getCommentStatus());
-			v.add("stat", article.getStat());
-			v.add("err", "");
-		} else {
-			v.add("commentStatus", Article.COMMENT_ON);
-			v.add("stat", Article.STAT_PUBLISHED);
-			v.add("err", "页面未找到");
+		if (article == null) {
+			article = new Article();
 		}
+		v.add("article", article);
 		return v;
 	}
 
@@ -164,17 +155,15 @@ public final class AdminPageController extends BaseController {
 	}
 
 	private Article getArticle(WebRequest request, Article ori) {
-		String title = request.getParameter("title") != null ? request.getParameter("title") : "";
-		String permalink = request.getParameter("permalink") != null ? request
-				.getParameter("permalink") : "";
-		String content = request.getParameter("content") != null ? request.getParameter("content")
-				: "";
+		String title = StringUtils.trimToEmpty(request.getParameter("title"));
+		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
+		String content = StringUtils.trimToEmpty(request.getParameter("content"));
 		byte commentStatus = Article.COMMENT_OFF;
 		if (request.getParameterValues("commentStatus") != null
 				&& request.getParameterValues("commentStatus").length > 0) {
 			commentStatus = Article.COMMENT_ON;
 		}
-		String s = request.getParameter("stat") != null ? request.getParameter("stat") : "";
+		String s = StringUtils.trimToEmpty(request.getParameter("stat"));
 
 		String id = Function.generateId();
 
