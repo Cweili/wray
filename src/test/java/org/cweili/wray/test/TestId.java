@@ -51,6 +51,7 @@ public class TestId {
 				e.printStackTrace();
 			}
 		}
+		log.info(Function.encode(-9223372036854775808L));
 	}
 
 }

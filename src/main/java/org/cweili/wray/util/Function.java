@@ -88,14 +88,15 @@ public class Function {
 	 * @return
 	 */
 	public static String encode(long src) {
-		char[] c = new char[64];
+		char[] c = new char[11];
 		long tmp = src;
-		int i = 64;
+		tmp = tmp > 0 ? tmp : -1 - tmp;
+		int i = 11;
 		while (tmp > 0 && i >= 0) {
 			c[--i] = CHARS.charAt((int) tmp & 0x3f);
 			tmp >>>= 6;
 		}
-		return new String(Arrays.copyOfRange(c, i, 64));
+		return new String(Arrays.copyOfRange(c, i, 11));
 	}
 
 	/**
@@ -285,10 +286,12 @@ public class Function {
 	}
 
 	public static String urlDecode(String input) {
-		try {
-			input = new String(input.getBytes("ISO-8859-1"), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			input = "";
+		if (ServerDetector.getInstance().detect() == ServerDetector.TOMCAT) {
+			try {
+				input = new String(input.getBytes("ISO-8859-1"), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				input = "";
+			}
 		}
 		return input;
 	}

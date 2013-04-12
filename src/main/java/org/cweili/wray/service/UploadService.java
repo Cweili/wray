@@ -37,7 +37,7 @@ public interface UploadService {
 
 	/**
 	 * @param page
-	 * @param limit
+	 * @param size
 	 * @return
 	 */
 	public List<Upload> getUploads(int page, int size);

@@ -13,5 +13,8 @@
 <link type="text/css" rel="stylesheet" href="include/editor/plugins/code/prettify.css" charset="utf-8" />
 <link href="blog-articles-feed.do" title="ATOM" type="application/atom+xml" rel="alternate" />
 <link rel="icon" type="image/png" href="favicon.png" />
+<script src="include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="include/js/functions.js" type="text/javascript"></script>
+<script src="include/editor/plugins/code/prettify.js" type="text/javascript"></script>
 ${htmlHead}
 </#macro>

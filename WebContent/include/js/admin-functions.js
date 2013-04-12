@@ -3,7 +3,7 @@
 var editor = null;
 var slideToggleDelay = 6000;
 
-$(document).ready(function() {
+$(function() {
 
  //NAVIGATION MENU
 	$(".submenu li").each(function (i) {

@@ -22,15 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Scope("prototype")
 public final class ArticleController extends BaseController {
 
-	/**
-	 * Article Handler
-	 * 
-	 * @param request
-	 * @param response
-	 * @param permalink
-	 * @return
-	 * @throws NotFoundException
-	 */
 	@RequestMapping("/article/{permalink}")
 	public BlogView article(@PathVariable("permalink") String permalink) throws NotFoundException {
 
@@ -49,15 +40,6 @@ public final class ArticleController extends BaseController {
 		return v;
 	}
 
-	/**
-	 * Page Handler
-	 * 
-	 * @param request
-	 * @param response
-	 * @param permalink
-	 * @return
-	 * @throws NotFoundException
-	 */
 	@RequestMapping("/page/{permalink}")
 	public BlogView page(@PathVariable("permalink") String permalink) throws NotFoundException {
 		permalink = Function.urlDecode(permalink);

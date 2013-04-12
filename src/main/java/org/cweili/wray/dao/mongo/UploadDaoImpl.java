@@ -126,7 +126,6 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	@Override
 	public Iterable<Upload> findAll(Sort arg0) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 
