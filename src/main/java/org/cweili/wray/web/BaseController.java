@@ -11,9 +11,10 @@ import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Paginator;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
