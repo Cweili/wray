@@ -19,7 +19,7 @@ public class ServerDetector {
 
 			"/org/mortbay/jetty/Server.class",
 
-			"org/eclipse/jetty/server/Server.class",
+			"/org/eclipse/jetty/server/Server.class",
 
 			"/weblogic/Server.class",
 

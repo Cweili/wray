@@ -16,7 +16,7 @@
             <div class="left comment-info">
                 <div class="left">
                     ${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}
-                    <#if (comment.parentId > 0)>
+                    <#if comment.parentId?has_content>
                     @
                     <a href="${permalink}#${comment.parentId}"
                        onmouseover="showComment(this, '${comment.parentId}');"
@@ -67,7 +67,7 @@
 	            </td>
 	        </tr>
 	        <tr>
-	            <td colspan="3">
+	            <td id="comment-content" colspan="3">
 	                <textarea class="wysiwyg" name="content"></textarea>
 	            </td>
 	        </tr>
@@ -84,7 +84,7 @@
 	                <button id="submitCommentButton">${submmitCommentLabel}</button>
 	            </td>
 	        </tr>
-	        <input type="hidden" name="parentId" value="" />
+	        <input class="parentId" type="hidden" name="parentId" value="" />
 	        <input type="hidden" name="articleId" value="${articleId}" />
 	        <input type="hidden" name="permalink" value="${permalink}" />
 	    </tbody>
