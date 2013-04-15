@@ -1,9 +1,8 @@
 package org.cweili.wray.web.admin;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
@@ -14,6 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.util.CookieGenerator;
+import org.springframework.web.util.WebUtils;
 
 /**
  * 
@@ -26,9 +30,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public final class AdminLoginController extends BaseController {
 
 	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
-	public BlogView logIn(HttpServletRequest request) {
+	public BlogView logIn() {
 		BlogView v = new BlogView("login");
-		String username = findCookie(request, Constant.AUTHORITY_COOKIE);
+		String username = null;
+		try {
+			ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
+					.currentRequestAttributes();
+			username = WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_COOKIE).getValue();
+		} catch (Exception e) {
+
+		}
 		if (null != username) {
 			v.addObject("username", username);
 		}
@@ -38,7 +49,11 @@ public final class AdminLoginController extends BaseController {
 
 	@RequestMapping(value = "/admin-login", method = RequestMethod.POST)
 	public @ResponseBody
-	String logIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	String logIn(WebRequest request, HttpServletResponse response) throws Exception {
+
+		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+
 		if (null != request.getParameter("username") && null != request.getParameter("password")
 				&& null != request.getParameter("hash")
 				&& request.getParameter("username").equals(blogConfig.get("adminName"))) {
@@ -50,24 +65,22 @@ public final class AdminLoginController extends BaseController {
 				String time = Function.encode(Function.timestamp());
 				String key = Function.authorityKey(time, blogConfig.get("adminName"),
 						blogConfig.get("adminPwd"));
-				request.getSession().setAttribute(Constant.AUTHORITY_KEY, key);
+				WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_KEY, key);
 
 				// Cookie 保存用户名
-				Cookie cookie = new Cookie(Constant.AUTHORITY_COOKIE, blogConfig.get("adminName"));
-				cookie.setDomain(request.getServerName());
-				cookie.setPath(request.getContextPath() + "/");
-				cookie.setMaxAge(31536000);
-				response.addCookie(cookie);
+				CookieGenerator cookie = new CookieGenerator();
+				cookie.setCookieName(Constant.AUTHORITY_COOKIE);
+				cookie.setCookieDomain(req.getRequest().getServerName());
+				cookie.setCookiePath(request.getContextPath());
+				cookie.setCookieMaxAge(31536000);
+				cookie.addCookie(response, blogConfig.get("adminName"));
 
 				if (null != request.getParameterValues("rememberme")
 						&& "true".equals(request.getParameterValues("rememberme")[0])) {
 
 					// Cookie 设置验证串
-					cookie = new Cookie(Constant.AUTHORITY_KEY, key + "@" + time);
-					cookie.setDomain(request.getServerName());
-					cookie.setPath(request.getContextPath() + "/");
-					cookie.setMaxAge(31536000);
-					response.addCookie(cookie);
+					cookie.setCookieName(Constant.AUTHORITY_KEY);
+					cookie.addCookie(response, key + "@" + time);
 				}
 				log.info(blogConfig.get("adminName") + " login successful.");
 
@@ -79,24 +92,24 @@ public final class AdminLoginController extends BaseController {
 	}
 
 	@RequestMapping("/admin-logout-{authority}")
-	public BlogView logOut(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("authority") String authority) {
+	public BlogView logOut(HttpServletResponse response, @PathVariable("authority") String authority) {
 		BlogView v = new BlogView("msg");
 		v.add("actionName", "管理员退出");
-		String sessionAuthority = "";
-		if (null != request.getSession(false)
-				&& null != request.getSession().getAttribute(Constant.AUTHORITY_KEY)) {
-			sessionAuthority = (String) request.getSession().getAttribute(Constant.AUTHORITY_KEY);
-		}
+		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
+		String sessionAuthority = StringUtils.stripToEmpty((String) WebUtils.getSessionAttribute(
+				req.getRequest(), Constant.AUTHORITY_KEY));
+
 		if (sessionAuthority.equals(authority)) {
 
-			request.getSession().removeAttribute(Constant.AUTHORITY_KEY);
+			WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_KEY, null);
 
-			Cookie cookie = new Cookie(Constant.AUTHORITY_KEY, null);
-			cookie.setDomain(request.getServerName());
-			cookie.setPath(request.getContextPath() + "/");
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
+			CookieGenerator cookie = new CookieGenerator();
+			cookie.setCookieName(Constant.AUTHORITY_KEY);
+			cookie.setCookieDomain(req.getRequest().getServerName());
+			cookie.setCookiePath(req.getRequest().getContextPath());
+			cookie.setCookieMaxAge(0);
+			cookie.addCookie(response, null);
 
 			log.info(blogConfig.get("adminName") + " logout successful.");
 
@@ -108,17 +121,6 @@ public final class AdminLoginController extends BaseController {
 			v.add("err", "退出失败");
 		}
 		return v;
-	}
-
-	private String findCookie(HttpServletRequest request, String find) {
-		if (null != request.getCookies()) {
-			for (Cookie cookie : request.getCookies()) {
-				if (find.equals(cookie.getName())) {
-					return cookie.getValue();
-				}
-			}
-		}
-		return null;
 	}
 
 }

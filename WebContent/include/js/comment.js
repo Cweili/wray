@@ -1,3 +1,26 @@
+$(function() {
+	if ($("#comments div").length === 0) {
+        $("#comments").removeClass("comments");
+    }
+});
+
+var replyTo = function(id) {
+    var commentFormHTML = '<table class="marginTop12 comment-form" id="replyForm">';
+    $("#comment-" + id).append(commentFormHTML + $("#commentForm").children().html() + '</table>');
+};
+
+var showComment = function(it, id) {
+    if ( $("#commentRef" + id).length > 0) {
+        $("#commentRef" + id).show();
+    } else {
+        var $refComment = $("#" + id + " .comment-panel").clone();
+        $refComment.removeClass().addClass("comment-body-ref").attr("id", "commentRef" + id);
+        $("#comments").append($refComment);
+    }
+    var position =  $(it).position();
+    $("#commentRef" + id).css("top", (position.top + 18) + "px");
+};
+
 var editor = null;
 KindEditor.ready(function(K) {
 	editor = K.create(".wysiwyg", {

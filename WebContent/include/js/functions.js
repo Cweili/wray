@@ -18,17 +18,12 @@ var howElliptical = 1;
 var aA = null;
 var oDiv = null;
 
-$(document).ready(function() {
-
-	if ($("#comments div").length === 0) {
-        $("#comments").removeClass("comments");
-    }
-
+$(function() {
 	$("#header-navi li").each(function(i) {
         if (i < $("#header-navi li").length - 1) {
             var $it = $(this),
             locationURL = window.location.pathname + window.location.search;
-            if (i === 0 && (locationURL === "/")) {
+            if (i === 0 && (locationURL.charAt(locationURL.length - 1) === "/")) {
                 $it.addClass("selected");
                 return;
             }
@@ -40,23 +35,6 @@ $(document).ready(function() {
 
 	tagCloud();
 });
-
-var replyTo = function(id) {
-    var commentFormHTML = '<table class="marginTop12 comment-form" id="replyForm">';
-    $("#" + id).append(commentFormHTML + $("#commentForm").children().html() + '</table>');
-};
-
-var showComment = function(it, id) {
-    if ( $("#commentRef" + id).length > 0) {
-        $("#commentRef" + id).show();
-    } else {
-        var $refComment = $("#" + id + " .comment-panel").clone();
-        $refComment.removeClass().addClass("comment-body-ref").attr("id", "commentRef" + id);
-        $("#comments").append($refComment);
-    }
-    var position =  $(it).position();
-    $("#commentRef" + id).css("top", (position.top + 18) + "px");
-};
 
 var tagCloud = function() {
 	var oTag = null;

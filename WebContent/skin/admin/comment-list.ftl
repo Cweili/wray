@@ -60,7 +60,6 @@
 				<div class="warn_icon"><!-- --></div>
 				<div class="desc">
 					<span>${actionName?if_exists}列表是空的呢</span>
-					<p>赶快 <a class="button" href="admin-article-add">添加新的文章</a> 吧!</p>
 				</div>
 			</div>
 			<div class="clearboth"><!-- --></div>

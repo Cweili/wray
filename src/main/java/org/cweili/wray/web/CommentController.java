@@ -34,7 +34,8 @@ public final class CommentController extends BaseController {
 	public ResponseEntity<String> index(@RequestParam("articleId") String articleId,
 			@RequestParam("author") String author, @RequestHeader("User-Agent") String userAgent,
 			@RequestParam("content") String content, @RequestParam("email") String email,
-			@RequestParam("link") String link, @RequestParam("permalink") String permalink) {
+			@RequestParam("link") String link, @RequestParam("parentId") String parentId,
+			@RequestParam("permalink") String permalink) {
 		String id = Function.generateId();
 		Comment comment = new Comment();
 		comment.setCommentId(id);
@@ -46,6 +47,7 @@ public final class CommentController extends BaseController {
 		comment.setIp(((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest().getRemoteAddr());
 		comment.setLink(link);
+		comment.setParentId(parentId);
 		comment.setStat(Comment.STAT_DISPLAY);
 		commentService.save(comment);
 		HttpHeaders header = new HttpHeaders();

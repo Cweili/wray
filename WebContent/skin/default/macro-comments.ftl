@@ -16,11 +16,11 @@
             <div class="left comment-info">
                 <div class="left">
                     ${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}
-                    <#if (comment.parrentId > 0)>
+                    <#if (comment.parentId > 0)>
                     @
-                    <a href="${permalink}#${comment.parrentId}"
-                       onmouseover="showComment(this, '${comment.parrentId}');"
-                       onmouseout="hideComment('${comment.parrentId}')">${comment.parrentId}</a>
+                    <a href="${permalink}#${comment.parentId}"
+                       onmouseover="showComment(this, '${comment.parentId}');"
+                       onmouseout="hideComment('${comment.parentId}')">${comment.parentId}</a>
                     </#if>
                 </div>
                 <div class="right">
@@ -84,8 +84,9 @@
 	                <button id="submitCommentButton">${submmitCommentLabel}</button>
 	            </td>
 	        </tr>
-	        <input type="hidden" name="articleId" value="${articleId}">
-	        <input type="hidden" name="permalink" value="${permalink}">
+	        <input type="hidden" name="parentId" value="" />
+	        <input type="hidden" name="articleId" value="${articleId}" />
+	        <input type="hidden" name="permalink" value="${permalink}" />
 	    </tbody>
 	</table>
 </form>

@@ -30,7 +30,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	private Date postDate = new Date();
 	private String agent = "";
 	private String content = "";
-	private long parrentId = 0;
+	private String parentId = "";
 	private byte stat = STAT_DISPLAY;
 
 	@Transient
@@ -54,12 +54,12 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	 * @param postDate
 	 * @param agent
 	 * @param content
-	 * @param parrentId
+	 * @param parentId
 	 * @param stat
 	 */
 	@PersistenceConstructor
 	public Comment(String commentId, String articleId, String author, String email, String link,
-			String ip, Date postDate, String agent, String content, long parrentId, byte stat) {
+			String ip, Date postDate, String agent, String content, String parentId, byte stat) {
 
 		this.commentId = commentId;
 		this.articleId = articleId;
@@ -70,7 +70,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.postDate = postDate;
 		this.agent = agent;
 		this.content = content;
-		this.parrentId = parrentId;
+		this.parentId = parentId;
 		this.stat = stat;
 	}
 
@@ -187,12 +187,12 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.content = content;
 	}
 
-	public long getParrentId() {
-		return parrentId;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParrentId(long parrentId) {
-		this.parrentId = parrentId;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public byte getStat() {

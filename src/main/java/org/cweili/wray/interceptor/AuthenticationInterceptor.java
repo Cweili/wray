@@ -29,8 +29,6 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 		String key = findCookie(request, Constant.AUTHORITY_KEY);
 		if (null != key) {
 			String[] keys = key.split("@");
-			log.error(Function.authorityKey(keys[1], blogConfig.get("adminName"),
-					blogConfig.get("adminPwd")));
 			if (keys.length == 2
 					&& keys[0].equals(Function.authorityKey(keys[1], blogConfig.get("adminName"),
 							blogConfig.get("adminPwd")))) {
