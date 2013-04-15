@@ -5,13 +5,7 @@
 	<title>${blogTitle?if_exists} 管理面板 - Wray Admin Panel</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="${staticServePath}" />
-	<style type="text/css" media="all">
-		@import url('${staticServePath}include/css/admin-style.css');
-		<#--@import url('${staticServePath}include/css/jquery.wysiwyg.css');-->
-		<#--@import url('${staticServePath}include/editor/plugins/code/prettify.css');-->
-		img {behavior:url('../js/iepngfix.htc') !important;}
-		.ke-icon-insertmore {background-image: url(default.png);background-position: 0px -1024px;width: 16px;height: 16px;}
-	</style>
+	<link rel="stylesheet" href="${staticServePath}include/css/admin-style.css" type="text/css" charset="utf-8" />
 	<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery.validate.min.js" type="text/javascript"></script>

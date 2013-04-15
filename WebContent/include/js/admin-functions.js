@@ -158,7 +158,7 @@ $(window).resize(function() {
 	reSizeMain();
 });
 
-function submitForm(form) {
+var submitForm = function(form) {
 	if(editor != null) {
 		editor.sync();
 	}
@@ -176,9 +176,14 @@ function submitForm(form) {
 		}
 		$(".submit").attr("disabled", false);
 	});
-}
+};
 
-function reSizeMain() {
+var deleteSingle = function(id) {
+	$("#deleteId").val(id);
+	$("#deleteForm").submit();
+};
+
+var reSizeMain = function() {
 	var containerwidth = $(window).width();
 	containerwidth = containerwidth > 996 ? containerwidth : 996;
 	var mainwidth = containerwidth - 285;
@@ -189,7 +194,7 @@ function reSizeMain() {
 	$("#main").css({
 		width: mainwidth + "px",
 	});
-}
+};
 
 $.extend($.validator.messages, {
 	required: "必须填写",

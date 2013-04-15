@@ -54,9 +54,6 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 			return null;
 		}
 		String link = Function.trimAndStripTags(comment.getLink());
-		if ("".equals(link)) {
-			return null;
-		}
 		String content = filterContent(comment.getContent());
 		if ("".equals(content)) {
 			return null;
@@ -98,6 +95,8 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		for (Comment comment : before) {
 			comment.setOrigin(IPSeeker.getInstance().getCountry(comment.getIp()) + " "
 					+ IPSeeker.getInstance().getArea(comment.getIp()));
+			comment.setContent(StringUtils.substring(Function.stripTags(comment.getContent()), 0,
+					30) + " ...");
 			Article article = articleDao.findOne(comment.getArticleId());
 			if (null != article) {
 				comment.setArtilceTitle(article.getTitle());

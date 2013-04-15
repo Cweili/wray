@@ -75,11 +75,14 @@ public final class AdminCommentController extends BaseController {
 		v.add("err", "succ");
 		v.add("msg", "评论屏蔽成功");
 		v.add("succ", "恭喜您，您选中的评论已成功屏蔽。");
-		v.add("redirect", "admin-comment-" + "?page=" + request.getParameter("page"));
+		v.add("redirect", "admin-comment" + "?page=" + request.getParameter("page"));
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
 			Collections.addAll(ids, request.getParameterValues("id"));
+		}
+		if (!commentService.remove(ids)) {
+			v.add("err", "评论屏蔽失败");
 		}
 
 		return v;

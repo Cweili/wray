@@ -3,12 +3,6 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (articles?size > 0)>
-		<script type="text/javascript">
-			function deleteSingle(id) {
-				$("#deleteId").val(id);
-				$("#deleteForm").submit();
-			};
-		</script>
 		<form id="deleteForm" action="admin-article-delete-${adminAction?replace('article-','')}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
@@ -34,7 +28,7 @@
 						<td>${article.commentCount}</td>
 						<td>
 							<a href="admin-article-edit-${article.articleId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle('${article.articleId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="article/${article.permalink}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>

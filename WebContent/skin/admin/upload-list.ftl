@@ -3,12 +3,6 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (uploads?size > 0)>
-		<script type="text/javascript">
-			function deleteSingle(id) {
-				$("#deleteId").val(id);
-				$("#deleteForm").submit();
-			};
-		</script>
 		<form id="deleteForm" action="admin-upload-delete" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>

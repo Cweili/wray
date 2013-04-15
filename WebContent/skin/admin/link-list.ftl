@@ -3,12 +3,6 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (items?size > 0)>
-		<script type="text/javascript">
-			function deleteSingle(id) {
-				$("#deleteId").val(id);
-				$("#manageForm").submit();
-			};
-		</script>
 		<form id="manageForm" action="admin-link-manage" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
@@ -30,7 +24,7 @@
 						<td><input class="tinyfield" type="text" name="order${item.itemId}" value="${item.itemOrder}" /></td>
 						<td>
 							<a href="admin-link-edit-${item.itemId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${item.itemId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle('${item.itemId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="${item.description}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>

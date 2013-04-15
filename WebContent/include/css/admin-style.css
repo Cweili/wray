@@ -866,3 +866,10 @@ textarea.wysiwyg {
 	background: #fff;
 	color: #000;
 }
+
+.ke-icon-insertmore {
+	background-image: url('../editor/themes/default/default.png');
+	background-position: 0px -1024px;
+	width: 16px;
+	height: 16px;
+}

@@ -52,9 +52,9 @@ public final class CommentController extends BaseController {
 
 		try {
 			header.setLocation(new URI(blogConfig.get("staticServePath") + "article/" + permalink
-					+ "/#" + id));
+					+ "#comment-" + id));
 		} catch (URISyntaxException e) {
-			log.error("URISyntaxException", e);
+			log.error(e, e);
 		}
 
 		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);

@@ -3,12 +3,6 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (articles?size > 0)>
-		<script type="text/javascript">
-			function deleteSingle(id) {
-				$("#deleteId").val(id);
-				$("#manageForm").submit();
-			};
-		</script>
 		<form id="manageForm" action="admin-page-manage-${adminAction?replace('page-','')}/?page=${paginationCurrentPageNum}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
@@ -32,7 +26,7 @@
 						<td><input class="tinyfield" type="text" name="order${article.articleId}" value="${article.hits}" /></td>
 						<td>
 							<a href="admin-page-edit-${article.articleId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="javascript:void(0)" onclick="deleteSingle('${article.articleId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="page/${article.permalink}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
 						</td>
 					</tr>

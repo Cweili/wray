@@ -2,14 +2,8 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<#if (articles?size > 0)>
-		<script type="text/javascript">
-			function deleteSingle(id) {
-				$("#deleteId").val(id);
-				$("#deleteForm").submit();
-			};
-		</script>
-		<form id="deleteForm" action="admin-article-delete-${adminAction?replace('article-','')}" method="post">
+		<#if (comments?size > 0)>
+		<form id="deleteForm" action="admin-comment-block" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -18,39 +12,43 @@
 						<th>时间</th>
 						<th>E-mail</th>
 						<th>链接</th>
+						<th>内容</th>
 						<th>状态</th>
 						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
 					<#assign i = 0>
-					<#list articles as article>
+					<#list comments as comment>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
-						<td><input type="checkbox" name="id" value="${article.articleId}" /></td>
-						<td><a href="admin-article-edit-${article.articleId}">${article.title}</a></td>
-						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
-						<td>${article.tag}</td>
-						<td>${article.hits}</td>
-						<td>${article.commentCount}</td>
+						<td><input type="checkbox" name="id" value="${comment.commentId}" /></td>
+						<td>${comment.author}</td>
+						<td><a href="admin-comment-edit-${comment.commentId}">${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}</a></td>
+						<td>${comment.email}</td>
+						<td>${comment.link}</td>
+						<td><a href="admin-comment-edit-${comment.commentId}">${comment.content}</a></td>
+						<td><#if comment.stat = 2>正常<#else>屏蔽</#if></td>
 						<td>
-							<a href="admin-article-edit-${article.articleId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0)" onclick="deleteSingle(${article.articleId});"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
-							<a href="article/${article.permalink}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
+							<a href="admin-comment-edit-${comment.commentId}">
+								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+							</a>
+							<a href="javascript:void(0)" onclick="deleteSingle('${comment.commentId}');">
+								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
+							</a>
 						</td>
 					</tr>
 					</#list>
-					<#assign i = (adminListSize - articles?size)>
+					<#assign i = (adminListSize - comments?size)>
 					<#if (i > 0)>
 						<#list 1..i as t>
-						<tr><td colspan="7" style="color:#242424">.</td></tr>
+						<tr><td colspan="8" style="color:#242424">.</td></tr>
 						</#list>
 					</#if>
 				</tbody>
 			</table> <!-- END Table -->
 			<fieldset>
 				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="删除选中文章" />
-					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin-article-add/'" />
+					<input class="submit" type="submit" value="屏蔽选中评论" />
 				</div>
 			</fieldset>
 			<input id="deleteId" name="id" type="hidden" />

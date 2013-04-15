@@ -24,7 +24,7 @@ $(document).ready(function() {
         $("#comments").removeClass("comments");
     }
 
-	$("#header-navi li").each(function (i) {
+	$("#header-navi li").each(function(i) {
         if (i < $("#header-navi li").length - 1) {
             var $it = $(this),
             locationURL = window.location.pathname + window.location.search;
@@ -41,12 +41,12 @@ $(document).ready(function() {
 	tagCloud();
 });
 
-var replyTo = function (id) {
+var replyTo = function(id) {
     var commentFormHTML = '<table class="marginTop12 comment-form" id="replyForm">';
     $("#" + id).append(commentFormHTML + $("#commentForm").children().html() + '</table>');
 };
 
-var showComment = function (it, id) {
+var showComment = function(it, id) {
     if ( $("#commentRef" + id).length > 0) {
         $("#commentRef" + id).show();
     } else {
@@ -58,7 +58,7 @@ var showComment = function (it, id) {
     $("#commentRef" + id).css("top", (position.top + 18) + "px");
 };
 
-var tagCloud = function () {
+var tagCloud = function() {
 	var oTag = null;
 	oDiv = document.getElementById("tagcloud");
 	aA = oDiv.getElementsByTagName("a");
@@ -75,15 +75,15 @@ var tagCloud = function () {
 	sineCosine(0, 0, 0);
 	positionAll();
 
-	oDiv.onmouseover = function () {
+	oDiv.onmouseover = function() {
 		active = true;
 	};
 
-	oDiv.onmouseout = function () {
+	oDiv.onmouseout = function() {
 		active = false;
 	};
 
-	oDiv.onmousemove = function (ev) {
+	oDiv.onmousemove = function(ev) {
 		var oEvent = window.event || ev;
 
 		mouseX = oEvent.pageX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
@@ -96,7 +96,7 @@ var tagCloud = function () {
 	setInterval(updateCloud, 30);
 };
 
-var updateCloud = function () {
+var updateCloud = function() {
 	var a;
 	var b;
 
@@ -148,7 +148,7 @@ var updateCloud = function () {
 	depthSort();
 };
 
-var depthSort = function () {
+var depthSort = function() {
 	var i = 0;
 	var aTmp = [];
 
@@ -157,7 +157,7 @@ var depthSort = function () {
 	}
 
 	aTmp.sort (
-		function (vItem1, vItem2) {
+		function(vItem1, vItem2) {
 			if(vItem1.cz > vItem2.cz) {
 				return -1;
 			} else if(vItem1.cz < vItem2.cz) {
@@ -173,7 +173,7 @@ var depthSort = function () {
 	}
 };
 
-var positionAll = function () {
+var positionAll = function() {
 	var phi = 0;
 	var theta = 0;
 	var max = mcList.length;
@@ -188,7 +188,7 @@ var positionAll = function () {
 	}
 
 	aTmp.sort (
-		function () {
+		function() {
 			return Math.random() < 0.5 ? 1 : -1;
 		}
 	);
@@ -217,7 +217,7 @@ var positionAll = function () {
 	};
 };
 
-var doPosition = function () {
+var doPosition = function() {
 	var l = oDiv.offsetWidth /  2;
 	var t = oDiv.offsetHeight / 2;
 	for (var i = 0; i < mcList.length; i++) {
@@ -231,7 +231,7 @@ var doPosition = function () {
 	}
 };
 
-var sineCosine = function (a, b, c) {
+var sineCosine = function(a, b, c) {
 	sa = Math.sin(a * dtr);
 	ca = Math.cos(a * dtr);
 	sb = Math.sin(b * dtr);
