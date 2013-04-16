@@ -1,9 +1,3 @@
-$(function() {
-	if ($("#comments div").length === 0) {
-		$("#comments").removeClass("comments");
-	}
-});
-
 var editorInit = {
 	themeType: "default",
 	height: "200px",
@@ -40,71 +34,7 @@ var editorInit = {
 	]
 };
 
-var editor = null;
-
-KindEditor.ready(function(K) {
-	editor = K.create(".wysiwyg", editorInit);
-});
-
-var replyTo = function(id) {
-	$("#replyForm").remove();
-	var commentFormHTML = '<form id="commentForm' + id + '" action="comment" method="post">'
-		+ '<table class="marginTop12 comment-form hide" id="replyForm">';
-	$("#comment-" + id).append(commentFormHTML + $("#commentForm").children().html() + '</table></form>');
-	$("#comment-content").empty();
-	$("#comment-content").append('<textarea id="textarea' + id + '" name="content" style="width:540px"></textarea>');
-	editor = KindEditor.create("#textarea" + id, editorInit);
-	$(".parentId").val(id);
-	$("#replyForm").show("slow");
-	$("#commentForm" + id).validate({
-		rules: {
-			author: {
-				required:true,
-				maxlength:200
-			},
-			email: {
-				required:true,
-				email:true,
-				maxlength:200
-			},
-			link: {
-				url:true,
-				maxlength:200
-			},
-			content: {
-				required:true
-			}
-		}
-	});
-	$("#commentForm").hide("slow");
-};
-
-var showComment = function(it, id) {
-	if ( $("#commentRef" + id).length < 1) {
-		var $refComment = $("#comment-" + id + " .comment-panel").clone();
-		$refComment.removeClass().addClass("comment-body-ref").attr("id", "commentRef" + id);
-		$("#comments").append($refComment);
-	}
-	var position =  $(it).position();
-	$("#commentRef" + id).hide();
-	$("#commentRef" + id).css("top", (position.top + 18) + "px");
-	$("#commentRef" + id).show("slow");
-};
-
-var hideComment = function(id) {
-	$("#commentRef" + id).hide("slow");
-};
-
-$.validator.setDefaults({
-	submitHandler: function(form) {
-		if(null != editor) {
-			editor.sync();
-			$("#submitCommentButton").attr("disabled",true);
-			form.submit();
-		}
-	}
-});
-$("#commentForm").validate({
+var commentFormValidation = {
 	rules: {
 		author: {
 			required:true,
@@ -123,4 +53,110 @@ $("#commentForm").validate({
 			required:true
 		}
 	}
+};
+
+var editor = null;
+
+var replyTo = function(id, author) {
+	// 移除其他回复框
+	$("#replyForm").remove();
+	
+	// 添加新的回复框
+	$("#comment-" + id).append(
+		'<form id="commentForm' + id + '" action="comment" method="post">'
+		+ '<table class="marginTop12 comment-form hide" id="replyForm">'
+		+ $("#commentForm").children().html() + '</table></form>'
+	);
+	
+	// 重置编辑器
+	$("#comment-content").empty();
+	$("#comment-content").append(
+		'<textarea id="textarea' + id + '" name="content" style="width:540px"></textarea>'
+	);
+	editor = KindEditor.create("#textarea" + id, editorInit);
+	
+	// 添加关闭按钮
+	$("#commentForm" + id + " #closeCommentButton").on("click", function() {
+		$("#replyForm").remove();
+		$("#commentForm").slideDown(500);
+		$("#commentForm .normalInput:eq(0)").focus();
+	});
+	$("#commentForm" + id + " #closeCommentButton").show();
+	
+	// 为父回复赋值
+	$(".parentId").val(id);
+	
+	// 添加回复框验证
+	$("#commentForm" + id).validate(commentFormValidation);
+	
+	// 显示回复框
+	$("#replyForm").show(500);
+	$("#commentForm" + id + " .normalInput:eq(0)").focus();
+	
+	// 关闭评论框
+	$("#commentForm").slideUp(500);
+};
+
+var showComment = function(it, id) {
+	if ( $("#commentRef" + id).length < 1) {
+		var $refComment = $("#comment-" + id + " .comment-panel").clone();
+		$refComment.removeClass().addClass("comment-body-ref").attr("id", "commentRef" + id);
+		$refComment.css("padding-left", "5px");
+		$refComment.find(".comment-info").width($(".comment-info:eq(0)").width());
+		$("#comments").append($refComment);
+	}
+	var position =  $(it).position();
+	$("#commentRef" + id).hide();
+	$("#commentRef" + id).css("top", (position.top + 18) + "px");
+	$("#commentRef" + id).show(300);
+};
+
+var hideComment = function(id) {
+	$("#commentRef" + id).hide(300);
+};
+
+$.validator.setDefaults({
+	submitHandler: function(form) {
+		if(null != editor) {
+			editor.sync();
+			$("#submitCommentButton").attr("disabled",true);
+			form.submit();
+		}
+	}
+});
+
+$(function() {
+	if ($("#comments div").length === 0) {
+		$("#comments").removeClass("comments");
+	}
+	
+	// 构造层叠评论
+	$(".comment-body").each(function(i) {
+		var $it = $(this);
+		var parentId = $it.find(".comment-parent");
+		if (parentId.length > 0) {
+			var parent = $("#comment-" + parentId.text());
+			parent.after($it);
+			
+			parentId.text($("#comment-" + parentId.text() + " .comment-author a").text());
+			
+			var left = parseInt(parent.find(".comment-panel").css("padding-left"));
+			left = left < 121 ? left : 120; // 缩进最多 8 + 1 次，即层叠 10 级
+			left += 15;
+			$it.find(".comment-panel").css("padding-left", left + "px");
+			$it.find(".comment-info").width($(".comment-info:eq(0)").width() - left);
+		}
+	});
+	
+	KindEditor.ready(function(K) {
+		editor = K.create(".wysiwyg", editorInit);
+	});
+	
+	$("#commentForm").validate(commentFormValidation);
+	
+	$(".comment-author-img").one("error", function() {
+		$(this).attr("src", "include/image/user.png");
+		return false;
+	});
+	
 });

@@ -645,12 +645,11 @@ div.copyr {
 }
 .comment-body-ref {
 	background-color: #FFFFFF;
-	filter: alpha(opacity=90);
 	left: 217px;
 	opacity: 0.9;
-	padding: 6px;
+	padding: 5px;
 	position: absolute;
-	width: 520px;
+	opacity: 0.9;
 	z-index: 10;
 }
 .comment-body {
@@ -680,7 +679,7 @@ div.copyr {
 	background: url("../images/comment.gif") no-repeat scroll 0 0 #EDEFF0;
 	font-size: 12px;
 	padding: 10px 15px 0;
-	width: 400px;
+	width: 495px;
 }
 .comment-content {
 	background: url("../images/comment.gif") no-repeat scroll 100% 100% transparent;
@@ -712,7 +711,7 @@ div.copyr {
 	height: auto;
 	width: 540px;
 }
-.comment-form button {
+button {
 	background: none repeat scroll 0 0 #B4D666;
 	border-color: #B4D666 #81B840 #81B840 #B4D666;
 	border-radius: 0px;
@@ -725,7 +724,7 @@ div.copyr {
 	padding: 0px 6px;
 	background-color:#ffffff;
 }
-.comment-form button:hover {
+button:hover {
 	background: none repeat scroll 0 0 #98C64C;
 	border-color: #76B33A #98C64C #98C64C #76B33A;
 	color: #074A7E;
@@ -778,8 +777,54 @@ div.copyr {
 	background: #fff;
 }
 
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
 .hide {
 	display: none;
+}
+
+.marginTop12 {
+	margin-top: 12px;
+}
+
+#scroll {
+	position: fixed;
+	top: 85%;
+	left: 50%;
+	margin-left: 403px;
+}
+
+#backToTop {
+	display: none;
+	height: 70px;
+	width: 58px;
+	background-image: url(../images/datebg.png);
+	background-position: 14px 0px;
+	background-repeat: no-repeat;
+	color: white;
+	padding: 10px 0 0 20px;
+	cursor: pointer;
+	opacity: 0.7;
+	
+	
+	/*翻转背景*/
+	-moz-transForm: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    /*IE*/
+    filter: FlipH;
+}
+
+#backToTop p {
+	font-size: 28px;
+	padding: 4px 8px;
 }
 
 label.error {

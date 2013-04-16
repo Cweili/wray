@@ -11,7 +11,8 @@
 						<th>作者</th>
 						<th>时间</th>
 						<th>E-mail</th>
-						<th>链接</th>
+						<th>位置</th>
+						<th>评论于</th>
 						<th>内容</th>
 						<th>状态</th>
 						<th>操作</th>
@@ -22,17 +23,24 @@
 					<#list comments as comment>
 					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
 						<td><input type="checkbox" name="id" value="${comment.commentId}" /></td>
-						<td>${comment.author}</td>
+						<td>
+							<#if comment.link?has_content>
+								<a href="${comment.link}" target="_blank">${comment.author}</a>
+							<#else>
+								${comment.author}
+							</#if>
+						</td>
 						<td><a href="admin-comment-edit-${comment.commentId}">${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}</a></td>
 						<td>${comment.email}</td>
-						<td>${comment.link}</td>
+						<td>${comment.origin}</td>
+						<td>${comment.artilceTitle}</td>
 						<td><a href="admin-comment-edit-${comment.commentId}">${comment.content}</a></td>
 						<td><#if comment.stat = 2>正常<#else>屏蔽</#if></td>
 						<td>
 							<a href="admin-comment-edit-${comment.commentId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
 							</a>
-							<a href="javascript:void(0)" onclick="deleteSingle('${comment.commentId}');">
+							<a href="javascript:void(0);" onclick="deleteSingle('${comment.commentId}');">
 								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
 							</a>
 						</td>
@@ -41,7 +49,7 @@
 					<#assign i = (adminListSize - comments?size)>
 					<#if (i > 0)>
 						<#list 1..i as t>
-						<tr><td colspan="8" style="color:#242424">.</td></tr>
+						<tr><td colspan="9" style="color:#242424">.</td></tr>
 						</#list>
 					</#if>
 				</tbody>

@@ -71,7 +71,7 @@ public final class AdminLoginController extends BaseController {
 				CookieGenerator cookie = new CookieGenerator();
 				cookie.setCookieName(Constant.AUTHORITY_COOKIE);
 				cookie.setCookieDomain(req.getRequest().getServerName());
-				cookie.setCookiePath(request.getContextPath());
+				cookie.setCookiePath(request.getContextPath() + "/");
 				cookie.setCookieMaxAge(31536000);
 				cookie.addCookie(response, blogConfig.get("adminName"));
 
@@ -107,7 +107,7 @@ public final class AdminLoginController extends BaseController {
 			CookieGenerator cookie = new CookieGenerator();
 			cookie.setCookieName(Constant.AUTHORITY_KEY);
 			cookie.setCookieDomain(req.getRequest().getServerName());
-			cookie.setCookiePath(req.getRequest().getContextPath());
+			cookie.setCookiePath(req.getRequest().getContextPath() + "/");
 			cookie.setCookieMaxAge(0);
 			cookie.addCookie(response, null);
 

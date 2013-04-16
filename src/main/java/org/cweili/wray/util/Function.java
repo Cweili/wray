@@ -25,7 +25,7 @@ public class Function {
 
 	private static final Log log = LogFactory.getLog(Function.class);
 
-	private static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+	private static final String CHARS = "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
 
 	private static long id = 0;
 
@@ -112,6 +112,34 @@ public class Function {
 			++id;
 		}
 		return encode(id);
+	}
+
+	/**
+	 * MD5
+	 * 
+	 * @param source
+	 * @return
+	 */
+	public static String md5(String source) {
+		String s = null;
+		CharSequence hexDigits = "0123456789abcdef";
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(source.getBytes());
+			byte[] digest = md.digest();
+			char[] c = new char[32];
+			int k = 0;
+			for (int i = 0; i < 16; i++) {
+				byte b = digest[i];
+				c[k++] = hexDigits.charAt(b >>> 4 & 0xf);
+				c[k++] = hexDigits.charAt(b & 0xf);
+			}
+			s = new String(c);
+
+		} catch (Exception e) {
+			log.error(e, e);
+		}
+		return s;
 	}
 
 	/**

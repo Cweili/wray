@@ -4,5 +4,5 @@
     </a>
     <span class="right" id="admin">
     </span>
-    <div class="clear"></div>
+    <div class="clr"></div>
 </div>

@@ -12,6 +12,7 @@ import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,12 +36,15 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public List<Comment> findByArticle(Article article) {
-		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY);
+		return dealArticleCommentList(commentDao.findByArticleIdAndStat(article.getArticleId(),
+				Comment.STAT_DISPLAY, new PageRequest(0, 65535, Sort.Direction.ASC, "_id"))
+				.getContent());
 	}
 
 	@Override
 	public List<Comment> find(int page, int limit) {
-		return dealCommentList(commentDao.findAll(new PageRequest(page - 1, limit)).getContent());
+		return dealCommentList(commentDao.findAll(
+				new PageRequest(page - 1, limit, Sort.Direction.DESC, "_id")).getContent());
 	}
 
 	@Override
@@ -64,7 +68,17 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		comment.setLink(link);
 		comment.setContent(content);
 
-		if ("".equals(comment.getCommentId())) {
+		if (!"".equals(comment.getCommentId())) {
+			if (null == commentDao.findOne(comment.getCommentId())) {
+				Article article = articleDao.findOne(comment.getArticleId());
+				if (null != article) {
+					article.setCommentCount(article.getCommentCount() + 1);
+					articleDao.save(article);
+				} else {
+					return null;
+				}
+			}
+		} else {
 			comment.setCommentId(Function.generateId());
 		}
 
@@ -90,13 +104,34 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 				Function.stripTags(content, Constant.DANGEROUS_TAGS), "javascript:", ""));
 	}
 
+	private List<Comment> dealArticleCommentList(List<Comment> before) {
+		List<Comment> comments = new ArrayList<Comment>();
+		Comment commentNew;
+		for (Comment comment : before) {
+			commentNew = new Comment(comment.getCommentId(), comment.getArticleId(),
+					comment.getAuthor(), Function.md5(comment.getEmail()), comment.getLink(),
+					comment.getIp(), comment.getPostDate(), comment.getAgent(),
+					comment.getContent(), comment.getParentId(), comment.getStat());
+			comments.add(commentNew);
+		}
+		return comments;
+	}
+
 	private List<Comment> dealCommentList(List<Comment> before) {
 		List<Comment> comments = new ArrayList<Comment>();
 		for (Comment comment : before) {
-			comment.setOrigin(IPSeeker.getInstance().getCountry(comment.getIp()) + " "
-					+ IPSeeker.getInstance().getArea(comment.getIp()));
+			String area = IPSeeker.getInstance().getArea(comment.getIp());
+			if (!"数据库损坏".equals(area)) {
+				StringBuilder sb = new StringBuilder(IPSeeker.getInstance().getCountry(
+						comment.getIp()));
+				if (!" CZ88.NET".equals(area)) {
+					sb.append(" ").append(area);
+					log.error(area);
+				}
+				comment.setOrigin(sb.toString());
+			}
 			comment.setContent(StringUtils.substring(Function.stripTags(comment.getContent()), 0,
-					30) + " ...");
+					16) + " ...");
 			Article article = articleDao.findOne(comment.getArticleId());
 			if (null != article) {
 				comment.setArtilceTitle(article.getTitle());
@@ -105,5 +140,4 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		}
 		return comments;
 	}
-
 }

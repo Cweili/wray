@@ -43,6 +43,7 @@ public class TestSha256 {
 		log.info(Function.sha256(s) + "////" + Function.sha256(s).length());
 		assertEquals("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
 				Function.sha256(s));
+		log.info(Function.md5(s));
+		assertEquals("0cc175b9c0f1b6a831c399e269772661", Function.md5(s));
 	}
-
 }

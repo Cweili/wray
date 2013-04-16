@@ -4,8 +4,8 @@
 <html>
     <head>
         <@head title="${article.title} - ${blogTitle}">
-        <meta name="keywords" content="${article.tag}"/>
-        <meta name="description" content="${article.content?html}"/>
+        <meta name="keywords" content="${article.tag}" />
+        <meta name="description" content="${article.content?html}" />
         </@head>
     </head>
     <body>
@@ -73,7 +73,7 @@
 											${articleTag}</a><#if articleTag_has_next>,</#if>
 									</#list>
 								</span>
-								<a href="${article.permalink}#comments">
+								<a href="article/${article.permalink}#comments">
 									<span class="postcomments" title="${commentLabel}">
 									${article.commentCount}
 									</span>

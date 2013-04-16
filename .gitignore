@@ -2,6 +2,7 @@
 /.hibernateSynchronizer3
 
 *.class
+*.tmp
 
 # Package Files #
 *.war
