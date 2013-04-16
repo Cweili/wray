@@ -47,7 +47,7 @@
 					${commentAuthorLabel}
 				</th>
 				<td colspan="2" width="450px">
-					<input type="text" class="normalInput" name="author"/>
+					<input type="text" name="author" tabindex="1" />
 				</td>
 				<td width="30px">
 					<button id="closeCommentButton" class="hide">X</button>
@@ -58,7 +58,7 @@
 					${commentEmailLabel}
 				</th>
 				<td colspan="3">
-					<input type="text" class="normalInput" name="email"/>
+					<input type="text" name="email" tabindex="2" />
 				</td>
 			</tr>
 			<tr>
@@ -66,23 +66,21 @@
 					${commentLinkLabel}
 				</th>
 				<td colspan="3">
-					<div id="commentLinkLabel">
-						http://
-					</div>
-					<input type="text" id="commentLink" name="link"/>
+					<div class="commentLinkLabel">http://</div>
+					<input class="commentLink" type="text" name="link" tabindex="3" />
 				</td>
 			</tr>
 			<tr>
 				<td id="comment-content" colspan="4">
-					<textarea class="wysiwyg" name="content"></textarea>
+					<textarea class="wysiwyg" name="content" tabindex="4" ></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" width="205px">
-					<input type="text" class="normalInput" name="captcha"/>
+				<td colspan="2" width="235px">
+					<input id="captchaInput" type="text" name="captcha" tabindex="5" />
 				</td>
-				<td colspan="2" width="335px">
-					<img id="captcha" alt="validate" src="/captcha.do"></img>
+				<td colspan="2" width="305px">
+					<img id="captcha" alt="validate"></img>
 				</td>
 			</tr>
 			<tr>

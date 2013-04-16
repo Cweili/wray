@@ -1,5 +1,9 @@
 package org.cweili.wray.web.admin;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,13 +36,14 @@ public final class AdminLoginController extends BaseController {
 	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
 	public BlogView logIn() {
 		BlogView v = new BlogView("login");
-		String username = null;
+		String username = "";
+		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
+				.currentRequestAttributes();
 		try {
-			ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
-					.currentRequestAttributes();
-			username = WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_COOKIE).getValue();
-		} catch (Exception e) {
-
+			username = URLDecoder.decode(
+					WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_COOKIE).getValue(),
+					"UTF-8");
+		} catch (UnsupportedEncodingException e) {
 		}
 		if (null != username) {
 			v.addObject("username", username);
@@ -73,7 +78,7 @@ public final class AdminLoginController extends BaseController {
 				cookie.setCookieDomain(req.getRequest().getServerName());
 				cookie.setCookiePath(request.getContextPath() + "/");
 				cookie.setCookieMaxAge(31536000);
-				cookie.addCookie(response, blogConfig.get("adminName"));
+				cookie.addCookie(response, URLEncoder.encode(blogConfig.get("adminName"), "UTF-8"));
 
 				if (null != request.getParameterValues("rememberme")
 						&& "true".equals(request.getParameterValues("rememberme")[0])) {

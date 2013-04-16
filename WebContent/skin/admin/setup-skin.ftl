@@ -23,6 +23,11 @@
 					<span class="field_desc">文章列表每页显示的文章数</span>
 				</div>
 				<div class="input_field">
+					<label for="recentCommentsSize">最近评论条数</label>
+					<input class="smallfield" name="recentCommentsSize" type="text" value="${recentCommentsSize?if_exists}" />
+					<span class="field_desc">输入0则不显示侧边栏最近评论</span>
+				</div>
+				<div class="input_field">
 					<label for="topHitsArticlesSize">热门点击条数</label>
 					<input class="smallfield" name="topHitsArticlesSize" type="text" value="${topHitsArticlesSize?if_exists}" />
 					<span class="field_desc">输入0则不显示侧边栏热门点击</span>
@@ -178,6 +183,11 @@
 						required:true,
 						digits:true,
 						range:[1,100]
+					},
+					recentCommentsSize: {
+						required:true,
+						digits:true,
+						range:[0,100]
 					},
 					topHitsArticlesSize: {
 						required:true,

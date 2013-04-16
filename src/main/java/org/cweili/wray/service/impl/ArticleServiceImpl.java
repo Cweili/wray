@@ -194,7 +194,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 							Article.TYPE_ARTICLE,
 							Article.STAT_PUBLISHED,
 							new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC,
-									"comment_count")).getContent();
+									"commentCount")).getContent();
 		}
 		if (topHitsArticlesSize > 0) {
 			topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,

@@ -60,19 +60,26 @@ public final class AdminSetupController extends BaseController {
 	public @ResponseBody
 	String skin(WebRequest request) {
 		int limit = 10;
+		int recentCommentsSize = 10;
 		int topHitsArticlesSize = 10;
 		int topCommentArticlesSize = 10;
+		int mostUsedTagsSize = 30;
 		try {
 			limit = Integer.valueOf(request.getParameter("limit"));
+			recentCommentsSize = Integer.valueOf(request.getParameter("recentCommentsSize"));
 			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
 			topCommentArticlesSize = Integer
 					.valueOf(request.getParameter("topCommentArticlesSize"));
+			mostUsedTagsSize = Integer.valueOf(request.getParameter("mostUsedTagsSize"));
+
 		} catch (Exception e) {
 			log.error(e.toString());
 		}
 		blogConfig.save(new Config("limit", limit + ""));
+		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize + ""));
 		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize + ""));
 		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize + ""));
+		blogConfig.save(new Config("mostUsedTagsSize", mostUsedTagsSize + ""));
 		blogConfig.saveRequest(request, Constant.LABELS, new String[] { "skinDir" });
 
 		return Constant.SUBMIT_SUCCESS;

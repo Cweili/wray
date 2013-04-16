@@ -332,7 +332,8 @@ public class Function {
 	 */
 	public static String urlEncode(String input) {
 		try {
-			input = URLEncoder.encode(stripTags(input).trim().toLowerCase(), "UTF-8");
+			input = URLEncoder.encode(StringUtils.stripToEmpty(stripTags(input)).toLowerCase(),
+					"UTF-8");
 		} catch (UnsupportedEncodingException e) {
 			input = "";
 		}

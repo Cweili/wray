@@ -51,6 +51,10 @@ var commentFormValidation = {
 		},
 		content: {
 			required:true
+		},
+		captcha: {
+			required:true,
+			maxlength:6
 		}
 	}
 };
@@ -79,7 +83,7 @@ var replyTo = function(id, author) {
 	$("#commentForm" + id + " #closeCommentButton").on("click", function() {
 		$("#replyForm").remove();
 		$("#commentForm").slideDown(500);
-		$("#commentForm .normalInput:eq(0)").focus();
+		$("#commentForm input:eq(0)").focus();
 	});
 	$("#commentForm" + id + " #closeCommentButton").show();
 	
@@ -91,7 +95,7 @@ var replyTo = function(id, author) {
 	
 	// 显示回复框
 	$("#replyForm").show(500);
-	$("#commentForm" + id + " .normalInput:eq(0)").focus();
+	$("#commentForm" + id + " input:eq(0)").focus();
 	
 	// 关闭评论框
 	$("#commentForm").slideUp(500);
@@ -119,11 +123,15 @@ $.validator.setDefaults({
 	submitHandler: function(form) {
 		if(null != editor) {
 			editor.sync();
-			$("#submitCommentButton").attr("disabled",true);
+			$("#submitCommentButton").attr("disabled", true);
 			form.submit();
 		}
 	}
 });
+
+var updateCaptcha = function() {
+	$("#captcha").attr("src", "captcha?height=10&amp;" + Math.random());
+};
 
 $(function() {
 	if ($("#comments div").length === 0) {
@@ -152,11 +160,27 @@ $(function() {
 		editor = K.create(".wysiwyg", editorInit);
 	});
 	
-	$("#commentForm").validate(commentFormValidation);
+	$(".commentLink").focus(function() {
+		$(".commentLinkLabel").hide();
+		$(".commentLink").val("http://");
+	});
+	
+	$("#captcha").hide();
+	
+	$("#captchaInput").one("focus", function() {
+		$("#captcha").show();
+		updateCaptcha();
+	});
+	
+	$("#captcha").click(function() {
+		updateCaptcha();
+	});
 	
 	$(".comment-author-img").one("error", function() {
 		$(this).attr("src", "include/image/user.png");
 		return false;
 	});
+	
+	$("#commentForm").validate(commentFormValidation);
 	
 });
