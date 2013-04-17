@@ -7,24 +7,22 @@
 		</div>
 		<div class="clr"></div>
 		</#if>
-		<``#if 0 != recentComments?size>
+		<#if 0 != recentComments?size>
 		<div class="widget-cat">
 			<h4>${recentCommentsLabel}</h4>
 			<ul id="newcomment">
-			<``#list recentComments as comment>
-				<li id="comment1">
-					<a target="_blank" href="$`{comment.commentURL}">
-						$`{comment.commentName}
-					</a><br>
-					<a class=" breakline" title="$`{comment.commentContent}" href="$`{comment.commentSharpURL}">
-						$`{comment.commentContent}
+			<#list recentComments as comment>
+				<li>
+					${comment.author}<br>
+					<a class="breakline" href="comment-${comment.commentId}">
+						${comment.content}
 					</a>
 				</li>
-			<``/#list>
+			</#list>
 			</ul>
 		</div>
 		<div class="clr"></div>
-		<``/#if>
+		</#if>
 		<if 0 != mostUsedTags?size>
 		<div class="clr"></div>
 		<div class="widget-cat">
@@ -43,10 +41,12 @@
 			<h4>${mostCommentArticlesLabel}</h4>
 			<ul id="blogsort">
 			<#list mostCommentArticles as article>
-				<li class="shortline"><sup>[${article.commentCount}]</sup><a
-                    title="${article.title}"
-                    href="article/${article.permalink?url('UTF-8')}">${article.title}
-				</a></li>
+				<li class="shortline">
+					<sup>[${article.commentCount}]</sup>
+					<a title="${article.title}" href="article/${article.permalink?url('UTF-8')}">
+						${article.title}
+					</a>
+				</li>
 			</#list>
 			</ul>
 		</div>

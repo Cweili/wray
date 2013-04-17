@@ -235,7 +235,10 @@ a img {
 	color: #FFF;
 	background-color: #950000;
 }
-#navouter #nav ul li.lastNavi a,#navouter #nav ul li.lastNavi a:hover{border-right:0px;background-color: #c00000;}
+#navouter #nav ul li.lastNavi a,#navouter #nav ul li.lastNavi a:hover{
+	border-right: 0px;
+	background-color: #c00000;
+}
 /*       +++++++++++ Main Content Area +++++++++++++      */
 
 #maincol {
@@ -246,13 +249,14 @@ a img {
 	border-right: 1px dotted #c9c9c9;
 }
 .breakline {
-	word-break:break-all;
-	word-wrap:break-word;
+	word-break: break-all;
+	word-wrap: break-word;
 }
 .shortline {
-	overflow:hidden;
-	white-space:nowrap;
-	text-overflow:ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 14px;
 }
 
 div.postwrap {
@@ -439,9 +443,9 @@ div.postwrap span.posttags {
 
 .nav {
 	overflow: hidden;
-	margin:4px auto;
-	text-align:center;
-	padding:4px 0;
+	margin: 4px auto;
+	text-align: center;
+	padding: 4px 0;
 }
 
 .wp-pagenavi {

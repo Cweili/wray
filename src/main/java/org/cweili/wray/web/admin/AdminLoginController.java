@@ -1,6 +1,5 @@
 package org.cweili.wray.web.admin;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -43,7 +42,8 @@ public final class AdminLoginController extends BaseController {
 			username = URLDecoder.decode(
 					WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_COOKIE).getValue(),
 					"UTF-8");
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
+			log.error(e);
 		}
 		if (null != username) {
 			v.addObject("username", username);

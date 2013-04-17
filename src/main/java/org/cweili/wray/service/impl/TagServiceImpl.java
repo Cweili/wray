@@ -53,9 +53,9 @@ public class TagServiceImpl extends BaseService implements TagService {
 	}
 
 	@Override
-	public List<Item> getmostUsedTags(int num) {
-		if (num >= 0 && mostUsedTagsSize != num) {
-			mostUsedTagsSize = num;
+	public List<Item> getmostUsedTags(int size) {
+		if (size >= 0 && mostUsedTagsSize != size) {
+			mostUsedTagsSize = size;
 			updateTagCache();
 		}
 		return tags;

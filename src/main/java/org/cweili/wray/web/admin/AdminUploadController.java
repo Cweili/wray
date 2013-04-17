@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -52,9 +53,13 @@ public final class AdminUploadController extends BaseController {
 			}
 
 			// 检查扩展名
-			String fileExt = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+			String[] filenameSplit = StringUtils.split(filename, '.');
+			if (filenameSplit.length < 2) {
+				return multipartErrorMessage("上传文件类型不被允许。");
+			}
+			String fileExt = filenameSplit[1].toLowerCase();
 			if (!Upload.TYPE.containsKey(fileExt)) {
-				return multipartErrorMessage("上传文件扩展名是不允许的扩展名。");
+				return multipartErrorMessage("上传文件类型不被允许。");
 			}
 
 			String id = Function.generateId();
@@ -65,13 +70,11 @@ public final class AdminUploadController extends BaseController {
 				return multipartErrorMessage("文件保存错误");
 			}
 
-			String filenameNew = filename.substring(0, filename.lastIndexOf("."));
-
 			JSONObject obj = new JSONObject();
 			obj.put("error", 0);
 			obj.put("url",
 					blogConfig.get("staticServePath") + "/upload/" + id + "/"
-							+ Function.permalink(filenameNew) + "." + fileExt);
+							+ Function.permalink(filenameSplit[0]) + "." + fileExt);
 			obj.put("fileName", filename);
 			return obj.toString();
 

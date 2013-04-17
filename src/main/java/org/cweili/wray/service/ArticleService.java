@@ -33,9 +33,9 @@ public interface ArticleService {
 
 	public boolean updateStatus(List<String> ids, byte status);
 
-	public List<Article> getTopCommentArticles(int num);
+	public List<Article> getTopCommentArticles(int size);
 
-	public List<Article> getTopHitsArticles(int num);
+	public List<Article> getTopHitsArticles(int size);
 
 	public void updateArticleCache();
 

@@ -45,6 +45,20 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	public Comment() {
 	}
 
+	public Comment(Comment comment) {
+		this.commentId = comment.getCommentId();
+		this.articleId = comment.getArticleId();
+		this.author = comment.getAuthor();
+		this.email = comment.getEmail();
+		this.link = comment.getLink();
+		this.ip = comment.getLink();
+		this.postDate = comment.getPostDate();
+		this.agent = comment.getAgent();
+		this.content = comment.getContent();
+		this.parentId = comment.getParentId();
+		this.stat = comment.getStat();
+	}
+
 	/**
 	 * @param commentId
 	 * @param author

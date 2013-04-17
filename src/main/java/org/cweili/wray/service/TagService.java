@@ -18,7 +18,7 @@ public interface TagService {
 
 	public List<Item> getTags(int page, int size);
 
-	public List<Item> getmostUsedTags(int num);
+	public List<Item> getmostUsedTags(int size);
 
 	public Item save(Item tag);
 

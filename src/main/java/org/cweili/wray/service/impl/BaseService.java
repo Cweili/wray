@@ -13,6 +13,7 @@ import org.cweili.wray.dao.ItemDao;
 import org.cweili.wray.dao.RelationshipDao;
 import org.cweili.wray.dao.UploadDao;
 import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.Comment;
 import org.cweili.wray.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -60,6 +61,11 @@ public abstract class BaseService {
 	protected static List<Article> pages = null;
 
 	/**
+	 * 最新评论
+	 */
+	protected static List<Comment> recentComments = null;
+
+	/**
 	 * 回复排行缓存
 	 */
 	protected static List<Article> topCommentArticles = null;
@@ -68,6 +74,11 @@ public abstract class BaseService {
 	 * 点击排行缓存
 	 */
 	protected static List<Article> topHitsArticles = null;
+
+	/**
+	 * 最新评论数
+	 */
+	protected static int recentCommentsSize = 0;
 
 	/**
 	 * 回复排行数

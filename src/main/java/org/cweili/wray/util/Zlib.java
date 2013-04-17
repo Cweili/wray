@@ -32,7 +32,7 @@ public class Zlib {
 			dos.write(data);
 			dos.close();
 		} catch (IOException e) {
-			log.error(e.getLocalizedMessage());
+			log.error(e);
 			return data;
 		}
 		return bos.toByteArray();
@@ -49,7 +49,7 @@ public class Zlib {
 			ios.write(data);
 			ios.close();
 		} catch (IOException e) {
-			log.error(e.getLocalizedMessage());
+			log.error(e);
 			return data;
 		}
 		return bos.toByteArray();

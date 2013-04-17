@@ -3,10 +3,12 @@ package org.cweili.wray.interceptor;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.service.CategoryService;
+import org.cweili.wray.service.CommentService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.service.TagService;
@@ -31,6 +33,9 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	protected ArticleService articleService;
 
 	@Autowired
+	protected CommentService commentService;
+
+	@Autowired
 	protected CategoryService categoryService;
 
 	@Autowired
@@ -46,8 +51,8 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	 * @return
 	 */
 	protected boolean isAdminPanel(HttpServletRequest request) {
-		return requestScript(request).length() > 7 ? requestScript(request).substring(0, 7).equals(
-				"/admin-") : false;
+		return requestScript(request).length() > 7 ? StringUtils.left(requestScript(request), 7)
+				.equals("/admin-") : false;
 	}
 
 	/**

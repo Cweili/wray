@@ -48,4 +48,21 @@ public interface CommentService {
 	 * @return
 	 */
 	public boolean remove(List<String> ids);
+
+	/**
+	 * @param commentId
+	 * @return
+	 */
+	public Article findArticleByCommentId(String commentId);
+
+	/**
+	 * @param size
+	 * @return
+	 */
+	public List<Comment> getRecentComments(int size);
+
+	/**
+	 * 
+	 */
+	public void updateRecentComments();
 }

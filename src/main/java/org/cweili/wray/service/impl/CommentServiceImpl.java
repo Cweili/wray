@@ -9,6 +9,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.service.CommentService;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
@@ -36,9 +37,8 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public List<Comment> findByArticle(Article article) {
-		return dealArticleCommentList(commentDao.findByArticleIdAndStat(article.getArticleId(),
-				Comment.STAT_DISPLAY, new PageRequest(0, 65535, Sort.Direction.ASC, "_id"))
-				.getContent());
+		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY,
+				new PageRequest(0, 65535, Sort.Direction.ASC, "_id")).getContent();
 	}
 
 	@Override
@@ -82,7 +82,12 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 			comment.setCommentId(Function.generateId());
 		}
 
-		return commentDao.save(comment);
+		Comment commentNew = commentDao.save(comment);
+
+		if (null != commentNew) {
+			updateRecentComments();
+		}
+		return commentNew;
 	}
 
 	@Override
@@ -99,26 +104,53 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		return result;
 	}
 
+	@Override
+	public Article findArticleByCommentId(String commentId) {
+		Comment comment = findById(commentId);
+		if (null != comment) {
+			return articleDao.findOne(comment.getArticleId());
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Comment> getRecentComments(int size) {
+		if (size >= 0 && recentCommentsSize != size) {
+			recentCommentsSize = size;
+			updateRecentComments();
+		}
+		return recentComments;
+	}
+
+	@Override
+	public void updateRecentComments() {
+		if (recentCommentsSize > 0) {
+			if (null != recentComments) {
+				recentComments.clear();
+			} else {
+				recentComments = new ArrayList<Comment>(recentCommentsSize);
+			}
+			Comment commentNew;
+			for (Comment comment : commentDao.findAll(
+					new PageRequest(0, recentCommentsSize, Sort.Direction.DESC, "_id"))
+					.getContent()) {
+				commentNew = new Comment(comment);
+				commentNew.setContent(CutString.substring(
+						Function.stripTags(commentNew.getContent()), 50)
+						+ " ...");
+				recentComments.add(commentNew);
+			}
+		}
+	}
+
 	private String filterContent(String content) {
 		return HtmlFixer.fix(StringUtils.replace(
 				Function.stripTags(content, Constant.DANGEROUS_TAGS), "javascript:", ""));
 	}
 
-	private List<Comment> dealArticleCommentList(List<Comment> before) {
-		List<Comment> comments = new ArrayList<Comment>();
-		Comment commentNew;
-		for (Comment comment : before) {
-			commentNew = new Comment(comment.getCommentId(), comment.getArticleId(),
-					comment.getAuthor(), Function.md5(comment.getEmail()), comment.getLink(),
-					comment.getIp(), comment.getPostDate(), comment.getAgent(),
-					comment.getContent(), comment.getParentId(), comment.getStat());
-			comments.add(commentNew);
-		}
-		return comments;
-	}
-
 	private List<Comment> dealCommentList(List<Comment> before) {
-		List<Comment> comments = new ArrayList<Comment>();
+		List<Comment> comments = new ArrayList<Comment>(before.size());
 		for (Comment comment : before) {
 			String area = IPSeeker.getInstance().getArea(comment.getIp());
 			if (!"数据库损坏".equals(area)) {
@@ -130,8 +162,8 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 				}
 				comment.setOrigin(sb.toString());
 			}
-			comment.setContent(StringUtils.substring(Function.stripTags(comment.getContent()), 0,
-					16) + " ...");
+			comment.setContent(CutString.substring(Function.stripTags(comment.getContent()), 16)
+					+ " ...");
 			Article article = articleDao.findOne(comment.getArticleId());
 			if (null != article) {
 				comment.setArtilceTitle(article.getTitle());
@@ -140,4 +172,5 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		}
 		return comments;
 	}
+
 }

@@ -137,7 +137,7 @@ public class Function {
 			s = new String(c);
 
 		} catch (Exception e) {
-			log.error(e, e);
+			log.error(e);
 		}
 		return s;
 	}
@@ -165,7 +165,7 @@ public class Function {
 			s = new String(c);
 
 		} catch (Exception e) {
-			log.error(e, e);
+			log.error(e);
 		}
 		return s;
 	}
@@ -190,7 +190,7 @@ public class Function {
 			try {
 				page = Integer.valueOf(p);
 			} catch (Exception e) {
-				log.error(e, e);
+				log.error(e);
 			}
 		}
 		return page;
@@ -212,11 +212,11 @@ public class Function {
 			permalink = permalink.substring(1);
 		}
 		if (!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
-			permalink = permalink.substring(0, permalink.length() - 1);
+			permalink = StringUtils.left(permalink, permalink.length() - 1);
 		}
 		permalink = new ChineseSpelling(permalink.toLowerCase().trim()).getSpelling();
 		if (permalink.length() > 32) {
-			permalink = permalink.substring(0, 32);
+			permalink = StringUtils.left(permalink, 32);
 		}
 		return permalink;
 	}
@@ -306,7 +306,6 @@ public class Function {
 		input = StringUtils.replace(input, "<", "&lt;");
 		input = StringUtils.replace(input, ">", "&gt;");
 		input = StringUtils.replace(input, "«", "&laquo;");
-		input = StringUtils.replace(input, "&", "&amp;");
 		input = StringUtils.replace(input, "»", "&raquo;");
 		input = StringUtils.stripToEmpty(input);
 

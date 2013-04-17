@@ -9,6 +9,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.ArticleContent;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
+import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
@@ -160,18 +161,18 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
-	public List<Article> getTopCommentArticles(int num) {
-		if (num > 0 && topCommentArticlesSize != num) {
-			topCommentArticlesSize = num;
+	public List<Article> getTopCommentArticles(int size) {
+		if (size > 0 && topCommentArticlesSize != size) {
+			topCommentArticlesSize = size;
 			updateSidebarArticleCache();
 		}
 		return topCommentArticles;
 	}
 
 	@Override
-	public List<Article> getTopHitsArticles(int num) {
-		if (num > 0 && topHitsArticlesSize != num) {
-			topHitsArticlesSize = num;
+	public List<Article> getTopHitsArticles(int size) {
+		if (size > 0 && topHitsArticlesSize != size) {
+			topHitsArticlesSize = size;
 			updateSidebarArticleCache();
 		}
 		return topHitsArticles;
@@ -225,8 +226,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		for (Article article : list) {
 			article.setContent(articleContentDao.findOne(article.getArticleId()).getContent());
 			if (article.getContent().contains("<a name=\"more\"></a>")) {
-				article.setContent(HtmlFixer.fix(article.getContent().substring(0,
-						article.getContent().indexOf("<a name=\"more\"></a>")))
+				article.setContent(HtmlFixer.fix(CutString.substring(article.getContent(), article
+						.getContent().indexOf("<a name=\"more\"></a>")))
 						+ "<!--more-->");
 			} else {
 				if (article.getContent().length() >= 300) {
