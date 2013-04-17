@@ -21,15 +21,15 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
 	private static final long serialVersionUID = -4128532409330876706L;
 	@Id
-	private String uploadId = "";
-	private int length = 0;
-	private String md5 = "";
-	private String filename = "";
-	private String contentType = "";
-	private Date uploadDate = null;
+	private String uploadId;
+	private int length;
+	private String md5;
+	private String filename;
+	private String contentType;
+	private Date uploadDate;
 
 	@Transient
-	private byte[] content = null;
+	private byte[] content;
 
 	public static final Map<String, String> TYPE = new HashMap<String, String>();
 	public static final Set<String> COMPRESSED = new HashSet<String>();
@@ -146,31 +146,38 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	}
 
 	public Upload() {
-		super();
+		uploadId = "";
+		length = 0;
+		md5 = "";
+		filename = "";
+		contentType = "";
+		uploadDate = new Date();
+		content = new byte[0];
 	}
 
 	public Upload(String uploadId, int length, String md5, String filename, String contentType,
 			Date uploadDate) {
-		super();
 		this.uploadId = uploadId;
 		this.length = length;
 		this.md5 = md5;
 		this.filename = filename;
 		this.contentType = contentType;
 		this.uploadDate = uploadDate;
+		this.content = new byte[0];
 	}
 
 	public Upload(String uploadId, String filename, String contentType, byte[] content) {
-		super();
 		this.uploadId = uploadId;
 		this.filename = filename;
 		this.contentType = contentType;
 		this.content = content;
+		this.length = 0;
+		this.md5 = "";
+		this.uploadDate = new Date();
 	}
 
 	public Upload(String uploadId, int length, String md5, String filename, String contentType,
 			Date uploadDate, byte[] content) {
-		super();
 		this.uploadId = uploadId;
 		this.length = length;
 		this.md5 = md5;

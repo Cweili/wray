@@ -23,11 +23,11 @@ public class Config implements Serializable, Cloneable {
 	private String value;
 
 	public Config() {
-		super();
+		key = "";
+		value = "";
 	}
 
 	public Config(String key, String value) {
-		super();
 		this.key = key;
 		this.value = value;
 	}

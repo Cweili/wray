@@ -17,10 +17,12 @@ public class ArticleContent implements Serializable, Cloneable, Comparable<Artic
 
 	private static final long serialVersionUID = -6805966590592475180L;
 	@Id
-	private String articleId = "";
-	private String content = "";
+	private String articleId;
+	private String content;
 
 	public ArticleContent() {
+		articleId = "";
+		content = "";
 	}
 
 	public ArticleContent(String articleId, String content) {

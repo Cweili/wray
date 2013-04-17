@@ -20,14 +20,14 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	private static final long serialVersionUID = 644800170130656153L;
 	@Id
-	private String itemId = "";
-	private String itemName = "";
-	private String permalink = "";
-	private String description = "";
-	private int count = 0;
-	private byte itemOrder = 0;
-	private byte itemType = TYPE_CATEGORY;
-	private long parrentId = 0;
+	private String itemId;
+	private String itemName;
+	private String permalink;
+	private String description;
+	private int count;
+	private byte itemOrder;
+	private byte itemType;
+	private long parrentId;
 	@Indexed
 	private byte stat = STAT_ON;
 
@@ -41,7 +41,15 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	public static final byte STAT_SELECTED = 2;
 
 	public Item() {
-		super();
+		itemId = "";
+		itemName = "";
+		permalink = "";
+		description = "";
+		count = 0;
+		itemOrder = 0;
+		itemType = TYPE_CATEGORY;
+		parrentId = 0;
+		stat = STAT_ON;
 	}
 
 	/**
@@ -57,7 +65,6 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	 */
 	public Item(String itemId, String itemName, String permalink, String description, int count,
 			byte itemOrder, byte itemType, long parrentId, byte stat) {
-		super();
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.permalink = permalink;
@@ -70,15 +77,15 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	}
 
 	public <S extends Item> Item(S item) {
-		this.setItemId(item.getItemId());
-		this.setItemName(item.getItemName());
-		this.setPermalink(item.getPermalink());
-		this.setDescription(item.getDescription());
-		this.setCount(item.getCount());
-		this.setItemOrder(item.getItemOrder());
-		this.setItemType(item.getItemType());
-		this.setParrentId(item.getParrentId());
-		this.setStat(item.getStat());
+		this.itemId = item.getItemId();
+		this.itemName = item.getItemName();
+		this.permalink = item.getPermalink();
+		this.description = item.getDescription();
+		this.count = item.getCount();
+		this.itemOrder = item.getItemOrder();
+		this.itemType = item.getItemType();
+		this.parrentId = item.getParrentId();
+		this.stat = item.getStat();
 	}
 
 	@Override

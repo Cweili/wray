@@ -25,18 +25,18 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 
 	private static final long serialVersionUID = 5085621145317473821L;
 	@Id
-	private String articleId = "";
-	private String title = "";
-	private String permalink = "";
+	private String articleId;
+	private String title;
+	private String permalink;
 	@Transient
-	private String content = "";
-	private String tag = "";
-	private Date createTime = new Date();
-	private byte stat = STAT_PUBLISHED;
-	private int hits = 0;
-	private int commentCount = 0;
-	private byte commentStatus = COMMENT_ON;
-	private byte isPage = TYPE_ARTICLE;
+	private String content;
+	private String tag;
+	private Date createTime;
+	private byte stat;
+	private int hits;
+	private int commentCount;
+	private byte commentStatus;
+	private byte isPage;
 
 	public static final byte STAT_PUBLISHED = 4;
 	public static final byte STAT_DRAFT = 2;
@@ -50,6 +50,17 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	public static final byte TYPE_PAGE = 1;
 
 	public Article() {
+		articleId = "";
+		title = "";
+		permalink = "";
+		content = "";
+		tag = "";
+		createTime = new Date();
+		stat = STAT_PUBLISHED;
+		hits = 0;
+		commentCount = 0;
+		commentStatus = COMMENT_ON;
+		isPage = TYPE_ARTICLE;
 	}
 
 	/**

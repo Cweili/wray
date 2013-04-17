@@ -20,18 +20,18 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	private static final long serialVersionUID = -767060507781375509L;
 	@Id
-	private String commentId = "";
+	private String commentId;
 	@Indexed
-	private String articleId = "";
-	private String author = "";
-	private String email = "";
-	private String link = "";
-	private String ip = "";
-	private Date postDate = new Date();
-	private String agent = "";
-	private String content = "";
-	private String parentId = "";
-	private byte stat = STAT_DISPLAY;
+	private String articleId;
+	private String author;
+	private String email;
+	private String link;
+	private String ip;
+	private Date postDate;
+	private String agent;
+	private String content;
+	private String parentId;
+	private byte stat;
 
 	@Transient
 	private String artilceTitle = "";
@@ -43,9 +43,22 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	public static final byte STAT_DISPLAY = 2;
 
 	public Comment() {
+		commentId = "";
+		articleId = "";
+		author = "";
+		email = "";
+		link = "";
+		ip = "";
+		postDate = new Date();
+		agent = "";
+		content = "";
+		parentId = "";
+		stat = STAT_DISPLAY;
+		artilceTitle = "";
+		origin = "";
 	}
 
-	public Comment(Comment comment) {
+	public <S extends Comment> Comment(S comment) {
 		this.commentId = comment.getCommentId();
 		this.articleId = comment.getArticleId();
 		this.author = comment.getAuthor();
@@ -57,6 +70,8 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.content = comment.getContent();
 		this.parentId = comment.getParentId();
 		this.stat = comment.getStat();
+		this.artilceTitle = "";
+		this.origin = "";
 	}
 
 	/**
@@ -86,6 +101,8 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		this.content = content;
 		this.parentId = parentId;
 		this.stat = stat;
+		this.artilceTitle = "";
+		this.origin = "";
 	}
 
 	@Override
