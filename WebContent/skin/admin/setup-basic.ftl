@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>基本设置</h2>
-		<@message type="设置">
-			恭喜您，您的设置已成功保存。
-		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>博客基本信息</legend>
 				<div class="input_field">
@@ -94,6 +91,10 @@
 				}
 			});
 		</script>
+		<p></p>
+		<@message type="设置">
+			恭喜您，您的设置已成功保存。
+		</@message>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">

@@ -1,5 +1,7 @@
 package org.cweili.wray.web;
 
+import java.util.List;
+
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
@@ -63,6 +65,14 @@ public final class TagController extends BaseController {
 		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED), p);
 
+		return v;
+	}
+
+	@RequestMapping("/tags")
+	public BlogView tags() {
+		List<Item> tags = tagService.getTags(0, 65535);
+		BlogView v = new BlogView("tags");
+		v.add("tags", tags);
 		return v;
 	}
 

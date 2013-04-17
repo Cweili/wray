@@ -66,7 +66,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 		List<String> nonHtmlList = Arrays.asList(nonHtmlArray);
 		List<String> htmlList = Arrays.asList(htmlArray);
 		Map<String, String[]> map = request.getParameterMap();
-		Map<String, String> values = new HashMap<String, String>();
+		Map<String, String> values = new HashMap<String, String>(map.size());
 		for (Map.Entry<String, String[]> entry : map.entrySet()) {
 			if (nonHtmlList.contains(entry.getKey())) {
 				values.put(entry.getKey(), Function.trimAndStripTags(entry.getValue()[0]));
@@ -75,6 +75,9 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 			}
 		}
 		for (Map.Entry<String, String> entry : values.entrySet()) {
+			if (entry.getKey().equals("adminPwd")) {
+				entry.setValue(Function.sha256(entry.getValue()));
+			}
 			save(new Config(entry.getKey(), entry.getValue()));
 		}
 		UpdateConfigMap();

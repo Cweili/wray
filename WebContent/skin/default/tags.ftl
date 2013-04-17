@@ -4,11 +4,11 @@
     <head>
         <@head title="${allTagsLabel} - ${blogTitle}">
         <meta name="keywords" content="${metaKeywords},${allTagsLabel}"/>
-        <meta name="description" content="<#list tags as tag>${tag.tagTitle}<#if tag_has_next>,</#if></#list>"/>
+        <meta name="description" content="<#list tags as tag>${tag.itemName}<#if tag_has_next>,</#if></#list>"/>
         </@head>
     </head>
     <body>
-        ${topBarReplacement}
+        $`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<#include "header.ftl">
 			<div id="outerwrapper">
@@ -34,8 +34,8 @@
 						<div class="postcontent">
 						<#list tags as tag>
 						
-							<a href="/tags/${tag.tagTitle?url('UTF-8')}" title="${tag.tagTitle}" class="tag">
-								${tag.tagTitle}(<b>${tag.tagPublishedRefCount}</b>)
+							<a href="tag/${tag.itemName?url('UTF-8')}" title="${tag.itemName}" class="tag">
+								${tag.itemName}(<b>${tag.count}</b>)
 							</a>
 						
 						</#list>

@@ -45,9 +45,7 @@ public final class AdminLoginController extends BaseController {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		if (null != username) {
-			v.addObject("username", username);
-		}
+		v.addObject("username", StringUtils.stripToEmpty(username));
 		v.add("err", false);
 		return v;
 	}

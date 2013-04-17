@@ -4,14 +4,18 @@ $(document).ready(function() {
 		
 		$("#hash").val(Math.random());
 		var password = $("#password").val();
-		$("#password").val(SHA256(password + $("#hash").val()));
+		$("#password").val(SHA256(SHA256(password) + $("#hash").val()));
 		$.post("admin-login", $("#admin-login").serialize(), function(data) {
 			if (data == "success") {
 				$(".err").hide();
-				$(".succes").slideToggle();
-				setTimeout("window.location.href='admin-dashboard'", 3000);
+				$(".succes").slideDown();
+				if (window.location.hash) {
+					setTimeout("window.location.href='admin-" + window.location.hash.substring(1) + "'", 2000);
+				} else {
+					setTimeout("window.location.href='admin-dashboard'", 2000);
+				}
 			} else {
-				$(".err").slideToggle();
+				$(".err").slideDown();
 			}
 		});
 		$("#password").val(password);

@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>外观设置</h2>
-		<@message type="设置">
-			恭喜您，您的设置已成功保存。
-		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>外观选项</legend>
 				<div class="input_field">
@@ -101,15 +98,19 @@
 			</fieldset>
 			<fieldset><legend>界面元素文本</legend>
 				<div class="input_field">
-					<label for="atomLabel">RSS/ATOM链接</label>
+					<label for="atomLabel">RSS/ATOM</label>
 					<input class="bigfield" name="atomLabel" type="text" value="${atomLabel?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="homeLabel">导航栏首页链接</label>
+					<label for="homeLabel">导航“首页”</label>
 					<input class="bigfield" name="homeLabel" type="text" value="${homeLabel?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="commentLabel">“评论”</label>
+					<label for="allTagsLabel">导航“标签表”</label>
+					<input class="bigfield" name="allTagsLabel" type="text" value="${allTagsLabel?if_exists}" />
+				</div>
+				<div class="input_field">
+					<label for="commentLabel">评论</label>
 					<input class="bigfield" name="commentLabel" type="text" value="${commentLabel?if_exists}" />
 				</div>
 				<div class="input_field">
@@ -117,11 +118,11 @@
 					<input class="bigfield" name="moreLabel" type="text" value="${moreLabel?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="moreLabel">“返回”</label>
+					<label for="moreLabel">返回</label>
 					<input class="bigfield" name="returnLabel" type="text" value="${returnLabel?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="tagLabel">“标签”</label>
+					<label for="tagLabel">标签</label>
 					<input class="bigfield" name="tagLabel" type="text" value="${tagLabel?if_exists}" />
 				</div>
 				<div class="input_field">
@@ -207,6 +208,10 @@
 				}
 			});
 		</script>
+		<p></p>
+		<@message type="设置">
+			恭喜您，您的设置已成功保存。
+		</@message>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">

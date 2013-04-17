@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Config;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
@@ -50,9 +51,10 @@ public final class AdminSetupController extends BaseController {
 	@RequestMapping(value = "/admin-setup-account", method = RequestMethod.POST)
 	public @ResponseBody
 	String account(WebRequest request) {
-		blogConfig.saveRequest(request, new String[] { "adminName", "adminNick", "adminEmail" }, ""
-				.equals(request.getParameter("adminPwd")) ? new String[] {}
-				: new String[] { "adminPwd" });
+		String[] adminPwd = StringUtils.isBlank(request.getParameter("adminPwd")) ? new String[] {}
+				: new String[] { "adminPwd" };
+		blogConfig.saveRequest(request, new String[] { "adminName", "adminNick", "adminEmail" },
+				adminPwd);
 		return Constant.SUBMIT_SUCCESS;
 	}
 

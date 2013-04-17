@@ -38,7 +38,7 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 			}
 		}
 
-		response.sendRedirect("admin-login");
+		response.sendRedirect("admin-login#" + requestScript(request).substring(7));
 		return false;
 	}
 

@@ -62,7 +62,7 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	 * @return
 	 */
 	protected String requestScript(HttpServletRequest request) {
-		return request.getRequestURI().replaceFirst(request.getContextPath(), "");
+		return StringUtils.removeStartIgnoreCase(request.getRequestURI(), request.getContextPath());
 	}
 
 	protected String findCookie(HttpServletRequest request, String find) {
