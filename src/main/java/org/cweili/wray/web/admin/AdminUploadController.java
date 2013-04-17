@@ -92,7 +92,7 @@ public final class AdminUploadController extends BaseController {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
 					.getParameter("page"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		List<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
 		v.add("uploads", uploads);

@@ -39,7 +39,7 @@ public final class AdminPageController extends BaseController {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
 					.getParameter("page"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		if ("private".equals(status)) {
 			stat = Article.STAT_DRAFT;
@@ -123,7 +123,7 @@ public final class AdminPageController extends BaseController {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
 					.getParameter("page"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		byte stat = Article.STAT_PUBLISHED;

@@ -123,7 +123,7 @@ public final class AdminCategoryController extends BaseController {
 		try {
 			itemOrder = Byte.valueOf(request.getParameter("itemOrder"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		String id = Function.generateId();

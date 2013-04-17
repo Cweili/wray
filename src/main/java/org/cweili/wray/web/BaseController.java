@@ -53,12 +53,7 @@ public abstract class BaseController extends MultiActionController {
 	 * @param current
 	 */
 	protected void addPaginator(BlogView v, int total, int current) {
-		int limit = 10;
-		try {
-			limit = Integer.valueOf(blogConfig.get("limit"));
-		} catch (Exception e) {
-			log.error(e.toString());
-		}
+		int limit = blogConfig.getInt("limit");
 		Paginator pagination = new Paginator(total, limit, current);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());

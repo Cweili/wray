@@ -59,11 +59,11 @@ public final class ArticleController extends BaseController {
 		try {
 			p = Integer.valueOf(page);
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 
 		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, p, Integer.valueOf(blogConfig.get("limit")));
+				Article.STAT_PUBLISHED, p, blogConfig.getInt("limit"));
 		v.add("articles", articles);
 
 		addPaginator(v,

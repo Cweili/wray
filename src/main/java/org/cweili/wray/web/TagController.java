@@ -34,7 +34,7 @@ public final class TagController extends BaseController {
 		}
 		v.add("item", item);
 		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, 1, Integer.valueOf(blogConfig.get("limit"))));
+				Article.STAT_PUBLISHED, 1, blogConfig.getInt("limit")));
 
 		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED), 1);
@@ -49,7 +49,7 @@ public final class TagController extends BaseController {
 		try {
 			p = Integer.valueOf(page);
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		BlogView v = new BlogView("articles");
 		v.add("path", "tag/" + permalink);
@@ -60,7 +60,7 @@ public final class TagController extends BaseController {
 		}
 		v.add("item", item);
 		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, p, Integer.valueOf(blogConfig.get("limit"))));
+				Article.STAT_PUBLISHED, p, blogConfig.getInt("limit")));
 
 		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED), p);

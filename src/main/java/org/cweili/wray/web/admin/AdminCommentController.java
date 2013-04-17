@@ -36,7 +36,7 @@ public final class AdminCommentController extends BaseController {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
 					.getParameter("page"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		v.add("actionName", actionName);
 		v.add("comments", commentService.find(page, Constant.ADMIN_LIST_SIZE));

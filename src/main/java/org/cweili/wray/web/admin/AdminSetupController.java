@@ -75,7 +75,7 @@ public final class AdminSetupController extends BaseController {
 			mostUsedTagsSize = Integer.valueOf(request.getParameter("mostUsedTagsSize"));
 
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		blogConfig.save(new Config("limit", limit + ""));
 		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize + ""));

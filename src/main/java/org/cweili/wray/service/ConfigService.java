@@ -20,6 +20,12 @@ public interface ConfigService {
 	public String get(String key);
 
 	/**
+	 * @param key
+	 * @return
+	 */
+	public int getInt(String key);
+
+	/**
 	 * @return
 	 */
 	public Map<String, String> getConfigMap();

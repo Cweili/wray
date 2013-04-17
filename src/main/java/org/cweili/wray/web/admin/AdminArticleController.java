@@ -41,7 +41,7 @@ public final class AdminArticleController extends BaseController {
 			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
 					.getParameter("page"));
 		} catch (Exception e) {
-			log.error(e.toString());
+			log.error(e);
 		}
 		if ("draft".equals(status)) {
 			stat = Article.STAT_DRAFT;

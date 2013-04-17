@@ -37,6 +37,22 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	}
 
 	/*
+	 * （non-Javadoc）
+	 * 
+	 * @see org.cweili.wray.service.ConfigService#getInt(java.lang.String)
+	 */
+	public int getInt(String key) {
+		int value = 0;
+		try {
+			value = Integer.valueOf(getConfigMap().get(key));
+		} catch (Exception e) {
+			log.error(e);
+		}
+		log.info("Find Config: " + key + " => " + value);
+		return value;
+	}
+
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.cweili.wray.service.ConfigService#saveOrUpdate(java.lang.String,

@@ -58,32 +58,11 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				mv.addObject("pageNavigations", pageNavigations);
 
 				// 添加侧栏
-				int recentCommentsSize = 0;
-				int topCommentArticlesSize = 0;
-				int topHitsArticlesSize = 0;
-				int mostUsedTagsSize = 0;
 
-				try {
-					recentCommentsSize = Integer.valueOf(blogConfig.get("recentCommentsSize"));
-				} catch (Exception e) {
-					log.error(e);
-				}
-				try {
-					topCommentArticlesSize = Integer.valueOf(blogConfig
-							.get("topCommentArticlesSize"));
-				} catch (Exception e) {
-					log.error(e);
-				}
-				try {
-					topHitsArticlesSize = Integer.valueOf(blogConfig.get("topHitsArticlesSize"));
-				} catch (Exception e) {
-					log.error(e);
-				}
-				try {
-					mostUsedTagsSize = Integer.valueOf(blogConfig.get("mostUsedTagsSize"));
-				} catch (Exception e) {
-					log.error(e);
-				}
+				int recentCommentsSize = blogConfig.getInt("recentCommentsSize");
+				int topCommentArticlesSize = blogConfig.getInt("topCommentArticlesSize");
+				int topHitsArticlesSize = blogConfig.getInt("topHitsArticlesSize");
+				int mostUsedTagsSize = blogConfig.getInt("mostUsedTagsSize");
 
 				if (recentCommentsSize > 0) {
 					mv.addObject("recentComments",
