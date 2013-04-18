@@ -9,12 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 
 /**
  * 生成验证码
@@ -48,7 +44,7 @@ public class CAPTCHA {
 				random.nextInt(end - begin) + begin);
 	}
 
-	public static byte[] out(String str, int width, int height) throws IOException {
+	public static BufferedImage out(String str, int width, int height) throws IOException {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = (Graphics2D) bi.getGraphics();
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -96,13 +92,7 @@ public class CAPTCHA {
 		}
 
 		g.dispose();
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageOutputStream ios = ImageIO.createImageOutputStream(bos);
-		ImageIO.write(bi, "gif", ios);
-		ios.close();
-		byte[] buf = bos.toByteArray();
-		bos.close();
-		return buf;
+		return bi;
 	}
 
 }

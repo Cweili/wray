@@ -127,9 +127,9 @@ public final class AdminLinkController extends BaseController {
 			}
 
 			String id = Function.generateId();
-			itemName = Function.trimAndStripTags(itemName);
+			itemName = Function.htmlSpecialChars(itemName);
 			itemName = "".equals(itemName) ? Function.timeString() : itemName;
-			description = Function.trimAndStripTags(description);
+			description = Function.htmlSpecialChars(description);
 
 			if (ori != null) {
 				ori.setItemName(itemName);

@@ -167,7 +167,7 @@ public final class AdminPageController extends BaseController {
 
 		String id = Function.generateId();
 
-		title = Function.trimAndStripTags(title);
+		title = Function.htmlSpecialChars(title);
 		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;

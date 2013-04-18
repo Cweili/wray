@@ -69,6 +69,10 @@
 					<constructor-arg index="2" value="UTF-8"/>
 				</bean>
 				<bean class="org.springframework.http.MediaType">
+					<constructor-arg index="0" value="application"/>
+					<constructor-arg index="1" value="json"/>
+				</bean>
+				<bean class="org.springframework.http.MediaType">
 					<constructor-arg index="0" value="*"/>
 					<constructor-arg index="1" value="*"/>
 					<constructor-arg index="2" value="UTF-8"/>
@@ -77,6 +81,20 @@
 		</property>
 	</bean>
 	<bean id="resource_hmc" class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+
+	<!--
+	<bean id="jackson2_hmc" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name = "supportedMediaTypes">
+			<list>
+				<bean class="org.springframework.http.MediaType">
+					<constructor-arg index="0" value="application"/>
+					<constructor-arg index="1" value="json"/>
+					<constructor-arg index="2" value="UTF-8"/>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	-->
 	
 	<bean id="jaxb2Collection_hmc" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter"/>
 	<bean id="jaxb2RootElement_hmc" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
@@ -92,6 +110,7 @@
 				<ref bean="form_hmc"/>
 				<ref bean="string_hmc"/>
 				<ref bean="resource_hmc"/>
+				<!-- ref bean="jackson2_hmc"/-->
 				<ref bean="jaxb2Collection_hmc"/>
 				<ref bean="jaxb2RootElement_hmc"/>
 				<ref bean="source_hmc"/>

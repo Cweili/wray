@@ -13,6 +13,11 @@ import java.util.Date;
 public class Constant {
 
 	/**
+	 * 调试状态
+	 */
+	public static final boolean DEBUG = false;
+
+	/**
 	 * 管理面板分页大小
 	 */
 	public static final int ADMIN_LIST_SIZE = 12;
@@ -84,5 +89,10 @@ public class Constant {
 	 * Wray 版本
 	 */
 	public static final String WRAY_VERSION = "0.1.0";
+
+	/**
+	 * 创建工具
+	 */
+	public static final String GENERATOR = "WRAY " + WRAY_VERSION;
 
 }

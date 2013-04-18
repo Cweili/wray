@@ -130,7 +130,7 @@ $.validator.setDefaults({
 });
 
 var updateCaptcha = function() {
-	$("#captcha").attr("src", "captcha?height=10&amp;" + Math.random());
+	$("#captcha").attr("src", "captcha?height=40&" + Math.random());
 };
 
 $(function() {
@@ -167,7 +167,7 @@ $(function() {
 	
 	$("#captcha").hide();
 	
-	$("#captchaInput").one("focus", function() {
+	$("input[name=author]").one("focus", function() {
 		$("#captcha").show();
 		updateCaptcha();
 	});

@@ -52,7 +52,8 @@ public class TestIp {
 
 	@Test
 	public final void test() {
-		log.info(IPSeeker.getInstance().getCountry("110.90.119.97"));
+		log.info(IPSeeker.getInstance().getCountry("211.86.224.9"));
+		log.info(IPSeeker.getInstance().getArea("211.86.224.9"));
 		log.info(this.getClass().getResource("/").getPath());
 	}
 

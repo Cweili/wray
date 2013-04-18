@@ -21,6 +21,8 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
+		printRequestHeader(request);
+
 		// 添加服务器路径
 		String host = request.getServerName();
 		if (request.getServerPort() != 80) {

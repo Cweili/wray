@@ -79,6 +79,10 @@ public abstract class BaseController extends MultiActionController {
 		v.add("paginationPageCount", pagination.getLast());
 	}
 
+	/**
+	 * @param message
+	 * @return
+	 */
 	protected String multipartErrorMessage(String message) {
 		JSONObject obj = new JSONObject();
 		obj.put("error", 1);

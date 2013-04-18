@@ -115,6 +115,27 @@ public class Function {
 	}
 
 	/**
+	 * 转换 html 字符并去除空格
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public static String htmlSpecialChars(String input) {
+
+		input = StringUtils.replace(input, "&amp;", "&");
+		input = StringUtils.replace(input, "&", "&amp;");
+		input = StringUtils.replace(input, "\'", "&apos;");
+		input = StringUtils.replace(input, "\"", "&quot;");
+		input = StringUtils.replace(input, "<", "&lt;");
+		input = StringUtils.replace(input, ">", "&gt;");
+		input = StringUtils.replace(input, "«", "&laquo;");
+		input = StringUtils.replace(input, "»", "&raquo;");
+		input = StringUtils.stripToEmpty(input);
+
+		return input;
+	}
+
+	/**
 	 * MD5
 	 * 
 	 * @param source
@@ -289,27 +310,6 @@ public class Function {
 	 */
 	public static long timestamp() {
 		return System.currentTimeMillis();
-	}
-
-	/**
-	 * 转换 html 字符并去除空格
-	 * 
-	 * @param input
-	 * @return
-	 */
-	public static String trimAndStripTags(String input) {
-
-		input = StringUtils.replace(input, "&amp;", "&");
-		input = StringUtils.replace(input, "&", "&amp;");
-		input = StringUtils.replace(input, "\'", "&apos;");
-		input = StringUtils.replace(input, "\"", "&quot;");
-		input = StringUtils.replace(input, "<", "&lt;");
-		input = StringUtils.replace(input, ">", "&gt;");
-		input = StringUtils.replace(input, "«", "&laquo;");
-		input = StringUtils.replace(input, "»", "&raquo;");
-		input = StringUtils.stripToEmpty(input);
-
-		return input;
 	}
 
 	public static String urlDecode(String input) {

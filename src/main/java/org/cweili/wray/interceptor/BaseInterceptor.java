@@ -1,5 +1,7 @@
 package org.cweili.wray.interceptor;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
@@ -86,6 +88,19 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 			return (String) request.getSession().getAttribute(Constant.AUTHORITY_KEY);
 		}
 		return null;
+	}
+
+	protected void printRequestHeader(HttpServletRequest request) {
+		if (Constant.DEBUG) {
+			StringBuilder sb = new StringBuilder();
+			Enumeration<String> r = request.getHeaderNames();
+			String s;
+			while (r.hasMoreElements()) {
+				s = r.nextElement();
+				sb.append(s).append(':').append(request.getHeader(s)).append('\n');
+			}
+			log.info(sb.toString());
+		}
 	}
 
 }

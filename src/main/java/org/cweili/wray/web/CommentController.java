@@ -3,6 +3,7 @@
  */
 package org.cweili.wray.web;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,7 +16,6 @@ import org.cweili.wray.util.NotFoundException;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
@@ -101,7 +102,8 @@ public final class CommentController extends BaseController {
 	}
 
 	@RequestMapping("/captcha")
-	public ResponseEntity<byte[]> captcha(WebRequest request) {
+	public @ResponseBody
+	BufferedImage captcha(WebRequest request) {
 
 		int width = 200;
 		int height = 50;
@@ -119,16 +121,11 @@ public final class CommentController extends BaseController {
 		String captcha = CAPTCHA.getRandomString(6);
 		request.setAttribute("captcha", captcha, WebRequest.SCOPE_SESSION);
 
-		HttpHeaders header = new HttpHeaders();
-		header.setContentType(new MediaType("image", "gif"));
-		header.set("Accept-Ranges", "bytes");
-
-		byte[] buf;
 		try {
-			buf = CAPTCHA.out(captcha, width, height);
+			return CAPTCHA.out(captcha, width, height);
 		} catch (IOException e) {
-			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+			log.error(e);
 		}
-		return new ResponseEntity<byte[]>(buf, header, HttpStatus.OK);
+		return null;
 	}
 }

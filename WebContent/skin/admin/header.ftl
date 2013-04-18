@@ -15,7 +15,7 @@
 	<script src="${staticServePath}include/js/wysiwyg.link.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/wysiwyg.table.js" type="text/javascript"></script>
 	-->
-	<script src="${staticServePath}include/editor/kindeditor-min.js" type="text/javascript"></script>
+	<script src="${staticServePath}include/editor/kindeditor.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/editor/zh_CN.js" type="text/javascript"></script>
 	<#--<script src="${staticServePath}include/editor/plugins/code/prettify.js"></script>-->
 	<script src="${staticServePath}include/js/admin-functions.js" type="text/javascript"></script>

@@ -24,7 +24,7 @@ public final class ErrorController extends BaseController {
 		return new BlogView("error");
 	}
 
-	@RequestMapping(value = "/error/MaxUploadSizeExceeded")
+	@RequestMapping(value = "/error/MaxUploadSizeExceeded", produces = "application/json;charset=UTF-8")
 	public @ResponseBody
 	String maxUploadSizeExceede() {
 		return multipartErrorMessage("上传文件大小必须小于256MB。");

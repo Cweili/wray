@@ -43,9 +43,7 @@
 	<table class="comment-form">
 		<tbody>
 			<tr>
-				<th width="58px">
-					${commentAuthorLabel}
-				</th>
+				<th width="58px">${commentAuthorLabel}</th>
 				<td colspan="2" width="450px">
 					<input type="text" name="author" tabindex="1" />
 				</td>
@@ -54,16 +52,13 @@
 				</td>
 			</tr>
 			<tr>
-				<th>
-					${commentEmailLabel}
-				</th>
+				<th>${commentEmailLabel}</th>
 				<td colspan="3">
 					<input type="text" name="email" tabindex="2" />
 				</td>
 			</tr>
 			<tr>
-				<th>
-					${commentLinkLabel}
+				<th>${commentLinkLabel}
 				</th>
 				<td colspan="3">
 					<div class="commentLinkLabel">http://</div>
@@ -76,10 +71,10 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" width="235px">
-					<input id="captchaInput" type="text" name="captcha" tabindex="5" />
+				<td colspan="2" width="235px" height="44px">
+					<input type="text" name="captcha" tabindex="5" />
 				</td>
-				<td colspan="2" width="305px">
+				<td colspan="2">
 					<img id="captcha" alt="validate"></img>
 				</td>
 			</tr>

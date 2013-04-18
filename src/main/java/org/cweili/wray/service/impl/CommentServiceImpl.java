@@ -49,15 +49,15 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 
 	@Override
 	public Comment save(Comment comment) {
-		String author = Function.trimAndStripTags(comment.getAuthor());
+		String author = Function.htmlSpecialChars(comment.getAuthor());
 		if ("".equals(author)) {
 			return null;
 		}
-		String email = Function.trimAndStripTags(comment.getEmail());
+		String email = Function.htmlSpecialChars(comment.getEmail());
 		if ("".equals(email)) {
 			return null;
 		}
-		String link = Function.trimAndStripTags(comment.getLink());
+		String link = Function.htmlSpecialChars(comment.getLink());
 		String content = filterContent(comment.getContent());
 		if ("".equals(content)) {
 			return null;
