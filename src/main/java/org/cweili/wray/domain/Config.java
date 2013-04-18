@@ -23,8 +23,7 @@ public class Config implements Serializable, Cloneable {
 	private String value;
 
 	public Config() {
-		key = "";
-		value = "";
+		this("", "");
 	}
 
 	public Config(String key, String value) {

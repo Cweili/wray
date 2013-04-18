@@ -137,7 +137,7 @@ public final class AdminLinkController extends BaseController {
 				ori.setItemOrder(itemOrder);
 				return ori;
 			}
-			return new Item(id, itemName, "", description, 0, itemOrder, Item.TYPE_LINK, 0,
+			return new Item(id, itemName, "", description, 0, itemOrder, Item.TYPE_LINK, "",
 					Item.STAT_ON);
 		}
 		return null;

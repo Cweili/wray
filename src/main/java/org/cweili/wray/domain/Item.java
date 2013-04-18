@@ -27,7 +27,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	private int count;
 	private byte itemOrder;
 	private byte itemType;
-	private long parrentId;
+	private String parrentId;
 	@Indexed
 	private byte stat = STAT_ON;
 
@@ -41,15 +41,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	public static final byte STAT_SELECTED = 2;
 
 	public Item() {
-		itemId = "";
-		itemName = "";
-		permalink = "";
-		description = "";
-		count = 0;
-		itemOrder = 0;
-		itemType = TYPE_CATEGORY;
-		parrentId = 0;
-		stat = STAT_ON;
+		this("", "", "", "", 0, (byte) 0, TYPE_CATEGORY, "", STAT_ON);
 	}
 
 	/**
@@ -64,7 +56,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	 * @param stat
 	 */
 	public Item(String itemId, String itemName, String permalink, String description, int count,
-			byte itemOrder, byte itemType, long parrentId, byte stat) {
+			byte itemOrder, byte itemType, String parrentId, byte stat) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.permalink = permalink;
@@ -186,11 +178,11 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		this.itemType = itemType;
 	}
 
-	public long getParrentId() {
+	public String getParrentId() {
 		return parrentId;
 	}
 
-	public void setParrentId(long parrentId) {
+	public void setParrentId(String parrentId) {
 		this.parrentId = parrentId;
 	}
 

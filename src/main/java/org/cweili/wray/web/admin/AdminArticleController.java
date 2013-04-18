@@ -200,7 +200,7 @@ public final class AdminArticleController extends BaseController {
 						relatedItems.add(addItem);
 					} else {
 						addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
-								Item.TYPE_TAG, 0L, Item.STAT_ON);
+								Item.TYPE_TAG, "", Item.STAT_ON);
 						tagService.save(addItem);
 						relatedItems.add(addItem);
 					}

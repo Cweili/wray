@@ -146,34 +146,16 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	}
 
 	public Upload() {
-		uploadId = "";
-		length = 0;
-		md5 = "";
-		filename = "";
-		contentType = "";
-		uploadDate = new Date();
-		content = new byte[0];
+		this("", "", "", new byte[0]);
 	}
 
 	public Upload(String uploadId, int length, String md5, String filename, String contentType,
 			Date uploadDate) {
-		this.uploadId = uploadId;
-		this.length = length;
-		this.md5 = md5;
-		this.filename = filename;
-		this.contentType = contentType;
-		this.uploadDate = uploadDate;
-		this.content = new byte[0];
+		this(uploadId, length, md5, filename, contentType, uploadDate, new byte[0]);
 	}
 
 	public Upload(String uploadId, String filename, String contentType, byte[] content) {
-		this.uploadId = uploadId;
-		this.filename = filename;
-		this.contentType = contentType;
-		this.content = content;
-		this.length = 0;
-		this.md5 = "";
-		this.uploadDate = new Date();
+		this(uploadId, 0, "", filename, contentType, new Date(), content);
 	}
 
 	public Upload(String uploadId, int length, String md5, String filename, String contentType,

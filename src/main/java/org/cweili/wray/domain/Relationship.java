@@ -29,15 +29,11 @@ public class Relationship implements Serializable, Cloneable {
 	private String itemId;
 
 	public Relationship() {
-		id = "";
-		articleId = "";
-		itemId = "";
+		this("", "");
 	}
 
 	public Relationship(String articleId, String itemId) {
-		this.id = "";
-		this.articleId = articleId;
-		this.itemId = itemId;
+		this("", articleId, itemId);
 	}
 
 	public Relationship(String id, String articleId, String itemId) {

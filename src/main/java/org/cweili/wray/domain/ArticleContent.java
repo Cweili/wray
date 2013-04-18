@@ -21,12 +21,10 @@ public class ArticleContent implements Serializable, Cloneable, Comparable<Artic
 	private String content;
 
 	public ArticleContent() {
-		articleId = "";
-		content = "";
+		this("", "");
 	}
 
 	public ArticleContent(String articleId, String content) {
-		super();
 		this.articleId = articleId;
 		this.content = content;
 	}

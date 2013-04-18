@@ -140,7 +140,7 @@ public final class AdminCategoryController extends BaseController {
 			ori.setItemOrder(itemOrder);
 			return ori;
 		}
-		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY, 0,
+		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY, "",
 				Item.STAT_ON);
 	}
 

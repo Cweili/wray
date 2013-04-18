@@ -43,19 +43,7 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	public static final byte STAT_DISPLAY = 2;
 
 	public Comment() {
-		commentId = "";
-		articleId = "";
-		author = "";
-		email = "";
-		link = "";
-		ip = "";
-		postDate = new Date();
-		agent = "";
-		content = "";
-		parentId = "";
-		stat = STAT_DISPLAY;
-		artilceTitle = "";
-		origin = "";
+		this("", "", "", "", "", "", new Date(), "", "", "", STAT_DISPLAY);
 	}
 
 	public <S extends Comment> Comment(S comment) {

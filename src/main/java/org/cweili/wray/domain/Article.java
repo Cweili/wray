@@ -50,17 +50,7 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	public static final byte TYPE_PAGE = 1;
 
 	public Article() {
-		articleId = "";
-		title = "";
-		permalink = "";
-		content = "";
-		tag = "";
-		createTime = new Date();
-		stat = STAT_PUBLISHED;
-		hits = 0;
-		commentCount = 0;
-		commentStatus = COMMENT_ON;
-		isPage = TYPE_ARTICLE;
+		this("", "", "", "", "", new Date(), STAT_PUBLISHED, 0, 0, COMMENT_ON, TYPE_ARTICLE);
 	}
 
 	/**
