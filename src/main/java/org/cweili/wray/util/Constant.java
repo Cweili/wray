@@ -18,6 +18,16 @@ public class Constant {
 	public static final boolean DEBUG = false;
 
 	/**
+	 * 分页最大值
+	 */
+	public static final int MAX_PAGE = 65535;
+
+	/**
+	 * Cookie 保存时间
+	 */
+	public static final int COOKIE_MAX_AGE = 31536000;
+
+	/**
 	 * 管理面板分页大小
 	 */
 	public static final int ADMIN_LIST_SIZE = 12;

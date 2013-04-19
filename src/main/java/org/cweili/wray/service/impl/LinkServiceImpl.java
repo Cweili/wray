@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.service.LinkService;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -81,7 +82,8 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	@Override
 	public void updateLinkCache() {
 		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
-				new PageRequest(0, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "itemOrder"))
+				.getContent();
 	}
 
 }

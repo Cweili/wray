@@ -145,7 +145,7 @@ $(function() {
 			],
 			items: [
 				"formatblock", "fontname", "fontsize", "forecolor", "hilitecolor", "|", "bold", "italic", "underline", "strikethrough", "superscript", "subscript", "|",
-				"link", "unlink", "anchor", "hr", "|", "image", /*"multiimage",*/ "flash", "media", "insertfile", "table", "emoticons", "code", "baidumap", "/",
+				"link", "unlink", "anchor", "hr", "|", "image", "multiimage", "flash", "media", "insertfile", "table", "emoticons", "code", "baidumap", "/",
 				"undo", "redo", "|", "insertunorderedlist", "insertorderedlist", "indent", "outdent", "|",
 				"justifyleft", "justifycenter", "justifyright", "justifyfull", "|", "selectall", "cut", "copy", "paste", "plainpaste", "wordpaste", "|",
 				"insertmore", "quickformat", "removeformat", "clearhtml", "source", "preview", "fullscreen", "about"

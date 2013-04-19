@@ -9,6 +9,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.ArticleContent;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
@@ -181,7 +182,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public void updateArticleCache() {
 		pages = articleDao.findByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
-				new PageRequest(0, 65535, Sort.Direction.ASC, "hits")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hits")).getContent();
 		publishedArticleCount = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED).size();
 	}

@@ -7,6 +7,7 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.CategoryService;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -100,7 +101,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		}
 		updateCategoryCache();
 		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(0, 65536, Sort.Direction.DESC, "count")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.DESC, "count")).getContent();
 	}
 
 	@Override
@@ -160,7 +161,8 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
-				new PageRequest(0, 65535, Sort.Direction.ASC, "itemOrder")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "itemOrder"))
+				.getContent();
 	}
 
 }

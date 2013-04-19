@@ -5,6 +5,7 @@ import java.util.List;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Item;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.context.annotation.Scope;
@@ -70,7 +71,7 @@ public final class TagController extends BaseController {
 
 	@RequestMapping("/tags")
 	public BlogView tags() {
-		List<Item> tags = tagService.getTags(0, 65535);
+		List<Item> tags = tagService.getTags(0, Constant.MAX_PAGE);
 		BlogView v = new BlogView("tags");
 		v.add("tags", tags);
 		return v;
