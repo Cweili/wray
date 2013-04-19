@@ -32,7 +32,6 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	@Override
 	public String get(String key) {
 		String value = getConfigMap().get(key);
-		log.info("Find Config: " + key + " => " + value);
 		return value;
 	}
 
@@ -48,7 +47,6 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		log.info("Find Config: " + key + " => " + value);
 		return value;
 	}
 

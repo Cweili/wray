@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.ArticleContent;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Constant;
@@ -33,7 +32,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				&& publishedArticleCount == 0) {
 			updateArticleCache();
 		} else if (type != Article.TYPE_ARTICLE || status != Article.STAT_PUBLISHED) {
-			return articleDao.findByIsPageAndStat(type, status).size();
+			return articleDao.findMetaByIsPageAndStat(type, status).size();
 		}
 		return publishedArticleCount;
 	}
@@ -95,24 +94,14 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public Article findById(String articleId) {
 		Article article = articleDao.findOne(articleId);
-		if (null != article) {
-			article.setContent(articleContentDao.findOne(articleId).getContent());
-			return article;
-		} else {
-			return null;
-		}
+		return article;
 	}
 
 	@Override
 	public Article findByPermalink(String permalink, byte type) {
 		Article article = articleDao.findByPermalinkAndIsPageAndStat(permalink, type,
 				Article.STAT_PUBLISHED);
-		if (null != article) {
-			article.setContent(articleContentDao.findOne(article.getArticleId()).getContent());
-			return article;
-		} else {
-			return null;
-		}
+		return article;
 	}
 
 	@Override
@@ -122,8 +111,6 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 		Article articleNew = articleDao.save(article);
 		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
-			articleContentDao.save(new ArticleContent(articleNew.getArticleId(), article
-					.getContent()));
 			updateArticleCache();
 			updateSidebarArticleCache();
 		}
@@ -181,9 +168,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public void updateArticleCache() {
-		pages = articleDao.findByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
+		pages = articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
 				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hits")).getContent();
-		publishedArticleCount = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+		publishedArticleCount = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED).size();
 	}
 
@@ -192,14 +179,14 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 		if (topCommentArticlesSize > 0) {
 			topCommentArticles = articleDao
-					.findByIsPageAndStat(
+					.findMetaByIsPageAndStat(
 							Article.TYPE_ARTICLE,
 							Article.STAT_PUBLISHED,
 							new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC,
 									"commentCount")).getContent();
 		}
 		if (topHitsArticlesSize > 0) {
-			topHitsArticles = articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+			topHitsArticles = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
 					Article.STAT_PUBLISHED,
 					new PageRequest(0, topHitsArticlesSize, Sort.Direction.DESC, "hits"))
 					.getContent();
@@ -225,7 +212,6 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	private List<Article> dealList(List<Article> list) {
 		List<Article> articles = new ArrayList<Article>();
 		for (Article article : list) {
-			article.setContent(articleContentDao.findOne(article.getArticleId()).getContent());
 			if (article.getContent().contains("<a name=\"more\"></a>")) {
 				article.setContent(HtmlFixer.fix(CutString.substring(article.getContent(), article
 						.getContent().indexOf("<a name=\"more\"></a>")))

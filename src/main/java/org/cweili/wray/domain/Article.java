@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -28,7 +27,6 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	private String articleId;
 	private String title;
 	private String permalink;
-	@Transient
 	private String content;
 	private String tag;
 	private Date createTime;

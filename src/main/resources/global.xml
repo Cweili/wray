@@ -59,7 +59,6 @@
 	
 	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
 	<bean id="byteArray_hmc" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-	<bean id="form_hmc" class="org.springframework.http.converter.FormHttpMessageConverter"/>
 	<bean id="string_hmc" class="org.springframework.http.converter.StringHttpMessageConverter">
 		<property name = "supportedMediaTypes">
 			<list>
@@ -113,7 +112,6 @@
 			<list>  
 				<ref bean="bufferedImage_hmc"/>
 				<ref bean="byteArray_hmc"/>
-				<ref bean="form_hmc"/>
 				<ref bean="string_hmc"/>
 				<ref bean="resource_hmc"/>
 				<!-- ref bean="jackson2_hmc"/-->
