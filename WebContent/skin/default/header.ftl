@@ -5,7 +5,7 @@
 				</div>
 				<div id="headerright">
 					<div id="rssboxo">
-						<a href="blog-articles-feed.do">${atomLabel}</a>
+						<a href="feed">${atomLabel}</a>
 					</div>
 				</div>
 			</div>

@@ -3,14 +3,11 @@
  */
 package org.cweili.wray.web;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
-import org.cweili.wray.util.CAPTCHA;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.context.annotation.Scope;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -101,31 +96,4 @@ public final class CommentController extends BaseController {
 		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);
 	}
 
-	@RequestMapping("/captcha")
-	public @ResponseBody
-	BufferedImage captcha(WebRequest request) {
-
-		int width = 200;
-		int height = 50;
-
-		try {
-			width = Integer.valueOf(request.getParameter("width"));
-		} catch (Exception e) {
-			log.error(e);
-		}
-		try {
-			height = Integer.valueOf(request.getParameter("height"));
-		} catch (Exception e) {
-			log.error(e);
-		}
-		String captcha = CAPTCHA.getRandomString(6);
-		request.setAttribute("captcha", captcha, WebRequest.SCOPE_SESSION);
-
-		try {
-			return CAPTCHA.out(captcha, width, height);
-		} catch (IOException e) {
-			log.error(e);
-		}
-		return null;
-	}
 }
