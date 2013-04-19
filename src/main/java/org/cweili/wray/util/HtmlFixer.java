@@ -35,7 +35,7 @@ class TagsList {
 
 	// 为了提高效率，只将其置为null
 	public boolean remove(String str) {
-		for (int index = 0; index < size; index++) {
+		for (int index = 0; index < size; ++index) {
 			if (str.equals(data[index])) {
 				data[index] = null;
 				return true;
@@ -63,7 +63,7 @@ class TagsList {
 			int newCapacity = (oldCapacity * 3 / 2 + 1) > minSize ? oldCapacity * 3 / 2 + 1
 					: minSize;
 			String[] newArray = new String[newCapacity];
-			for (int i = 0; i < data.length; i++) {
+			for (int i = 0; i < data.length; ++i) {
 				newArray[i] = data[i];
 			}
 			data = newArray;
@@ -78,7 +78,7 @@ public class HtmlFixer {
 		char temp;
 		boolean isCode = false; // 是不是HTML代码
 		boolean isHTML = false; // 是不是HTML特殊字符,如
-		for (int i = 0; i < param.length(); i++) {
+		for (int i = 0; i < param.length(); ++i) {
 			temp = param.charAt(i);
 			if (temp == '<') {
 				isCode = true;
@@ -116,11 +116,11 @@ public class HtmlFixer {
 		StringBuffer fixed = new StringBuffer(); // 存放修复后的字符串
 		TagsList[] unclosedTags = getUnclosedTags(str);
 		// 生成新字符串
-		for (int i = unclosedTags[0].size() - 1; i > -1; i--) {
+		for (int i = unclosedTags[0].size() - 1; i > -1; --i) {
 			fixed.append("<" + unclosedTags[0].get(i) + ">");
 		}
 		fixed.append(str);
-		for (int i = unclosedTags[1].size() - 1; i > -1; i--) {
+		for (int i = unclosedTags[1].size() - 1; i > -1; --i) {
 			String s = null;
 			if ((s = unclosedTags[1].get(i)) != null) {
 				fixed.append("</" + s + ">");

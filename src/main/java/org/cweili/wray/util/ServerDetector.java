@@ -72,7 +72,7 @@ public class ServerDetector {
 	}
 
 	public int detect() {
-		for (int i = 0; i < SERVERS.length; i++) {
+		for (int i = 0; i < SERVERS.length; ++i) {
 			if (null != this.getClass().getResource(SERVERS[i])) {
 				switch (i) {
 				case 0:

@@ -149,8 +149,7 @@ public class Function {
 			md.update(source.getBytes());
 			byte[] digest = md.digest();
 			char[] c = new char[32];
-			int k = 0;
-			for (int i = 0; i < 16; i++) {
+			for (int i = 0, k = 0; i < 16; ++i) {
 				byte b = digest[i];
 				c[k++] = hexDigits.charAt(b >>> 4 & 0xf);
 				c[k++] = hexDigits.charAt(b & 0xf);
@@ -177,8 +176,7 @@ public class Function {
 			md.update(source.getBytes());
 			byte[] digest = md.digest();
 			char[] c = new char[64];
-			int k = 0;
-			for (int i = 0; i < 32; i++) {
+			for (int i = 0, k = 0; i < 32; ++i) {
 				byte b = digest[i];
 				c[k++] = hexDigits.charAt(b >>> 4 & 0xf);
 				c[k++] = hexDigits.charAt(b & 0xf);

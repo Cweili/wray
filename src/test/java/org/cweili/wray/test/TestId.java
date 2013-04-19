@@ -42,7 +42,7 @@ public class TestId {
 
 	@Test
 	public void test() {
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 20; ++i) {
 			String id = Function.generateId();
 			log.info(Function.timestamp() + "//" + id + "//" + (Function.decode(id) << 6));
 			try {

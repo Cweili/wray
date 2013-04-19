@@ -88,11 +88,11 @@ public class ChineseSpelling {
 
 	public ChineseSpelling() {
 	}
-	
+
 	public ChineseSpelling(String resource) {
 		this.resource = resource;
 	}
-	
+
 	public String getResource() {
 		return resource;
 	}
@@ -128,7 +128,7 @@ public class ChineseSpelling {
 		if (ascii > 0 && ascii < 160) {
 			result = String.valueOf((char) ascii);
 		} else {
-			for (int i = (pyvalue.length - 1); i >= 0; i--) {
+			for (int i = (pyvalue.length - 1); i >= 0; --i) {
 				if (pyvalue[i] <= ascii) {
 					result = pystr[i];
 					break;
@@ -141,7 +141,7 @@ public class ChineseSpelling {
 	public String getSelling(String chs) {
 		String key, value;
 		buffer = new StringBuilder();
-		for (int i = 0; i < chs.length(); i++) {
+		for (int i = 0; i < chs.length(); ++i) {
 			key = chs.substring(i, i + 1);
 			if (key.getBytes().length == 3) {
 				value = (String) convert(key);

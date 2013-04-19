@@ -19,16 +19,16 @@ import java.util.Random;
  * @version 2013-4-16 下午5:35:20
  * 
  */
-public class CAPTCHA {
+public class Captcha {
 
 	private static Random random = new Random();
 
 	public static String getRandomString(int length) {
-		String str = "";
-		for (int i = 0; i < length; i++) {
-			str += String.valueOf((char) (random.nextInt(26) + 65));
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < length; ++i) {
+			sb.append((char) (random.nextInt(26) + 65));
 		}
-		return str;
+		return sb.toString();
 	}
 
 	public static Color getRandomColor() {
@@ -54,7 +54,7 @@ public class CAPTCHA {
 		g.fillRect(0, 0, width, height);
 
 		// 画随机线
-		for (int i = 0; i < 250; i++) {
+		for (int i = 0; i < 250; ++i) {
 			g.setColor(getRandomColor());
 			int x = random.nextInt(width - 2) + 1;
 			int y = random.nextInt(height - 2) + 1;
