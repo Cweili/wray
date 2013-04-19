@@ -115,6 +115,8 @@ $(function() {
 		});
 	});
 	
+	
+	
 	KindEditor.ready(function(K) {
 		editor = K.create(".wysiwyg", {
 			themeType: "default",
@@ -122,7 +124,7 @@ $(function() {
 			indentChar: "",
 			urlType: "relative",
 			emoticonsPath: "include/image/emotion/",
-			uploadJson: "admin-upload-json",//"include/editor/jsp/upload_json.jsp",
+			uploadJson: "upload-json?a=" + (authority ? authority : 0) + "&t=" + (authorityTime ? authorityTime : 0),
 			//fileManagerJson: "include/editor/jsp/file_manager_json.jsp",
 			allowFileManager : false,
 			allowImageUpload: true,

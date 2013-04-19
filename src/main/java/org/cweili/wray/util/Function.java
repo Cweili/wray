@@ -37,7 +37,7 @@ public class Function {
 	 * @param password
 	 * @return
 	 */
-	public static String authorityKey(String time, String name, String password) {
+	public static String authorityToken(String time, String name, String password) {
 		String sha256 = sha256(name + time + password);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < sha256.length(); i += 16) {

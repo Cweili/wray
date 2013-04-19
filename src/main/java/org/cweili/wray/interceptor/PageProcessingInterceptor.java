@@ -5,9 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.WebUtils;
 
 /**
  * 页面处理
@@ -88,9 +90,10 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 			} else {
 
 				// 添加验证
-				if (null != getAuthoritySession(request)) {
-					mv.addObject("authority", getAuthoritySession(request));
-				}
+				mv.addObject("authority", StringUtils.stripToEmpty((String) WebUtils
+						.getSessionAttribute(request, Constant.AUTHORITY_TOKEN)));
+				mv.addObject("authorityTime", StringUtils.stripToEmpty((String) WebUtils
+						.getSessionAttribute(request, Constant.AUTHORITY_TIME)));
 
 				// 添加列表大小设置
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);

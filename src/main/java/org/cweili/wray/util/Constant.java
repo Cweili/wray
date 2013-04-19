@@ -48,19 +48,14 @@ public class Constant {
 	public static final String SUBMIT_FAILED = "";
 
 	/**
+	 * 
+	 */
+	public static final String AUTHORITY_TIME = "wray_t";
+
+	/**
 	 * 登陆验证字段
 	 */
-	public static final String AUTHORITY_KEY = "wray_k";
-
-	/**
-	 * 
-	 */
-	public static final String AUTHORITY_LOGIN = "wray_login";
-
-	/**
-	 * 
-	 */
-	public static final String AUTHORITY_LOGOUT = "wray_logout";
+	public static final String AUTHORITY_TOKEN = "wray_k";
 
 	/**
 	 * COOKIE 登陆验证

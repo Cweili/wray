@@ -1,28 +1,18 @@
 package org.cweili.wray.web.admin;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
-import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * 
@@ -33,52 +23,6 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 @Scope("prototype")
 public final class AdminUploadController extends BaseController {
-
-	@RequestMapping(value = "/admin-upload-json", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-	public @ResponseBody
-	String uploadJson(MultipartHttpServletRequest request) {
-
-		Map<String, MultipartFile> fileMap = request.getFileMap();
-
-		for (String filename : fileMap.keySet()) {
-			MultipartFile file = fileMap.get(filename);
-
-			filename = file.getOriginalFilename();
-
-			// 检查文件大小 小于256MB
-			if (file.getSize() > 268435456) {
-				throw new MaxUploadSizeExceededException(file.getSize());
-			}
-
-			// 检查扩展名
-			String[] filenameSplit = StringUtils.split(filename, '.');
-			if (filenameSplit.length < 2) {
-				return multipartErrorMessage("上传文件类型不被允许。");
-			}
-			String fileExt = filenameSplit[1].toLowerCase();
-			if (!Upload.TYPE.containsKey(fileExt)) {
-				return multipartErrorMessage("上传文件类型不被允许。");
-			}
-
-			String id = Function.generateId();
-			try {
-				byte[] content = file.getBytes();
-				uploadService.save(new Upload(id, filename, Upload.TYPE.get(fileExt), content));
-			} catch (IOException e) {
-				return multipartErrorMessage("文件保存错误");
-			}
-
-			JSONObject obj = new JSONObject();
-			obj.put("error", 0);
-			obj.put("url",
-					blogConfig.get("staticServePath") + "upload/" + id + "/"
-							+ Function.permalink(filenameSplit[0]) + "." + fileExt);
-			obj.put("fileName", filename);
-			return obj.toString();
-		}
-
-		return multipartErrorMessage("没有上传的文件");
-	}
 
 	@RequestMapping("/admin-upload")
 	public BlogView uploadManager(WebRequest request) {

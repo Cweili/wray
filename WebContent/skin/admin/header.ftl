@@ -6,6 +6,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="${staticServePath}" />
 	<link rel="stylesheet" href="${staticServePath}include/css/admin-style.css" type="text/css" charset="utf-8" />
+	
+	<script type="text/javascript">
+		var authority = "${authority?if_exists}";
+		var authorityTime = "${authorityTime?if_exists}";
+	</script>
+	
 	<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/jquery.validate.min.js" type="text/javascript"></script>

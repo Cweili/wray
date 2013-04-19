@@ -69,9 +69,10 @@ public final class AdminLoginController extends BaseController {
 
 				// 保存登陆状态
 				String time = Function.encode(Function.timestamp());
-				String key = Function.authorityKey(time, blogConfig.get("adminName"),
+				String token = Function.authorityToken(time, blogConfig.get("adminName"),
 						blogConfig.get("adminPwd"));
-				WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_KEY, key);
+				WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_TIME, time);
+				WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_TOKEN, token);
 
 				// Cookie 保存用户名
 				CookieGenerator cookie = new CookieGenerator();
@@ -84,8 +85,8 @@ public final class AdminLoginController extends BaseController {
 						&& "true".equals(request.getParameterValues("rememberme")[0])) {
 
 					// Cookie 设置验证串
-					cookie.setCookieName(Constant.AUTHORITY_KEY);
-					cookie.addCookie(response, key + "@" + time);
+					cookie.setCookieName(Constant.AUTHORITY_TOKEN);
+					cookie.addCookie(response, time + "@" + token);
 				}
 				log.info(blogConfig.get("adminName") + " login successful.");
 
@@ -103,14 +104,14 @@ public final class AdminLoginController extends BaseController {
 		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 		String sessionAuthority = StringUtils.stripToEmpty((String) WebUtils.getSessionAttribute(
-				req.getRequest(), Constant.AUTHORITY_KEY));
+				req.getRequest(), Constant.AUTHORITY_TOKEN));
 
 		if (sessionAuthority.equals(authority)) {
 
-			WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_KEY, null);
+			WebUtils.setSessionAttribute(req.getRequest(), Constant.AUTHORITY_TOKEN, null);
 
 			CookieGenerator cookie = new CookieGenerator();
-			cookie.setCookieName(Constant.AUTHORITY_KEY);
+			cookie.setCookieName(Constant.AUTHORITY_TOKEN);
 			cookie.setCookieDomain(req.getRequest().getServerName());
 			cookie.setCookiePath(req.getRequest().getContextPath() + "/");
 			cookie.setCookieMaxAge(0);
@@ -126,6 +127,13 @@ public final class AdminLoginController extends BaseController {
 			v.add("err", "退出失败");
 		}
 		return v;
+	}
+
+	private String getAuthority() {
+		String time = Function.encode(Function.timestamp());
+		String key = Function.authorityToken(time, blogConfig.get("adminName"),
+				blogConfig.get("adminPwd"));
+		return key + "@" + time;
 	}
 
 }

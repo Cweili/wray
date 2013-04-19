@@ -78,18 +78,6 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 		return null;
 	}
 
-	/**
-	 * @param request
-	 * @return
-	 */
-	protected String getAuthoritySession(HttpServletRequest request) {
-		if (null != request.getSession(false)
-				&& null != request.getSession().getAttribute(Constant.AUTHORITY_KEY)) {
-			return (String) request.getSession().getAttribute(Constant.AUTHORITY_KEY);
-		}
-		return null;
-	}
-
 	protected void printRequestHeader(HttpServletRequest request) {
 		if (Constant.DEBUG) {
 			StringBuilder sb = new StringBuilder();
