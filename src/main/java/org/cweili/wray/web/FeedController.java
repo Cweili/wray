@@ -33,11 +33,16 @@ public final class FeedController extends BaseController {
 			String author = blogConfig.get("adminNick");
 			RSS rss = new RSS(blogConfig.get("blogTitle"), path, path + "atom",
 					blogConfig.get("blogSubtitle"), Constant.GENERATOR, new Date());
-			List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-					Article.STAT_PUBLISHED, 1, 10);
-			for (Article article : articles) {
-				rss.addItem(article.getTitle(), path + "article/" + article.getPermalink(), author,
-						article.getContent(), article.getCreateTime(), getCategories(article));
+
+			int feedSize = blogConfig.getInt("feedSize");
+			if (feedSize > 0) {
+				List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+						Article.STAT_PUBLISHED, 1, feedSize);
+				for (Article article : articles) {
+					rss.addItem(article.getTitle(), path + "article/" + article.getPermalink(),
+							author, article.getContent(), article.getCreateTime(),
+							getCategories(article));
+				}
 			}
 
 			synchronized (feedService) {
@@ -58,12 +63,16 @@ public final class FeedController extends BaseController {
 			Atom atom = new Atom(blogConfig.get("blogTitle"), blogConfig.get("blogSubtitle"),
 					blogConfig.get("staticServePath"), blogConfig.get("adminNick"),
 					blogConfig.get("staticServePath") + "atom", Constant.GENERATOR, new Date());
-			List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-					Article.STAT_PUBLISHED, 1, 10);
-			for (Article article : articles) {
-				atom.addEntry(article.getTitle(), path + "article/" + article.getPermalink(),
-						author, article.getContent(), article.getCreateTime(),
-						getCategories(article));
+
+			int feedSize = blogConfig.getInt("feedSize");
+			if (feedSize > 0) {
+				List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+						Article.STAT_PUBLISHED, 1, feedSize);
+				for (Article article : articles) {
+					atom.addEntry(article.getTitle(), path + "article/" + article.getPermalink(),
+							author, article.getContent(), article.getCreateTime(),
+							getCategories(article));
+				}
 			}
 
 			synchronized (feedService) {

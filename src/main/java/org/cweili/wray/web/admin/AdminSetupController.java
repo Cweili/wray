@@ -48,7 +48,10 @@ public final class AdminSetupController extends BaseController {
 			log.error(e);
 		}
 
-		blogConfig.save(new Config("feedSize", feedSize));
+		if (blogConfig.getInt("feedSize") != feedSize) {
+			blogConfig.save(new Config("feedSize", feedSize));
+			feedService.clearFeedCache();
+		}
 
 		blogConfig.saveRequest(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
 				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",

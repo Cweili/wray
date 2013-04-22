@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<@message type="链接">
-			恭喜您，您的链接已成功保存。
-		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>链接信息</legend>
 				<div class="input_field">
@@ -21,6 +18,9 @@
 					<input class="smallfield" name="itemOrder" type="text" value="${link.itemOrder?if_exists}" />
 				</div>
 			</fieldset>
+			<@message type="链接">
+				恭喜您，您的链接已成功保存。
+			</@message>
 			<fieldset><legend>保存链接</legend>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="保存链接" />

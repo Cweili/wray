@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<@message type="文章">
-			恭喜您，您的分类已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}category/${category.permalink?if_exists}" target="_blank">查看效果</a>。
-		</@message>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>分类信息</legend>
 				<div class="input_field">
@@ -27,6 +24,9 @@
 					<input class="smallfield" name="itemOrder" type="text" value="${category.itemOrder?if_exists}" />
 				</div>
 			</fieldset>
+			<@message type="文章">
+				恭喜您，您的分类已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}category/${category.permalink?if_exists}" target="_blank">查看效果</a>。
+			</@message>
 			<fieldset><legend>保存分类</legend>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="保存分类" />

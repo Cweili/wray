@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<@message type="页面">
-			恭喜您，您的页面已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}page/${permalink?if_exists}" target="_blank">查看效果</a>。
-		</@message>
 		<div class="clearboth"><!-- --></div>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>页面信息</legend>
@@ -25,6 +22,9 @@
 					<textarea class="wysiwyg" name="content" style="width:100%;">${article.content?if_exists}</textarea>
 				</div>
 			</fieldset>
+			<@message type="页面">
+				恭喜您，您的页面已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}page/${permalink?if_exists}" target="_blank">查看效果</a>。
+			</@message>
 			<fieldset><legend>保存选项</legend>
 				<div class="input_field no_margin_bottom">
 					<span class="form_line"><input type="checkbox" name="commentStatus" class="checkbox" value="1" <#if article.commentStatus=1>checked="checked" </#if>/>允许评论</span>

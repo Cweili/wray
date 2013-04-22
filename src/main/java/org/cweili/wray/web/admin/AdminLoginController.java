@@ -84,7 +84,7 @@ public final class AdminLoginController extends BaseController {
 
 					// Cookie 设置验证串
 					cookie.setCookieName(Constant.AUTHORITY_TOKEN);
-					cookie.addCookie(response, time + "@" + token);
+					cookie.addCookie(response, token + "@" + time);
 				}
 				log.info(blogConfig.get("adminName") + " login successful.");
 

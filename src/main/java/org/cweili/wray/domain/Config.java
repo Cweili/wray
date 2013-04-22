@@ -26,13 +26,13 @@ public class Config implements Serializable, Cloneable {
 		this("", "");
 	}
 
+	public Config(String key, int value) {
+		this(key, String.valueOf(value));
+	}
+
 	public Config(String key, String value) {
 		this.key = key;
 		this.value = value;
-	}
-
-	public Config(String key, int value) {
-		this("", new StringBuilder(value).toString());
 	}
 
 	@Override

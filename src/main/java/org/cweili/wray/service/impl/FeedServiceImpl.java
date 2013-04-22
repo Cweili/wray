@@ -34,4 +34,10 @@ public class FeedServiceImpl extends BaseService implements FeedService {
 		atom = atomNew.toString();
 	}
 
+	@Override
+	public void clearFeedCache() {
+		rss = null;
+		atom = null;
+	}
+
 }

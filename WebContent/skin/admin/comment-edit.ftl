@@ -3,9 +3,6 @@
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
-		<@message type="评论">
-			恭喜您，您的评论已编辑成功。
-		</@message>
 		<div class="clearboth"><!-- --></div>
 		<form id="editForm" action="admin-${adminAction}" method="post">
 			<fieldset><legend>作者信息</legend>
@@ -30,6 +27,9 @@
 					<textarea class="wysiwyg" name="content" style="width:100%;">${comment.content?if_exists}</textarea>
 				</div>
 			</fieldset>
+			<@message type="评论">
+				恭喜您，您的评论已编辑成功。
+			</@message>
 			<fieldset><legend>评论状态</legend>
 				<div class="input_field no_margin_bottom">
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if comment.stat=2>checked="checked" </#if>/>正常</span>

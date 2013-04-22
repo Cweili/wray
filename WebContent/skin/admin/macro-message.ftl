@@ -1,4 +1,13 @@
 <#macro message type>
+<div class="warning hide">
+	<div class="warn_icon"><!-- --></div>
+	<a href="#" class="close" title="关闭">x</a>
+	<div class="desc">
+		<span>${type}正在保存...</span>
+		<p>${type}正在保存，请稍候...</p>
+	</div>
+</div>
+<div class="clearboth"><!-- --></div>
 <div class="succes hide">
 	<div class="succes_icon"><!-- --></div>
 	<a href="#" class="close" title="关闭">x</a>

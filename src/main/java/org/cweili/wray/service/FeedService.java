@@ -18,4 +18,6 @@ public interface FeedService {
 	public void setRss(RSS rss);
 
 	public void setAtom(Atom atom);
+
+	public void clearFeedCache();
 }

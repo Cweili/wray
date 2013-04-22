@@ -80,13 +80,14 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 
 	protected void printRequestHeader(HttpServletRequest request) {
 		if (Constant.DEBUG) {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder("\nHTTP Headers:\n");
 			Enumeration<String> r = request.getHeaderNames();
 			String s;
 			while (r.hasMoreElements()) {
 				s = r.nextElement();
 				sb.append(s).append(':').append(request.getHeader(s)).append('\n');
 			}
+
 			log.info(sb.toString());
 		}
 	}

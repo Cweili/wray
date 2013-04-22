@@ -3,39 +3,33 @@
 	<div id="content"> <!-- Content begins here -->
 		<ul class="modals">
 			<li>
-				<a href="#">
-					<img src="iconsee/pencil_48.png" alt="Write an article" />
-					<span>Write an article</span>
+				<a href="admin-article-add">
+					<img src="include/image/pencil_48.png" alt="创建新文章" />
+					<div>创建新文章</div>
 				</a>
 			</li>
 			<li>
-				<a href="#">
-					<img src="iconsee/diagram_48.png" alt="View statistics" />
-					<span>View statistics</span>
+				<a href="admin-page-add">
+					<img src="include/image/page_48.png" alt="创建新页面" />
+					<span>创建新页面</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
-					<img src="iconsee/letter_48.png" alt="Check inbox" />
-					<span>Check inbox</span>
+				<a href="admin-comment">
+					<img src="include/image/letter_48.png" alt="管理评论" />
+					<span>管理评论</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
-					<img src="iconsee/clipboard_48.png" alt="To-do list" />
-					<span>Todo list</span>
+				<a href="admin-upload">
+					<img src="include/image/save_48.png" alt="管理附件" />
+					<span>管理附件</span>
 				</a>
 			</li>
 			<li>
-				<a href="#">
-					<img src="iconsee/gear_48.png" alt="Settings" />
-					<span>Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="iconsee/save_48.png" alt="Save this!" />
-					<span>Save this!</span>
+				<a href="admin-setup-basic">
+					<img src="include/image/gear_48.png" alt="博客设置" />
+					<span>博客设置</span>
 				</a>
 			</li>
 		</ul>

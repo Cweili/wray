@@ -26,17 +26,19 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 		}
 
 		// Cookie 登录
-		String key = findCookie(request, Constant.AUTHORITY_TOKEN);
-		if (null != key) {
-			String[] keys = key.split("@");
-			if (keys.length == 2
-					&& keys[0].equals(Function.authorityToken(keys[1], blogConfig.get("adminName"),
-							blogConfig.get("adminPwd")))) {
-				request.getSession().setAttribute(Constant.AUTHORITY_TOKEN, keys[0]);
-				request.getSession().setAttribute(Constant.AUTHORITY_TIME, keys[1]);
+		String token = findCookie(request, Constant.AUTHORITY_TOKEN);
+		if (null != token) {
+			log.error(token);
+			String[] tokens = token.split("@");
+			if (tokens.length == 2
+					&& tokens[0].equals(Function.authorityToken(tokens[1],
+							blogConfig.get("adminName"), blogConfig.get("adminPwd")))) {
+				request.getSession().setAttribute(Constant.AUTHORITY_TOKEN, tokens[0]);
+				request.getSession().setAttribute(Constant.AUTHORITY_TIME, tokens[1]);
 				log.info(blogConfig.get("adminName") + " login by cookie successful.");
 				return true;
 			}
+			log.error("Cookie login failed! Token: " + token);
 		}
 
 		response.sendRedirect("admin-login#" + requestScript(request).substring(7));

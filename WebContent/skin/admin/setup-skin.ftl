@@ -164,6 +164,9 @@
 					<input class="bigfield" name="maxlengthErrorLabel" type="text" value="${maxlengthErrorLabel?if_exists}" />
 				</div>
 			</fieldset>
+			<@message type="设置">
+				恭喜您，您的设置已成功保存。
+			</@message>
 			<fieldset><legend>保存设置</legend>
 				<div class="input_field no_margin_bottom">
 					<span class="form_line"><input class="submit" type="submit" value="保存设置" /></span>
@@ -208,10 +211,6 @@
 				}
 			});
 		</script>
-		<p></p>
-		<@message type="设置">
-			恭喜您，您的设置已成功保存。
-		</@message>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">
