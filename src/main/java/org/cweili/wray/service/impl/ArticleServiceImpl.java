@@ -172,6 +172,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hits")).getContent();
 		publishedArticleCount = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED).size();
+		rss = null;
+		atom = null;
 	}
 
 	@Override

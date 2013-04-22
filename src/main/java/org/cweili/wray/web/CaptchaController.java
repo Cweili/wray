@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.cweili.wray.util.Captcha;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +19,6 @@ import org.springframework.web.context.request.WebRequest;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class CaptchaController extends BaseController {
 
 	@RequestMapping("/captcha")

@@ -10,7 +10,6 @@ import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +26,6 @@ import org.springframework.web.context.request.WebRequest;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class AdminSetupController extends BaseController {
 
 	private static final List<String> TYPE = new ArrayList<String>();
@@ -41,6 +39,16 @@ public final class AdminSetupController extends BaseController {
 	@RequestMapping(value = "/admin-setup-basic", method = RequestMethod.POST)
 	public @ResponseBody
 	String basic(WebRequest request) {
+
+		int feedSize = 10;
+
+		try {
+			feedSize = Integer.valueOf(request.getParameter("feedSize"));
+		} catch (Exception e) {
+			log.error(e);
+		}
+
+		blogConfig.save(new Config("feedSize", feedSize));
 
 		blogConfig.saveRequest(request, new String[] { "blogTitle", "blogSubtitle", "metaKeywords",
 				"metaDescription" }, new String[] { "blogHost", "noticeBoard", "attachHeader",
@@ -77,10 +85,10 @@ public final class AdminSetupController extends BaseController {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		blogConfig.save(new Config("limit", limit + ""));
-		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize + ""));
-		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize + ""));
-		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize + ""));
+		blogConfig.save(new Config("limit", limit));
+		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize));
+		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize));
+		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize));
 		blogConfig.save(new Config("mostUsedTagsSize", mostUsedTagsSize + ""));
 		blogConfig.saveRequest(request, Constant.LABELS, new String[] { "skinDir" });
 

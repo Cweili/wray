@@ -4,7 +4,6 @@
 package org.cweili.wray.web;
 
 import org.cweili.wray.util.BlogView;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class ErrorController extends BaseController {
 
 	@RequestMapping(value = "/error")

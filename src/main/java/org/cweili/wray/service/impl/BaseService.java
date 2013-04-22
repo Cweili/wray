@@ -99,16 +99,26 @@ public abstract class BaseService {
 	/**
 	 * Category 缓存
 	 */
-	protected List<Item> categories = null;
+	protected static List<Item> categories = null;
 
 	/**
 	 * Tag 缓存
 	 */
-	protected List<Item> tags = null;
+	protected static List<Item> tags = null;
 
 	/**
 	 * Link 缓存
 	 */
-	protected List<Item> links = null;
+	protected static List<Item> links = null;
+
+	/**
+	 * RSS 缓存
+	 */
+	protected static String rss = null;
+
+	/**
+	 * Atom 缓存
+	 */
+	protected static String atom = null;
 
 }

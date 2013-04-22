@@ -8,7 +8,6 @@ import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class TagController extends BaseController {
 
 	@RequestMapping("/tag/{permalink}")

@@ -10,7 +10,6 @@ import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +29,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class CommentController extends BaseController {
 
 	@RequestMapping(value = "/comment-{commentid}")

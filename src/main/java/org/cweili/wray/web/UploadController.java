@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Upload;
 import org.cweili.wray.util.Function;
-import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +28,6 @@ import com.alibaba.fastjson.JSONObject;
  * 
  */
 @Controller
-@Scope("prototype")
 public class UploadController extends BaseController {
 
 	@RequestMapping("/upload/{id}/*")

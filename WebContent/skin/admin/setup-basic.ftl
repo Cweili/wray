@@ -19,8 +19,13 @@
 					<span class="field_desc">用于页脚版权链接</span>
 				</div>
 				<div class="input_field">
+					<label for="feedSize">Feed更新数量</label>
+					<input class="bigfield" name="feedSize" type="text" value="${feedSize?if_exists}" />
+					<span class="field_desc">提供给RSS/Atom阅读器抓取的博客更新信息</span>
+				</div>
+				<div class="input_field">
 					<label for="metaKeywords">关键词</label>
-					<textarea name="metaKeywords">${metaKeywords?if_exists}</textarea>
+					<input class="bigfield" name="metaKeywords" type="text" value="${metaKeywords?if_exists}" />
 					<span class="field_desc">提供给搜索引擎索引用, 逗号分隔</span>
 				</div>
 				<div class="input_field">
@@ -69,6 +74,11 @@
 					},
 					blogHost: {
 						maxlength:512
+					},
+					feedSize: {
+						required:true,
+						digits:true,
+						range:[1,100]
 					},
 					metaKeywords: {
 						maxlength:512

@@ -31,6 +31,10 @@ public class Config implements Serializable, Cloneable {
 		this.value = value;
 	}
 
+	public Config(String key, int value) {
+		this("", new StringBuilder(value).toString());
+	}
+
 	@Override
 	public String toString() {
 		return "Config: " + key + " => " + value;

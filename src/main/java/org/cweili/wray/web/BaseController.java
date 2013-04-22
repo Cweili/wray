@@ -6,6 +6,7 @@ import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.service.CommentService;
 import org.cweili.wray.service.ConfigService;
+import org.cweili.wray.service.FeedService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
@@ -46,6 +47,9 @@ public abstract class BaseController extends MultiActionController {
 
 	@Autowired
 	protected UploadService uploadService;
+
+	@Autowired
+	protected FeedService feedService;
 
 	/**
 	 * @param v

@@ -10,7 +10,6 @@ import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,6 @@ import org.springframework.web.util.WebUtils;
  * 
  */
 @Controller
-@Scope("prototype")
 public final class AdminLoginController extends BaseController {
 
 	@RequestMapping(value = "/admin-login", method = RequestMethod.GET)
@@ -127,13 +125,6 @@ public final class AdminLoginController extends BaseController {
 			v.add("err", "退出失败");
 		}
 		return v;
-	}
-
-	private String getAuthority() {
-		String time = Function.encode(Function.timestamp());
-		String key = Function.authorityToken(time, blogConfig.get("adminName"),
-				blogConfig.get("adminPwd"));
-		return key + "@" + time;
 	}
 
 }
