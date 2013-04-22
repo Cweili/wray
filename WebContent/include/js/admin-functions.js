@@ -4,6 +4,7 @@ var editor = null;
 var slideToggleDelay = 6000;
 var editorInit = {
 	themeType: "default",
+	cssPath : ['include/editor/plugins/code/prettify.css'],
 	wellFormatMode: true,
 	indentChar: "",
 	urlType: "relative",
@@ -41,19 +42,27 @@ var editorInit = {
 $(function() {
 
  //NAVIGATION MENU
-	$(".submenu li").each(function (i) {
+	var locationURL = window.location.pathname + window.location.search;
+	$(".submenu li").each(function(i) {
 		if (i < $(".submenu li").length - 1) {
-			var $it = $(this),
-			locationURL = window.location.pathname + window.location.search;
-//			if (i === 0 && (locationURL === "/")) {
-//					$it.addClass("current_nav");
-//					return;
-//			}
-			if (locationURL.indexOf($it.find("a").attr("href")) > -1) {// && i !== 0) {
+			var $it = $(this);
+			if (locationURL.indexOf($it.find("a").attr("href")) > -1) {
 					$it.addClass("current_nav");
+					return;
 			}
 		}
 	});
+	if($(".current_nav").length == 0) {
+		$(".submenu li").each(function(i) {
+			if (i < $(".submenu li").length - 1) {
+				var $it = $(this);
+				if (locationURL.indexOf($it.attr("rel")) > -1) {
+					$it.addClass("current_nav");
+					return;
+				}
+			}
+		});
+	}
 	
 	$("div.sidenav:eq(0)> div.subnav").hide();
 	$("div.sidenav:eq(0)> div.navhead").click(function() {
@@ -152,7 +161,9 @@ $(function() {
 	
 	KindEditor.ready(function(K) {
 		editor = K.create(".wysiwyg", editorInit);
+//		prettyPrint();
 	});
+	
 });
 
 $(window).resize(function() {
@@ -160,21 +171,21 @@ $(window).resize(function() {
 });
 
 var submitForm = function(form) {
-	$(".warning").slideDown(100);
+	$(".loading").show();
 	if(editor != null) {
 		editor.sync();
 	}
 	$(".submit").attr("disabled", true);
 	$.post(form.attr("action"), form.serialize(), function(data) {
 		if (data == "success") {
-			$(".warning").hide();
+			$(".loading").hide();
 			$(".err").hide();
 			$(".succes").slideDown();
 			setTimeout('$(".succes").slideUp()', slideToggleDelay);
 		} else if(data != "") {
 			window.location.href = data + "#succ";
 		} else {
-			$(".warning").hide();
+			$(".loading").hide();
 			$(".succes").hide();
 			$(".err").slideDown();
 			setTimeout('$(".err").slideUp()', slideToggleDelay);

@@ -1,4 +1,5 @@
 <#include "macro-message.ftl">
+<#include "macro-form.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
@@ -23,7 +24,7 @@
 			</@message>
 			<fieldset><legend>保存链接</legend>
 				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="保存链接" />
+					<@submit>保存链接</@submit>
 				</div>
 			</fieldset>
 		</form>

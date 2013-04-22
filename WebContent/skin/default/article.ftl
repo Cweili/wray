@@ -4,7 +4,7 @@
 <html>
     <head>
         <@head title="${article.title} - ${blogTitle}">
-        <meta name="keywords" content="${article.tag}" />
+        <meta name="keywords" content="${metaKeywords},${article.tag}" />
         <meta name="description" content="${article.content?html}" />
         </@head>
     </head>

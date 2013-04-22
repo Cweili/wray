@@ -1,4 +1,5 @@
 <#include "macro-message.ftl">
+<#include "macro-form.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
@@ -45,7 +46,7 @@
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if article.stat=4>checked="checked" </#if>/>已发布</span>
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if article.stat=2>checked="checked" </#if>/>草稿</span>
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if article.stat=1>checked="checked" </#if>/>回收站</span>
-					<span class="form_line"><input class="submit" type="submit" value="保存文章" /></span>
+					<@submit>保存文章</@submit>
 				</div>
 			</fieldset>
 		</form>

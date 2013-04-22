@@ -1,4 +1,5 @@
 <#include "macro-message.ftl">
+<#include "macro-form.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
@@ -169,7 +170,7 @@
 			</@message>
 			<fieldset><legend>保存设置</legend>
 				<div class="input_field no_margin_bottom">
-					<span class="form_line"><input class="submit" type="submit" value="保存设置" /></span>
+					<@submit>保存设置</@submit>
 				</div>
 			</fieldset>
 		</form>

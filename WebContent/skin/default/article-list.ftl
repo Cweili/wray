@@ -35,7 +35,7 @@
 		</div>
 		<div class="clr16"></div>
 		<div class="postcontent breakline">
-			${article.content?replace('<!--more-->','... <a href="article/'+article.permalink+'/#more">'+moreLabel+'</a>')}
+			${article.content?replace('<!--more-->','... [<a href="article/'+article.permalink+'/#more">'+moreLabel+'</a>]')}
 		</div>
 		<div class="clr"></div>
 		<div class="roubcornrcontent">

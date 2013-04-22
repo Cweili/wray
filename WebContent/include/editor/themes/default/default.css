@@ -692,7 +692,6 @@
 	overflow: auto;
 	padding: 0;
 	resize: none;
-	background: #fff;
 }
 .ke-dialog-body textarea:focus,
 .ke-dialog-body input:focus,

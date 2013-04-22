@@ -3,12 +3,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <@head title="${page.pageTitle} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${page.pageTitle}" />
+        <@head title="${article.pageTitle} - ${blogTitle}">
+        <meta name="keywords" content="${metaKeywords}" />
         <meta name="description" content="${metaDescription}" />
         </@head>
-        <link type="text/css" rel="stylesheet" href="/js/lib/SyntaxHighlighter/styles/shCoreEclipse.css" charset="utf-8" />
-        <link type="text/css" rel="stylesheet" href="/js/lib/SyntaxHighlighter/styles/shThemeEclipse.css" charset="utf-8" />
     </head>
     <body>
         ${topBarReplacement}
@@ -28,19 +26,19 @@
 							</div>
 						</div>
 						<h2 class="posttitle">
-							${page.pageTitle}
+							${article.pageTitle}
 						</h2>
 						<div class="postmeta">
 							<a href="">${blogTitle}</a>
 						</div>
 						<div class="clr16"></div>
 						<div class="postcontent breakline article-body">
-						${page.pageContent}
+						${article.pageContent}
 						</div>
 						<div class="clr"></div>
 					</div>
 					<div class="clr"></div>
-					<@comments commentList=pageComments permalink=page.pagePermalink></@comments>
+					<@comments commentList=pageComments permalink=article.pagePermalink></@comments>
 				</div>
 				<div class="clr"></div>
 				<div class="copyr">
@@ -51,6 +49,6 @@
 			</div>
 			<#include "footer.ftl">
 		</div>
-		<@comment_script oId=page.oId></@comment_script>
+		<@comment_script oId=article.oId></@comment_script>
     </body>
 </html>

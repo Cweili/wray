@@ -155,6 +155,8 @@ public final class AdminPageController extends BaseController {
 	private Article getArticle(WebRequest request, Article ori) {
 		String title = StringUtils.trimToEmpty(request.getParameter("title"));
 		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
+		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
+				new String[] { ",", "," }));
 		String content = StringUtils.trimToEmpty(request.getParameter("content"));
 		byte commentStatus = Article.COMMENT_OFF;
 		if (request.getParameterValues("commentStatus") != null

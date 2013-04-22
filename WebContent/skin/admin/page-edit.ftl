@@ -1,4 +1,5 @@
 <#include "macro-message.ftl">
+<#include "macro-form.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->
 	<div id="content"> <!-- Content begins here -->
@@ -23,7 +24,7 @@
 				</div>
 			</fieldset>
 			<@message type="页面">
-				恭喜您，您的页面已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}page/${permalink?if_exists}" target="_blank">查看效果</a>。
+				恭喜您，您的页面已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}page/${article.permalink?if_exists}" target="_blank">查看效果</a>。
 			</@message>
 			<fieldset><legend>保存选项</legend>
 				<div class="input_field no_margin_bottom">
@@ -31,7 +32,7 @@
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if article.stat=4>checked="checked" </#if>/>公开</span>
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if article.stat=2>checked="checked" </#if>/>私密</span>
 					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if article.stat=1>checked="checked" </#if>/>回收站</span>
-					<span class="form_line"><input class="submit" type="submit" value="保存页面" /></span>
+					<@submit>保存页面</@submit>
 				</div>
 			</fieldset>
 		</form>

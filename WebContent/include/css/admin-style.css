@@ -401,6 +401,10 @@ a.close {
 	clear: both;
 }
 
+.block {
+	display: block !important;
+}
+
 .navhead span, .navhead_blank span { 
 	width: 100%;
 	text-align: center;
@@ -754,6 +758,14 @@ a.button {
 	color: #3a9805;
 }
 
+.loading {
+	display: none;
+	background-image: url('../image/loading.gif');
+	margin-top: 6px;
+	width: 20px;
+	height: 20px;
+}
+
 table { 
 	width: 100%;
 	border: 1px solid #111;
@@ -782,6 +794,7 @@ tbody tr.alt td {
 
 
 #container #footer { 
+	margin-top: 80px;
 	float: left;
 	display: inline;
 	width: 100%;

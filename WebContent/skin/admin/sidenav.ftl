@@ -12,6 +12,7 @@
 				<div class="navhead"><span>文章管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
+						<li class="hide" rel="admin-article">编辑文章</li>
 						<li><a href="admin-article-pub">已发布文章</a></li>
 						<li><a href="admin-article-draft">文章草稿</a></li>
 						<li><a href="admin-article-add">新增文章</a></li>
@@ -41,6 +42,7 @@
 				<div class="navhead"><span>页面管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
+						<li class="hide" rel="admin-page">页面编辑</li>
 						<li><a href="admin-page-pub">公开页面</a></li>
 						<li><a href="admin-page-private">私密页面</a></li>
 						<li><a href="admin-page-add">新增页面</a></li>

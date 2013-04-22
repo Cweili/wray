@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.Constant;
-import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
@@ -215,9 +215,8 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		List<Article> articles = new ArrayList<Article>();
 		for (Article article : list) {
 			if (article.getContent().contains("<a name=\"more\"></a>")) {
-				article.setContent(HtmlFixer.fix(CutString.substring(article.getContent(), article
-						.getContent().indexOf("<a name=\"more\"></a>")))
-						+ "<!--more-->");
+				article.setContent(HtmlFixer.fix(StringUtils.substringBefore(article.getContent(),
+						"<a name=\"more\"></a>")) + "<!--more-->");
 			} else {
 				if (article.getContent().length() >= 300) {
 					article.setContent(HtmlFixer.substring(article.getContent(), 300)
@@ -228,5 +227,4 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 		return articles;
 	}
-
 }

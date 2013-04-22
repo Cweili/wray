@@ -5,26 +5,28 @@
 	<title>${blogTitle?if_exists} 管理面板 - Wray Admin Panel</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<base href="${staticServePath}" />
-	<link rel="stylesheet" href="${staticServePath}include/css/admin-style.css" type="text/css" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="${staticServePath}include/css/admin-style.css" />
 	
 	<script type="text/javascript">
 		var authority = "${authority?if_exists}";
 		var authorityTime = "${authorityTime?if_exists}";
 	</script>
 	
-	<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
-	<script src="${staticServePath}include/js/jquery-ui-1.10.2.min.js" type="text/javascript"></script>
-	<script src="${staticServePath}include/js/jquery.validate.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${staticServePath}include/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${staticServePath}include/js/jquery-ui-1.10.2.min.js"></script>
+	<script type="text/javascript" src="${staticServePath}include/js/jquery.validate.min.js"></script>
 	<#--
 	<script src="${staticServePath}include/js/jquery.wysiwyg.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/wysiwyg.image.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/wysiwyg.link.js" type="text/javascript"></script>
 	<script src="${staticServePath}include/js/wysiwyg.table.js" type="text/javascript"></script>
 	-->
-	<script src="${staticServePath}include/editor/kindeditor.js" type="text/javascript"></script>
-	<script src="${staticServePath}include/editor/zh_CN.js" type="text/javascript"></script>
-	<#--<script src="${staticServePath}include/editor/plugins/code/prettify.js"></script>-->
-	<script src="${staticServePath}include/js/admin-functions.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${staticServePath}include/editor/kindeditor.js"></script>
+	<script type="text/javascript" src="${staticServePath}include/editor/zh_CN.js"></script>
+	<#--
+	<script type="text/javascript" src="${staticServePath}include/editor/plugins/code/prettify.js"></script>
+	-->
+	<script type="text/javascript" src="${staticServePath}include/js/admin-functions.js"></script>
 
 </head>
 <body>
