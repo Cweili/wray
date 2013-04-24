@@ -95,7 +95,6 @@
 	<div class="sidebox">
 		<span class="stitle">关于 Wary</span>
 		<p>作者: <b>Cweili</b></p>
-		<p><b>213 products</b> sold yesterday.</p>
-		<p><b>More information:</b></p>
+		<p>版本: <b>${wrayVersion}</b></p>
 	</div>
 </div> <!-- END Sidebar -->
