@@ -232,7 +232,7 @@ db.getCollection("config").insert({
   "value": "长度最长为"
 });
 db.getCollection("config").insert({
-  "_id": "emailErrorLabel",
+  "_id": "inputErrorLabel",
   "_class": "org.cweili.wray.domain.Config",
   "value": "E-mail填写错误"
 });

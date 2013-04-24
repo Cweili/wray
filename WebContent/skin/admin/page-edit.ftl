@@ -17,6 +17,11 @@
 					<input class="mediumfield" name="permalink" type="text" value="${article.permalink?if_exists}" />
 					<span class="field_desc">/</span>
 				</div>
+				<div class="input_field">
+					<label for="tag">关键字</label>
+					<input class="bigfield" name="tag" type="text" value="${article.tag?if_exists}" />
+					<span class="field_desc">使用逗号或空格分隔，每个标签不长于6个汉字</span>
+				</div>
 			</fieldset>
 			<fieldset><legend>页面正文</legend>
 				<div class="input_field">

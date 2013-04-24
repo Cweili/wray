@@ -155,8 +155,7 @@ public final class AdminPageController extends BaseController {
 	private Article getArticle(WebRequest request, Article ori) {
 		String title = StringUtils.trimToEmpty(request.getParameter("title"));
 		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
-		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
-				new String[] { ",", "," }));
+		String tag = StringUtils.trimToEmpty(request.getParameter("tag"));
 		String content = StringUtils.trimToEmpty(request.getParameter("content"));
 		byte commentStatus = Article.COMMENT_OFF;
 		if (request.getParameterValues("commentStatus") != null
@@ -171,6 +170,8 @@ public final class AdminPageController extends BaseController {
 		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
+		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
+				new String[] { ",", "," }));
 		byte stat = Article.STAT_PUBLISHED;
 		if ((Article.STAT_DRAFT + "").equals(s)) {
 			stat = Article.STAT_DRAFT;
@@ -181,11 +182,12 @@ public final class AdminPageController extends BaseController {
 			ori.setTitle(title);
 			ori.setPermalink(permalink);
 			ori.setContent(content);
+			ori.setTag(tag);
 			ori.setStat(stat);
 			ori.setCommentStatus(commentStatus);
 			return ori;
 		}
-		return new Article(id, title, permalink, content, "", new Date(), stat, 0, 0,
+		return new Article(id, title, permalink, content, tag, new Date(), stat, 0, 0,
 				commentStatus, Article.TYPE_PAGE);
 	}
 

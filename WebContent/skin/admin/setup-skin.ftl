@@ -153,12 +153,8 @@
 					<input class="bigfield" name="requiredErrorLabel" type="text" value="${requiredErrorLabel?if_exists}" />
 				</div>
 				<div class="input_field">
-					<label for="emailErrorLabel">E-mail错误提示</label>
-					<input class="bigfield" name="emailErrorLabel" type="text" value="${emailErrorLabel?if_exists}" />
-				</div>
-				<div class="input_field">
-					<label for="urlErrorLabel">链接错误提示</label>
-					<input class="bigfield" name="urlErrorLabel" type="text" value="${urlErrorLabel?if_exists}" />
+					<label for="inputErrorLabel">填写错误提示</label>
+					<input class="bigfield" name="inputErrorLabel" type="text" value="${inputErrorLabel?if_exists}" />
 				</div>
 				<div class="input_field">
 					<label for="maxlengthErrorLabel">超长错误提示</label>

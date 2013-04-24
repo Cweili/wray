@@ -78,7 +78,7 @@ public class Constant {
 			"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
 			"moreLabel", "returnLabel", "tagLabel", "viewLabel", "commentAuthorLabel",
 			"commentEmailLabel", "commentLinkLabel", "submmitCommentLabel", "requiredErrorLabel",
-			"emailErrorLabel", "urlErrorLabel", "maxlengthErrorLabel", "allTagsLabel" };
+			"inputErrorLabel", "maxlengthErrorLabel", "allTagsLabel" };
 
 	/**
 	 * 皮肤扩展名

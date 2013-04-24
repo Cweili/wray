@@ -20,7 +20,7 @@
 				<div class="input_field">
 					<label for="tag">文章标签</label>
 					<input class="bigfield" name="tag" type="text" value="${article.tag?if_exists}" />
-					<span class="field_desc">使用逗号或空格分隔，每个标签不长于18字节</span>
+					<span class="field_desc">使用逗号或空格分隔，每个标签不长于6个汉字</span>
 				</div>
 				<div class="input_field">
 					<label for="permalink">文章分类</label>

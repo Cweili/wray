@@ -3,13 +3,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <@head title="${article.pageTitle} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords}" />
+        <@head title="${article.title} - ${blogTitle}">
+        <meta name="keywords" content="${metaKeywords},${article.tag}" />
         <meta name="description" content="${metaDescription}" />
         </@head>
     </head>
     <body>
-        ${topBarReplacement}
+        $`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<#include "header.ftl">
 			<div id="outerwrapper">
@@ -26,19 +26,19 @@
 							</div>
 						</div>
 						<h2 class="posttitle">
-							${article.pageTitle}
+							${article.title}
 						</h2>
 						<div class="postmeta">
 							<a href="">${blogTitle}</a>
 						</div>
 						<div class="clr16"></div>
 						<div class="postcontent breakline article-body">
-						${article.pageContent}
+						${article.content}
 						</div>
 						<div class="clr"></div>
 					</div>
 					<div class="clr"></div>
-					<@comments commentList=pageComments permalink=article.pagePermalink></@comments>
+					<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
 				</div>
 				<div class="clr"></div>
 				<div class="copyr">
@@ -49,6 +49,6 @@
 			</div>
 			<#include "footer.ftl">
 		</div>
-		<@comment_script oId=article.oId></@comment_script>
+		<@comment_script></@comment_script>
     </body>
 </html>

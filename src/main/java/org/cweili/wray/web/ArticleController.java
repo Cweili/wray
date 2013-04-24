@@ -47,6 +47,7 @@ public final class ArticleController extends BaseController {
 		}
 		BlogView v = new BlogView("page");
 		v.add("article", page);
+		v.add("commentList", commentService.findByArticle(page));
 		return v;
 	}
 

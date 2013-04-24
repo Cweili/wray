@@ -43,43 +43,44 @@
 	<table class="comment-form">
 		<tbody>
 			<tr>
-				<th width="58px">${commentAuthorLabel}</th>
-				<td colspan="2" width="450px">
+				<th style="width:104px">${commentAuthorLabel}</th>
+				<td>
 					<input type="text" name="author" tabindex="1" />
 				</td>
-				<td width="30px">
+				<td style="width:30px">
 					<button id="closeCommentButton" class="hide">X</button>
 				</td>
 			</tr>
 			<tr>
 				<th>${commentEmailLabel}</th>
-				<td colspan="3">
+				<td colspan="2">
 					<input type="text" name="email" tabindex="2" />
 				</td>
 			</tr>
 			<tr>
 				<th>${commentLinkLabel}
 				</th>
-				<td colspan="3">
+				<td colspan="2">
 					<div class="commentLinkLabel">http://</div>
 					<input class="commentLink" type="text" name="link" tabindex="3" />
 				</td>
 			</tr>
 			<tr>
-				<td id="comment-content" colspan="4">
+				<td id="comment-content" colspan="3">
 					<textarea class="wysiwyg" name="content" tabindex="4" ></textarea>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" width="235px" height="44px">
+				<th id="comment-captcha">
+					<img id="captcha" alt="validate" />
+				</th>
+				<td colspan="2" style="height:44px">
 					<input type="text" name="captcha" tabindex="5" />
-				</td>
-				<td colspan="2">
-					<img id="captcha" alt="validate"></img>
+					<label for="captcha" class="error captcha-error">${inputErrorLabel}</label>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4" align="right">
+				<td colspan="3" align="right">
 					<button id="submitCommentButton">${submmitCommentLabel}</button>
 				</td>
 			</tr>
@@ -99,8 +100,8 @@
 <script type="text/javascript">
 	$.extend($.validator.messages, {
 		required: "${requiredErrorLabel}",
-		email: "${emailErrorLabel}",
-		url: "${urlErrorLabel}",
+		email: "${inputErrorLabel}",
+		url: "${inputErrorLabel}",
 		maxlength: $.validator.format("${maxlengthErrorLabel}" + " {0}")
 	});
 </script>

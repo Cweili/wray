@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
+import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.WebRequest;
 
 /**
  * 
@@ -40,10 +43,8 @@ public final class CommentController extends BaseController {
 		HttpHeaders header = new HttpHeaders();
 		try {
 			if (Article.TYPE_ARTICLE == article.getIsPage()) {
-
 				header.setLocation(new URI("article/" + article.getPermalink() + "#comment-"
 						+ commentid));
-
 			} else {
 				header.setLocation(new URI("page/" + article.getPermalink() + "#comment-"
 						+ commentid));
@@ -59,11 +60,21 @@ public final class CommentController extends BaseController {
 	}
 
 	@RequestMapping(value = "/comment", method = RequestMethod.POST)
-	public ResponseEntity<String> post(@RequestParam("articleId") String articleId,
+	public @ResponseBody
+	String post(WebRequest request, @RequestParam("articleId") String articleId,
 			@RequestParam("author") String author, @RequestHeader("User-Agent") String userAgent,
 			@RequestParam("content") String content, @RequestParam("email") String email,
 			@RequestParam("link") String link, @RequestParam("parentId") String parentId,
-			@RequestParam("permalink") String permalink) {
+			@RequestParam("permalink") String permalink, @RequestParam("captcha") String captcha) {
+		if (!request.getAttribute("captcha", WebRequest.SCOPE_SESSION)
+				.equals(captcha.toUpperCase())) {
+			return "captcha";
+		}
+		request.setAttribute("captcha", Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
+		Article article = articleService.findById(articleId);
+		if (null == article && "".equals(content)) {
+			return "error";
+		}
 		String id = Function.generateId();
 		Comment comment = new Comment();
 		comment.setCommentId(id);
@@ -78,20 +89,8 @@ public final class CommentController extends BaseController {
 		comment.setParentId(parentId);
 		comment.setStat(Comment.STAT_DISPLAY);
 		commentService.save(comment);
-		HttpHeaders header = new HttpHeaders();
 
-		try {
-			header.setLocation(new URI(blogConfig.get("staticServePath") + "article/" + permalink
-					+ "#comment-" + id));
-		} catch (URISyntaxException e) {
-			log.error(e);
-			try {
-				header.setLocation(new URI(blogConfig.get("staticServePath")));
-			} catch (URISyntaxException e1) {
-			}
-		}
-
-		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);
+		return "comment-" + id;
 	}
 
 }

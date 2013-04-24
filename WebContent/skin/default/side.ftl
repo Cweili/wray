@@ -84,6 +84,7 @@
 		<div class="widget-cat">
 			<h4>${archiveLabel}</h4>
 			<ul id="link">
+			<#--
 			<``#list archiveDates as archiveDate>
 				<``#if "en" == localeString?substring(0, 2)>
 				<li><a href="/archives/$`{archiveDate.archiveDateYear}/$`{archiveDate.archiveDateMonth}"
@@ -95,6 +96,7 @@
 					$`{archiveDate.archiveDateYear} $`{yearLabel} $`{archiveDate.archiveDateMonth} $`{monthLabel}</a>($`{archiveDate.archiveDatePublishedArticleCount})</li>
 				<``/#if>
 			<``/#list>
+			-->
 			</ul>
 		</div>
 		<div class="clr"></div>

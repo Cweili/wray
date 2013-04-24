@@ -4,9 +4,9 @@
 
 body {
 	color: #373737;
-	background:url(../images/homebg.jpg) top center no-repeat #222326;
-	font-family:Tahoma,Microsoft YaHei,Verdana,Arial,Helvetica,sans-serif;
-	font-size: 12px;
+	background: url(../images/homebg.jpg) top center no-repeat #222326;
+	font-family: Tahoma,Microsoft YaHei,Verdana,Arial,Helvetica,sans-serif;
+	font-size: 13px;
 	background-color: #3e3e3e;
 	background-position: top;
 	background-color: #000000;
@@ -19,21 +19,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-	margin:0px 0px 20px 0px;
+	margin: 0px 0px 20px 0px;
 }
 
 a {
-	outline:none; 
+	outline: none; 
 	text-decoration: none;
 	color: #333333;
 }
 a:hover {
-	color:#c00000;
+	color: #c00000;
 	text-decoration: none;
 }
 
 a img {
-	border:none;
+	border: none;
 }
 
 .clr {
@@ -689,18 +689,22 @@ div.copyr {
 	padding: 9px 15px 10px;
 	word-wrap: break-word;
 }
+.comment-form table{
+	table-layout: fixed;
+}
 .comment-form img {
 	cursor: pointer;
 }
 .comment-form th {
-	align: right;
+	text-align: right;
+	padding-right: 3px;
 }
 .comment-form input, .comment-form textarea {
 	background: url("../images/textfield.gif") repeat-x scroll 50% 0 #FFFFFF;
 	border: 1px solid #A6A6A6;
 	color: #555555;
 	font-family: Helvetica,Arial,sans-serif;
-	height: 16px;
+	height: 22px;
 	outline: none;
 	padding: 2px 1px;
 	width: 200px;
@@ -731,12 +735,14 @@ button:hover {
 .commentLinkLabel, .commentLinkLabelReply {
 	position: absolute;
 	background: url("../images/textfield.gif") repeat-x scroll 50% 0 #FFFFFF;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 13px;
 	border: 1px solid #A6A6A6;
 	border-right: 0px;
 	float: left;
-	height: 20px;
-	line-height: 20px;
-	padding-left: 2px;
+	height: 22px;
+	line-height: 22px;
+	padding: 2px 0 2px 2px;
 }
 .commentLink, .commentLinkReply {
 	border-left: 0 none;
@@ -832,9 +838,9 @@ label.error {
 	float: none;
 	position: static;
 	background: url('../../../include/image/validate_error.png') no-repeat left;
-	background-position: 4px;
-	margin-left: 4px;
-	padding: 2px 6px 2px 21px;
+	background-position: 2px;
+	margin-left: 2px;
+	padding: 3px 2px 4px 17px;
 	color: #981d05;
 	top: 0;
 	behavior: url('../../../include/js/iepngfic.htc') !important;

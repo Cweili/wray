@@ -61,6 +61,30 @@ var commentFormValidation = {
 
 var editor = null;
 
+var updateCaptcha = function(id) {
+	$(id).attr("src", "captcha?height=28&width=100&" + Math.random());
+};
+
+var submitComment = function(id) {
+	$(id).on("submit", function() {
+		$(".captcha-error").hide();
+		if($(id).valid()) {
+			$.post("comment", $(id).serialize(), function(data) {
+				if (data == "captcha") {
+					$(".captcha-error").show();
+					$(id + " input[name=captcha]").focus();
+					updateCaptcha("#captcha" + id.substring(12));
+				} else if (data == "error") {
+					
+				} else {
+					window.location.href = data;
+				}
+			});
+		}
+		return false;
+	});
+};
+
 var replyTo = function(id, author) {
 	// 移除其他回复框
 	$("#replyForm").remove();
@@ -72,12 +96,23 @@ var replyTo = function(id, author) {
 		+ $("#commentForm").children().html() + '</table></form>'
 	);
 	
+	// 添加AJAX提交
+	submitComment("#commentForm" + id);
+	
 	// 重置编辑器
 	$("#comment-content").empty();
 	$("#comment-content").append(
 		'<textarea id="textarea' + id + '" name="content" style="width:540px"></textarea>'
 	);
 	editor = KindEditor.create("#textarea" + id, editorInit);
+	
+	// 重置验证码
+	$("#comment-captcha").empty();
+	$("#comment-captcha").append('<img id="captcha' + id + '" alt="validate" />');
+	updateCaptcha("#captcha" + id);
+	$("#captcha" + id).click(function() {
+		updateCaptcha("#captcha" + id);
+	});
 	
 	// 添加关闭按钮
 	$("#commentForm" + id + " #closeCommentButton").on("click", function() {
@@ -119,19 +154,14 @@ var hideComment = function(id) {
 	$("#commentRef" + id).hide(300);
 };
 
-$.validator.setDefaults({
-	submitHandler: function(form) {
-		if(null != editor) {
-			editor.sync();
-			$("#submitCommentButton").attr("disabled", true);
-			form.submit();
-		}
-	}
-});
-
-var updateCaptcha = function() {
-	$("#captcha").attr("src", "captcha?height=40&" + Math.random());
-};
+//$.validator.setDefaults({
+//	submitHandler: function(form) {
+//		if(null != editor) {
+//			editor.sync();
+//			$("#submitCommentButton").attr("disabled", true);
+//		}
+//	}
+//});
 
 $(function() {
 	if ($("#comments div").length === 0) {
@@ -165,21 +195,27 @@ $(function() {
 		$(".commentLink").val("http://");
 	});
 	
-	$("#captcha").hide();
+//	$("#captcha").hide();
 	
-	$("input[name=author]").one("focus", function() {
-		$("#captcha").show();
-		updateCaptcha();
-	});
+	$(".captcha-error").hide();
+	
+	updateCaptcha("#captcha");
+	
+//	$("input[name=author]").one("focus", function() {
+//		$("#captcha").show();
+//		updateCaptcha();
+//	});
 	
 	$("#captcha").click(function() {
-		updateCaptcha();
+		updateCaptcha("#captcha");
 	});
 	
 	$(".comment-author-img").one("error", function() {
 		$(this).attr("src", "include/image/user.png");
 		return false;
 	});
+	
+	submitComment("#commentForm");
 	
 	$("#commentForm").validate(commentFormValidation);
 	
