@@ -58,6 +58,11 @@ public final class AdminLoginController extends BaseController {
 		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 
+		if (!StringUtils.stripToEmpty(request.getParameter(Constant.CAPTCHA)).toUpperCase()
+				.equals(request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION))) {
+			return Constant.CAPTCHA;
+		}
+
 		if (null != request.getParameter("username") && null != request.getParameter("password")
 				&& null != request.getParameter("hash")
 				&& request.getParameter("username").equals(blogConfig.get("adminName"))) {

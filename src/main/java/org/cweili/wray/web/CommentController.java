@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.util.Captcha;
+import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -65,12 +66,13 @@ public final class CommentController extends BaseController {
 			@RequestParam("author") String author, @RequestHeader("User-Agent") String userAgent,
 			@RequestParam("content") String content, @RequestParam("email") String email,
 			@RequestParam("link") String link, @RequestParam("parentId") String parentId,
-			@RequestParam("permalink") String permalink, @RequestParam("captcha") String captcha) {
-		if (!request.getAttribute("captcha", WebRequest.SCOPE_SESSION)
-				.equals(captcha.toUpperCase())) {
-			return "captcha";
+			@RequestParam("permalink") String permalink,
+			@RequestParam(Constant.CAPTCHA) String captcha) {
+		if (!request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION).equals(
+				captcha.toUpperCase())) {
+			return Constant.CAPTCHA;
 		}
-		request.setAttribute("captcha", Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
+		request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
 		Article article = articleService.findById(articleId);
 		if (null == article && "".equals(content)) {
 			return "error";

@@ -40,6 +40,11 @@ public class Constant {
 	/**
 	 * 
 	 */
+	public static final String CAPTCHA = "captcha";
+
+	/**
+	 * 
+	 */
 	public static final String SUBMIT_SUCCESS = "success";
 
 	/**

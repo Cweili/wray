@@ -1,7 +1,13 @@
 package org.cweili.wray.web.admin;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.web.BaseController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,8 +20,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public final class AdminDashboardController extends BaseController {
 
+	@RequestMapping("/admin")
+	public ResponseEntity<String> redirect() {
+		HttpHeaders header = new HttpHeaders();
+		try {
+			header.setLocation(new URI("admin-dashboard"));
+		} catch (URISyntaxException e) {
+			log.error(e);
+		}
+		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);
+	}
+
 	@RequestMapping("/admin-dashboard")
-	public BlogView index() {
+	public BlogView dashboard() {
 		BlogView v = new BlogView("dashboard");
 		return v;
 	}

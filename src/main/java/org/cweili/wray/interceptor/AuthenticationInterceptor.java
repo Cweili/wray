@@ -28,7 +28,6 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 		// Cookie 登录
 		String token = findCookie(request, Constant.AUTHORITY_TOKEN);
 		if (null != token) {
-			log.error(token);
 			String[] tokens = token.split("@");
 			if (tokens.length == 2
 					&& tokens[0].equals(Function.authorityToken(tokens[1],

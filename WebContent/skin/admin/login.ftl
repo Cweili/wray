@@ -12,24 +12,30 @@
 		<h1>${blogTitle?if_exists}管理面板 - Wray Admin Panel</h1>
 		<div id="box">
 			<form id="admin-login" action="admin-login" method="post">
-			<p class="main">
-				<label>用户名: </label>
-				<input name="username" value="${username?if_exists}" /> 
-				<label>密码: </label>
-				<input id="password" type="password" name="password" />	
-			</p>
-			<p class="space">
-				<span><input type="checkbox" name="rememberme" value="true" />记住我</span>
+				<p class="main">
+					<label for="username">用户名: </label>
+					<input class="text" type="text" name="username" value="${username?if_exists}" /> 
+					<label for="password">密码: </label>
+					<input class="text" type="password" name="password" />	
+				</p>
+				<p class="main space">
+					<label for="captcha">验证码: </label>
+					<input class="text" type="text" name="captcha" />
+					<img id="captcha" alt="validate" />
+				</p>
+				<p class="space"></p>
+				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" />记住我</div>
 				<input type="submit" value="登 &nbsp; 录" class="login" />
-			</p>
-			<input id="hash" type="hidden" name="hash" />
+				<div id="loading"></div>
+				<input id="hash" type="hidden" name="hash" />
+				<div class=""></div>
 			</form>
-			<br />
+			<p class="space"></p>
 			<div class="err">
 				<div class="err_icon"><!-- --></div>
 				<div class="desc">
 					<span>Error!</span>
-					<p>请确认您的用户名和密码正确.</p>
+					<p></p>
 				</div>
 			</div>
 			<div class="succes">

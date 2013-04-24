@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import org.cweili.wray.util.Captcha;
+import org.cweili.wray.util.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +40,7 @@ public final class CaptchaController extends BaseController {
 			log.error(e);
 		}
 		String captcha = Captcha.getRandomString(6);
-		request.setAttribute("captcha", captcha, WebRequest.SCOPE_SESSION);
+		request.setAttribute(Constant.CAPTCHA, captcha, WebRequest.SCOPE_SESSION);
 
 		try {
 			return Captcha.out(captcha, width, height);
