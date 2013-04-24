@@ -37,6 +37,7 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	private byte isPage;
 
 	public static final byte STAT_PUBLISHED = 4;
+	public static final byte STAT_PRIVATE = 3;
 	public static final byte STAT_DRAFT = 2;
 	public static final byte STAT_RECYCLE = 1;
 	public static final byte STAT_REMOVED = 0;

@@ -40,7 +40,7 @@ public final class AdminPageController extends BaseController {
 			log.error(e);
 		}
 		if ("private".equals(status)) {
-			stat = Article.STAT_DRAFT;
+			stat = Article.STAT_PRIVATE;
 			actionName = "私密页面";
 		} else if ("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;
@@ -126,7 +126,7 @@ public final class AdminPageController extends BaseController {
 
 		byte stat = Article.STAT_PUBLISHED;
 		if ("private".equals(status)) {
-			stat = Article.STAT_DRAFT;
+			stat = Article.STAT_PRIVATE;
 		} else if ("recycle".equals(status)) {
 			stat = Article.STAT_RECYCLE;
 		}
@@ -173,8 +173,8 @@ public final class AdminPageController extends BaseController {
 		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
 				new String[] { ",", "," }));
 		byte stat = Article.STAT_PUBLISHED;
-		if ((Article.STAT_DRAFT + "").equals(s)) {
-			stat = Article.STAT_DRAFT;
+		if ((Article.STAT_PRIVATE + "").equals(s)) {
+			stat = Article.STAT_PRIVATE;
 		} else if ((Article.STAT_RECYCLE + "").equals(s)) {
 			stat = Article.STAT_RECYCLE;
 		}

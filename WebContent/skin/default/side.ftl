@@ -7,7 +7,7 @@
 		</div>
 		<div class="clr"></div>
 		</#if>
-		<#if 0 != recentComments?size>
+		<#if (recentComments?size > 0)>
 		<div class="widget-cat">
 			<h4>${recentCommentsLabel}</h4>
 			<ul id="newcomment">
@@ -36,7 +36,7 @@
 		</div>
 		<div class="clr"></div>
 		<``/#if>
-		<#if 0 != mostCommentArticles?size>
+		<#if (mostCommentArticles?size > 0)>
 		<div class="widget-cat">
 			<h4>${mostCommentArticlesLabel}</h4>
 			<ul id="blogsort">
@@ -52,7 +52,7 @@
 		</div>
 		<div class="clr"></div>
 		</#if>
-		<#if 0 != mostViewCountArticles?size>
+		<#if (mostViewCountArticles?size > 0)>
 		<div class="widget-cat">
 			<h4>${mostViewCountArticlesLabel}</h4>
 			<ul id="blogsort">
@@ -68,7 +68,7 @@
 		</div>
 		<div class="clr"></div>
 		</#if>
-		<#if 0 != links?size>
+		<#if (links?size > 0)>
 		<div class="widget-cat">
 			<h4>${linkLabel}</h4>
 			<ul id="link">

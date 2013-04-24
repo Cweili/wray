@@ -33,176 +33,104 @@
 				</a>
 			</li>
 		</ul>
-		<h2>Tables</h2>				
-		<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
-			<thead>
-				<tr>
-					<th><input type="checkbox" class="checkall" /></th>
-					<th>No</th>
-					<th>Status</th>
-					<th>Customer Name</th>
-					<th>Views</th>
-					<th>Date</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-		
-			<tbody>
-				<tr>
-					<td><input type="checkbox" /></td>
-					<td>1</td>
-					<td>Approved</td>
-					<td>Lorem ipsum</td>
-					<td>273</td>
-					<td>6.12.2009</td>
-					<td><a href="#"><img src="assets/action_add.png" alt="Add" /></a><a href="#"><img src="assets/action_remove.png" alt="Remove" /></a><a href="#"><img src="assets/action_check.png" alt="Check" /></a><a href="#"><img src="assets/action_delete.png" alt="Delete" /></a><a href="#"><img src="assets/folder.png" alt="Folder" /></a><a href="#"><img src="assets/letter.png" alt="Letter" /></a></td>
-				</tr>
-				
-				<tr class="alt">
-					<td><input type="checkbox" /></td>
-					<td>2</td>
-					<td>Approved</td>
-					<td>Ipsum Dolor</td>
-					<td>5096</td>
-					<td>1.23.2009</td>
-					<td><a href="#"><img src="assets/action_add.png" alt="Add" /></a><a href="#"><img src="assets/action_remove.png" alt="Remove" /></a><a href="#"><img src="assets/action_check.png" alt="Check" /></a><a href="#"><img src="assets/action_delete.png" alt="Delete" /></a><a href="#"><img src="assets/folder.png" alt="Folder" /></a><a href="#"><img src="assets/letter.png" alt="Letter" /></a></td>
-				</tr>
-				
-				<tr>
-					<td><input type="checkbox" /></td>
-					<td>3</td>
-					<td>Pending</td>
-					<td>Dolor sit</td>
-					<td>0</td>
-					<td>3.17.2009</td>
-					<td><a href="#"><img src="assets/action_add.png" alt="Add" /></a><a href="#"><img src="assets/action_remove.png" alt="Remove" /></a><a href="#"><img src="assets/action_check.png" alt="Check" /></a><a href="#"><img src="assets/action_delete.png" alt="Delete" /></a><a href="#"><img src="assets/folder.png" alt="Folder" /></a><a href="#"><img src="assets/letter.png" alt="Letter" /></a></td>
-				</tr>
-				
-				<tr class="alt">
-					<td><input type="checkbox" /></td>
-					<td>4</td>
-					<td>Declined</td>
-					<td>Sit Amet</td>
-					<td>192</td>
-					<td>9.30.2009</td>
-					<td><a href="#"><img src="assets/action_add.png" alt="Add" /></a><a href="#"><img src="assets/action_remove.png" alt="Remove" /></a><a href="#"><img src="assets/action_check.png" alt="Check" /></a><a href="#"><img src="assets/action_delete.png" alt="Delete" /></a><a href="#"><img src="assets/folder.png" alt="Folder" /></a><a href="#"><img src="assets/letter.png" alt="Letter" /></a></td>
-				</tr>
-				
-				<tr>
-					<td><input type="checkbox" /></td>
-					<td>5</td>
-					<td>Pending</td>
-					<td>Amet Lorem</td>
-					<td>501</td>
-					<td>10.01.2009</td>
-					<td><a href="#"><img src="assets/action_add.png" alt="Add" /></a><a href="#"><img src="assets/action_remove.png" alt="Remove" /></a><a href="#"><img src="assets/action_check.png" alt="Check" /></a><a href="#"><img src="assets/action_delete.png" alt="Delete" /></a><a href="#"><img src="assets/folder.png" alt="Folder" /></a><a href="#"><img src="assets/letter.png" alt="Letter" /></a></td>
-				</tr>
-			</tbody>
-		</table> <!-- END Table -->
-		<h2>Notifications</h2>
-		<div class="warning">
-			<div class="warn_icon"><!-- --></div>
-			<a href="#" class="close" title="Close this notification">x</a>
-			<div class="desc">
-				<span>Warning!</span>
-				<p>Mauris molestie, nisi ac elementum convallis, sapien odio sollicitudin mi, vel pellentesque nunc erat at sapien. </p>
+		<fieldset><legend>博客统计</legend>
+			<div class="input_field">
+				<p>
+					<strong><a href="admin-article-pub">已发布文章</a></strong>
+					<em><a href="admin-article-pub">${articlePublishCount} 篇</a></em>
+					<strong><a href="admin-page-pub">已发布页面</a></strong>
+					<em><a href="admin-page-pub">${pagePublishCount} 个</a></em>
+				</p>
+				<p>
+					<strong><a href="admin-article-draft">文章草稿</a></strong>
+					<em><a href="admin-article-draft">${articleDraftCount} 篇</a></em>
+					<strong><a href="admin-page-private">私密页面</a></strong>
+					<em><a href="admin-page-private">${pagePrivateCount} 个</a></em>
+				</p>
+				<p>
+					<strong><a href="admin-article-recycle">文章回收站</a></strong>
+					<em><a href="admin-article-recycle">${articleRecycleCount} 篇</a></em>
+					<strong><a href="admin-comment">评论总数</a></strong>
+					<em><a href="admin-comment">${commentCount} 条</a></em>
+				</p>
 			</div>
-		</div>
-		<div class="err">
-			<div class="err_icon"><!-- --></div>
-			<a href="#" class="close" title="Close this notification">x</a>
-			<div class="desc">
-				<span>Error!</span>
-				<p>Ut fermentum, quam non eleifend molestie, velit nisl mattis eros, sit amet imperdiet diam justo sed augue.</p>
-			</div>
-		</div>
-		<div class="succes">
-			<div class="succes_icon"><!-- --></div>
-			<a href="#" class="close" title="Close this notification">x</a>
-			<div class="desc">
-				<span>Success!</span>
-				<p>Ut fermentum, quam non eleifend molestie, velit nisl mattis eros, sit amet imperdiet diam justo sed augue.</p>
-			</div>
-		</div>
-		<div class="clear"><!-- --></div>
-
-		<h2>Forms and buttons</h2>
-		<p>In aliquam sagittis urna. Suspendisse potenti. Mauris eu ante ut enim semper egestas. Donec eros justo, tempor eu, condimentum non, fringilla sed, mauris. Fusce massa arcu, fringilla vitae, pulvinar pretium, viverra at, libero. Morbi elit. Integer dapibus. Pellentesque ut ipsum et metus rhoncus vehicula. Quisque fringilla tincidunt lorem. Proin sed erat. Curabitur sit amet risus in dolor tempor adipiscing.</p>
-		<form method="post" action="#"><!-- Form -->
-			<!-- Fieldset -->
-			<fieldset><legend>This is a simple fieldset</legend>
-				<div class="input_field">
-					<label for="sf">Small field: </label>
-					<input class="smallfield" name="sf" type="text" value="input text" />
-					<span class="field_desc">Field description</span>
-				</div>
-				
-				<div class="input_field">
-					<label for="mf">Medium Field: </label>
-					<input class="mediumfield" name="mf" type="text" value="" /> <span class="validate_success">A positive message!</span>
-				</div>
-				
-				<div class="input_field">
-					<label for="lf">Large Field: </label>
-					<input class="bigfield" name="lf" type="text" value="" /> <span class="validate_error">A negative message!</span>
-				</div>
-				<div class="input_field">
-					<label for ="che">Linecheckboxes: </label>
-					<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-					<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-					<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-					<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-				</div>
-				<div class="input_field">
-
-					<label for="dropdown">DropDown: </label>
-					<select name="dropdown" class="dropdown">
-						<option>United States</option>
-						<option>Other Country</option>
-					</select>
-				</div>
-				<div class="input_field">
-					<label>Vertical:</label>
-					<div class="column">
-						<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-						<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-						<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-						<span class="form_line"><input type="checkbox" name="che" class="checkbox" />Lorem Ipsum</span>
-					</div>
-					<div class="column">
-						<span class="form_line"><input type="radio" class="radio" />Lorem Ipsum</span>
-						<span class="form_line"><input type="radio" class="radio" />Lorem Ipsum</span>
-						<span class="form_line"><input type="radio" class="radio" />Lorem Ipsum</span>
-						<span class="form_line"><input type="radio" class="radio" />Lorem Ipsum</span>
-					</div>
-				</div>
-				<div class="input_field">
-						<textarea id="wysiwyg" cols="50" rows="10"></textarea>
-				</div>
-				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="Submit" />
-					<input class="submit" type="reset" value="Reset" />
-					<a href="#" class="button">A button</a>
-				</div>
-			</fieldset>
-			<!-- End of fieldset -->
-		</form><!-- /Form -->
-
-		<!-- The paginator -->
-		<ul class="pagination">
-			<li><a href="#">Previous</a></li>
-			<li class="current"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-			<li><a href="#">3</a></li>
-			<li><a href="#">4</a></li>
-			<li><a href="#">5</a></li>
-			<li><a href="#">6</a></li>
-			<li><a href="#">7</a></li>
-			<li><a href="#">8</a></li>
-			<li><a href="#">9</a></li>
-			<li><a href="#">Next</a></li>
-		</ul>
-		<!-- Paginator end -->
+		</fieldset>
+		<#if (recentComments?size > 0)>
+			<h2>最新评论</h2>
+			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+				<thead>
+					<tr>
+						<th>作者</th>
+						<th>时间</th>
+						<th>E-mail</th>
+						<th>内容</th>
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#assign i = 0>
+					<#list recentComments as comment>
+					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
+						<td>
+							<#if comment.link?has_content>
+								<a href="${comment.link}" target="_blank">${comment.author}</a>
+							<#else>
+								${comment.author}
+							</#if>
+						</td>
+						<td><a href="admin-comment-edit-${comment.commentId}">${comment.postDate?string("yyyy-MM-dd HH:mm:ss")}</a></td>
+						<td>${comment.email}</td>
+						<td><a href="admin-comment-edit-${comment.commentId}">${comment.content}</a></td>
+						<td><#if comment.stat = 2>正常<#else>屏蔽</#if></td>
+						<td>
+							<a href="admin-comment-edit-${comment.commentId}">
+								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+							</a>
+							<a href="comment-${comment.commentId}" target="_blank">
+								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+							</a>
+						</td>
+					</tr>
+					</#list>
+				</tbody>
+			</table> <!-- END Table -->
+		</#if>
+		<#if (articles?size > 0)>
+			<h2>最近文章草稿</h2>
+			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+				<thead>
+					<tr>
+						<th>标题</th>
+						<th>时间</th>
+						<th>标签</th>
+						<th>点击</th>
+						<th>回复</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#assign i = 0>
+					<#list articles as article>
+					<tr<#if i = 0> class="alt"<#assign i = 1><#else><#assign i = 0></#if>>
+						<td><a href="admin-article-edit-${article.articleId}">${article.title}</a></td>
+						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
+						<td>${article.tag}</td>
+						<td>${article.hits}</td>
+						<td>${article.commentCount}</td>
+						<td>
+							<a href="admin-article-edit-${article.articleId}">
+								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+							</a>
+							<a href="article/${article.permalink}" target="_blank">
+								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+							</a>
+						</td>
+					</tr>
+					</#list>
+				</tbody>
+			</table> <!-- END Table -->
+		</#if>
 	</div> <!-- END Content -->
 </div> 	
 <#include "footer.ftl">
