@@ -1,4 +1,5 @@
 <#include "macro-head.ftl">
+<#include "macro-footer.ftl">
 <#include "macro-comments.ftl">
 <!DOCTYPE html>
 <html>
@@ -11,7 +12,7 @@
     <body>
         $`{topBarReplacement}
 		<div id="wrapper" align="center">
-			<#include "header.ftl">
+			<@header></@header>
 			<div id="outerwrapper">
 				<div id="innerwrapper">
 					<div id="rightcol">
@@ -99,15 +100,10 @@
 						<div class="clr"></div>
 						<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
 					</div>
-					<div class="clr"></div>
-					<div class="copyr">
-					&copy; ${year}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
-					</div>
-					<div class="clr16"></div>
-					<!---->
+					<@copyright></@copyright>
 				</div>
 			</div>
-			<#include "footer.ftl">
+			<@footer></@footer>
 		</div>
         <@comment_script></@comment_script>
     </body>

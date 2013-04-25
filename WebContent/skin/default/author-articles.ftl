@@ -1,4 +1,5 @@
 <#include "macro-head.ftl">
+<#include "macro-footer.ftl">
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +11,7 @@
     <body>
         ${topBarReplacement}
 		<div id="wrapper" align="center">
-			<#include "header.ftl">
+			<@header></@header>
 			<div id="outerwrapper">
 				<div id="innerwrapper">
 				<div id="rightcol">
@@ -19,7 +20,7 @@
 				<#include "article-list.ftl">
 			</div>
 			</div>
-			<#include "footer.ftl">
+			<@footer></@footer>
 		</div>
     </body>
 </html>

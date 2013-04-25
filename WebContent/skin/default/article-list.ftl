@@ -57,8 +57,4 @@
 </#list>
 <#include "pagination.ftl">
 </div>
-<div class="clr"></div>
-<div class="copyr">
-&copy; ${year}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
-</div>
-<div class="clr16"></div>
+<@copyright></@copyright>

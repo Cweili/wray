@@ -1,4 +1,5 @@
 <#include "macro-head.ftl">
+<#include "macro-footer.ftl">
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,7 +12,7 @@
     <body>
         ${topBarReplacement?if_exists}
 		<div id="wrapper" align="center">
-			<#include "header.ftl">
+			<@header></@header>
 			<div id="outerwrapper">
 				<div id="innerwrapper">
 					<div id="rightcol">
@@ -25,15 +26,10 @@
                         </div>
 						<div class="clr"></div>
 					</div>
-					<div class="clr"></div>
-					<div class="copyr">
-					&copy; ${year?if_exists}&nbsp;<a href="http://${blogHost?if_exists}">${blogTitle?if_exists}</a>
-					</div>
-					<div class="clr16"></div>
-					<!---->
+					<@copyright></@copyright>
 				</div>
 			</div>
-			<#include "footer.ftl">
+			<@footer></@footer>
 		</div>
     </body>
 </html>

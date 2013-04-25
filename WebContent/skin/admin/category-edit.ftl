@@ -1,4 +1,3 @@
-<#include "macro-message.ftl">
 <#include "macro-form.ftl">
 <#include "header.ftl">
 <div id="main"> <!-- Main, right side content -->

@@ -11,43 +11,39 @@
     <body>
         $`{topBarReplacement}
 		<div id="wrapper" align="center">
-			<#include "header.ftl">
+			<@header></@header>
 			<div id="outerwrapper">
 				<div id="innerwrapper">
-				<div id="rightcol">
-					<#include "side.ftl">
-				</div>
-				<div id="maincol">
-					<div class="postwrap">
-						<div class="postmeta2">
-							<div class="meta2inner">
-								<div class="pyear"></div>
-								<div class="pday"></div>
+					<div id="rightcol">
+						<#include "side.ftl">
+					</div>
+					<div id="maincol">
+						<div class="postwrap">
+							<div class="postmeta2">
+								<div class="meta2inner">
+									<div class="pyear"></div>
+									<div class="pday"></div>
+								</div>
 							</div>
-						</div>
-						<h2 class="posttitle">
-							${article.title}
-						</h2>
-						<div class="postmeta">
-							<a href="">${blogTitle}</a>
-						</div>
-						<div class="clr16"></div>
-						<div class="postcontent breakline article-body">
-						${article.content}
+							<h2 class="posttitle">
+								${article.title}
+							</h2>
+							<div class="postmeta">
+								<a href="">${blogTitle}</a>
+							</div>
+							<div class="clr16"></div>
+							<div class="postcontent breakline article-body">
+							${article.content}
+							</div>
+							<div class="clr"></div>
 						</div>
 						<div class="clr"></div>
+						<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
 					</div>
-					<div class="clr"></div>
-					<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
+					<@copyright></@copyright>
 				</div>
-				<div class="clr"></div>
-				<div class="copyr">
-				&copy; ${year}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
-				</div>
-				<div class="clr16"></div>
 			</div>
-			</div>
-			<#include "footer.ftl">
+			<@footer></@footer>
 		</div>
 		<@comment_script></@comment_script>
     </body>
