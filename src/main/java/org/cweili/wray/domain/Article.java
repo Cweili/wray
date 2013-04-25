@@ -117,9 +117,9 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	@Override
 	public int compareTo(Article article) {
 		if (this.getCreateTime().after(article.getCreateTime())) {
-			return 1;
-		} else if (this.getCreateTime().before(article.getCreateTime())) {
 			return -1;
+		} else if (this.getCreateTime().before(article.getCreateTime())) {
+			return 1;
 		}
 		return 0;
 	}

@@ -114,7 +114,7 @@ public abstract class BaseService {
 	/**
 	 * Archive 缓存
 	 */
-	protected static List<Map.Entry<String, String>> archive = null;
+	protected static List<Article> archive = null;
 
 	/**
 	 * RSS 缓存

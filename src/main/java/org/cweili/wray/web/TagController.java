@@ -55,6 +55,9 @@ public final class TagController extends BaseController {
 		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED), page);
 
+		v.add("path", blogConfig.get("StaticServePath") + "tag/" + Function.urlEncode(permalink)
+				+ "/");
+
 		return v;
 	}
 

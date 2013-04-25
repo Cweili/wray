@@ -83,6 +83,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				if (mostUsedTagsSize > 0) {
 					mv.addObject("mostUsedTags", tagService.getmostUsedTags(mostUsedTagsSize));
 				}
+				mv.addObject("archive", articleService.getArchive());
 
 				// 添加分类和链接
 				mv.addObject("categories", categoryService.getCategories());

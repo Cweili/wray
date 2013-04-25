@@ -1,10 +1,14 @@
 package org.cweili.wray.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
@@ -40,16 +44,16 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public int countByRelationship(String itemId, byte type, byte status) {
-		List<Relationship> relationships = relationshipDao.findByArticleId(itemId);
-		List<Article> articles = new ArrayList<Article>();
+		List<Relationship> relationships = relationshipDao.findByItemId(itemId);
+		int count = 0;
 		Article article;
 		for (Relationship relationship : relationships) {
 			article = articleDao.findOne(relationship.getArticleId());
 			if (null != article && type == article.getIsPage() && status == article.getStat()) {
-				articles.add(articleDao.findOne(relationship.getArticleId()));
+				++count;
 			}
 		}
-		return articles.size();
+		return count;
 	}
 
 	@Override
@@ -83,7 +87,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		for (Relationship relationship : relationships) {
 			article = articleDao.findOne(relationship.getArticleId());
 			if (null != article && type == article.getIsPage() && status == article.getStat()) {
-				articles.add(articleDao.findOne(relationship.getArticleId()));
+				articles.add(dealArticleContent(articleDao.findOne(relationship.getArticleId())));
 			}
 		}
 		Collections.sort(articles);
@@ -94,8 +98,17 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public List<Article> findByMonth(Date month, int page, int size) {
-		// TODO 自动生成的方法存根
-		return null;
+		Calendar toDate = new GregorianCalendar();
+		toDate.setTime(month);
+		toDate.set(Calendar.DATE, toDate.getActualMaximum(Calendar.DATE));
+		toDate.set(Calendar.HOUR_OF_DAY, toDate.getActualMaximum(Calendar.HOUR_OF_DAY));
+		toDate.set(Calendar.MINUTE, toDate.getActualMaximum(Calendar.MINUTE));
+		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
+		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
+
+		return dealList(articleDao.findByIsPageAndStatAndCreateTimeBetween(Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED, month, toDate.getTime(),
+				new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")).getContent());
 	}
 
 	@Override
@@ -174,6 +187,14 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
+	public List<Article> getArchive() {
+		if (null == archive) {
+			updateArchiveCache();
+		}
+		return archive;
+	}
+
+	@Override
 	public void updateArticleCache() {
 		pages = articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
 				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hits")).getContent();
@@ -221,23 +242,57 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	private List<Article> dealList(List<Article> list) {
 		List<Article> articles = new ArrayList<Article>();
 		for (Article article : list) {
-			if (article.getContent().contains("<a name=\"more\"></a>")) {
-				article.setContent(HtmlFixer.fix(StringUtils.substringBefore(article.getContent(),
-						"<a name=\"more\"></a>")) + "<!--more-->");
-			} else {
-				if (article.getContent().length() >= 300) {
-					article.setContent(HtmlFixer.substring(article.getContent(), 300)
-							+ "<!--more-->");
-				}
-			}
+			dealArticleContent(article);
 			articles.add(article);
 		}
 		return articles;
 	}
 
+	private Article dealArticleContent(Article article) {
+		if (article.getContent().contains("<a name=\"more\"></a>")) {
+			article.setContent(HtmlFixer.fix(StringUtils.substringBefore(article.getContent(),
+					"<a name=\"more\"></a>")) + "<!--more-->");
+		} else {
+			if (article.getContent().length() >= 300) {
+				article.setContent(HtmlFixer.substring(article.getContent(), 300) + "<!--more-->");
+			}
+		}
+		return article;
+	}
+
 	@Override
 	public void updateArchiveCache() {
-		// TODO 自动生成的方法存根
+		if (null == archive) {
+			archive = new LinkedList<Article>();
+		} else {
+			archive.clear();
+		}
+		List<Article> articles = articleDao.findAll();
+		if (null != articles && articles.size() > 0) {
+			HashMap<Date, Integer> months = new HashMap<Date, Integer>();
+			Calendar calendar = Calendar.getInstance();
+			for (Article article : articles) {
+				calendar.setTime(article.getCreateTime());
+				calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DATE));
+				calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+				calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+				calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+				calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
+				if (null != months.get(calendar.getTime())) {
+					months.put(calendar.getTime(), months.get(calendar.getTime()) + 1);
+				} else {
+					months.put(calendar.getTime(), 1);
+				}
+			}
+			for (Entry<Date, Integer> month : months.entrySet()) {
+				Article article = new Article();
+				article.setCreateTime(month.getKey());
+				article.setHits(month.getValue());
+				archive.add(article);
+			}
+		}
+
+		Collections.sort(archive);
 
 	}
 

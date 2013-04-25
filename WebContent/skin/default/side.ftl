@@ -86,24 +86,19 @@
 	</div>
 	<div class="clr"></div>
 </#if>
-<``#if 0 != archiveDates?size>
+<#if (archive?size > 0)>
 	<div class="widget">
 		<h4>${archiveLabel}</h4>
 		<ul>
-		<#--
-		<``#list archiveDates as archiveDate>
-			<``#if "en" == localeString?substring(0, 2)>
-			<li><a href="/archives/$`{archiveDate.archiveDateYear}/$`{archiveDate.archiveDateMonth}"
-			   title="$`{archiveDate.monthName} $`{archiveDate.archiveDateYear}($`{archiveDate.archiveDatePublishedArticleCount})">
-				$`{archiveDate.monthName} $`{archiveDate.archiveDateYear}</a>($`{archiveDate.archiveDatePublishedArticleCount})</li>
-			<``#else>
-			<li><a href="/archives/$`{archiveDate.archiveDateYear}/$`{archiveDate.archiveDateMonth}"
-			   title="$`{archiveDate.archiveDateYear} $`{yearLabel} $`{archiveDate.archiveDateMonth} $`{monthLabel}($`{archiveDate.archiveDatePublishedArticleCount})">
-				$`{archiveDate.archiveDateYear} $`{yearLabel} $`{archiveDate.archiveDateMonth} $`{monthLabel}</a>($`{archiveDate.archiveDatePublishedArticleCount})</li>
-			<``/#if>
-		<``/#list>
-		-->
+			<#list archive as month>
+				<li>
+					<a href="archive/${month.createTime?string("yyyy-MM")}">
+						${month.createTime?string("yyyy-MM")}
+					</a>
+					(${month.hits})
+				</li>
+			</#list>
 		</ul>
 	</div>
 	<div class="clr"></div>
-<``/#if>
+</#if>

@@ -40,6 +40,8 @@ public interface ArticleService {
 
 	public List<Article> getTopHitsArticles(int size);
 
+	public List<Article> getArchive();
+
 	public void updateArticleCache();
 
 	public void updateSidebarArticleCache();

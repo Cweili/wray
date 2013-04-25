@@ -1,5 +1,6 @@
 package org.cweili.wray.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
@@ -49,9 +50,12 @@ public interface ArticleDao extends BaseDao<Article> {
 	 */
 	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
 
-	public List<Article> findByTitleAndStatLike(String title, byte stat);
+	public Page<Article> findByIsPageAndStatAndCreateTimeBetween(byte isPage, byte stat, Date from,
+			Date to, Pageable page);
 
-	public List<Article> findByContentAndStatLike(String content, byte stat);
+	public List<Article> findByStatAndTitleLike(byte stat, String title);
+
+	public List<Article> findByStatAndContentLike(byte stat, String content);
 
 	// /**
 	// * @param type

@@ -42,8 +42,13 @@ public final class CategoryController extends BaseController {
 		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit")));
 
+		log.error(articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED));
 		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED), page);
+		v.add("path",
+				blogConfig.get("StaticServePath") + "category/" + Function.urlEncode(permalink)
+						+ "/");
 
 		return v;
 	}

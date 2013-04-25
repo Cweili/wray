@@ -3,14 +3,14 @@
 <#include "macro-comments.ftl">
 <!DOCTYPE html>
 <html>
-    <head>
-        <@head title="${article.title} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${article.tag}" />
-        <meta name="description" content="${article.content?html}" />
-        </@head>
-    </head>
-    <body>
-        $`{topBarReplacement}
+	<head>
+		<@head title="${article.title} - ${blogTitle}">
+		<meta name="keywords" content="${metaKeywords},${article.tag}" />
+		<meta name="description" content="${article.content?html}" />
+		</@head>
+	</head>
+	<body>
+		$`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<@header></@header>
 			<div id="outerwrapper">
@@ -105,6 +105,6 @@
 			</div>
 			<@footer></@footer>
 		</div>
-        <@comment_script></@comment_script>
-    </body>
+		<@comment_script></@comment_script>
+	</body>
 </html>
