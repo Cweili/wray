@@ -1,5 +1,6 @@
 package org.cweili.wray.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.cweili.wray.domain.Article;
@@ -21,6 +22,8 @@ public interface ArticleService {
 	public List<Article> findByRelationship(String itemId, byte type, byte status, int page,
 			int size);
 
+	public List<Article> findByMonth(Date month, int page, int size);
+
 	public Article findById(String articleId);
 
 	public Article findByPermalink(String permalink, byte type);
@@ -40,4 +43,6 @@ public interface ArticleService {
 	public void updateArticleCache();
 
 	public void updateSidebarArticleCache();
+
+	public void updateArchiveCache();
 }

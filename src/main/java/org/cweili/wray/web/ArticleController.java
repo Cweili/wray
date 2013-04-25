@@ -51,24 +51,26 @@ public final class ArticleController extends BaseController {
 		return v;
 	}
 
+	@RequestMapping("/")
+	public BlogView index() {
+		return getIndexView(1);
+	}
+
 	@RequestMapping("/page-{page}")
-	public BlogView index(@PathVariable("page") String page) {
+	public BlogView indexPage(@PathVariable("page") String page) {
+		return getIndexView(Function.page(page));
+	}
+
+	private BlogView getIndexView(int page) {
 		BlogView v = new BlogView("index");
-		int p = 1;
-		try {
-			p = Integer.valueOf(page);
-		} catch (Exception e) {
-			log.error(e);
-		}
 
 		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, p, blogConfig.getInt("limit"));
+				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
 		v.add("articles", articles);
 
 		addPaginator(v,
-				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED), p);
-
-		v.add("path", "");
+				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED),
+				page);
 
 		return v;
 	}

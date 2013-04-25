@@ -57,10 +57,17 @@
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">		
 	</bean>
 	
-	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter"/>
+	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter">
+		<property name="defaultContentType">
+			<bean class="org.springframework.http.MediaType">
+				<constructor-arg index="0" value="image"/>
+				<constructor-arg index="1" value="gif"/>
+			</bean>
+		</property>
+	</bean>
 	<bean id="byteArray_hmc" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
 	<bean id="string_hmc" class="org.springframework.http.converter.StringHttpMessageConverter">
-		<property name = "supportedMediaTypes">
+		<property name="supportedMediaTypes">
 			<list>
 				<bean class="org.springframework.http.MediaType">
 					<constructor-arg index="0" value="text"/>

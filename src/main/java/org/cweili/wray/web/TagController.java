@@ -23,48 +23,13 @@ public final class TagController extends BaseController {
 
 	@RequestMapping("/tag/{permalink}")
 	public BlogView permalink(@PathVariable("permalink") String permalink) throws NotFoundException {
-
-		BlogView v = new BlogView("articles");
-		v.add("path", "tag/" + permalink);
-		permalink = Function.urlDecode(permalink);
-		Item item = tagService.findByName(permalink);
-		if (null == item) {
-			throw new NotFoundException();
-		}
-		v.add("item", item);
-		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, 1, blogConfig.getInt("limit")));
-
-		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED), 1);
-
-		return v;
+		return getTagView(permalink, 1);
 	}
 
 	@RequestMapping("/tag/{permalink}/page-{page}")
 	public BlogView permalink(@PathVariable("permalink") String permalink,
 			@PathVariable("page") String page) throws NotFoundException {
-		int p = 1;
-		try {
-			p = Integer.valueOf(page);
-		} catch (Exception e) {
-			log.error(e);
-		}
-		BlogView v = new BlogView("articles");
-		v.add("path", "tag/" + permalink);
-		permalink = Function.urlDecode(permalink);
-		Item item = tagService.findByName(permalink);
-		if (null == item) {
-			throw new NotFoundException();
-		}
-		v.add("item", item);
-		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, p, blogConfig.getInt("limit")));
-
-		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED), p);
-
-		return v;
+		return getTagView(permalink, Function.page(page));
 	}
 
 	@RequestMapping("/tags")
@@ -72,6 +37,24 @@ public final class TagController extends BaseController {
 		List<Item> tags = tagService.getTags(0, Constant.MAX_PAGE);
 		BlogView v = new BlogView("tags");
 		v.add("tags", tags);
+		return v;
+	}
+
+	private BlogView getTagView(String permalink, int page) throws NotFoundException {
+		BlogView v = new BlogView("articles");
+		v.add("path", "tag/" + permalink);
+		permalink = Function.urlDecode(permalink);
+		Item item = tagService.findByName(permalink);
+		if (null == item) {
+			throw new NotFoundException();
+		}
+		v.add("item", item);
+		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit")));
+
+		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED), page);
+
 		return v;
 	}
 

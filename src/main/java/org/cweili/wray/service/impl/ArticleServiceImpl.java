@@ -2,6 +2,7 @@ package org.cweili.wray.service.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,6 +90,12 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		int end = size * page - 1;
 		end = end < articles.size() ? end : articles.size();
 		return articles.subList(size * (page - 1), end);
+	}
+
+	@Override
+	public List<Article> findByMonth(Date month, int page, int size) {
+		// TODO 自动生成的方法存根
+		return null;
 	}
 
 	@Override
@@ -227,4 +234,11 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		}
 		return articles;
 	}
+
+	@Override
+	public void updateArchiveCache() {
+		// TODO 自动生成的方法存根
+
+	}
+
 }

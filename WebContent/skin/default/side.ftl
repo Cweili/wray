@@ -1,4 +1,11 @@
-<#if "" != noticeBoard>
+<div id="searchbox">
+	<form method="get" id="searchform" action="search">
+		<input type="text" value="Search keywords" name="s" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+		<input type="submit" class="submitbutton" value="Search" />
+	</form> 
+	<div class="clr"></div>
+</div>
+<#if noticeBoard?has_content>
 	<div class="widget-cat">
 		<h4>${noticeBoardLabel}</h4>
 		<ul id="bloggerinfo">
@@ -38,7 +45,7 @@
 <#if (mostCommentArticles?size > 0)>
 	<div class="widget-cat">
 		<h4>${mostCommentArticlesLabel}</h4>
-		<ul id="blogsort">
+		<ul>
 		<#list mostCommentArticles as article>
 			<li class="shortline">
 				<sup>[${article.commentCount}]</sup>
@@ -54,7 +61,7 @@
 <#if (mostViewCountArticles?size > 0)>
 	<div class="widget-cat">
 		<h4>${mostViewCountArticlesLabel}</h4>
-		<ul id="blogsort">
+		<ul>
 		<#list mostViewCountArticles as article>
 			<li class="shortline">
 				<sup>[${article.hits}]</sup>
@@ -68,9 +75,9 @@
 	<div class="clr"></div>
 </#if>
 <#if (links?size > 0)>
-	<div class="widget-cat">
+	<div class="widget">
 		<h4>${linkLabel}</h4>
-		<ul id="link">
+		<ul>
 		<#list links as link>
 			<li><a href="${link.description}" title="${link.itemName}" target="_blank">
 			${link.itemName}</a></li>
@@ -80,9 +87,9 @@
 	<div class="clr"></div>
 </#if>
 <``#if 0 != archiveDates?size>
-	<div class="widget-cat">
+	<div class="widget">
 		<h4>${archiveLabel}</h4>
-		<ul id="link">
+		<ul>
 		<#--
 		<``#list archiveDates as archiveDate>
 			<``#if "en" == localeString?substring(0, 2)>

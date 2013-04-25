@@ -49,6 +49,10 @@ public interface ArticleDao extends BaseDao<Article> {
 	 */
 	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
 
+	public List<Article> findByTitleAndStatLike(String title, byte stat);
+
+	public List<Article> findByContentAndStatLike(String content, byte stat);
+
 	// /**
 	// * @param type
 	// * @param status

@@ -195,24 +195,14 @@ public class Function {
 	 * @param uri
 	 * @return
 	 */
-	public static int page(String uri) {
-		int page = 1;
-		if (uri.contains("/page-")) {
-			String p;
-			if (uri.lastIndexOf("/") > uri.lastIndexOf("/page-") + 6) {
-				p = uri.substring(uri.lastIndexOf("/page-") + 6, uri.lastIndexOf("/"));
-			} else if (uri.lastIndexOf(".") > uri.lastIndexOf("/page-") + 6) {
-				p = uri.substring(uri.lastIndexOf("/page-") + 6, uri.lastIndexOf("/"));
-			} else {
-				p = uri.substring(uri.lastIndexOf("/page-") + 6);
-			}
-			try {
-				page = Integer.valueOf(p);
-			} catch (Exception e) {
-				log.error(e);
-			}
+	public static int page(String page) {
+		int p = 1;
+		try {
+			p = Integer.valueOf(page);
+		} catch (Exception e) {
+			log.error(e);
 		}
-		return page;
+		return p;
 	}
 
 	/**

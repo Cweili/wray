@@ -17,6 +17,9 @@
 					<div id="rightcol">
 						<#include "side.ftl">
 					</div>
+					<div class="postwrap">
+						<h1>${item.itemName}</h1>
+					</div>
 					<#include "article-list.ftl">
 				</div>
 			</div>

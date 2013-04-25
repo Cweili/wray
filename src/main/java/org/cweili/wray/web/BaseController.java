@@ -8,6 +8,7 @@ import org.cweili.wray.service.CommentService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.FeedService;
 import org.cweili.wray.service.LinkService;
+import org.cweili.wray.service.SearchService;
 import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.BlogView;
@@ -50,6 +51,9 @@ public abstract class BaseController extends MultiActionController {
 
 	@Autowired
 	protected FeedService feedService;
+
+	@Autowired
+	protected SearchService searchService;
 
 	/**
 	 * @param v

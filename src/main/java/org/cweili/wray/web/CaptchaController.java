@@ -8,9 +8,11 @@ import java.io.IOException;
 
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -22,9 +24,8 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public final class CaptchaController extends BaseController {
 
-	@RequestMapping("/captcha")
-	public @ResponseBody
-	BufferedImage captcha(WebRequest request) {
+	@RequestMapping(value = "/captcha", produces = "image/gif")
+	public ResponseEntity<BufferedImage> captcha(WebRequest request) {
 
 		int width = 200;
 		int height = 50;
@@ -42,11 +43,19 @@ public final class CaptchaController extends BaseController {
 		String captcha = Captcha.getRandomString(6);
 		request.setAttribute(Constant.CAPTCHA, captcha, WebRequest.SCOPE_SESSION);
 
+		BufferedImage bi;
 		try {
-			return Captcha.out(captcha, width, height);
+			bi = Captcha.out(captcha, width, height);
 		} catch (IOException e) {
 			log.error(e);
+			return new ResponseEntity<BufferedImage>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return null;
+
+		HttpHeaders header = new HttpHeaders();
+		header.setCacheControl("no-cache");
+		header.setPragma("no-cache");
+		header.setExpires(0);
+
+		return new ResponseEntity<BufferedImage>(bi, header, HttpStatus.OK);
 	}
 }
