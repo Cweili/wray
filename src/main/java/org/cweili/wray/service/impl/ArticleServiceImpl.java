@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -126,6 +127,18 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
+	public List<Article> findByKeyword(String keyword) {
+		Set<String> keywords = ChineseSegment.segmentToSet(keyword);
+		Set<Article> articleSet = new HashSet<Article>();
+		for (String key : keywords) {
+			articleSet.addAll(articleDao.findBykeywordAndStat(key, Article.STAT_PUBLISHED));
+		}
+		List<Article> articles = new LinkedList<Article>(articleSet);
+		Collections.sort(dealList(articles));
+		return articles;
+	}
+
+	@Override
 	public Article findById(String articleId) {
 		Article article = articleDao.findOne(articleId);
 		return article;
@@ -133,9 +146,12 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public Article findByPermalink(String permalink, byte type) {
-		Article article = articleDao.findByPermalinkAndIsPageAndStat(permalink, type,
-				Article.STAT_PUBLISHED);
-		return article;
+		Article article = articleDao.findByPermalinkAndIsPage(permalink, type);
+		if (Article.STAT_REMOVED != article.getStat() && Article.STAT_RECYCLE != article.getStat()) {
+			return article;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

@@ -2,14 +2,14 @@
 <#include "macro-footer.ftl">
 <!DOCTYPE html>
 <html>
-	<head>
-		<@head title="${item.itemName} - ${blogTitle}">
-		<meta name="keywords" content="${metaKeywords},${item.description?if_exists}"/>
-		<meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
-		</@head>
-	</head>
-	<body>
-		${topBarReplacement?if_exists}
+    <head>
+        <@head title="${title?if_exists} - ${blogTitle}">
+        <meta name="keywords" content="${metaKeywords},${title?if_exists}"/>
+        <meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
+        </@head>
+    </head>
+    <body>
+        $`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<@header></@header>
 			<div id="outerwrapper">
@@ -18,12 +18,12 @@
 						<#include "side.ftl">
 					</div>
 					<div class="postwrap">
-						<h1>${item.itemName}</h1>
+						<h1>${title?if_exists}</h1>
 					</div>
 					<#include "article-list.ftl">
 				</div>
 			</div>
 			<@footer></@footer>
 		</div>
-	</body>
+    </body>
 </html>

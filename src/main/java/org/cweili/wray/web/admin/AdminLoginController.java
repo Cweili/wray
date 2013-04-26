@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
@@ -60,6 +61,8 @@ public final class AdminLoginController extends BaseController {
 
 		if (!StringUtils.stripToEmpty(request.getParameter(Constant.CAPTCHA)).toUpperCase()
 				.equals(request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION))) {
+			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
+					WebRequest.SCOPE_SESSION);
 			return Constant.CAPTCHA;
 		}
 
@@ -97,6 +100,7 @@ public final class AdminLoginController extends BaseController {
 			}
 		}
 
+		request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
 		return Constant.SUBMIT_FAILED;
 	}
 

@@ -26,7 +26,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public final class AdminCategoryController extends BaseController {
 
-	@RequestMapping("/admin-category")
+	@RequestMapping(value = "/admin-category-manage", method = RequestMethod.GET)
 	public BlogView categoryList() {
 		BlogView v = new BlogView("category-list");
 		v.add("actionName", "分类");

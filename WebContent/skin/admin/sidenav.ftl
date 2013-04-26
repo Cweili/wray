@@ -12,7 +12,7 @@
 				<div class="navhead"><span>文章管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li class="hide" rel="admin-article">编辑文章</li>
+						<li class="hide" rel="admin-article">文章编辑</li>
 						<li><a href="admin-article-pub">已发布文章</a></li>
 						<li><a href="admin-article-draft">文章草稿</a></li>
 						<li><a href="admin-article-add">新增文章</a></li>
@@ -28,7 +28,8 @@
 				<div class="navhead"><span>分类管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-category">分类管理</a></li>
+						<li class="hide" rel="admin-category">分类编辑</li>
+						<li><a href="admin-category-manage">分类管理</a></li>
 						<li><a href="admin-category-add">新增分类</a></li>
 					</ul>
 				</div>
@@ -58,7 +59,8 @@
 				<div class="navhead"><span>链接管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
-						<li><a href="admin-link">链接管理</a></li>
+						<li class="hide" rel="admin-link">链接编辑</li>
+						<li><a href="admin-link-manage">链接管理</a></li>
 						<li><a href="admin-link-add">新增链接</a></li>
 					</ul>
 				</div>

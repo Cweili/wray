@@ -1,7 +1,7 @@
 <div id="searchbox">
-	<form method="get" id="searchform" action="search">
-		<input type="text" value="Search keywords" name="keyword" id="searchbox" onfocus="this.value=''" class="searchinput"/>
-		<input type="submit" class="submitbutton" value="Search" />
+	<form id="searchform" action="search" method="post">
+		<input type="text" value="${searchLabel}" name="k" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+		<input type="submit" class="submitbutton" value="${searchLabel}" />
 	</form> 
 	<div class="clr"></div>
 </div>

@@ -81,9 +81,9 @@ public class Constant {
 			"previousPageLabel", "nextPageLabel", "sumLabel", "pageLabel", "noticeBoardLabel",
 			"recentCommentsLabel", "mostCommentArticlesLabel", "mostViewCountArticlesLabel",
 			"popTagsLabel", "archiveLabel", "linkLabel", "atomLabel", "homeLabel", "commentLabel",
-			"moreLabel", "returnLabel", "tagLabel", "viewLabel", "commentAuthorLabel",
-			"commentEmailLabel", "commentLinkLabel", "submmitCommentLabel", "requiredErrorLabel",
-			"inputErrorLabel", "maxlengthErrorLabel", "allTagsLabel" };
+			"moreLabel", "returnLabel", "tagLabel", "searchLabel", "viewLabel",
+			"commentAuthorLabel", "commentEmailLabel", "commentLinkLabel", "submmitCommentLabel",
+			"requiredErrorLabel", "inputErrorLabel", "maxlengthErrorLabel", "allTagsLabel" };
 
 	/**
 	 * 皮肤扩展名

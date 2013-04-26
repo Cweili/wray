@@ -126,6 +126,10 @@
 					<input class="bigfield" name="tagLabel" type="text" value="${tagLabel?if_exists}" />
 				</div>
 				<div class="input_field">
+					<label for="searchLabel">搜索</label>
+					<input class="bigfield" name="searchLabel" type="text" value="${searchLabel?if_exists}" />
+				</div>
+				<div class="input_field">
 					<label for="viewLabel">点击数</label>
 					<input class="bigfield" name="viewLabel" type="text" value="${viewLabel?if_exists}" />
 				</div>

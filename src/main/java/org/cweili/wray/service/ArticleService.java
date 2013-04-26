@@ -26,6 +26,8 @@ public interface ArticleService {
 
 	public List<Article> findByMonth(Date month, int page, int size);
 
+	public List<Article> findByKeyword(String keyword);
+
 	public Article findById(String articleId);
 
 	public Article findByPermalink(String permalink, byte type);

@@ -30,7 +30,7 @@ public final class CategoryController extends BaseController {
 	}
 
 	private BlogView getCategoryView(String permalink, int page) throws NotFoundException {
-		BlogView v = new BlogView("articles");
+		BlogView v = new BlogView("item-articles");
 		v.add("path", "category/" + permalink);
 		permalink = Function.urlDecode(permalink);
 

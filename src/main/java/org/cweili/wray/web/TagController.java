@@ -41,7 +41,7 @@ public final class TagController extends BaseController {
 	}
 
 	private BlogView getTagView(String permalink, int page) throws NotFoundException {
-		BlogView v = new BlogView("articles");
+		BlogView v = new BlogView("item-articles");
 		v.add("path", "tag/" + permalink);
 		permalink = Function.urlDecode(permalink);
 		Item item = tagService.findByName(permalink);

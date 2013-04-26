@@ -24,7 +24,7 @@
 					<input class="smallfield" name="itemOrder" type="text" value="${category.itemOrder?if_exists}" />
 				</div>
 			</fieldset>
-			<@message type="文章">
+			<@message type="分类">
 				恭喜您，您的分类已成功保存，您可以继续编辑，也可以 <a class="button" href="${staticServePath}category/${category.permalink?if_exists}" target="_blank">查看效果</a>。
 			</@message>
 			<fieldset><legend>保存分类</legend>

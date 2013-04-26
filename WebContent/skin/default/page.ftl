@@ -1,4 +1,5 @@
 <#include "macro-head.ftl">
+<#include "macro-footer.ftl">
 <#include "macro-comments.ftl">
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,16 @@
 							</div>
 							<div class="clr16"></div>
 							<div class="postcontent breakline article-body">
-							${article.content}
+								${article.content}
+							</div>
+							<div class="clr"></div>
+							<div class="roubcornrcontent">
+								<a href="article/${article.permalink}#comments">
+									<span class="postcomments" title="${commentLabel}">
+										${article.commentCount}
+									</span>
+								</a>
+								<div class="clr"></div>
 							</div>
 							<div class="clr"></div>
 						</div>

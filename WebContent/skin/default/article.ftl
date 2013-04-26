@@ -59,12 +59,12 @@
 							</div>
 							<div class="clr16"></div>
 							<div class="postcontent breakline article-body">
-							${article.content}
-							<#--if "" != article.articleSign.signHTML?trim>
-							<div class="marginTop12">
-								$`{article.articleSign.signHTML}
-							</div>
-							</#if-->
+								${article.content}
+								<#--if "" != article.articleSign.signHTML?trim>
+								<div class="marginTop12">
+									$`{article.articleSign.signHTML}
+								</div>
+								</#if-->
 							</div>
 							<div class="clr"></div>
 							<div class="roubcornrcontent">

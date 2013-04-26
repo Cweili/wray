@@ -38,7 +38,7 @@ public interface ArticleDao extends BaseDao<Article> {
 	@Query(value = VALUE_ARCHIVE)
 	public List<Article> findByArchive(Date from, Date to);
 
-	public List<Article> findBykeywordAndIsPageAndStat(String keyword, byte isPage, byte stat);
+	public List<Article> findBykeywordAndStat(String keyword, byte stat);
 
 	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
 	public Page<Article> findMetaByIsPageAndStat(byte isPage, byte stat, Pageable page);
@@ -56,10 +56,9 @@ public interface ArticleDao extends BaseDao<Article> {
 
 	/**
 	 * @param permalink
-	 * @param isPage
 	 * @return
 	 */
-	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
+	public Article findByPermalinkAndIsPage(String permalink, byte isPage);
 
 	// /**
 	// * @param type

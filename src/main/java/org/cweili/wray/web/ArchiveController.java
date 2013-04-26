@@ -42,7 +42,8 @@ public final class ArchiveController extends BaseController {
 		List<Article> articles = articleService.findByMonth(calendar.getTime(), page,
 				blogConfig.getInt("limit"));
 
-		BlogView v = new BlogView("archive-articles");
+		BlogView v = new BlogView("articles");
+		v.add("title", year + " - " + month);
 		v.add("articles", articles);
 
 		addPaginator(v, articleService.countByMonth(calendar.getTime()), page);

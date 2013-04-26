@@ -34,6 +34,7 @@ $(document).ready(function() {
 				$(".err").hide();
 				$(".err p").html("请确认您的用户名和密码正确.");
 				$(".err").slideDown();
+				updateCaptcha("#captcha");
 			}
 		});
 		$("input[type=password]").val(password);

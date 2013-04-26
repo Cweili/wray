@@ -49,14 +49,14 @@ public final class AdminDashboardController extends BaseController {
 	}
 
 	@RequestMapping("/admin")
-	public ResponseEntity<String> redirect() {
+	public ResponseEntity<Object> redirect() {
 		HttpHeaders header = new HttpHeaders();
 		try {
 			header.setLocation(new URI("admin-dashboard"));
 		} catch (URISyntaxException e) {
 			log.error(e);
 		}
-		return new ResponseEntity<String>(header, HttpStatus.MOVED_PERMANENTLY);
+		return new ResponseEntity<Object>(header, HttpStatus.MOVED_PERMANENTLY);
 	}
 
 }

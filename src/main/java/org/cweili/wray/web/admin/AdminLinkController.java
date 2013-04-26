@@ -26,7 +26,7 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public final class AdminLinkController extends BaseController {
 
-	@RequestMapping("/admin-link")
+	@RequestMapping(value = "/admin-link-manage", method = RequestMethod.GET)
 	public BlogView linkList() {
 		BlogView v = new BlogView("link-list");
 		v.add("actionName", "博客链接");
@@ -65,6 +65,7 @@ public final class AdminLinkController extends BaseController {
 	public BlogView addGet() {
 		BlogView v = new BlogView("link-edit");
 		v.add("actionName", "新增博客链接");
+		v.add("link", new Item());
 		return v;
 	}
 

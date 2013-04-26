@@ -70,11 +70,15 @@ public final class CommentController extends BaseController {
 			@RequestParam(Constant.CAPTCHA) String captcha) {
 		if (!request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION).equals(
 				captcha.toUpperCase())) {
+			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
+					WebRequest.SCOPE_SESSION);
 			return Constant.CAPTCHA;
 		}
 		request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
 		Article article = articleService.findById(articleId);
 		if (null == article && "".equals(content)) {
+			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
+					WebRequest.SCOPE_SESSION);
 			return "error";
 		}
 		String id = Function.generateId();
