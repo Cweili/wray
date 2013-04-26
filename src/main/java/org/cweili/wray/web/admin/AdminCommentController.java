@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Comment;
 import org.cweili.wray.util.BlogView;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,13 +30,8 @@ public final class AdminCommentController extends BaseController {
 	public BlogView articleList(WebRequest request) {
 		BlogView v = new BlogView("comment-list");
 		String actionName = "评论管理";
-		int page = 1;
-		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
-					.getParameter("page"));
-		} catch (Exception e) {
-			log.error(e);
-		}
+		int page = Function.minimumPositiveInteger(request.getParameter("page"));
+
 		v.add("actionName", actionName);
 		v.add("comments", commentService.find(page, Constant.ADMIN_LIST_SIZE));
 

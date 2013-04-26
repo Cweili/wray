@@ -26,7 +26,7 @@ public final class CategoryController extends BaseController {
 	@RequestMapping("/category/{permalink}/page-{page}")
 	public BlogView permalink(@PathVariable("permalink") String permalink,
 			@PathVariable("page") String page) throws NotFoundException {
-		return getCategoryView(permalink, Function.page(page));
+		return getCategoryView(permalink, Function.minimumPositiveInteger(page));
 	}
 
 	private BlogView getCategoryView(String permalink, int page) throws NotFoundException {

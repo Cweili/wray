@@ -17,4 +17,7 @@ public abstract class BaseDaoSupport {
 
 	@Autowired
 	protected MongoTemplate db;
+
+	// @Autowired
+	// protected GridFsTemplate gfs;
 }

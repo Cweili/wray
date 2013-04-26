@@ -40,13 +40,7 @@ public final class AdminSetupController extends BaseController {
 	public @ResponseBody
 	String basic(WebRequest request) {
 
-		int feedSize = 10;
-
-		try {
-			feedSize = Integer.valueOf(request.getParameter("feedSize"));
-		} catch (Exception e) {
-			log.error(e);
-		}
+		int feedSize = Function.minimumInteger(request.getParameter("feedSize"), 10);
 
 		if (blogConfig.getInt("feedSize") != feedSize) {
 			blogConfig.save(new Config("feedSize", feedSize));
@@ -72,22 +66,16 @@ public final class AdminSetupController extends BaseController {
 	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
 	public @ResponseBody
 	String skin(WebRequest request) {
-		int limit = 10;
-		int recentCommentsSize = 10;
-		int topHitsArticlesSize = 10;
-		int topCommentArticlesSize = 10;
-		int mostUsedTagsSize = 30;
-		try {
-			limit = Integer.valueOf(request.getParameter("limit"));
-			recentCommentsSize = Integer.valueOf(request.getParameter("recentCommentsSize"));
-			topHitsArticlesSize = Integer.valueOf(request.getParameter("topHitsArticlesSize"));
-			topCommentArticlesSize = Integer
-					.valueOf(request.getParameter("topCommentArticlesSize"));
-			mostUsedTagsSize = Integer.valueOf(request.getParameter("mostUsedTagsSize"));
+		int limit = Function.minimumInteger(request.getParameter("limit"), 10);
+		int recentCommentsSize = Function.minimumInteger(
+				request.getParameter("recentCommentsSize"), 10);
+		int topHitsArticlesSize = Function.minimumInteger(
+				request.getParameter("topHitsArticlesSize"), 10);
+		int topCommentArticlesSize = Function.minimumInteger(
+				request.getParameter("topCommentArticlesSize"), 10);
+		int mostUsedTagsSize = Function
+				.minimumInteger(request.getParameter("mostUsedTagsSize"), 30);
 
-		} catch (Exception e) {
-			log.error(e);
-		}
 		blogConfig.save(new Config("limit", limit));
 		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize));
 		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize));

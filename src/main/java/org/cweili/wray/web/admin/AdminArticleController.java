@@ -34,13 +34,8 @@ public final class AdminArticleController extends BaseController {
 		BlogView v = new BlogView("article-list");
 		byte stat = Article.STAT_PUBLISHED;
 		String actionName = "已发布文章";
-		int page = 1;
-		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
-					.getParameter("page"));
-		} catch (Exception e) {
-			log.error(e);
-		}
+		int page = Function.minimumPositiveInteger(request.getParameter("page"));
+
 		if ("draft".equals(status)) {
 			stat = Article.STAT_DRAFT;
 			actionName = "文章草稿";

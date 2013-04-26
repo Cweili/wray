@@ -41,13 +41,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	 * @see org.cweili.wray.service.ConfigService#getInt(java.lang.String)
 	 */
 	public int getInt(String key) {
-		int value = 0;
-		try {
-			value = Integer.valueOf(getConfigMap().get(key));
-		} catch (Exception e) {
-			log.error(e);
-		}
-		return value;
+		return Function.minimumInteger(getConfigMap().get(key), 0);
 	}
 
 	/*

@@ -190,19 +190,39 @@ public class Function {
 	}
 
 	/**
-	 * 取得当前页码
+	 * 取最小正整数
 	 * 
-	 * @param uri
+	 * @param string
 	 * @return
 	 */
-	public static int page(String page) {
-		int p = 1;
-		try {
-			p = Integer.valueOf(page);
-		} catch (Exception e) {
-			log.error(e);
+	public static int minimumPositiveInteger(String string) {
+		int integer = 1;
+		if (null != string) {
+			try {
+				integer = Integer.valueOf(string);
+			} catch (Exception e) {
+				log.error(e);
+			}
 		}
-		return p;
+		return integer > 0 ? integer : 1;
+	}
+
+	/**
+	 * 取最小正整数
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public static int minimumInteger(String string, int min) {
+		int integer = min;
+		if (null != string) {
+			try {
+				integer = Integer.valueOf(string);
+			} catch (Exception e) {
+				log.error(e);
+			}
+		}
+		return integer >= min ? integer : min;
 	}
 
 	/**

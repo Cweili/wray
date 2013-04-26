@@ -29,7 +29,7 @@ public final class TagController extends BaseController {
 	@RequestMapping("/tag/{permalink}/page-{page}")
 	public BlogView permalink(@PathVariable("permalink") String permalink,
 			@PathVariable("page") String page) throws NotFoundException {
-		return getTagView(permalink, Function.page(page));
+		return getTagView(permalink, Function.minimumPositiveInteger(page));
 	}
 
 	@RequestMapping("/tags")

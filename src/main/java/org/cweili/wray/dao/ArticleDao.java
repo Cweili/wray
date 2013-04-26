@@ -50,8 +50,13 @@ public interface ArticleDao extends BaseDao<Article> {
 	 */
 	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
 
-	public Page<Article> findByIsPageAndStatAndCreateTimeBetween(byte isPage, byte stat, Date from,
-			Date to, Pageable page);
+	@Query(value = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': " + Article.TYPE_ARTICLE
+			+ ", 'stat': " + Article.STAT_PUBLISHED + " }")
+	public Page<Article> findByArchive(Date from, Date to, Pageable page);
+
+	@Query(value = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': " + Article.TYPE_ARTICLE
+			+ ", 'stat': " + Article.STAT_PUBLISHED + " }")
+	public List<Article> countArchive(Date from, Date to);
 
 	public List<Article> findByStatAndTitleLike(byte stat, String title);
 

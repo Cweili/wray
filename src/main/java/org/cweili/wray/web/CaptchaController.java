@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.Function;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,19 +28,9 @@ public final class CaptchaController extends BaseController {
 	@RequestMapping(value = "/captcha", produces = "image/gif")
 	public ResponseEntity<BufferedImage> captcha(WebRequest request) {
 
-		int width = 200;
-		int height = 50;
+		int width = Function.minimumInteger(request.getParameter("width"), 200);
+		int height = Function.minimumInteger(request.getParameter("height"), 50);
 
-		try {
-			width = Integer.valueOf(request.getParameter("width"));
-		} catch (Exception e) {
-			log.error(e);
-		}
-		try {
-			height = Integer.valueOf(request.getParameter("height"));
-		} catch (Exception e) {
-			log.error(e);
-		}
 		String captcha = Captcha.getRandomString(6);
 		request.setAttribute(Constant.CAPTCHA, captcha, WebRequest.SCOPE_SESSION);
 

@@ -57,6 +57,19 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
+	public int countByMonth(Date month) {
+		Calendar toDate = new GregorianCalendar();
+		toDate.setTime(month);
+		toDate.set(Calendar.DATE, toDate.getActualMaximum(Calendar.DATE));
+		toDate.set(Calendar.HOUR_OF_DAY, toDate.getActualMaximum(Calendar.HOUR_OF_DAY));
+		toDate.set(Calendar.MINUTE, toDate.getActualMaximum(Calendar.MINUTE));
+		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
+		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
+
+		return articleDao.countArchive(month, toDate.getTime()).size();
+	}
+
+	@Override
 	public List<Article> findByTypeStatus(byte type, byte status, int page, int size) {
 		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED) {
 			return dealList(findByTypeStatusInDao(type, status, page, size));
@@ -106,8 +119,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
 		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
 
-		return dealList(articleDao.findByIsPageAndStatAndCreateTimeBetween(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, month, toDate.getTime(),
+		return dealList(articleDao.findByArchive(month, toDate.getTime(),
 				new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")).getContent());
 	}
 

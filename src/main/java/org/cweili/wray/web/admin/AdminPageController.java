@@ -32,13 +32,7 @@ public final class AdminPageController extends BaseController {
 		BlogView v = new BlogView("page-list");
 		byte stat = Article.STAT_PUBLISHED;
 		String actionName = "公开页面";
-		int page = 1;
-		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
-					.getParameter("page"));
-		} catch (Exception e) {
-			log.error(e);
-		}
+		int page = Function.minimumPositiveInteger(request.getParameter("page"));
 		if ("private".equals(status)) {
 			stat = Article.STAT_PRIVATE;
 			actionName = "私密页面";
@@ -116,13 +110,7 @@ public final class AdminPageController extends BaseController {
 			Collections.addAll(ids, request.getParameterValues("id"));
 		}
 
-		int page = 1;
-		try {
-			page = Integer.valueOf(request.getParameter("page") == null ? "1" : request
-					.getParameter("page"));
-		} catch (Exception e) {
-			log.error(e);
-		}
+		int page = Function.minimumPositiveInteger(request.getParameter("page"));
 
 		byte stat = Article.STAT_PUBLISHED;
 		if ("private".equals(status)) {

@@ -17,6 +17,8 @@ public interface ArticleService {
 
 	public int countByRelationship(String itemId, byte type, byte status);
 
+	public int countByMonth(Date month);
+
 	public List<Article> findByTypeStatus(byte type, byte status, int page, int size);
 
 	public List<Article> findByRelationship(String itemId, byte type, byte status, int page,

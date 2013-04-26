@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.util.BlogView;
+import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,28 +23,31 @@ public final class ArchiveController extends BaseController {
 
 	@RequestMapping("/archive/{year}-{month}")
 	public BlogView archive(@PathVariable("year") String year, @PathVariable("month") String month) {
+		return getArchiveView(year, month, 1);
+	}
 
-		int y = 2013;
-		int m = 1;
-		try {
-			y = Integer.valueOf(year);
-		} catch (Exception e) {
-			log.error(e);
-		}
-		try {
-			m = Integer.valueOf(month);
-		} catch (Exception e) {
-			log.error(e);
-		}
+	@RequestMapping("/archive/{year}-{month}/page-{page}")
+	public BlogView archive(@PathVariable("year") String year, @PathVariable("month") String month,
+			@PathVariable("page") String page) {
+		return getArchiveView(year, month, Function.minimumPositiveInteger(page));
+	}
+
+	private BlogView getArchiveView(String year, String month, int page) {
+		int y = Function.minimumInteger(year, Integer.valueOf(Constant.CURRENT_YEAR));
+		int m = Function.minimumPositiveInteger(month) - 1;
 
 		Calendar calendar = new GregorianCalendar();
 		calendar.set(y, m, 1, 0, 0, 0);
 
-		List<Article> articles = articleService.findByMonth(calendar.getTime(), 1,
+		List<Article> articles = articleService.findByMonth(calendar.getTime(), page,
 				blogConfig.getInt("limit"));
 
 		BlogView v = new BlogView("archive-articles");
 		v.add("articles", articles);
+
+		addPaginator(v, articleService.countByMonth(calendar.getTime()), page);
+
+		v.add("path", blogConfig.get("StaticServePath") + "tag/" + year + "-" + month + "/");
 
 		return v;
 	}
