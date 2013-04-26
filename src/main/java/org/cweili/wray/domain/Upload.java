@@ -31,8 +31,8 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	@Transient
 	private byte[] content;
 
-	public static final Map<String, String> TYPE = new HashMap<String, String>();
-	public static final Set<String> COMPRESSED = new HashSet<String>();
+	public static final Map<String, String> TYPE = new HashMap<String, String>(79);
+	public static final Set<String> COMPRESSED = new HashSet<String>(27);
 
 	static {
 		TYPE.put("", "text/html");

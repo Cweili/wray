@@ -55,7 +55,7 @@
 											${cat.itemName}</a><#if cat_has_next>,</#if>
 								</#list>
 								<a href="article/${article.permalink}">${article.createTime?string("HH:mm:ss")}</a>
-								${article.hits} ${viewLabel}
+								${article.hit} ${viewLabel}
 							</div>
 							<div class="clr16"></div>
 							<div class="postcontent breakline article-body">
@@ -98,13 +98,17 @@
 							<div class="clr"></div>
 						</div>
 						<div class="clr"></div>
-						<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
+						<#if (article.commentStatus > 0)>
+							<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
+						</#if>
 					</div>
 					<@copyright></@copyright>
 				</div>
 			</div>
 			<@footer></@footer>
 		</div>
-		<@comment_script></@comment_script>
+		<#if (article.commentStatus > 0)>
+			<@comment_script></@comment_script>
+		</#if>
 	</body>
 </html>

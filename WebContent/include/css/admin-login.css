@@ -39,7 +39,7 @@ p.main label {
 	float: left;
 	padding: 5px;
 	display: inline;
-	margin-left: 39px;
+	margin-left: 36px;
 	font-size: 16px;
 	color: #fff;
 	margin-right: 10px;
@@ -96,7 +96,7 @@ input.check {
 }
 
 #captcha {
-	margin: 1px 0 0 10px;
+	margin: 1px 0 0 36px;
 }
 
 .err, .succes {

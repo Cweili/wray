@@ -24,7 +24,7 @@
 						<td><a href="admin-article-edit-${article.articleId}">${article.title}</a></td>
 						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${article.tag}</td>
-						<td>${article.hits}</td>
+						<td>${article.hit}</td>
 						<td>${article.commentCount}</td>
 						<td>
 							<a href="admin-article-edit-${article.articleId}">

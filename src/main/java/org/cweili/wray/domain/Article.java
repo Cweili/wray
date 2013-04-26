@@ -3,6 +3,7 @@ package org.cweili.wray.domain;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
@@ -31,10 +32,11 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	private String tag;
 	private Date createTime;
 	private byte stat;
-	private int hits;
+	private int hit;
 	private int commentCount;
 	private byte commentStatus;
 	private byte isPage;
+	private Set<String> keyword;
 
 	public static final byte STAT_PUBLISHED = 4;
 	public static final byte STAT_PRIVATE = 3;
@@ -60,13 +62,13 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	 * @param tag
 	 * @param createTime
 	 * @param stat
-	 * @param hits
+	 * @param hit
 	 * @param commentCount
 	 * @param commentStatus
 	 * @param isPage
 	 */
 	public Article(String articleId, String title, String permalink, String content, String tag,
-			Date createTime, byte stat, int hits, int commentCount, byte commentStatus, byte isPage) {
+			Date createTime, byte stat, int hit, int commentCount, byte commentStatus, byte isPage) {
 		this.articleId = articleId;
 		this.title = title;
 		this.permalink = permalink;
@@ -74,7 +76,7 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 		this.tag = tag;
 		this.createTime = createTime;
 		this.stat = stat;
-		this.hits = hits;
+		this.hit = hit;
 		this.commentCount = commentCount;
 		this.commentStatus = commentStatus;
 		this.isPage = isPage;
@@ -180,12 +182,12 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 		this.stat = stat;
 	}
 
-	public int getHits() {
-		return hits;
+	public int getHit() {
+		return hit;
 	}
 
-	public void setHits(int hits) {
-		this.hits = hits;
+	public void setHit(int hit) {
+		this.hit = hit;
 	}
 
 	public int getCommentCount() {
@@ -210,6 +212,21 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 
 	public void setIsPage(byte isPage) {
 		this.isPage = isPage;
+	}
+
+	/**
+	 * @return keyword
+	 */
+	public Set<String> getKeyword() {
+		return keyword;
+	}
+
+	/**
+	 * @param keyword
+	 *            要设置的 keyword
+	 */
+	public void setKeyword(Set<String> keyword) {
+		this.keyword = keyword;
 	}
 
 }

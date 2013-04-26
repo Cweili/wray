@@ -38,13 +38,17 @@
 							<div class="clr"></div>
 						</div>
 						<div class="clr"></div>
-						<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
+						<#if (article.commentStatus > 0)>
+							<@comments commentList=commentList articleId=article.articleId permalink=article.permalink></@comments>
+						</#if>
 					</div>
 					<@copyright></@copyright>
 				</div>
 			</div>
 			<@footer></@footer>
 		</div>
-		<@comment_script></@comment_script>
+		<#if (article.commentStatus > 0)>
+			<@comment_script></@comment_script>
+		</#if>
     </body>
 </html>

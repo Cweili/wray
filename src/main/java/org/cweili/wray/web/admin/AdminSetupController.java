@@ -69,8 +69,8 @@ public final class AdminSetupController extends BaseController {
 		int limit = Function.minimumInteger(request.getParameter("limit"), 10);
 		int recentCommentsSize = Function.minimumInteger(
 				request.getParameter("recentCommentsSize"), 10);
-		int topHitsArticlesSize = Function.minimumInteger(
-				request.getParameter("topHitsArticlesSize"), 10);
+		int topHitArticlesSize = Function.minimumInteger(
+				request.getParameter("topHitArticlesSize"), 10);
 		int topCommentArticlesSize = Function.minimumInteger(
 				request.getParameter("topCommentArticlesSize"), 10);
 		int mostUsedTagsSize = Function
@@ -78,7 +78,7 @@ public final class AdminSetupController extends BaseController {
 
 		blogConfig.save(new Config("limit", limit));
 		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize));
-		blogConfig.save(new Config("topHitsArticlesSize", topHitsArticlesSize));
+		blogConfig.save(new Config("topHitArticlesSize", topHitArticlesSize));
 		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize));
 		blogConfig.save(new Config("mostUsedTagsSize", mostUsedTagsSize + ""));
 		blogConfig.saveRequest(request, Constant.LABELS, new String[] { "skinDir" });

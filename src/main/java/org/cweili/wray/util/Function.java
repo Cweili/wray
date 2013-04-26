@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -120,16 +121,18 @@ public class Function {
 	 * @param input
 	 * @return
 	 */
-	public static String htmlSpecialChars(String input) {
+	public static String escapeHtml(String input) {
 
-		input = StringUtils.replace(input, "&amp;", "&");
-		input = StringUtils.replace(input, "&", "&amp;");
-		input = StringUtils.replace(input, "\'", "&apos;");
-		input = StringUtils.replace(input, "\"", "&quot;");
-		input = StringUtils.replace(input, "<", "&lt;");
-		input = StringUtils.replace(input, ">", "&gt;");
-		input = StringUtils.replace(input, "«", "&laquo;");
-		input = StringUtils.replace(input, "»", "&raquo;");
+		// input = StringUtils.replace(input, "&amp;", "&");
+		// input = StringUtils.replace(input, "&", "&amp;");
+		// input = StringUtils.replace(input, "\'", "&apos;");
+		// input = StringUtils.replace(input, "\"", "&quot;");
+		// input = StringUtils.replace(input, "<", "&lt;");
+		// input = StringUtils.replace(input, ">", "&gt;");
+		// input = StringUtils.replace(input, "«", "&laquo;");
+		// input = StringUtils.replace(input, "»", "&raquo;");
+
+		input = StringEscapeUtils.escapeHtml4(input);
 		input = StringUtils.stripToEmpty(input);
 
 		return input;
@@ -196,25 +199,23 @@ public class Function {
 	 * @return
 	 */
 	public static int minimumPositiveInteger(String string) {
-		int integer = 1;
-		if (null != string) {
-			try {
-				integer = Integer.valueOf(string);
-			} catch (Exception e) {
-				log.error(e);
-			}
-		}
-		return integer > 0 ? integer : 1;
+		return minimumInteger(string, 1);
 	}
 
 	/**
-	 * 取最小正整数
+	 * 取最小整数
 	 * 
 	 * @param string
+	 * @param min
+	 *            最小整数值
 	 * @return
 	 */
 	public static int minimumInteger(String string, int min) {
-		int integer = min;
+		int integer = defaultInteger(string, min);
+		return integer >= min ? integer : min;
+	}
+
+	public static int defaultInteger(String string, int integer) {
 		if (null != string) {
 			try {
 				integer = Integer.valueOf(string);
@@ -222,7 +223,7 @@ public class Function {
 				log.error(e);
 			}
 		}
-		return integer >= min ? integer : min;
+		return integer;
 	}
 
 	/**
@@ -232,8 +233,7 @@ public class Function {
 	 * @return
 	 */
 	public static String permalink(String permalink) {
-		permalink = permalink.replaceAll("\\pP", "-").replaceAll("\\pM", "-")
-				.replaceAll("\\pS", "-").replaceAll("\\pC", "-").replace(' ', '-');
+		permalink = permalink.replaceAll("[\\s\\p{Blank}\\p{Cntrl}\\p{Punct}]", "-");
 		while (permalink.indexOf("--") > -1) {
 			permalink = StringUtils.replace(permalink, "--", "-");
 		}

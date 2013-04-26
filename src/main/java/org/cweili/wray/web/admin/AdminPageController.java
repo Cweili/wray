@@ -126,9 +126,9 @@ public final class AdminPageController extends BaseController {
 		for (Article article : articles) {
 			if (request.getParameter("order" + article.getArticleId()) != null) {
 				order = Integer.valueOf(request.getParameter("order" + article.getArticleId()));
-				if (article.getHits() != order) {
-					article.setHits(order);
-					articleService.updateHits(article);
+				if (article.getHit() != order) {
+					article.setHit(order);
+					articleService.updateHit(article);
 				}
 			}
 		}
@@ -154,7 +154,7 @@ public final class AdminPageController extends BaseController {
 
 		String id = Function.generateId();
 
-		title = Function.htmlSpecialChars(title);
+		title = Function.escapeHtml(title);
 		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;

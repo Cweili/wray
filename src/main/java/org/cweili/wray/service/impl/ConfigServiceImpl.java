@@ -77,7 +77,7 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 		Map<String, String> values = new HashMap<String, String>(map.size());
 		for (Map.Entry<String, String[]> entry : map.entrySet()) {
 			if (nonHtmlList.contains(entry.getKey())) {
-				values.put(entry.getKey(), Function.htmlSpecialChars(entry.getValue()[0]));
+				values.put(entry.getKey(), Function.escapeHtml(entry.getValue()[0]));
 			} else if (htmlList.contains(entry.getKey())) {
 				values.put(entry.getKey(), entry.getValue()[0].trim());
 			}

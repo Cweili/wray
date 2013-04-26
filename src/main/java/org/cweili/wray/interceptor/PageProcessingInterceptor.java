@@ -65,7 +65,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 
 				int recentCommentsSize = blogConfig.getInt("recentCommentsSize");
 				int topCommentArticlesSize = blogConfig.getInt("topCommentArticlesSize");
-				int topHitsArticlesSize = blogConfig.getInt("topHitsArticlesSize");
+				int topHitArticlesSize = blogConfig.getInt("topHitArticlesSize");
 				int mostUsedTagsSize = blogConfig.getInt("mostUsedTagsSize");
 
 				if (recentCommentsSize > 0) {
@@ -76,9 +76,9 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 					mv.addObject("mostCommentArticles",
 							articleService.getTopCommentArticles(topCommentArticlesSize));
 				}
-				if (topHitsArticlesSize > 0) {
-					mv.addObject("mostViewCountArticles",
-							articleService.getTopHitsArticles(topHitsArticlesSize));
+				if (topHitArticlesSize > 0) {
+					mv.addObject("topHitArticles",
+							articleService.getTopHitArticles(topHitArticlesSize));
 				}
 				if (mostUsedTagsSize > 0) {
 					mv.addObject("mostUsedTags", tagService.getmostUsedTags(mostUsedTagsSize));

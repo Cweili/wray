@@ -69,7 +69,7 @@ public abstract class BaseService {
 	/**
 	 * 点击排行缓存
 	 */
-	protected static List<Article> topHitsArticles = null;
+	protected static List<Article> topHitArticles = null;
 
 	/**
 	 * 最新评论数
@@ -84,7 +84,7 @@ public abstract class BaseService {
 	/**
 	 * 点击排行数
 	 */
-	protected static int topHitsArticlesSize = 0;
+	protected static int topHitArticlesSize = 0;
 
 	/**
 	 * 热门标签数

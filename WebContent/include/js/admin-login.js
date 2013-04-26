@@ -43,7 +43,7 @@ $(document).ready(function() {
 });
 
 var updateCaptcha = function(id) {
-	$(id).attr("src", "captcha?height=27&width=100&" + Math.random());
+	$(id).attr("src", "captcha?height=27&width=266&" + Math.random());
 };
 
 /**

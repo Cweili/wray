@@ -140,7 +140,7 @@ public final class AdminArticleController extends BaseController {
 
 		String id = Function.generateId();
 
-		title = Function.htmlSpecialChars(title);
+		title = Function.escapeHtml(title);
 		title = "".equals(title) ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;

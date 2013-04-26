@@ -28,8 +28,8 @@ public final class CaptchaController extends BaseController {
 	@RequestMapping(value = "/captcha", produces = "image/gif")
 	public ResponseEntity<BufferedImage> captcha(WebRequest request) {
 
-		int width = Function.minimumInteger(request.getParameter("width"), 200);
-		int height = Function.minimumInteger(request.getParameter("height"), 50);
+		int width = Function.defaultInteger(request.getParameter("width"), 200);
+		int height = Function.defaultInteger(request.getParameter("height"), 50);
 
 		String captcha = Captcha.getRandomString(6);
 		request.setAttribute(Constant.CAPTCHA, captcha, WebRequest.SCOPE_SESSION);

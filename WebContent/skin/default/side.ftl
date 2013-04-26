@@ -1,6 +1,6 @@
 <div id="searchbox">
 	<form method="get" id="searchform" action="search">
-		<input type="text" value="Search keywords" name="s" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+		<input type="text" value="Search keywords" name="keyword" id="searchbox" onfocus="this.value=''" class="searchinput"/>
 		<input type="submit" class="submitbutton" value="Search" />
 	</form> 
 	<div class="clr"></div>
@@ -58,13 +58,13 @@
 	</div>
 	<div class="clr"></div>
 </#if>
-<#if (mostViewCountArticles?size > 0)>
+<#if (topHitArticles?size > 0)>
 	<div class="widget-cat">
 		<h4>${mostViewCountArticlesLabel}</h4>
 		<ul>
-		<#list mostViewCountArticles as article>
+		<#list topHitArticles as article>
 			<li class="shortline">
-				<sup>[${article.hits}]</sup>
+				<sup>[${article.hit}]</sup>
 				<a title="${article.title}" href="article/${article.permalink?url('UTF-8')}">
 					${article.title}
 				</a>
@@ -95,7 +95,7 @@
 					<a href="archive/${month.createTime?string("yyyy-MM")}">
 						${month.createTime?string("yyyy-MM")}
 					</a>
-					(${month.hits})
+					(${month.hit})
 				</li>
 			</#list>
 		</ul>

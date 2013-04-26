@@ -9,11 +9,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Article;
 import org.cweili.wray.domain.Relationship;
 import org.cweili.wray.service.ArticleService;
+import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
@@ -66,7 +68,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
 		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
 
-		return articleDao.countArchive(month, toDate.getTime()).size();
+		return articleDao.findByArchive(month, toDate.getTime()).size();
 	}
 
 	@Override
@@ -84,7 +86,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				return pages;
 			} else {
 				return articleDao.findByIsPageAndStat(type, status,
-						new PageRequest(page - 1, size, Sort.Direction.ASC, "hits")).getContent();
+						new PageRequest(page - 1, size, Sort.Direction.ASC, "hit")).getContent();
 			}
 		}
 	}
@@ -141,6 +143,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		if ("".equals(article.getArticleId())) {
 			article.setArticleId(Function.generateId());
 		}
+		Set<String> keyword = ChineseSegment.segmentToSet(Function.stripTags(article.getTitle()
+				+ article.getContent() + article.getTag()));
+		article.setKeyword(keyword);
 		Article articleNew = articleDao.save(article);
 		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
 			updateArticleCache();
@@ -150,7 +155,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
-	public boolean updateHits(Article article) {
+	public boolean updateHit(Article article) {
 		Article articleNew = articleDao.save(article);
 		return null != articleNew;
 	}
@@ -190,12 +195,12 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	}
 
 	@Override
-	public List<Article> getTopHitsArticles(int size) {
-		if (size > 0 && topHitsArticlesSize != size) {
-			topHitsArticlesSize = size;
+	public List<Article> getTopHitArticles(int size) {
+		if (size > 0 && topHitArticlesSize != size) {
+			topHitArticlesSize = size;
 			updateSidebarArticleCache();
 		}
-		return topHitsArticles;
+		return topHitArticles;
 	}
 
 	@Override
@@ -209,7 +214,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public void updateArticleCache() {
 		pages = articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hits")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hit")).getContent();
 		publishedArticleCount = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED).size();
 		rss = null;
@@ -227,10 +232,10 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 							new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC,
 									"commentCount")).getContent();
 		}
-		if (topHitsArticlesSize > 0) {
-			topHitsArticles = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
+		if (topHitArticlesSize > 0) {
+			topHitArticles = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
 					Article.STAT_PUBLISHED,
-					new PageRequest(0, topHitsArticlesSize, Sort.Direction.DESC, "hits"))
+					new PageRequest(0, topHitArticlesSize, Sort.Direction.DESC, "hit"))
 					.getContent();
 		}
 	}
@@ -299,7 +304,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 			for (Entry<Date, Integer> month : months.entrySet()) {
 				Article article = new Article();
 				article.setCreateTime(month.getKey());
-				article.setHits(month.getValue());
+				article.setHit(month.getValue());
 				archive.add(article);
 			}
 		}

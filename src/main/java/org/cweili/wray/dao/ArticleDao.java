@@ -19,8 +19,11 @@ public interface ArticleDao extends BaseDao<Article> {
 	public static final String VALUE_ISPAGE_STAT = "{ 'isPage': ?0, 'stat': ?1 }";
 
 	public static final String FIELD_META = "{ 'title': 1, 'permalink': 1, 'tag': 1, "
-			+ "'createTime': 1, 'stat': 1, 'hits': 1, 'commentCount': 1, "
+			+ "'createTime': 1, 'stat': 1, 'hit': 1, 'commentCount': 1, "
 			+ "'commentStatus': 1, 'isPage': 1 }";
+
+	public static final String VALUE_ARCHIVE = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
+			+ Article.TYPE_ARTICLE + ", 'stat': " + Article.STAT_PUBLISHED + " }";
 
 	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
 	public List<Article> findMetaByIsPageAndStat(byte isPage, byte stat);
@@ -31,6 +34,11 @@ public interface ArticleDao extends BaseDao<Article> {
 	 * @return
 	 */
 	public List<Article> findByIsPageAndStat(byte isPage, byte stat);
+
+	@Query(value = VALUE_ARCHIVE)
+	public List<Article> findByArchive(Date from, Date to);
+
+	public List<Article> findBykeywordAndIsPageAndStat(String keyword, byte isPage, byte stat);
 
 	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
 	public Page<Article> findMetaByIsPageAndStat(byte isPage, byte stat, Pageable page);
@@ -43,24 +51,15 @@ public interface ArticleDao extends BaseDao<Article> {
 	 */
 	public Page<Article> findByIsPageAndStat(byte isPage, byte stat, Pageable page);
 
+	@Query(value = VALUE_ARCHIVE)
+	public Page<Article> findByArchive(Date from, Date to, Pageable page);
+
 	/**
 	 * @param permalink
 	 * @param isPage
 	 * @return
 	 */
 	public Article findByPermalinkAndIsPageAndStat(String permalink, byte isPage, byte stat);
-
-	@Query(value = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': " + Article.TYPE_ARTICLE
-			+ ", 'stat': " + Article.STAT_PUBLISHED + " }")
-	public Page<Article> findByArchive(Date from, Date to, Pageable page);
-
-	@Query(value = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': " + Article.TYPE_ARTICLE
-			+ ", 'stat': " + Article.STAT_PUBLISHED + " }")
-	public List<Article> countArchive(Date from, Date to);
-
-	public List<Article> findByStatAndTitleLike(byte stat, String title);
-
-	public List<Article> findByStatAndContentLike(byte stat, String content);
 
 	// /**
 	// * @param type

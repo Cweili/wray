@@ -125,11 +125,11 @@ public final class AdminCategoryController extends BaseController {
 		}
 
 		String id = Function.generateId();
-		itemName = Function.htmlSpecialChars(itemName);
+		itemName = Function.escapeHtml(itemName);
 		itemName = "".equals(itemName) ? Function.timeString() : itemName;
 		permalink = Function.permalink(permalink);
 		permalink = "".equals(permalink) ? Function.permalink(itemName) : permalink;
-		description = Function.htmlSpecialChars(description);
+		description = Function.escapeHtml(description);
 
 		if (ori != null) {
 			ori.setItemName(itemName);

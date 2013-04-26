@@ -23,7 +23,7 @@
 						<td><a href="admin-page-edit-${article.articleId}">${article.title}</a></td>
 						<td>${article.createTime?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${article.commentCount}</td>
-						<td><input class="tinyfield" type="text" name="order${article.articleId}" value="${article.hits}" /></td>
+						<td><input class="tinyfield" type="text" name="order${article.articleId}" value="${article.hit}" /></td>
 						<td>
 							<a href="admin-page-edit-${article.articleId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />

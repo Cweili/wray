@@ -31,7 +31,7 @@
 			<``/#if-->
 			<!--a href="author/$`{article.userId}">$`{article.userId}</a-->
 			${adminNick} <a href="article/${article.permalink}">${article.createTime?string("HH:mm:ss")}</a>
-			${article.hits} ${viewLabel}
+			${article.hit} ${viewLabel}
 		</div>
 		<div class="clr16"></div>
 		<div class="postcontent breakline">

@@ -25,8 +25,8 @@
 					<span class="field_desc">输入0则不显示侧边栏最近评论</span>
 				</div>
 				<div class="input_field">
-					<label for="topHitsArticlesSize">热门点击条数</label>
-					<input class="smallfield" name="topHitsArticlesSize" type="text" value="${topHitsArticlesSize?if_exists}" />
+					<label for="topHitArticlesSize">热门点击条数</label>
+					<input class="smallfield" name="topHitArticlesSize" type="text" value="${topHitArticlesSize?if_exists}" />
 					<span class="field_desc">输入0则不显示侧边栏热门点击</span>
 				</div>
 				<div class="input_field">

@@ -33,8 +33,8 @@ public final class ArticleController extends BaseController {
 		v.add("article", article);
 		v.add("relatedCats", relatedCats);
 		v.add("commentList", commentService.findByArticle(article));
-		article.setHits(article.getHits() + 1);
-		articleService.updateHits(article);
+		article.setHit(article.getHit() + 1);
+		articleService.updateHit(article);
 		return v;
 	}
 

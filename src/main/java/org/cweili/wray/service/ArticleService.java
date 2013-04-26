@@ -32,7 +32,7 @@ public interface ArticleService {
 
 	public Article save(Article article);
 
-	public boolean updateHits(Article article);
+	public boolean updateHit(Article article);
 
 	public boolean remove(Article article);
 
@@ -40,7 +40,7 @@ public interface ArticleService {
 
 	public List<Article> getTopCommentArticles(int size);
 
-	public List<Article> getTopHitsArticles(int size);
+	public List<Article> getTopHitArticles(int size);
 
 	public List<Article> getArchive();
 
