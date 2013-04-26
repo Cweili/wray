@@ -8,6 +8,7 @@ import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -36,6 +37,8 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	private int commentCount;
 	private byte commentStatus;
 	private byte isPage;
+
+	@Indexed
 	private Set<String> keyword;
 
 	public static final byte STAT_PUBLISHED = 4;

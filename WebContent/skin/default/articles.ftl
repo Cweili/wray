@@ -2,14 +2,14 @@
 <#include "macro-footer.ftl">
 <!DOCTYPE html>
 <html>
-    <head>
-        <@head title="${title?if_exists} - ${blogTitle}">
-        <meta name="keywords" content="${metaKeywords},${title?if_exists}"/>
-        <meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
-        </@head>
-    </head>
-    <body>
-        $`{topBarReplacement}
+	<head>
+		<@head title="${title?if_exists} - ${blogTitle}">
+		<meta name="keywords" content="${metaKeywords},${title?if_exists}"/>
+		<meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
+		</@head>
+	</head>
+	<body>
+		$`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<@header></@header>
 			<div id="outerwrapper">
@@ -25,5 +25,5 @@
 			</div>
 			<@footer></@footer>
 		</div>
-    </body>
+	</body>
 </html>
