@@ -28,13 +28,4 @@ public class Page<T> extends PageImpl<T> implements org.springframework.data.dom
 				.getTotalElements());
 	}
 
-	/**
-	 * 取得记录总数
-	 * 
-	 * @return
-	 */
-	public int getTotal() {
-		return (int) super.getTotalElements();
-	}
-
 }

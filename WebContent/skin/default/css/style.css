@@ -977,9 +977,17 @@ label.error {
 	top: 0;
 	behavior: url("../../../include/js/iepngfic.htc") !important;
 }
+
 .error {
 	border: 1px solid #a5260f !important;
 }
+
+.highlight {
+	font-weight: bold !important;
+	color: #cc3333 !important;
+	background-color: #ffff00 !important;
+}
+
 .ke-container {
 	background-color: #fff !important;
 }

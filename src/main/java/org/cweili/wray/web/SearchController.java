@@ -2,7 +2,7 @@ package org.cweili.wray.web;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
+import java.util.Arrays;
 
 import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.dto.Article;
@@ -56,27 +56,30 @@ public final class SearchController extends BaseController {
 	private BlogView getSearchView(WebRequest request, String searchid, int page)
 			throws NotFoundException {
 
-		Object obj = request.getAttribute(SEARCH_RESULT + searchid, WebRequest.SCOPE_SESSION);
-		String keyword = (String) request.getAttribute(SEARCH_KEYWORD + searchid,
+		Object resultObject = request.getAttribute(SEARCH_RESULT + searchid,
 				WebRequest.SCOPE_SESSION);
 
-		List<Article> articles;
+		Article[] articles;
 
-		if (null != obj && obj instanceof List<?>) {
-			articles = (List<Article>) obj;
+		if (null != resultObject && resultObject instanceof Article[]) {
+			articles = (Article[]) resultObject;
 		} else {
 			throw new NotFoundException();
 		}
 
+		String keyword = (String) request.getAttribute(SEARCH_KEYWORD + searchid,
+				WebRequest.SCOPE_SESSION);
+
 		int pageSize = blogConfig.getInt("pageSize");
 
 		int end = pageSize * page - 1;
-		end = end < articles.size() ? end : articles.size();
+		end = end < articles.length ? end : articles.length;
 
 		BlogView v = new BlogView("articles");
 		v.add("title", blogConfig.get("searchLabel") + " \"" + keyword + '"');
-		v.add("articles", articles.subList(pageSize * (page - 1), end));
-		addPaginator(v, articles.size(), page);
+		v.add("articles", Arrays.copyOfRange(articles, pageSize * (page - 1), end));
+		addPaginator(v, articles.length, page);
+		v.add("path", blogConfig.get("staticServePath") + "search-" + searchid + "/");
 
 		return v;
 	}
@@ -87,7 +90,8 @@ public final class SearchController extends BaseController {
 			throw new NotFoundException();
 		}
 		String searchId = Function.generateId();
-		request.setAttribute(SEARCH_RESULT + searchId, articleService.findByKeyword(keyword),
+		String[] keywords = searchService.segmentKeyword(keyword);
+		request.setAttribute(SEARCH_RESULT + searchId, searchService.findByKeyword(keywords),
 				WebRequest.SCOPE_SESSION);
 		request.setAttribute(SEARCH_KEYWORD + searchId, keyword, WebRequest.SCOPE_SESSION);
 		return searchId;

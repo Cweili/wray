@@ -1,5 +1,6 @@
 package org.cweili.wray.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.cweili.wray.dao.ArticleDao;
@@ -22,6 +24,7 @@ import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Comment;
 import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
+import org.cweili.wray.util.HtmlFixer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -187,6 +190,27 @@ public abstract class BaseService {
 	protected void clearFeedCache() {
 		rss = null;
 		atom = null;
+	}
+
+	protected List<Article> dealArticleList(List<Article> list) {
+		List<Article> articles = new ArrayList<Article>();
+		for (Article article : list) {
+			dealArticleContent(article);
+			articles.add(article);
+		}
+		return articles;
+	}
+
+	protected Article dealArticleContent(Article article) {
+		if (article.getContent().contains("<a name=\"more\"></a>")) {
+			article.setContent(HtmlFixer.fix(StringUtils.substringBefore(article.getContent(),
+					"<a name=\"more\"></a>")) + "<!--more-->");
+		} else {
+			if (article.getContent().length() >= 300) {
+				article.setContent(HtmlFixer.substring(article.getContent(), 300) + "<!--more-->");
+			}
+		}
+		return article;
 	}
 
 }

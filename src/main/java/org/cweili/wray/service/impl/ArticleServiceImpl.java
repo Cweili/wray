@@ -1,23 +1,19 @@
 package org.cweili.wray.service.impl;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Function;
-import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -77,11 +73,14 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	@Override
 	public Page<Article> findByTypeStatus(byte type, byte status, int page, int size) {
 		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED) {
-			Page<Article> pagedArticles = findByTypeStatusInDao(type, status, page, size);
 
-			return new Page<Article>(dealList(pagedArticles.getContent()), pagedArticles);
+			Page<Article> pagedArticles = findByTypeStatusInDao(type, status, page, size);
+			return new Page<Article>(dealArticleList(pagedArticles.getContent()), pagedArticles);
+
 		} else if (type == Article.TYPE_ARTICLE) {
+
 			return findByTypeStatusInDao(type, status, page, size);
+
 		} else {
 			if (size < 1 && status == Article.STAT_PUBLISHED) {
 				if (pages == null) {
@@ -131,19 +130,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		Page<Article> pagedArticles = new Page<Article>(articleDao.findByArchive(month,
 				toDate.getTime(), new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")));
 
-		return new Page<Article>(dealList(pagedArticles.getContent()), pagedArticles);
-	}
-
-	@Override
-	public List<Article> findByKeyword(String keyword) {
-		Set<String> keywords = ChineseSegment.segmentToSet(keyword);
-		Set<Article> articleSet = new HashSet<Article>();
-		for (String key : keywords) {
-			articleSet.addAll(articleDao.findBykeywordAndStat(key, Article.STAT_PUBLISHED));
-		}
-		List<Article> articles = new LinkedList<Article>(articleSet);
-		Collections.sort(dealList(articles));
-		return articles;
+		return new Page<Article>(dealArticleList(pagedArticles.getContent()), pagedArticles);
 	}
 
 	@Override
@@ -236,31 +223,6 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	private Page<Article> findByTypeStatusInDao(byte type, byte status, int page, int size) {
 		return new Page<Article>(articleDao.findByIsPageAndStat(type, status, new PageRequest(
 				page - 1, size, Sort.Direction.DESC, "_id")));
-	}
-
-	/**
-	 * @param list
-	 * @return
-	 */
-	private List<Article> dealList(List<Article> list) {
-		List<Article> articles = new ArrayList<Article>();
-		for (Article article : list) {
-			dealArticleContent(article);
-			articles.add(article);
-		}
-		return articles;
-	}
-
-	private Article dealArticleContent(Article article) {
-		if (article.getContent().contains("<a name=\"more\"></a>")) {
-			article.setContent(HtmlFixer.fix(StringUtils.substringBefore(article.getContent(),
-					"<a name=\"more\"></a>")) + "<!--more-->");
-		} else {
-			if (article.getContent().length() >= 300) {
-				article.setContent(HtmlFixer.substring(article.getContent(), 300) + "<!--more-->");
-			}
-		}
-		return article;
 	}
 
 	private void updateCache(Article article) {

@@ -57,9 +57,10 @@ public final class ArticleController extends BaseController {
 		return getIndexView(1);
 	}
 
-	@RequestMapping("/page-{page}")
-	public BlogView indexPage(@PathVariable("page") String page) {
-		return getIndexView(Function.minimumPositiveInteger(page));
+	@RequestMapping("/page-{page:[\\d]+}")
+	public BlogView indexPage(@PathVariable("page") int page) {
+		page = page > 0 ? page : 1;
+		return getIndexView(page);
 	}
 
 	private BlogView getIndexView(int page) {

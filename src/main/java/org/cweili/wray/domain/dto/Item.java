@@ -5,7 +5,6 @@ import java.io.Serializable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -16,7 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "item")
-@CompoundIndexes({ @CompoundIndex(name = "index_permalink_itemType", def = "{'permalink': 1, 'itemType': 1}", unique = true) })
+@CompoundIndexes({
+		@CompoundIndex(name = "index_permalink_itemType", def = "{'permalink': 1, 'itemType': 1}", unique = true),
+		@CompoundIndex(name = "index_itemType_stat", def = "{'itemType': 1, 'stat': 1}") })
 public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	private static final long serialVersionUID = 644800170130656153L;
@@ -29,7 +30,6 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	private byte itemOrder;
 	private byte itemType;
 	private String parrentId;
-	@Indexed
 	private byte stat = STAT_ON;
 
 	public static final byte TYPE_CATEGORY = 0;

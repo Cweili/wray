@@ -1,7 +1,6 @@
 package org.cweili.wray.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  * Wray 常量
@@ -35,7 +34,12 @@ public class Constant {
 	/**
 	 * 当前年份
 	 */
-	public static final String CURRENT_YEAR = new SimpleDateFormat("yyyy").format(new Date());
+	public static final int CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR);
+
+	/**
+	 * 当前月份
+	 */
+	public static final int CURRENT_MONTH = Calendar.getInstance().get(Calendar.MONTH) + 1;
 
 	/**
 	 * 

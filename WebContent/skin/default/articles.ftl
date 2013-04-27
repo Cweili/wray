@@ -4,8 +4,8 @@
 <html>
 	<head>
 		<@head title="${title?if_exists} - ${blogTitle}">
-		<meta name="keywords" content="${metaKeywords},${title?if_exists}"/>
-		<meta name="description" content="<#list articles as article>${article.title}<#if article_has_next>,</#if></#list>"/>
+		<meta name="keywords" content="${metaKeywords?html},${title?if_exists}"/>
+		<meta name="description" content="<#list articles as article>${article.title?html}<#if article_has_next>,</#if></#list>"/>
 		</@head>
 	</head>
 	<body>

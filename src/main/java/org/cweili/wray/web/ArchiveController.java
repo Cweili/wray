@@ -7,7 +7,6 @@ import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.util.Constant;
-import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,34 +21,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/archive")
 public final class ArchiveController extends BaseController {
 
-	@RequestMapping("/{year}-{month}")
-	public BlogView archive(@PathVariable("year") String year, @PathVariable("month") String month) {
+	@RequestMapping("/{year:[\\d]+}-{month:[\\d]+}")
+	public BlogView archive(@PathVariable("year") int year, @PathVariable("month") int month) {
 		return getArchiveView(year, month, 1);
 	}
 
-	@RequestMapping("/{year}-{month}/page-{page}")
-	public BlogView archive(@PathVariable("year") String year, @PathVariable("month") String month,
-			@PathVariable("page") String page) {
-		return getArchiveView(year, month, Function.minimumPositiveInteger(page));
+	@RequestMapping("/{year:[\\d]+}-{month:[\\d]+}/page-{page:[\\d]+}")
+	public BlogView archive(@PathVariable("year") int year, @PathVariable("month") int month,
+			@PathVariable("page") int page) {
+		page = page > 0 ? page : 1;
+		return getArchiveView(year, month, page);
 	}
 
-	private BlogView getArchiveView(String year, String month, int page) {
-		int y = Function.minimumInteger(year, Integer.valueOf(Constant.CURRENT_YEAR));
-		int m = Function.minimumPositiveInteger(month) - 1;
+	private BlogView getArchiveView(int year, int month, int page) {
 
-		Calendar calendar = new GregorianCalendar();
-		calendar.set(y, m, 1, 0, 0, 0);
+		if (year < 1970) {
+			year = Constant.CURRENT_YEAR;
+		}
 
+		if (month < 1 || month > 12) {
+			month = Constant.CURRENT_MONTH;
+		}
+
+		Calendar calendar = new GregorianCalendar(year, month - 1, 1);
 		Page<Article> articles = articleService.findByMonth(calendar.getTime(), page,
 				blogConfig.getInt("pageSize"));
 
 		BlogView v = new BlogView("articles");
-		v.add("title", year + " - " + month);
+		String archiveTime = year + "-" + (month < 10 ? "0" : "") + month;
+		v.add("title", archiveTime);
 		v.add("articles", articles.getContent());
 
 		addPaginator(v, articles);
 
-		v.add("path", blogConfig.get("staticServePath") + "archive/" + year + "-" + month + "/");
+		v.add("path", blogConfig.get("staticServePath") + "archive/" + archiveTime + "/");
 
 		return v;
 	}

@@ -30,6 +30,12 @@ public class ChineseSegment {
 		useLessNature.add('p');
 	}
 
+	public static String[] segmentToArray(String string) {
+		Set<String> stringSet = segmentToSet(string);
+		String[] strings = new String[stringSet.size()];
+		return stringSet.toArray(strings);
+	}
+
 	public static Set<String> segmentToSet(String string) {
 		List<Term> terms = ToAnalysis.paser(string);
 		new NatureRecognition(terms).recognition();

@@ -11,6 +11,7 @@ import org.cweili.wray.service.CommentService;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.service.FeedService;
 import org.cweili.wray.service.LinkService;
+import org.cweili.wray.service.SearchService;
 import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public abstract class BaseController extends MultiActionController {
 	protected UploadService uploadService;
 
 	@Autowired
+	protected SearchService searchService;
+
+	@Autowired
 	protected FeedService feedService;
 
 	/**
@@ -57,7 +61,7 @@ public abstract class BaseController extends MultiActionController {
 	 * @param page
 	 */
 	protected void addPaginator(BlogView v, Page<?> page) {
-		addPaginator(v, page.getTotal(), page.getNumber() + 1);
+		addPaginator(v, page.getTotalElements(), page.getNumber() + 1);
 	}
 
 	/**
@@ -65,7 +69,7 @@ public abstract class BaseController extends MultiActionController {
 	 * @param total
 	 * @param current
 	 */
-	protected void addPaginator(BlogView v, int total, int current) {
+	protected void addPaginator(BlogView v, long total, long current) {
 		int size = blogConfig.getInt("pageSize");
 		Paginator pagination = new Paginator(total, size, current);
 		v.add("paginationOn", pagination.isPageBarOn());

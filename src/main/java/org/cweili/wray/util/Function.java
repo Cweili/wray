@@ -7,8 +7,13 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -257,8 +262,31 @@ public class Function {
 	 * @param b
 	 * @return
 	 */
-	public static int round(int a, int b) {
+	public static long round(long a, long b) {
 		return (((double) a / (double) b) > (a / b) ? a / b + 1 : a / b);
+	}
+
+	public static <K extends Object, V extends Number> List<Entry<K, V>> sortMapByValue(
+			Map<K, V> map) {
+
+		List<Entry<K, V>> list = new LinkedList<Entry<K, V>>(map.entrySet());
+
+		Collections.sort(list, new Comparator<Entry<K, V>>() {
+
+			@Override
+			public int compare(Entry<K, V> e1, Entry<K, V> e2) {
+				if (e1.getValue().doubleValue() > e2.getValue().doubleValue()) {
+					return -1;
+				} else if (e1.getValue().doubleValue() < e2.getValue().doubleValue()) {
+					return 1;
+				}
+				return 0;
+			}
+
+		});
+
+		return list;
+
 	}
 
 	/**
