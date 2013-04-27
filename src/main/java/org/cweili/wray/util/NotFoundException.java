@@ -4,6 +4,7 @@
 package org.cweili.wray.util;
 
 /**
+ * 内容未找到错误
  * 
  * @author cweili
  * @version 2013-4-7 下午3:47:17

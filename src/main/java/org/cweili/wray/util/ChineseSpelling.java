@@ -1,6 +1,7 @@
 package org.cweili.wray.util;
 
 /**
+ * 中文转换为拼音
  * 
  * @author cweili
  * @version 2012-8-21 上午10:47:21
@@ -82,8 +83,6 @@ public class ChineseSpelling {
 			"zhuai", "zhuan", "zhuang", "zhui", "zhun", "zhuo", "zi", "zong", "zou", "zu", "zuan",
 			"zui", "zun", "zuo" };
 
-	private StringBuilder buffer;
-
 	private String resource;
 
 	public ChineseSpelling() {
@@ -101,7 +100,7 @@ public class ChineseSpelling {
 		this.resource = resource;
 	}
 
-	private int getChsAscii(String chs) {
+	private static int getChsAscii(String chs) {
 		int asc = 0;
 		try {
 			byte[] bytes = chs.getBytes("gb2312");
@@ -122,7 +121,7 @@ public class ChineseSpelling {
 		return asc;
 	}
 
-	public String convert(String str) {
+	private static String convert(String str) {
 		String result = null;
 		int ascii = getChsAscii(str);
 		if (ascii > 0 && ascii < 160) {
@@ -138,9 +137,16 @@ public class ChineseSpelling {
 		return result;
 	}
 
-	public String getSelling(String chs) {
+	/**
+	 * 获取输入字符串的拼音
+	 * 
+	 * @param chs
+	 *            输入字符串
+	 * @return 拼音字符串
+	 */
+	public static String getSpelling(String chs) {
 		String key, value;
-		buffer = new StringBuilder();
+		StringBuilder buffer = new StringBuilder();
 		for (int i = 0; i < chs.length(); ++i) {
 			key = chs.substring(i, i + 1);
 			if (key.getBytes().length == 3) {
@@ -156,12 +162,17 @@ public class ChineseSpelling {
 		return buffer.toString();
 	}
 
+	/**
+	 * 获取拼音字符串
+	 * 
+	 * @return 拼音字符串
+	 */
 	public String getSpelling() {
-		return this.getSelling(this.getResource());
+		return ChineseSpelling.getSpelling(this.getResource());
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new ChineseSpelling("中文字符").getSpelling());
+		System.out.println(ChineseSpelling.getSpelling("中文字符"));
 		System.out.println(new ChineseSpelling("英文字符Eng").getSpelling());
 	}
 

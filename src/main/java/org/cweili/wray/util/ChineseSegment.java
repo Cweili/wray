@@ -13,6 +13,7 @@ import org.ansj.util.recognition.NatureRecognition;
 import org.apache.commons.lang3.StringUtils;
 
 /**
+ * 中文分词
  * 
  * @author cweili
  * @version 2013-4-26 下午12:38:51
@@ -30,12 +31,26 @@ public class ChineseSegment {
 		useLessNature.add('p');
 	}
 
+	/**
+	 * 获取关键词数组
+	 * 
+	 * @param string
+	 *            原文
+	 * @return 关键词数组
+	 */
 	public static String[] segmentToArray(String string) {
 		Set<String> stringSet = segmentToSet(string);
 		String[] strings = new String[stringSet.size()];
 		return stringSet.toArray(strings);
 	}
 
+	/**
+	 * 获取关键词集合
+	 * 
+	 * @param string
+	 *            原文
+	 * @return 关键词集合
+	 */
 	public static Set<String> segmentToSet(String string) {
 		List<Term> terms = ToAnalysis.paser(string);
 		new NatureRecognition(terms).recognition();

@@ -21,10 +21,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Wray 公用函数
+ * 公用方法
  * 
  * @author cweili
- * @version 2012-8-16 下午5:27:40
+ * @version 2013-4-27 下午8:13:33
  * 
  */
 public class Function {
@@ -248,7 +248,7 @@ public class Function {
 		if (!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
 			permalink = StringUtils.left(permalink, permalink.length() - 1);
 		}
-		permalink = new ChineseSpelling(permalink.toLowerCase().trim()).getSpelling();
+		permalink = ChineseSpelling.getSpelling(permalink.toLowerCase().trim());
 		if (permalink.length() > 32) {
 			permalink = StringUtils.left(permalink, 32);
 		}

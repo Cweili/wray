@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.util;
 
 import java.io.ByteArrayOutputStream;
@@ -12,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
+ * Zlib压缩
  * 
  * @author cweili
  * @version 2013-4-2 下午5:28:20
@@ -22,8 +20,11 @@ public class Zlib {
 	private static final Log log = LogFactory.getLog(Zlib.class);
 
 	/**
+	 * 压缩
+	 * 
 	 * @param data
-	 * @return
+	 *            需要压缩的数据
+	 * @return 压缩后数据
 	 */
 	public static byte[] compress(byte[] data) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -39,8 +40,11 @@ public class Zlib {
 	}
 
 	/**
+	 * 解压
+	 * 
 	 * @param data
-	 * @return
+	 *            需要解压的数据
+	 * @return 解压后的数据
 	 */
 	public static byte[] decompress(byte[] data) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();

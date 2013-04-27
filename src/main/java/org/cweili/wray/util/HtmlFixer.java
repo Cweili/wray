@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.util;
 
 /**
