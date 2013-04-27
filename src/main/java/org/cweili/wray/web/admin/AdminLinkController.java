@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
@@ -54,8 +54,12 @@ public final class AdminLinkController extends BaseController {
 		Item link = linkService.findById(linkid);
 		if (null != link) {
 			link = getLink(request, link);
-			if (null != linkService.save(link)) {
-				return Constant.SUBMIT_SUCCESS;
+			try {
+				if (null != linkService.save(link)) {
+					return Constant.SUBMIT_SUCCESS;
+				}
+			} catch (Exception e) {
+				return Constant.SUBMIT_FAILED;
 			}
 		}
 		return Constant.SUBMIT_FAILED;
@@ -73,8 +77,12 @@ public final class AdminLinkController extends BaseController {
 	public @ResponseBody
 	String addPost(WebRequest request) {
 		Item link = getLink(request, null);
-		if (null != linkService.save(link)) {
-			return "admin-link-edit-" + link.getItemId();
+		try {
+			if (null != linkService.save(link)) {
+				return "admin-link-edit-" + link.getItemId();
+			}
+		} catch (Exception e) {
+			return Constant.SUBMIT_FAILED;
 		}
 		return Constant.SUBMIT_FAILED;
 	}

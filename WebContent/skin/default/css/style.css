@@ -4,7 +4,7 @@
 
 body {
 	color: #373737;
-	background: url(../images/homebg.jpg) top center no-repeat #222326;
+	background: url("../images/homebg.jpg") top center no-repeat #222326;
 	font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma, sans-serif;
 	font-size: 13px;
 	background-color: #3e3e3e;
@@ -80,7 +80,7 @@ ul li, ul li ul li {
     padding: 0px;
     list-style-type: none;
     line-height: 16px;
-    background-image: url('../images/item-pointer.gif');
+    background-image: url("../images/item-pointer.gif");
     background-position: 0px 7px;
     background-repeat: no-repeat;
     padding-left: 12px;
@@ -88,7 +88,7 @@ ul li, ul li ul li {
 }
 
 ul li ul li {
-    background-image: url('../images/item-pointer.gif');
+    background-image: url("../images/item-pointer.gif");
 }
 
 ol {
@@ -123,7 +123,7 @@ input[type=text], input[type=password], input[type=file], select, textarea {
     border: 1px solid #858a8e;
     background-color: #c9ccd0;
     color: #333333;
-    background-image: url(images/inputbg.png);
+    background-image: url("../images/inputbg.png");
     background-position: 0px 0px;
     background-repeat: no-repeat;
 }
@@ -160,7 +160,7 @@ input[type=button], input[type=reset], input[type=submit] {
 	display: block;
 	width: 960px;
 	height: 26px;
-	background-image: url(../images/headertop2.png);
+	background-image: url("../images/headertop2.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	margin: 24px 0 0 0;
@@ -170,7 +170,7 @@ input[type=button], input[type=reset], input[type=submit] {
 	display: block;
 	width: 960px;
 	height: 26px;
-	background-image: url(../images/footerbottom.png);
+	background-image: url("../images/footerbottom.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	margin-bottom: 12px;
@@ -181,7 +181,7 @@ input[type=button], input[type=reset], input[type=submit] {
 	width: 864px;
 	height: 60px;
 	padding: 0px 48px;
-	background-image: url(../images/headerbg2.png);
+	background-image: url("../images/headerbg2.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	margin: 0px 0px;
@@ -191,7 +191,7 @@ input[type=button], input[type=reset], input[type=submit] {
 #outerwrapper {
 	display: block;
 	padding: 0px 0px;
-	background-image: url(../images/innerbg-trns.png);
+	background-image: url("../images/innerbg-trns.png");
 	background-repeat: repeat-y;
 	background-position: 0px 0px;
 	margin: 0px 0px;
@@ -201,7 +201,7 @@ input[type=button], input[type=reset], input[type=submit] {
 	display: block;
 	width: 864px;
 	padding: 0px 48px;
-	background-image: url(../images/innerbg-top.png);
+	background-image: url("../images/innerbg-top.png");
 	background-repeat: no-repeat;
 	background-position: 24px 0px;
 	margin: 0px 0px;
@@ -259,7 +259,7 @@ input[type=button], input[type=reset], input[type=submit] {
 	width: 124px;
 	height: 41px;
 	margin-top: 0px;
-	background-image: url(../images/rssbg.png);
+	background-image: url("../images/rssbg.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 }
@@ -278,7 +278,7 @@ input[type=button], input[type=reset], input[type=submit] {
 #navouter {
 	display: block;
 	height: 60px;
-	background-image: url(../images/topnavbg.png);
+	background-image: url("../images/topnavbg.png");
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 }
@@ -409,7 +409,7 @@ div.postmeta2 div.meta2inner {
 	position: absolute;
 	height: 70px;
 	width: 58px;
-	background-image: url(../images/datebg.png);
+	background-image: url("../images/datebg.png");
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	color: #FFF;
@@ -494,7 +494,7 @@ div.postwrap div.roubcornrcontent a:hover{
 div.postwrap span.postcomments {
 	display: block;
 	float: right;
-	background-image: url(../images/icon-comment.png);
+	background-image: url("../images/icon-comment.png");
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	padding: 0px 0px 0px 18px;
@@ -504,7 +504,7 @@ div.postwrap span.posttags-single,
 div.postwrap span.posttags {
 	display: block;
 	float: left;
-	background-image: url(../images/icontag.png);
+	background-image: url("../images/icontag.png");
 	background-position: 0px 0px;
 	background-repeat: no-repeat;
 	padding: 0px 0px 0px 18px;
@@ -578,7 +578,7 @@ div.rightcontent {
     padding: 0px 2px;
     border: 1px solid #7f7f7f;
     background-color: #FFFFFF;
-    background-image: url(images/inputbg.png);
+    background-image: url("../images/inputbg.png");
     background-repeat: no-repeat;
     background-position: 0px 0px;
 }
@@ -626,7 +626,7 @@ div.widget h2,
 	margin-bottom: 12px;
 	background-color: #d2d2d2;
 	border-top: 1px solid #c00000;
-	background-image: url(../images/downarrow.gif);
+	background-image: url("../images/downarrow.gif");
 	background-position: right top;
 	background-repeat: no-repeat;
 	margin-left: 0px;
@@ -650,7 +650,7 @@ div.widget-cat h4,
 	border-top: 2px solid #c00000;
 	background-color: #464848;
 	color: #FFF;
-	background-image: url(../images/downarrow.gif);
+	background-image: url("../images/downarrow.gif");
 	background-position: right top;
 	background-repeat: no-repeat;
 	
@@ -665,7 +665,7 @@ li.widget_categories ul li {
 	margin: 0px;
 	background-image: none;
 	color: #9ea2a9;
-	background-image: url(../images/item-pointer.gif);
+	background-image: url("../images/item-pointer.gif");
 	background-position: 4px 8px;
 	background-repeat: no-repeat;	
 }
@@ -942,7 +942,7 @@ button:hover {
 	display: none;
 	height: 70px;
 	width: 58px;
-	background-image: url(../images/datebg.png);
+	background-image: url("../images/datebg.png");
 	background-position: 14px 0px;
 	background-repeat: no-repeat;
 	color: white;
@@ -969,13 +969,13 @@ label.error {
 	display: inline;
 	float: none;
 	position: static;
-	background: url('../../../include/image/validate_error.png') no-repeat left;
+	background: url("../../../include/image/validate_error.png") no-repeat left;
 	background-position: 2px;
 	margin-left: 2px;
 	padding: 3px 2px 4px 17px;
 	color: #981d05;
 	top: 0;
-	behavior: url('../../../include/js/iepngfic.htc') !important;
+	behavior: url("../../../include/js/iepngfic.htc") !important;
 }
 .error {
 	border: 1px solid #a5260f !important;

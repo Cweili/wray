@@ -2,7 +2,7 @@ package org.cweili.wray.service.impl;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Item;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;

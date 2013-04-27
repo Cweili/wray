@@ -1,4 +1,4 @@
-package org.cweili.wray.util;
+package org.cweili.wray.domain;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Paginator {
 
 	private int total = 0;
-	private int limit = 0;
+	private int size = 0;
 	private int current = 0;
 	private int last = 0;
 	private int previous = 0;
@@ -30,12 +30,12 @@ public class Paginator {
 
 	/**
 	 * @param total
-	 * @param limit
+	 * @param size
 	 * @param current
 	 */
-	public Paginator(int total, int limit, int current) {
+	public Paginator(int total, int size, int current) {
 		this.total = total;
-		this.limit = limit;
+		this.size = size;
 		this.current = current;
 		calculate();
 	}
@@ -44,16 +44,16 @@ public class Paginator {
 	 * 计算分页
 	 */
 	public void calculate() {
-		limit = limit > 0 ? limit : 1;
+		size = size > 0 ? size : 1;
 		current = current > 0 ? current : 1;
 		total = total > 0 ? total : 1;
-		last = round(total, limit);
-		if (total > limit) {
+		last = round(total, size);
+		if (total > size) {
 			pageBarOn = true;
 
-			limit = limit > 0 ? limit : 1;
+			size = size > 0 ? size : 1;
 			current = current > 0 ? current : 1;
-			last = round(total, limit);
+			last = round(total, size);
 			int fix = last - current > 4 ? 4 : 9 - last + current;
 			int begin = current - fix < 1 ? 1 : current - fix;
 			int end = begin + 9 > last ? last : begin + 9;
@@ -77,12 +77,12 @@ public class Paginator {
 		return (((double) a / (double) b) > (a / b) ? a / b + 1 : a / b);
 	}
 
-	public int getLimit() {
-		return limit;
+	public int getSize() {
+		return size;
 	}
 
-	public void setLimit(int limit) {
-		this.limit = limit;
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	public int getTotal() {

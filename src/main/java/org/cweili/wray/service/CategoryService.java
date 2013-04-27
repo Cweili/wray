@@ -2,8 +2,8 @@ package org.cweili.wray.service;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 
 /**
  * 

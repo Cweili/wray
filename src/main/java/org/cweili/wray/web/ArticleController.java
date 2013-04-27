@@ -2,9 +2,10 @@ package org.cweili.wray.web;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.stereotype.Controller;
@@ -64,13 +65,11 @@ public final class ArticleController extends BaseController {
 	private BlogView getIndexView(int page) {
 		BlogView v = new BlogView("index");
 
-		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+		Page<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
 				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
-		v.add("articles", articles);
+		v.add("articles", articles.getContent());
 
-		addPaginator(v,
-				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED),
-				page);
+		addPaginator(v, articles);
 
 		return v;
 	}

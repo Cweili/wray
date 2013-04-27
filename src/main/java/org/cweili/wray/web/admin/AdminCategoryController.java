@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
@@ -53,8 +53,12 @@ public final class AdminCategoryController extends BaseController {
 		Item category = categoryService.findById(categoryid);
 		if (null != category) {
 			category = getCategory(request, category);
-			if (null != categoryService.save(category)) {
-				return Constant.SUBMIT_SUCCESS;
+			try {
+				if (null != categoryService.save(category)) {
+					return Constant.SUBMIT_SUCCESS;
+				}
+			} catch (Exception e) {
+				return Constant.SUBMIT_FAILED;
 			}
 		}
 		return Constant.SUBMIT_FAILED;
@@ -72,8 +76,12 @@ public final class AdminCategoryController extends BaseController {
 	public @ResponseBody
 	String addPost(WebRequest request) {
 		Item category = getCategory(request, null);
-		if (null != categoryService.save(category)) {
-			return "admin-category-edit-" + category.getItemId();
+		try {
+			if (null != categoryService.save(category)) {
+				return "admin-category-edit-" + category.getItemId();
+			}
+		} catch (Exception e) {
+			return Constant.SUBMIT_FAILED;
 		}
 		return Constant.SUBMIT_FAILED;
 	}

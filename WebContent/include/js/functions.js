@@ -55,39 +55,41 @@ $(function() {
 var tagCloud = function() {
 	var oTag = null;
 	oDiv = document.getElementById("tagcloud");
-	aA = oDiv.getElementsByTagName("a");
-
-	for (var i = 0; i < aA.length; i++) {
-		oTag = {};
-
-		oTag.offsetWidth = aA[i].offsetWidth;
-		oTag.offsetHeight = aA[i].offsetHeight;
-
-		mcList.push(oTag);
+	if (oDiv) {
+		aA = oDiv.getElementsByTagName("a");
+	
+		for (var i = 0; i < aA.length; i++) {
+			oTag = {};
+	
+			oTag.offsetWidth = aA[i].offsetWidth;
+			oTag.offsetHeight = aA[i].offsetHeight;
+	
+			mcList.push(oTag);
+		}
+	
+		sineCosine(0, 0, 0);
+		positionAll();
+	
+		oDiv.onmouseover = function() {
+			active = true;
+		};
+	
+		oDiv.onmouseout = function() {
+			active = false;
+		};
+	
+		oDiv.onmousemove = function(ev) {
+			var oEvent = window.event || ev;
+	
+			mouseX = oEvent.pageX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
+			mouseY = oEvent.pageY - (oDiv.offsetTop + oDiv.offsetHeight / 2);
+	
+			mouseX /= 5;
+			mouseY /= 5;
+		};
+	
+		setInterval(updateCloud, 30);
 	}
-
-	sineCosine(0, 0, 0);
-	positionAll();
-
-	oDiv.onmouseover = function() {
-		active = true;
-	};
-
-	oDiv.onmouseout = function() {
-		active = false;
-	};
-
-	oDiv.onmousemove = function(ev) {
-		var oEvent = window.event || ev;
-
-		mouseX = oEvent.pageX - (oDiv.offsetLeft + oDiv.offsetWidth / 2);
-		mouseY = oEvent.pageY - (oDiv.offsetTop + oDiv.offsetHeight / 2);
-
-		mouseX /= 5;
-		mouseY /= 5;
-	};
-
-	setInterval(updateCloud, 30);
 };
 
 var updateCloud = function() {

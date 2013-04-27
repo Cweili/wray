@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Upload;
+import org.cweili.wray.domain.dto.Upload;
 import org.cweili.wray.util.Function;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

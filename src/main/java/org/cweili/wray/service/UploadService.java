@@ -2,7 +2,8 @@ package org.cweili.wray.service;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Upload;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Upload;
 
 /**
  * 
@@ -40,5 +41,5 @@ public interface UploadService {
 	 * @param size
 	 * @return
 	 */
-	public List<Upload> getUploads(int page, int size);
+	public Page<Upload> getUploads(int page, int size);
 }

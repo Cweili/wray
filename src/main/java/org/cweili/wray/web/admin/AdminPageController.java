@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
@@ -41,11 +42,12 @@ public final class AdminPageController extends BaseController {
 			actionName = "页面回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
-				Constant.ADMIN_LIST_SIZE));
 
-		addPaginator(v, articleService.countByTypeStatus(Article.TYPE_PAGE, stat), page,
+		Page<Article> articles = articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
 				Constant.ADMIN_LIST_SIZE);
+		v.add("articles", articles.getContent());
+
+		addPaginator(v, articles);
 		return v;
 	}
 
@@ -61,7 +63,11 @@ public final class AdminPageController extends BaseController {
 	public @ResponseBody
 	String addPost(WebRequest request) {
 		Article article = getArticle(request, null);
-		if (null == articleService.save(article)) {
+		try {
+			if (null == articleService.save(article)) {
+				return Constant.SUBMIT_FAILED;
+			}
+		} catch (Exception e) {
 			return Constant.SUBMIT_FAILED;
 		}
 		return "admin-page-edit-" + article.getArticleId();
@@ -85,7 +91,11 @@ public final class AdminPageController extends BaseController {
 	String editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		Article article = articleService.findById(articleid);
 		article = getArticle(request, article);
-		if (null == articleService.save(article)) {
+		try {
+			if (null == articleService.save(article)) {
+				return Constant.SUBMIT_FAILED;
+			}
+		} catch (Exception e) {
 			return Constant.SUBMIT_FAILED;
 		}
 		return Constant.SUBMIT_SUCCESS;
@@ -120,7 +130,7 @@ public final class AdminPageController extends BaseController {
 		}
 
 		List<Article> articles = articleService.findByTypeStatus(Article.TYPE_PAGE, stat, page,
-				Constant.ADMIN_LIST_SIZE);
+				Constant.ADMIN_LIST_SIZE).getContent();
 		int order = 0;
 
 		for (Article article : articles) {

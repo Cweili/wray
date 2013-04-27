@@ -3,7 +3,7 @@
  */
 package org.cweili.wray.web;
 
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

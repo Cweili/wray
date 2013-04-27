@@ -6,9 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.CutString;
 import org.cweili.wray.util.Function;
@@ -44,11 +45,12 @@ public final class AdminArticleController extends BaseController {
 			actionName = "文章回收站";
 		}
 		v.add("actionName", actionName);
-		v.add("articles", articleService.findByTypeStatus(Article.TYPE_ARTICLE, stat, page,
-				Constant.ADMIN_LIST_SIZE));
 
-		addPaginator(v, articleService.countByTypeStatus(Article.TYPE_ARTICLE, stat), page,
+		Page<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE, stat, page,
 				Constant.ADMIN_LIST_SIZE);
+		v.add("articles", articles.getContent());
+
+		addPaginator(v, articles);
 		return v;
 	}
 
@@ -64,10 +66,14 @@ public final class AdminArticleController extends BaseController {
 	@RequestMapping(value = "/admin-article-add", method = RequestMethod.POST)
 	public @ResponseBody
 	String addPost(WebRequest request) {
-		Article article = getArticle(request, null);
-		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
-		if (null != articleService.save(article)) {
-			return "admin-article-edit-" + article.getArticleId();
+		try {
+			Article article = getArticle(request, null);
+			categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
+			if (null != articleService.save(article)) {
+				return "admin-article-edit-" + article.getArticleId();
+			}
+		} catch (Exception e) {
+			return Constant.SUBMIT_FAILED;
 		}
 		return Constant.SUBMIT_FAILED;
 	}
@@ -92,8 +98,12 @@ public final class AdminArticleController extends BaseController {
 	public @ResponseBody
 	String editPost(WebRequest request, @PathVariable("articleid") String articleid) {
 		Article article = articleService.findById(articleid);
-		article = getArticle(request, article);
-		if (null == articleService.save(article)) {
+		try {
+			article = getArticle(request, article);
+			if (null == articleService.save(article)) {
+				return Constant.SUBMIT_FAILED;
+			}
+		} catch (Exception e) {
 			return Constant.SUBMIT_FAILED;
 		}
 		categoryService.saveRelationshipWithArticle(article, getRelatedItems(request));
@@ -192,8 +202,8 @@ public final class AdminArticleController extends BaseController {
 					if (null != addItem) {
 						relatedItems.add(addItem);
 					} else {
-						addItem = new Item(Function.generateId(), tagStr, "", "", 0, (byte) 0,
-								Item.TYPE_TAG, "", Item.STAT_ON);
+						addItem = new Item(Function.generateId(), tagStr, Function.generateId(),
+								"", 0, (byte) 0, Item.TYPE_TAG, "", Item.STAT_ON);
 						tagService.save(addItem);
 						relatedItems.add(addItem);
 					}

@@ -1,4 +1,4 @@
-package org.cweili.wray.util;
+package org.cweili.wray.domain;
 
 import java.util.Map;
 

@@ -3,7 +3,8 @@ package org.cweili.wray.service;
 import java.util.Date;
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
 
 /**
  * 
@@ -13,18 +14,12 @@ import org.cweili.wray.domain.Article;
  */
 public interface ArticleService {
 
-	public int countByTypeStatus(byte type, byte status);
+	public Page<Article> findByTypeStatus(byte type, byte status, int page, int size);
 
-	public int countByRelationship(String itemId, byte type, byte status);
-
-	public int countByMonth(Date month);
-
-	public List<Article> findByTypeStatus(byte type, byte status, int page, int size);
-
-	public List<Article> findByRelationship(String itemId, byte type, byte status, int page,
+	public Page<Article> findByRelationship(String itemId, byte type, byte status, int page,
 			int size);
 
-	public List<Article> findByMonth(Date month, int page, int size);
+	public Page<Article> findByMonth(Date month, int page, int size);
 
 	public List<Article> findByKeyword(String keyword);
 
@@ -46,9 +41,4 @@ public interface ArticleService {
 
 	public List<Article> getArchive();
 
-	public void updateArticleCache();
-
-	public void updateSidebarArticleCache();
-
-	public void updateArchiveCache();
 }

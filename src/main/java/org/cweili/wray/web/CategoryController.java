@@ -1,8 +1,9 @@
 package org.cweili.wray.web;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.stereotype.Controller;
@@ -16,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 
  */
 @Controller
+@RequestMapping("/category")
 public final class CategoryController extends BaseController {
 
-	@RequestMapping("/category/{permalink}")
+	@RequestMapping("/{permalink}")
 	public BlogView permalink(@PathVariable("permalink") String permalink) throws NotFoundException {
 		return getCategoryView(permalink, 1);
 	}
 
-	@RequestMapping("/category/{permalink}/page-{page}")
+	@RequestMapping("/{permalink}/page-{page}")
 	public BlogView permalink(@PathVariable("permalink") String permalink,
 			@PathVariable("page") String page) throws NotFoundException {
 		return getCategoryView(permalink, Function.minimumPositiveInteger(page));
@@ -39,18 +41,16 @@ public final class CategoryController extends BaseController {
 			throw new NotFoundException();
 		}
 		v.add("item", item);
-		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit")));
 
-		log.error(articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED));
-		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED), page);
+		Page<Article> articles = articleService.findByRelationship(item.getItemId(),
+				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
+		v.add("articles", articles.getContent());
+
+		addPaginator(v, articles);
 		v.add("path",
-				blogConfig.get("StaticServePath") + "category/" + Function.urlEncode(permalink)
+				blogConfig.get("staticServePath") + "category/" + Function.urlEncode(permalink)
 						+ "/");
 
 		return v;
 	}
-
 }

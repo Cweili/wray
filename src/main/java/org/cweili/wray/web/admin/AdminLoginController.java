@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;

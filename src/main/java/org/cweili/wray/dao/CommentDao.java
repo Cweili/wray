@@ -1,6 +1,6 @@
 package org.cweili.wray.dao;
 
-import org.cweili.wray.domain.Comment;
+import org.cweili.wray.domain.dto.Comment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

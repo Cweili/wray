@@ -3,7 +3,7 @@ package org.cweili.wray.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.dto.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
@@ -16,14 +16,14 @@ import org.springframework.data.mongodb.repository.Query;
  */
 public interface ArticleDao extends BaseDao<Article> {
 
-	public static final String VALUE_ISPAGE_STAT = "{ 'isPage': ?0, 'stat': ?1 }";
+	public static final String VALUE_ISPAGE_STAT = "{'isPage': ?0, 'stat': ?1}";
 
-	public static final String FIELD_META = "{ 'title': 1, 'permalink': 1, 'tag': 1, "
+	public static final String FIELD_META = "{'title': 1, 'permalink': 1, 'tag': 1, "
 			+ "'createTime': 1, 'stat': 1, 'hit': 1, 'commentCount': 1, "
-			+ "'commentStatus': 1, 'isPage': 1 }";
+			+ "'commentStatus': 1, 'isPage': 1}";
 
-	public static final String VALUE_ARCHIVE = "{ 'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
-			+ Article.TYPE_ARTICLE + ", 'stat': " + Article.STAT_PUBLISHED + " }";
+	public static final String VALUE_ARCHIVE = "{'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
+			+ Article.TYPE_ARTICLE + ", 'stat': " + Article.STAT_PUBLISHED + "}";
 
 	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
 	public List<Article> findMetaByIsPageAndStat(byte isPage, byte stat);

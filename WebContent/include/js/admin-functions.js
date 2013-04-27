@@ -182,7 +182,7 @@ var submitForm = function(form) {
 			$(".err").hide();
 			$(".succes").slideDown();
 			setTimeout('$(".succes").slideUp()', slideToggleDelay);
-		} else if(data != "") {
+		} else if(data.substring(0, 6) == "admin-") {
 			window.location.href = data + "#succ";
 		} else {
 			$(".loading").hide();

@@ -218,7 +218,7 @@ public class Function {
 	public static int defaultInteger(String string, int integer) {
 		if (null != string) {
 			try {
-				integer = Integer.valueOf(string);
+				integer = Integer.parseInt(string);
 			} catch (Exception e) {
 				log.error(e);
 			}

@@ -5,8 +5,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.ipseeker.IPSeeker;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Comment;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Comment;
 import org.cweili.wray.service.CommentService;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.CutString;
@@ -42,9 +43,10 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	}
 
 	@Override
-	public List<Comment> find(int page, int limit) {
-		return dealCommentList(commentDao.findAll(
-				new PageRequest(page - 1, limit, Sort.Direction.DESC, "_id")).getContent());
+	public Page<Comment> find(int page, int limit) {
+		Page<Comment> pagedComments = new Page<Comment>(commentDao.findAll(new PageRequest(
+				page - 1, limit, Sort.Direction.DESC, "_id")));
+		return new Page<Comment>(dealCommentList(pagedComments.getContent()), pagedComments);
 	}
 
 	@Override

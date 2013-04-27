@@ -8,7 +8,6 @@
 	<meta name="copyright" content="${blogHost}" />
 	<meta name="revised" content="wray" />
 	<meta http-equiv="Window-target" content="_top" />
-	<!--link rel="stylesheet" href="/css/default-base$`{miniPostfix}.css" type="text/css" charset="utf-8" /-->
 	<link rel="stylesheet" type="text/css" href="${staticServePath}${skinDir}css/style.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="include/editor/plugins/code/prettify.css" />
 	<link rel="alternate" type="application/rss+xml" charset="utf-8" title="${blogTitle}" href="${staticServePath}feed" />

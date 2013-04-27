@@ -2,8 +2,9 @@ package org.cweili.wray.service;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Comment;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Comment;
 
 /**
  * 
@@ -35,7 +36,7 @@ public interface CommentService {
 	 * @param limit
 	 * @return
 	 */
-	public List<Comment> find(int page, int limit);
+	public Page<Comment> find(int page, int limit);
 
 	/**
 	 * @param comment

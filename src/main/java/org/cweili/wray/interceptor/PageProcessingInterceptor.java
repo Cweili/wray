@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Article;
+import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -58,7 +58,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 
 				// 添加页面
 				List<Article> pageNavigations = articleService.findByTypeStatus(Article.TYPE_PAGE,
-						Article.STAT_PUBLISHED, 1, 0);
+						Article.STAT_PUBLISHED, 1, 0).getContent();
 				mv.addObject("pageNavigations", pageNavigations);
 
 				// 添加侧栏

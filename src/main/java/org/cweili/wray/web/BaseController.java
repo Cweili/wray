@@ -2,6 +2,9 @@ package org.cweili.wray.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.Paginator;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.service.CommentService;
@@ -10,8 +13,6 @@ import org.cweili.wray.service.FeedService;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.service.TagService;
 import org.cweili.wray.service.UploadService;
-import org.cweili.wray.util.BlogView;
-import org.cweili.wray.util.Paginator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -73,11 +74,11 @@ public abstract class BaseController extends MultiActionController {
 	 * @param current
 	 * @param limit
 	 */
-	protected void addPaginator(BlogView v, int total, int current, int limit) {
-		Paginator pagination = new Paginator(total, limit, current);
+	protected void addPaginator(BlogView v, Page<?> page) {
+		Paginator pagination = new Paginator(page.getTotal(), page.getSize(), page.getNumber());
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
-		v.add("paginationCurrentPageNum", current);
+		v.add("paginationCurrentPageNum", page.getNumber());
 		v.add("paginationPreviousPageNum", pagination.getPrevious());
 		v.add("paginationNextPageNum", pagination.getNext());
 		v.add("paginationPageCount", pagination.getLast());

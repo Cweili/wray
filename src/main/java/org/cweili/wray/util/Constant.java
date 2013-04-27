@@ -20,7 +20,7 @@ public class Constant {
 	/**
 	 * 分页最大值
 	 */
-	public static final int MAX_PAGE = 65535;
+	public static final int MAX_PAGE = Integer.MAX_VALUE;
 
 	/**
 	 * Cookie 保存时间

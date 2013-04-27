@@ -5,19 +5,17 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Relationship;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.ChineseSegment;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.HtmlFixer;
 import org.springframework.data.domain.PageRequest;
@@ -33,67 +31,73 @@ import org.springframework.stereotype.Service;
 @Service("articleService")
 public class ArticleServiceImpl extends BaseService implements ArticleService {
 
+	// @Override
+	// public int countByTypeStatus(byte type, byte status) {
+	//
+	// if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED
+	// && publishedArticleCount == 0) {
+	// updateArticleCache();
+	// } else if (type != Article.TYPE_ARTICLE || status !=
+	// Article.STAT_PUBLISHED) {
+	// return articleDao.findMetaByIsPageAndStat(type, status).size();
+	// }
+	// return (int) publishedArticleCount;
+	// }
+	//
+	// @Override
+	// public int countByRelationship(String itemId, byte type, byte status) {
+	// List<Relationship> relationships = relationshipDao.findByItemId(itemId);
+	// int count = 0;
+	// Article article;
+	// for (Relationship relationship : relationships) {
+	// article = articleDao.findOne(relationship.getArticleId());
+	// if (null != article && type == article.getIsPage() && status ==
+	// article.getStat()) {
+	// ++count;
+	// }
+	// }
+	// return count;
+	// }
+
+	// @Override
+	// public int countByMonth(Date month) {
+	// Calendar toDate = new GregorianCalendar();
+	// toDate.setTime(month);
+	// toDate.set(Calendar.DATE, toDate.getActualMaximum(Calendar.DATE));
+	// toDate.set(Calendar.HOUR_OF_DAY,
+	// toDate.getActualMaximum(Calendar.HOUR_OF_DAY));
+	// toDate.set(Calendar.MINUTE, toDate.getActualMaximum(Calendar.MINUTE));
+	// toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
+	// toDate.set(Calendar.MILLISECOND,
+	// toDate.getActualMaximum(Calendar.MILLISECOND));
+	//
+	// return articleDao.findByArchive(month, toDate.getTime()).size();
+	// }
+
 	@Override
-	public int countByTypeStatus(byte type, byte status) {
-
-		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED
-				&& publishedArticleCount == 0) {
-			updateArticleCache();
-		} else if (type != Article.TYPE_ARTICLE || status != Article.STAT_PUBLISHED) {
-			return articleDao.findMetaByIsPageAndStat(type, status).size();
-		}
-		return publishedArticleCount;
-	}
-
-	@Override
-	public int countByRelationship(String itemId, byte type, byte status) {
-		List<Relationship> relationships = relationshipDao.findByItemId(itemId);
-		int count = 0;
-		Article article;
-		for (Relationship relationship : relationships) {
-			article = articleDao.findOne(relationship.getArticleId());
-			if (null != article && type == article.getIsPage() && status == article.getStat()) {
-				++count;
-			}
-		}
-		return count;
-	}
-
-	@Override
-	public int countByMonth(Date month) {
-		Calendar toDate = new GregorianCalendar();
-		toDate.setTime(month);
-		toDate.set(Calendar.DATE, toDate.getActualMaximum(Calendar.DATE));
-		toDate.set(Calendar.HOUR_OF_DAY, toDate.getActualMaximum(Calendar.HOUR_OF_DAY));
-		toDate.set(Calendar.MINUTE, toDate.getActualMaximum(Calendar.MINUTE));
-		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
-		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
-
-		return articleDao.findByArchive(month, toDate.getTime()).size();
-	}
-
-	@Override
-	public List<Article> findByTypeStatus(byte type, byte status, int page, int size) {
+	public Page<Article> findByTypeStatus(byte type, byte status, int page, int size) {
 		if (type == Article.TYPE_ARTICLE && status == Article.STAT_PUBLISHED) {
-			return dealList(findByTypeStatusInDao(type, status, page, size));
+			Page<Article> pagedArticles = findByTypeStatusInDao(type, status, page, size);
+
+			return new Page<Article>(dealList(pagedArticles.getContent()), pagedArticles);
 		} else if (type == Article.TYPE_ARTICLE) {
 			return findByTypeStatusInDao(type, status, page, size);
 		} else {
 			if (size < 1 && status == Article.STAT_PUBLISHED) {
 				if (pages == null) {
-					updateArticleCache();
+					updatePageCache();
 					return pages;
 				}
 				return pages;
 			} else {
-				return articleDao.findByIsPageAndStat(type, status,
-						new PageRequest(page - 1, size, Sort.Direction.ASC, "hit")).getContent();
+				return new Page<Article>(articleDao.findByIsPageAndStat(type, status,
+						new PageRequest(page - 1, size, Sort.Direction.ASC, "hit")));
 			}
 		}
 	}
 
 	@Override
-	public List<Article> findByRelationship(String itemId, byte type, byte status, int page,
+	public Page<Article> findByRelationship(String itemId, byte type, byte status, int page,
 			int size) {
 		page = page > 0 ? page : 1;
 		size = size > 0 ? size : 1;
@@ -109,11 +113,13 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		Collections.sort(articles);
 		int end = size * page - 1;
 		end = end < articles.size() ? end : articles.size();
-		return articles.subList(size * (page - 1), end);
+		Page<Article> pagedArticles = new Page<Article>(articles.subList(size * (page - 1), end),
+				new PageRequest(page - 1, size), articles.size());
+		return pagedArticles;
 	}
 
 	@Override
-	public List<Article> findByMonth(Date month, int page, int size) {
+	public Page<Article> findByMonth(Date month, int page, int size) {
 		Calendar toDate = new GregorianCalendar();
 		toDate.setTime(month);
 		toDate.set(Calendar.DATE, toDate.getActualMaximum(Calendar.DATE));
@@ -122,8 +128,10 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		toDate.set(Calendar.SECOND, toDate.getActualMaximum(Calendar.SECOND));
 		toDate.set(Calendar.MILLISECOND, toDate.getActualMaximum(Calendar.MILLISECOND));
 
-		return dealList(articleDao.findByArchive(month, toDate.getTime(),
-				new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")).getContent());
+		Page<Article> pagedArticles = new Page<Article>(articleDao.findByArchive(month,
+				toDate.getTime(), new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")));
+
+		return new Page<Article>(dealList(pagedArticles.getContent()), pagedArticles);
 	}
 
 	@Override
@@ -163,10 +171,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 				+ article.getContent() + article.getTag()));
 		article.setKeyword(keyword);
 		Article articleNew = articleDao.save(article);
-		if (null != articleNew && articleNew.getStat() == Article.STAT_PUBLISHED) {
-			updateArticleCache();
-			updateSidebarArticleCache();
-		}
+		updateCache(articleNew);
 		return articleNew;
 	}
 
@@ -180,10 +185,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	public boolean remove(Article article) {
 		article.setStat(Article.STAT_REMOVED);
 		Article articleNew = articleDao.save(article);
-		if (null != articleNew) {
-			updateArticleCache();
-			updateSidebarArticleCache();
-		}
+		updateCache(articleNew);
 		return null != articleNew;
 	}
 
@@ -194,10 +196,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 			article.setStat(status);
 		}
 		articles = articleDao.save(articles);
-		if (null != articles) {
-			updateArticleCache();
-			updateSidebarArticleCache();
-		}
+		updateCache(articles.iterator().next());
 		return null != articles;
 	}
 
@@ -207,7 +206,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 			topCommentArticlesSize = size;
 			updateSidebarArticleCache();
 		}
-		return topCommentArticles;
+		return topCommentArticles.getContent();
 	}
 
 	@Override
@@ -216,7 +215,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 			topHitArticlesSize = size;
 			updateSidebarArticleCache();
 		}
-		return topHitArticles;
+		return topHitArticles.getContent();
 	}
 
 	@Override
@@ -227,35 +226,6 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return archive;
 	}
 
-	@Override
-	public void updateArticleCache() {
-		pages = articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE, Article.STAT_PUBLISHED,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "hit")).getContent();
-		publishedArticleCount = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED).size();
-		rss = null;
-		atom = null;
-	}
-
-	@Override
-	public void updateSidebarArticleCache() {
-
-		if (topCommentArticlesSize > 0) {
-			topCommentArticles = articleDao
-					.findMetaByIsPageAndStat(
-							Article.TYPE_ARTICLE,
-							Article.STAT_PUBLISHED,
-							new PageRequest(0, topCommentArticlesSize, Sort.Direction.DESC,
-									"commentCount")).getContent();
-		}
-		if (topHitArticlesSize > 0) {
-			topHitArticles = articleDao.findMetaByIsPageAndStat(Article.TYPE_ARTICLE,
-					Article.STAT_PUBLISHED,
-					new PageRequest(0, topHitArticlesSize, Sort.Direction.DESC, "hit"))
-					.getContent();
-		}
-	}
-
 	/**
 	 * @param type
 	 * @param status
@@ -263,9 +233,9 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 	 * @param size
 	 * @return
 	 */
-	private List<Article> findByTypeStatusInDao(byte type, byte status, int page, int size) {
-		return articleDao.findByIsPageAndStat(type, status,
-				new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")).getContent();
+	private Page<Article> findByTypeStatusInDao(byte type, byte status, int page, int size) {
+		return new Page<Article>(articleDao.findByIsPageAndStat(type, status, new PageRequest(
+				page - 1, size, Sort.Direction.DESC, "_id")));
 	}
 
 	/**
@@ -293,38 +263,16 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		return article;
 	}
 
-	@Override
-	public void updateArchiveCache() {
-		if (null == archive) {
-			archive = new LinkedList<Article>();
-		} else {
-			archive.clear();
-		}
-		HashMap<Date, Integer> months = new HashMap<Date, Integer>();
-		Calendar calendar = Calendar.getInstance();
-		for (Article article : articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED)) {
-			calendar.setTime(article.getCreateTime());
-			calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DATE));
-			calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
-			calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
-			calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
-			calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
-			if (null != months.get(calendar.getTime())) {
-				months.put(calendar.getTime(), months.get(calendar.getTime()) + 1);
+	private void updateCache(Article article) {
+		if (null != article) {
+			if (article.getIsPage() == Article.TYPE_ARTICLE) {
+				updateSidebarArticleCache();
+				updateArchiveCache();
+				clearFeedCache();
 			} else {
-				months.put(calendar.getTime(), 1);
+				updatePageCache();
 			}
 		}
-		for (Entry<Date, Integer> month : months.entrySet()) {
-			Article article = new Article();
-			article.setCreateTime(month.getKey());
-			article.setHit(month.getValue());
-			archive.add(article);
-		}
-
-		Collections.sort(archive);
-
 	}
 
 }

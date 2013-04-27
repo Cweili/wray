@@ -1,7 +1,13 @@
 package org.cweili.wray.service.impl;
 
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,10 +17,14 @@ import org.cweili.wray.dao.ConfigDao;
 import org.cweili.wray.dao.ItemDao;
 import org.cweili.wray.dao.RelationshipDao;
 import org.cweili.wray.dao.UploadDao;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Comment;
-import org.cweili.wray.domain.Item;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Comment;
+import org.cweili.wray.domain.dto.Item;
+import org.cweili.wray.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 /**
  * 
@@ -54,7 +64,7 @@ public abstract class BaseService {
 	/**
 	 * 页面缓存
 	 */
-	protected static List<Article> pages = null;
+	protected static Page<Article> pages = null;
 
 	/**
 	 * 最新评论
@@ -64,12 +74,12 @@ public abstract class BaseService {
 	/**
 	 * 回复排行缓存
 	 */
-	protected static List<Article> topCommentArticles = null;
+	protected static Page<Article> topCommentArticles = null;
 
 	/**
 	 * 点击排行缓存
 	 */
-	protected static List<Article> topHitArticles = null;
+	protected static Page<Article> topHitArticles = null;
 
 	/**
 	 * 最新评论数
@@ -90,11 +100,6 @@ public abstract class BaseService {
 	 * 热门标签数
 	 */
 	protected static int mostUsedTagsSize = 0;
-
-	/**
-	 * 已发布 Article 数
-	 */
-	protected static int publishedArticleCount = 0;
 
 	/**
 	 * Category 缓存
@@ -125,5 +130,63 @@ public abstract class BaseService {
 	 * Atom 缓存
 	 */
 	protected static String atom = null;
+
+	protected void updatePageCache() {
+		pages = new Page<Article>(articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE,
+				Article.STAT_PUBLISHED, new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC,
+						"hit")));
+	}
+
+	protected void updateSidebarArticleCache() {
+
+		if (topCommentArticlesSize > 0) {
+			topCommentArticles = new Page<Article>(articleDao.findMetaByIsPageAndStat(
+					Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, new PageRequest(0,
+							topCommentArticlesSize, Sort.Direction.DESC, "commentCount")));
+		}
+		if (topHitArticlesSize > 0) {
+			topHitArticles = new Page<Article>(articleDao.findMetaByIsPageAndStat(
+					Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, new PageRequest(0,
+							topHitArticlesSize, Sort.Direction.DESC, "hit")));
+		}
+	}
+
+	protected void updateArchiveCache() {
+		if (null == archive) {
+			archive = new LinkedList<Article>();
+		} else {
+			archive.clear();
+		}
+		HashMap<Date, Integer> months = new HashMap<Date, Integer>();
+		Calendar calendar = Calendar.getInstance();
+		for (Article article : articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED)) {
+			calendar.setTime(article.getCreateTime());
+			calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DATE));
+			calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+			calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+			calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+			calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
+			if (null != months.get(calendar.getTime())) {
+				months.put(calendar.getTime(), months.get(calendar.getTime()) + 1);
+			} else {
+				months.put(calendar.getTime(), 1);
+			}
+		}
+		for (Entry<Date, Integer> month : months.entrySet()) {
+			Article article = new Article();
+			article.setCreateTime(month.getKey());
+			article.setHit(month.getValue());
+			archive.add(article);
+		}
+
+		Collections.sort(archive);
+
+	}
+
+	protected void clearFeedCache() {
+		rss = null;
+		atom = null;
+	}
 
 }

@@ -6,8 +6,8 @@ package org.cweili.wray.web;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Comment;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Comment;
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
@@ -68,8 +68,8 @@ public final class CommentController extends BaseController {
 			@RequestParam("link") String link, @RequestParam("parentId") String parentId,
 			@RequestParam("permalink") String permalink,
 			@RequestParam(Constant.CAPTCHA) String captcha) {
-		if (!request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION).equals(
-				captcha.toUpperCase())) {
+		if (!captcha.toUpperCase().equals(
+				request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION))) {
 			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
 					WebRequest.SCOPE_SESSION);
 			return Constant.CAPTCHA;

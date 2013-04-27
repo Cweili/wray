@@ -7,8 +7,8 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.feed.atom.Atom;
 import org.cweili.feed.rss.RSS;
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +37,7 @@ public final class FeedController extends BaseController {
 			int feedSize = blogConfig.getInt("feedSize");
 			if (feedSize > 0) {
 				List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-						Article.STAT_PUBLISHED, 1, feedSize);
+						Article.STAT_PUBLISHED, 1, feedSize).getContent();
 				for (Article article : articles) {
 					rss.addItem(article.getTitle(), path + "article/" + article.getPermalink(),
 							author, article.getContent(), article.getCreateTime(),
@@ -67,7 +67,7 @@ public final class FeedController extends BaseController {
 			int feedSize = blogConfig.getInt("feedSize");
 			if (feedSize > 0) {
 				List<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-						Article.STAT_PUBLISHED, 1, feedSize);
+						Article.STAT_PUBLISHED, 1, feedSize).getContent();
 				for (Article article : articles) {
 					atom.addEntry(article.getTitle(), path + "article/" + article.getPermalink(),
 							author, article.getContent(), article.getCreateTime(),

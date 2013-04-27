@@ -2,9 +2,10 @@ package org.cweili.wray.web;
 
 import java.util.List;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.domain.Item;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
@@ -49,13 +50,14 @@ public final class TagController extends BaseController {
 			throw new NotFoundException();
 		}
 		v.add("item", item);
-		v.add("articles", articleService.findByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit")));
 
-		addPaginator(v, articleService.countByRelationship(item.getItemId(), Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED), page);
+		Page<Article> articles = articleService.findByRelationship(item.getItemId(),
+				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
+		v.add("articles", articles.getContent());
 
-		v.add("path", blogConfig.get("StaticServePath") + "tag/" + Function.urlEncode(permalink)
+		addPaginator(v, articles);
+
+		v.add("path", blogConfig.get("staticServePath") + "tag/" + Function.urlEncode(permalink)
 				+ "/");
 
 		return v;

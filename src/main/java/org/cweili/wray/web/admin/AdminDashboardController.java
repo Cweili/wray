@@ -3,8 +3,8 @@ package org.cweili.wray.web.admin;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.cweili.wray.domain.Article;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.web.BaseController;
 import org.springframework.http.HttpHeaders;
@@ -32,17 +32,17 @@ public final class AdminDashboardController extends BaseController {
 		v.add("articles", articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT,
 				1, Constant.ADMIN_LIST_SIZE));
 
-		v.add("articlePublishCount",
-				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED));
-		v.add("articleDraftCount",
-				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT));
-		v.add("articleRecycleCount",
-				articleService.countByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_RECYCLE));
+		v.add("articlePublishCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED, 1, Constant.MAX_PAGE));
+		v.add("articleDraftCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+				Article.STAT_DRAFT, 1, Constant.MAX_PAGE));
+		v.add("articleRecycleCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
+				Article.STAT_RECYCLE, 1, Constant.MAX_PAGE));
 
-		v.add("pagePublishCount",
-				articleService.countByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED));
-		v.add("pagePrivateCount",
-				articleService.countByTypeStatus(Article.TYPE_PAGE, Article.STAT_PRIVATE));
+		v.add("pagePublishCount", articleService.findByTypeStatus(Article.TYPE_PAGE,
+				Article.STAT_PUBLISHED, 1, Constant.MAX_PAGE));
+		v.add("pagePrivateCount", articleService.findByTypeStatus(Article.TYPE_PAGE,
+				Article.STAT_PRIVATE, 1, Constant.MAX_PAGE));
 
 		v.add("commentCount", commentService.count());
 		return v;

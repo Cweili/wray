@@ -5,8 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.Comment;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Comment;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;
@@ -33,9 +34,11 @@ public final class AdminCommentController extends BaseController {
 		int page = Function.minimumPositiveInteger(request.getParameter("page"));
 
 		v.add("actionName", actionName);
-		v.add("comments", commentService.find(page, Constant.ADMIN_LIST_SIZE));
 
-		addPaginator(v, commentService.count(), page, Constant.ADMIN_LIST_SIZE);
+		Page<Comment> comments = commentService.find(page, Constant.ADMIN_LIST_SIZE);
+		v.add("comments", comments.getContent());
+
+		addPaginator(v, comments);
 		return v;
 	}
 
@@ -56,8 +59,11 @@ public final class AdminCommentController extends BaseController {
 	String editPost(WebRequest request, @PathVariable("commentid") String commentid) {
 		Comment comment = commentService.findById(commentid);
 		comment = getComment(request, comment);
-
-		if (null == commentService.save(comment)) {
+		try {
+			if (null == commentService.save(comment)) {
+				return Constant.SUBMIT_FAILED;
+			}
+		} catch (Exception e) {
 			return Constant.SUBMIT_FAILED;
 		}
 		return Constant.SUBMIT_SUCCESS;

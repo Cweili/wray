@@ -1,12 +1,13 @@
 /**
  * 
  */
-package org.cweili.wray.domain;
+package org.cweili.wray.domain.dto;
 
 import java.io.Serializable;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "relationship")
-@CompoundIndex(def = "{'articleId': 1, 'itemId': 1}", unique = true)
+@CompoundIndexes({ @CompoundIndex(name = "index_article_item", def = "{'articleId': 1, 'itemId': 1}", unique = true) })
 public class Relationship implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -198625132517703178L;

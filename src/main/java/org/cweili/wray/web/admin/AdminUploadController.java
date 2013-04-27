@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.cweili.wray.domain.Upload;
-import org.cweili.wray.util.BlogView;
+import org.cweili.wray.domain.BlogView;
+import org.cweili.wray.domain.Page;
+import org.cweili.wray.domain.dto.Upload;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.web.BaseController;
 import org.springframework.stereotype.Controller;
@@ -33,9 +34,9 @@ public final class AdminUploadController extends BaseController {
 		} catch (Exception e) {
 			log.error(e);
 		}
-		List<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
-		v.add("uploads", uploads);
-		addPaginator(v, uploadService.getCount(), page, Constant.ADMIN_LIST_SIZE);
+		Page<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
+		v.add("uploads", uploads.getContent());
+		addPaginator(v, uploads);
 
 		return v;
 	}

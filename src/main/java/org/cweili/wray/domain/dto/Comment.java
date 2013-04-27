@@ -1,4 +1,4 @@
-package org.cweili.wray.domain;
+package org.cweili.wray.domain.dto;
 
 import java.io.Serializable;
 import java.util.Date;
