@@ -15,8 +15,8 @@
 					<span class="field_desc">将皮肤文件夹放在Web目录的skin目录下</span>
 				</div>
 				<div class="input_field">
-					<label for="limit">文章列表条数</label>
-					<input class="smallfield" name="limit" type="text" value="${limit?if_exists}" />
+					<label for="pageSize">文章列表条数</label>
+					<input class="smallfield" name="pageSize" type="text" value="${pageSize?if_exists}" />
 					<span class="field_desc">文章列表每页显示的文章数</span>
 				</div>
 				<div class="input_field">

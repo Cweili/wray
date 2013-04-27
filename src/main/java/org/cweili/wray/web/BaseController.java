@@ -54,31 +54,23 @@ public abstract class BaseController extends MultiActionController {
 
 	/**
 	 * @param v
-	 * @param total
-	 * @param current
+	 * @param page
 	 */
-	protected void addPaginator(BlogView v, int total, int current) {
-		int limit = blogConfig.getInt("limit");
-		Paginator pagination = new Paginator(total, limit, current);
-		v.add("paginationOn", pagination.isPageBarOn());
-		v.add("paginationPageNums", pagination.getPageList());
-		v.add("paginationCurrentPageNum", current);
-		v.add("paginationPreviousPageNum", pagination.getPrevious());
-		v.add("paginationNextPageNum", pagination.getNext());
-		v.add("paginationPageCount", pagination.getLast());
+	protected void addPaginator(BlogView v, Page<?> page) {
+		addPaginator(v, page.getTotal(), page.getNumber() + 1);
 	}
 
 	/**
 	 * @param v
 	 * @param total
 	 * @param current
-	 * @param limit
 	 */
-	protected void addPaginator(BlogView v, Page<?> page) {
-		Paginator pagination = new Paginator(page.getTotal(), page.getSize(), page.getNumber());
+	protected void addPaginator(BlogView v, int total, int current) {
+		int size = blogConfig.getInt("pageSize");
+		Paginator pagination = new Paginator(total, size, current);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());
-		v.add("paginationCurrentPageNum", page.getNumber());
+		v.add("paginationCurrentPageNum", current);
 		v.add("paginationPreviousPageNum", pagination.getPrevious());
 		v.add("paginationNextPageNum", pagination.getNext());
 		v.add("paginationPageCount", pagination.getLast());

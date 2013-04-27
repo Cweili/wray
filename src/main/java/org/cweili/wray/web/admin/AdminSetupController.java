@@ -66,7 +66,7 @@ public final class AdminSetupController extends BaseController {
 	@RequestMapping(value = "/admin-setup-skin", method = RequestMethod.POST)
 	public @ResponseBody
 	String skin(WebRequest request) {
-		int limit = Function.minimumInteger(request.getParameter("limit"), 10);
+		int pageSize = Function.minimumInteger(request.getParameter("pageSize"), 10);
 		int recentCommentsSize = Function.minimumInteger(
 				request.getParameter("recentCommentsSize"), 10);
 		int topHitArticlesSize = Function.minimumInteger(
@@ -76,7 +76,7 @@ public final class AdminSetupController extends BaseController {
 		int mostUsedTagsSize = Function
 				.minimumInteger(request.getParameter("mostUsedTagsSize"), 30);
 
-		blogConfig.save(new Config("limit", limit));
+		blogConfig.save(new Config("pageSize", pageSize));
 		blogConfig.save(new Config("recentCommentsSize", recentCommentsSize));
 		blogConfig.save(new Config("topHitArticlesSize", topHitArticlesSize));
 		blogConfig.save(new Config("topCommentArticlesSize", topCommentArticlesSize));

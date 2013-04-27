@@ -66,7 +66,7 @@ public final class ArticleController extends BaseController {
 		BlogView v = new BlogView("index");
 
 		Page<Article> articles = articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
+				Article.STAT_PUBLISHED, page, blogConfig.getInt("pageSize"));
 		v.add("articles", articles.getContent());
 
 		addPaginator(v, articles);

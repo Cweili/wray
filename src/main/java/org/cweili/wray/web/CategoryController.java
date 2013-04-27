@@ -43,7 +43,7 @@ public final class CategoryController extends BaseController {
 		v.add("item", item);
 
 		Page<Article> articles = articleService.findByRelationship(item.getItemId(),
-				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, page, blogConfig.getInt("limit"));
+				Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, page, blogConfig.getInt("pageSize"));
 		v.add("articles", articles.getContent());
 
 		addPaginator(v, articles);

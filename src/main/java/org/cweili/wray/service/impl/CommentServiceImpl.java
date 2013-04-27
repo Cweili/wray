@@ -43,9 +43,9 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	}
 
 	@Override
-	public Page<Comment> find(int page, int limit) {
+	public Page<Comment> find(int page, int size) {
 		Page<Comment> pagedComments = new Page<Comment>(commentDao.findAll(new PageRequest(
-				page - 1, limit, Sort.Direction.DESC, "_id")));
+				page - 1, size, Sort.Direction.DESC, "_id")));
 		return new Page<Comment>(dealCommentList(pagedComments.getContent()), pagedComments);
 	}
 

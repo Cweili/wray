@@ -41,7 +41,7 @@ public final class ArchiveController extends BaseController {
 		calendar.set(y, m, 1, 0, 0, 0);
 
 		Page<Article> articles = articleService.findByMonth(calendar.getTime(), page,
-				blogConfig.getInt("limit"));
+				blogConfig.getInt("pageSize"));
 
 		BlogView v = new BlogView("articles");
 		v.add("title", year + " - " + month);

@@ -33,10 +33,10 @@ public interface CommentService {
 
 	/**
 	 * @param page
-	 * @param limit
+	 * @param size
 	 * @return
 	 */
-	public Page<Comment> find(int page, int limit);
+	public Page<Comment> find(int page, int size);
 
 	/**
 	 * @param comment

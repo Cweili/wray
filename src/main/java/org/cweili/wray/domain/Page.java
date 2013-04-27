@@ -24,13 +24,8 @@ public class Page<T> extends PageImpl<T> implements org.springframework.data.dom
 	}
 
 	public Page(List<T> content, org.springframework.data.domain.Page<T> page) {
-		super(content, new PageRequest(page.getNumber() - 1, page.getSize(), page.getSort()), page
+		super(content, new PageRequest(page.getNumber(), page.getSize(), page.getSort()), page
 				.getTotalElements());
-	}
-
-	@Override
-	public int getNumber() {
-		return super.getNumber() + 1;
 	}
 
 	/**

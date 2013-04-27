@@ -68,7 +68,7 @@ public final class SearchController extends BaseController {
 			throw new NotFoundException();
 		}
 
-		int pageSize = blogConfig.getInt("limit");
+		int pageSize = blogConfig.getInt("pageSize");
 
 		int end = pageSize * page - 1;
 		end = end < articles.size() ? end : articles.size();
