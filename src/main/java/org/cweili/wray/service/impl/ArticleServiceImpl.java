@@ -300,29 +300,27 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		} else {
 			archive.clear();
 		}
-		List<Article> articles = articleDao.findAll();
-		if (null != articles && articles.size() > 0) {
-			HashMap<Date, Integer> months = new HashMap<Date, Integer>();
-			Calendar calendar = Calendar.getInstance();
-			for (Article article : articles) {
-				calendar.setTime(article.getCreateTime());
-				calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DATE));
-				calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
-				calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
-				calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
-				calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
-				if (null != months.get(calendar.getTime())) {
-					months.put(calendar.getTime(), months.get(calendar.getTime()) + 1);
-				} else {
-					months.put(calendar.getTime(), 1);
-				}
+		HashMap<Date, Integer> months = new HashMap<Date, Integer>();
+		Calendar calendar = Calendar.getInstance();
+		for (Article article : articleDao.findByIsPageAndStat(Article.TYPE_ARTICLE,
+				Article.STAT_PUBLISHED)) {
+			calendar.setTime(article.getCreateTime());
+			calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DATE));
+			calendar.set(Calendar.HOUR_OF_DAY, calendar.getActualMinimum(Calendar.HOUR_OF_DAY));
+			calendar.set(Calendar.MINUTE, calendar.getActualMinimum(Calendar.MINUTE));
+			calendar.set(Calendar.SECOND, calendar.getActualMinimum(Calendar.SECOND));
+			calendar.set(Calendar.MILLISECOND, calendar.getActualMinimum(Calendar.MILLISECOND));
+			if (null != months.get(calendar.getTime())) {
+				months.put(calendar.getTime(), months.get(calendar.getTime()) + 1);
+			} else {
+				months.put(calendar.getTime(), 1);
 			}
-			for (Entry<Date, Integer> month : months.entrySet()) {
-				Article article = new Article();
-				article.setCreateTime(month.getKey());
-				article.setHit(month.getValue());
-				archive.add(article);
-			}
+		}
+		for (Entry<Date, Integer> month : months.entrySet()) {
+			Article article = new Article();
+			article.setCreateTime(month.getKey());
+			article.setHit(month.getValue());
+			archive.add(article);
 		}
 
 		Collections.sort(archive);
