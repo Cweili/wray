@@ -135,8 +135,10 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		q.with(page.getSort());
 		q.skip(page.getOffset());
 		q.limit(page.getPageSize());
-		log.info("Find upload from " + page.getOffset() + " to " + page.getOffset());
-		return new PageImpl<Upload>(db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files"));
+		log.info("Find upload from " + page.getOffset() + " to "
+				+ (page.getOffset() + page.getPageSize()));
+		return new PageImpl<Upload>(db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files"), page,
+				count());
 	}
 
 }

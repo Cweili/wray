@@ -29,20 +29,26 @@ public final class AdminDashboardController extends BaseController {
 		if (recentCommentsSize > 0) {
 			v.add("recentComments", commentService.getRecentComments(recentCommentsSize));
 		}
-		v.add("articles", articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT,
-				1, Constant.ADMIN_LIST_SIZE));
+		v.add("articles",
+				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT, 1,
+						Constant.ADMIN_LIST_SIZE).getContent());
 
-		v.add("articlePublishCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_PUBLISHED, 1, Constant.MAX_PAGE));
-		v.add("articleDraftCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_DRAFT, 1, Constant.MAX_PAGE));
-		v.add("articleRecycleCount", articleService.findByTypeStatus(Article.TYPE_ARTICLE,
-				Article.STAT_RECYCLE, 1, Constant.MAX_PAGE));
+		v.add("articlePublishCount",
+				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 1,
+						Constant.MAX_PAGE).getTotalElements());
+		v.add("articleDraftCount",
+				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT, 1,
+						Constant.MAX_PAGE).getTotalElements());
+		v.add("articleRecycleCount",
+				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_RECYCLE, 1,
+						Constant.MAX_PAGE).getTotalElements());
 
-		v.add("pagePublishCount", articleService.findByTypeStatus(Article.TYPE_PAGE,
-				Article.STAT_PUBLISHED, 1, Constant.MAX_PAGE));
-		v.add("pagePrivateCount", articleService.findByTypeStatus(Article.TYPE_PAGE,
-				Article.STAT_PRIVATE, 1, Constant.MAX_PAGE));
+		v.add("pagePublishCount",
+				articleService.findByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1,
+						Constant.MAX_PAGE).getTotalElements());
+		v.add("pagePrivateCount",
+				articleService.findByTypeStatus(Article.TYPE_PAGE, Article.STAT_PRIVATE, 1,
+						Constant.MAX_PAGE).getTotalElements());
 
 		v.add("commentCount", commentService.count());
 		return v;

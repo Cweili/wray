@@ -1,7 +1,7 @@
 <#macro copyright>
 	<div class="clr"></div>
 	<div class="copyr">
-		&copy; ${year}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
+		&copy; ${year?c}&nbsp;<a href="http://${blogHost}">${blogTitle}</a>
 	</div>
 	<div class="clr16"></div>
 </#macro>

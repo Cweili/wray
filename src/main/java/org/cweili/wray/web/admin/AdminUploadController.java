@@ -36,7 +36,7 @@ public final class AdminUploadController extends BaseController {
 		}
 		Page<Upload> uploads = uploadService.getUploads(page, Constant.ADMIN_LIST_SIZE);
 		v.add("uploads", uploads.getContent());
-		addPaginator(v, uploads);
+		addPaginator(v, uploads, Constant.ADMIN_LIST_SIZE);
 
 		return v;
 	}

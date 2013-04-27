@@ -49,7 +49,7 @@ public final class ArchiveController extends BaseController {
 
 		BlogView v = new BlogView("articles");
 		String archiveTime = year + "-" + (month < 10 ? "0" : "") + month;
-		v.add("title", archiveTime);
+		v.add("title", blogConfig.get("archiveLabel") + ": " + archiveTime);
 		v.add("articles", articles.getContent());
 
 		addPaginator(v, articles);

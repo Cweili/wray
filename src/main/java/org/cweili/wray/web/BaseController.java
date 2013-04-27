@@ -66,11 +66,30 @@ public abstract class BaseController extends MultiActionController {
 
 	/**
 	 * @param v
+	 * @param page
+	 * @param size
+	 */
+	protected void addPaginator(BlogView v, Page<?> page, int size) {
+		addPaginator(v, page.getTotalElements(), page.getNumber() + 1, size);
+	}
+
+	/**
+	 * @param v
 	 * @param total
 	 * @param current
 	 */
 	protected void addPaginator(BlogView v, long total, long current) {
 		int size = blogConfig.getInt("pageSize");
+		addPaginator(v, total, current, size);
+	}
+
+	/**
+	 * @param v
+	 * @param total
+	 * @param current
+	 * @param size
+	 */
+	protected void addPaginator(BlogView v, long total, long current, int size) {
 		Paginator pagination = new Paginator(total, size, current);
 		v.add("paginationOn", pagination.isPageBarOn());
 		v.add("paginationPageNums", pagination.getPageList());

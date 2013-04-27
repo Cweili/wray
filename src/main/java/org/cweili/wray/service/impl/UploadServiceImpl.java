@@ -16,9 +16,11 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 
 	@Override
 	public Upload save(Upload upload) {
-		byte[] commpressed = Zlib.compress(upload.getContent());
-		if (commpressed.length < upload.getContent().length) {
-			upload.setContent(commpressed);
+		if (!Upload.COMPRESSED.contains(upload.getContentType())) {
+			byte[] commpressed = Zlib.compress(upload.getContent());
+			if (commpressed.length < upload.getContent().length) {
+				upload.setContent(commpressed);
+			}
 		}
 		return uploadDao.save(upload);
 	}
@@ -40,8 +42,10 @@ public class UploadServiceImpl extends BaseService implements UploadService {
 	public Upload getUploadById(String id) {
 		Upload upload = uploadDao.findOne(id);
 		if (null != upload) {
-			upload.setContent(Zlib.decompress(upload.getContent()));
-			upload.setLength(upload.getContent().length);
+			if (!Upload.COMPRESSED.contains(upload.getContentType())) {
+				upload.setContent(Zlib.decompress(upload.getContent()));
+				upload.setLength(upload.getContent().length);
+			}
 		}
 		return upload;
 	}

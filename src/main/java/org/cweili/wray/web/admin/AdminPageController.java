@@ -47,7 +47,7 @@ public final class AdminPageController extends BaseController {
 				Constant.ADMIN_LIST_SIZE);
 		v.add("articles", articles.getContent());
 
-		addPaginator(v, articles);
+		addPaginator(v, articles, Constant.ADMIN_LIST_SIZE);
 		return v;
 	}
 

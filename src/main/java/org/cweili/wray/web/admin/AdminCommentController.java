@@ -38,7 +38,7 @@ public final class AdminCommentController extends BaseController {
 		Page<Comment> comments = commentService.find(page, Constant.ADMIN_LIST_SIZE);
 		v.add("comments", comments.getContent());
 
-		addPaginator(v, comments);
+		addPaginator(v, comments, Constant.ADMIN_LIST_SIZE);
 		return v;
 	}
 
