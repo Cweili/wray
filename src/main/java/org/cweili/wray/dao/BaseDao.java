@@ -3,8 +3,8 @@
  */
 package org.cweili.wray.dao;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * 
@@ -13,6 +13,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * 
  */
 @NoRepositoryBean
-public interface BaseDao<T> extends MongoRepository<T, String> {
+public interface BaseDao<T> extends PagingAndSortingRepository<T, String> {
 
 }

@@ -2,7 +2,6 @@ package org.cweili.wray.dao;
 
 import org.cweili.wray.domain.Upload;
 import org.springframework.data.repository.NoRepositoryBean;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * 
@@ -11,6 +10,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * 
  */
 @NoRepositoryBean
-public interface UploadDao extends PagingAndSortingRepository<Upload, String> {
+public interface UploadDao extends BaseDao<Upload> {
 
 }
