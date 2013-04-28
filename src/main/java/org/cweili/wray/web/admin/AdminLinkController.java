@@ -133,7 +133,6 @@ public final class AdminLinkController extends BaseController {
 				log.error(e);
 			}
 
-			String id = Function.generateId();
 			itemName = Function.escapeHtml(itemName);
 			itemName = "".equals(itemName) ? Function.timeString() : itemName;
 			description = Function.escapeHtml(description);
@@ -144,7 +143,8 @@ public final class AdminLinkController extends BaseController {
 				ori.setItemOrder(itemOrder);
 				return ori;
 			}
-			return new Item(id, itemName, id, description, 0, itemOrder, Item.TYPE_LINK,
+			String linkId = Function.generateId();
+			return new Item(linkId, itemName, linkId, description, 0, itemOrder, Item.TYPE_LINK,
 					Item.STAT_ON);
 		}
 		return null;

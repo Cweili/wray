@@ -202,8 +202,9 @@ public final class AdminArticleController extends BaseController {
 					if (null != addItem) {
 						relatedItems.add(addItem);
 					} else {
-						addItem = new Item(Function.generateId(), tagStr, Function.generateId(),
-								"", 0, (byte) 0, Item.TYPE_TAG, Item.STAT_ON);
+						String tagId = Function.generateId();
+						addItem = new Item(tagId, tagStr, tagId, "", 0, (byte) 0, Item.TYPE_TAG,
+								Item.STAT_ON);
 						tagService.save(addItem);
 						relatedItems.add(addItem);
 					}
