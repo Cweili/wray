@@ -41,10 +41,22 @@
 			</@message>
 			<fieldset><legend>发布选项</legend>
 				<div class="input_field no_margin_bottom">
-					<span class="form_line"><input type="checkbox" name="commentStatus" class="checkbox" value="1" <#if article.commentStatus=1>checked="checked" </#if>/>允许评论</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="4" <#if article.stat=4>checked="checked" </#if>/>已发布</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="2" <#if article.stat=2>checked="checked" </#if>/>草稿</span>
-					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if article.stat=1>checked="checked" </#if>/>回收站</span>
+					<span class="form_line">
+						<input type="checkbox" name="commentStatus" class="checkbox" value="1"<#if article.commentStatus=1>checked="checked" </#if>/>
+						允许评论
+					</span>
+					<span class="form_line">
+						<input type="radio" name="stat" class="radio" value="4" <#if article.stat=4>checked="checked" </#if>/>
+						已发布
+					</span>
+					<span class="form_line">
+						<input type="radio" name="stat" class="radio" value="2" <#if article.stat=2>checked="checked" </#if>/>
+						草稿
+					</span>
+					<span class="form_line">
+						<input type="radio" name="stat" class="radio" value="1" <#if article.stat=1>checked="checked" </#if>/>
+						回收站
+					</span>
 					<@submit>保存文章</@submit>
 				</div>
 			</fieldset>

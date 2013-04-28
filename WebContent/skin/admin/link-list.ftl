@@ -46,7 +46,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="更新排序并删除选中链接" />
-					<input class="submit" type="button" value="添加新的链接" onclick="location.href='admin-link-add/'" />
+					<input class="submit" type="button" value="添加新的链接" onclick="location.href='admin-link-add'" />
 				</div>
 			</fieldset>
 			<input id="manageId" name="id" type="hidden" />

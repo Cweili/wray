@@ -64,6 +64,14 @@
 						<li><a href="admin-link-add">新增链接</a></li>
 					</ul>
 				</div>
+				<div class="navhead"><span>导航管理</span></div>
+				<div class="subnav">
+					<ul class="submenu">
+						<li class="hide" rel="admin-nav">导航编辑</li>
+						<li><a href="admin-nav-manage">导航管理</a></li>
+						<li><a href="admin-nav-add">新增导航</a></li>
+					</ul>
+				</div>
 				<div class="navhead"><span>博客设置</span></div>
 				<div class="subnav">
 					<ul class="submenu">

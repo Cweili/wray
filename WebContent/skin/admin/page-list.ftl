@@ -48,7 +48,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="更新排序并删除选中页面" />
-					<input class="submit" type="button" value="添加新的页面" onclick="location.href='admin-page-add/'" />
+					<input class="submit" type="button" value="添加新的页面" onclick="location.href='admin-page-add'" />
 				</div>
 			</fieldset>
 			<input id="manageId" name="id" type="hidden" />

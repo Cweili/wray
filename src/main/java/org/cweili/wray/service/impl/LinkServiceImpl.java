@@ -41,13 +41,25 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	}
 
 	@Override
+	public List<Item> getNavigators() {
+		if (navigators == null) {
+			updateNavigatorCache();
+		}
+		return navigators;
+	}
+
+	@Override
 	public Item save(Item item) {
 		if ("".equals(item.getItemId())) {
 			item.setItemId(Function.generateId());
 		}
 		Item itemNew = itemDao.save(item);
 		if (null != itemNew) {
-			updateLinkCache();
+			if (Item.TYPE_LINK == itemNew.getItemType()) {
+				updateLinkCache();
+			} else {
+				updateNavigatorCache();
+			}
 		}
 		return itemNew;
 	}
@@ -82,6 +94,13 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	@Override
 	public void updateLinkCache() {
 		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "itemOrder"))
+				.getContent();
+	}
+
+	@Override
+	public void updateNavigatorCache() {
+		navigators = itemDao.findByItemTypeAndStat(Item.TYPE_NAVIGATOR, Item.STAT_ON,
 				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "itemOrder"))
 				.getContent();
 	}

@@ -88,6 +88,10 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				// 添加分类和链接
 				mv.addObject("categories", categoryService.getCategories());
 				mv.addObject("links", linkService.getLinks());
+
+				if ("1".equals(blogConfig.get("navigatorSwitch"))) {
+					mv.addObject("navigators", linkService.getNavigators());
+				}
 			} else {
 
 				// 添加验证

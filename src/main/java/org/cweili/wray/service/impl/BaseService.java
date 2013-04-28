@@ -120,6 +120,11 @@ public abstract class BaseService {
 	protected static List<Item> links = null;
 
 	/**
+	 * Navigator 缓存
+	 */
+	protected static List<Item> navigators = null;
+
+	/**
 	 * Archive 缓存
 	 */
 	protected static List<Article> archive = null;
@@ -136,8 +141,8 @@ public abstract class BaseService {
 
 	protected void updatePageCache() {
 		pages = new Page<Article>(articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE,
-				Article.STAT_PUBLISHED, new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC,
-						"hit")));
+				Article.STAT_PUBLISHED, new PageRequest(0, Constant.MAX_PAGE_SIZE,
+						Sort.Direction.ASC, "hit")));
 	}
 
 	protected void updateSidebarArticleCache() {

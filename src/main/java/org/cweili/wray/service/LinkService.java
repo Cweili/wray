@@ -16,6 +16,8 @@ public interface LinkService {
 
 	public List<Item> getLinks();
 
+	public List<Item> getNavigators();
+
 	public Item save(Item link);
 
 	public boolean remove(Item link);
@@ -23,4 +25,6 @@ public interface LinkService {
 	public boolean remove(List<String> ids);
 
 	public void updateLinkCache();
+
+	public void updateNavigatorCache();
 }

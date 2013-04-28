@@ -50,7 +50,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="删除选中文章" />
-					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin-article-add/'" />
+					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin-article-add'" />
 				</div>
 			</fieldset>
 			<input id="manageId" name="id" type="hidden" />

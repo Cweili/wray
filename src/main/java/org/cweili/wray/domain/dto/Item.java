@@ -34,7 +34,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	public static final byte TYPE_CATEGORY = 0;
 	public static final byte TYPE_TAG = 1;
 	public static final byte TYPE_LINK = 2;
-	public static final byte TYPE_MENU = 3;
+	public static final byte TYPE_NAVIGATOR = 3;
 
 	public static final byte STAT_OFF = 0;
 	public static final byte STAT_ON = 1;

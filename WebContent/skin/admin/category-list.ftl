@@ -50,7 +50,7 @@
 			<fieldset>
 				<div class="input_field no_margin_bottom">
 					<input class="submit" type="submit" value="更新分类排序与状态" />
-					<input class="submit" type="button" value="添加新的分类" onclick="location.href='admin-category-add/'" />
+					<input class="submit" type="button" value="添加新的分类" onclick="location.href='admin-category-add'" />
 				</div>
 			</fieldset>
 			<input id="manageId" name="id" type="hidden" />

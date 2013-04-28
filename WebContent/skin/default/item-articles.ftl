@@ -9,7 +9,6 @@
 		</@head>
 	</head>
 	<body>
-		${topBarReplacement?if_exists}
 		<div id="wrapper" align="center">
 			<@header></@header>
 			<div id="outerwrapper">

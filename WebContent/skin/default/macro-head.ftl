@@ -34,28 +34,22 @@
 	<div id="navouter">
 		<div id="nav">
 			<ul id="header-navi">
-				<li><a href="${staticServePath}">${homeLabel}</a></li>
-				<#list categories as category>
-				<li>
-					<a href="category/${category.permalink}">
-						${category.itemName}
-					</a>
-				</li>
-				</#list>
-				<#list pageNavigations as page>
-				<li>
-					<a href="page/${page.permalink}">
-						${page.title}
-					</a>
-				</li>
-				</#list>
-				<#nested>
-				<li>
-					<a href="tags">${allTagsLabel}</a>
-				</li>
-				<li class="lastNavi">
-					<a href="javascript:void(0);"></a>
-				</li>
+				<#if navigators?exists>
+					<#list navigators as navigator>
+						<li><a href="${navigator.description}">${navigator.itemName}</a></li>
+					</#list>
+				<#else>
+					<li><a href="${staticServePath}">${homeLabel}</a></li>
+					<#list categories as category>
+						<li><a href="category/${category.permalink}">${category.itemName}</a></li>
+					</#list>
+					<#list pageNavigations as page>
+						<li><a href="page/${page.permalink}">${page.title}</a></li>
+					</#list>
+					<#nested>
+					<li><a href="tags">${allTagsLabel}</a></li>
+				</#if>
+				<li class="lastNavi"><a href="javascript:void(0);"></a></li>
 				<!--
 				<li class="current_page_item"><a  href="javascript:void(0);"></a></li>
 				-->
