@@ -92,7 +92,7 @@
 		<ul>
 			<#list archive as month>
 				<li>
-					<a href="archive/${month.createTime?string("yyyy-MM")}">
+					<a href="archive/${month.createTime?string("yyyy-MM")}" title="${archiveLabel}${month.createTime?string("yyyy-MM")}">
 						${month.createTime?string("yyyy-MM")}
 					</a>
 					(${month.hit})

@@ -48,7 +48,7 @@ public interface CommentService {
 	 * @param ids
 	 * @return
 	 */
-	public boolean remove(List<String> ids);
+	public boolean switchStat(List<String> ids);
 
 	/**
 	 * @param commentId

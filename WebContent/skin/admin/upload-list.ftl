@@ -3,7 +3,7 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (uploads?size > 0)>
-		<form id="deleteForm" action="admin-upload-delete" method="post">
+		<form id="manageForm" action="admin-upload-delete" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -23,7 +23,7 @@
 						<td>${upload.uploadDate?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${(upload.length / 1024)?int} KB</td>
 						<td>
-							<a href="javascript:void(0);" onclick="deleteSingle('${upload.uploadId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
+							<a href="javascript:void(0);" onclick="manageSingle('${upload.uploadId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
 							<a href="${staticServePath}upload/${upload.uploadId}/${upload.filename}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="打开" /></a>
 						</td>
 					</tr>
@@ -41,7 +41,7 @@
 					<input class="submit" type="submit" value="删除选中附件" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 			<input name="page" value="${paginationCurrentPageNum}" type="hidden" />
 		</form>
 		<#include "pagination.ftl">

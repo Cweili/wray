@@ -35,20 +35,20 @@ public final class AdminDashboardController extends BaseController {
 
 		v.add("articlePublishCount",
 				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_PUBLISHED, 1,
-						Constant.MAX_PAGE).getTotalElements());
+						Constant.MAX_PAGE_SIZE).getTotalElements());
 		v.add("articleDraftCount",
 				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_DRAFT, 1,
-						Constant.MAX_PAGE).getTotalElements());
+						Constant.MAX_PAGE_SIZE).getTotalElements());
 		v.add("articleRecycleCount",
 				articleService.findByTypeStatus(Article.TYPE_ARTICLE, Article.STAT_RECYCLE, 1,
-						Constant.MAX_PAGE).getTotalElements());
+						Constant.MAX_PAGE_SIZE).getTotalElements());
 
 		v.add("pagePublishCount",
 				articleService.findByTypeStatus(Article.TYPE_PAGE, Article.STAT_PUBLISHED, 1,
-						Constant.MAX_PAGE).getTotalElements());
+						Constant.MAX_PAGE_SIZE).getTotalElements());
 		v.add("pagePrivateCount",
 				articleService.findByTypeStatus(Article.TYPE_PAGE, Article.STAT_PRIVATE, 1,
-						Constant.MAX_PAGE).getTotalElements());
+						Constant.MAX_PAGE_SIZE).getTotalElements());
 
 		v.add("commentCount", commentService.count());
 		return v;

@@ -36,7 +36,7 @@ public final class TagController extends BaseController {
 
 	@RequestMapping("/tags")
 	public BlogView tags() {
-		List<Item> tags = tagService.getTags(0, Constant.MAX_PAGE);
+		List<Item> tags = tagService.getTags(0, Constant.MAX_PAGE_SIZE);
 		BlogView v = new BlogView("tags");
 		v.add("tags", tags);
 		return v;

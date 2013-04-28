@@ -28,7 +28,7 @@
 							<a href="admin-page-edit-${article.articleId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
 							</a>
-							<a href="javascript:void(0);" onclick="deleteSingle('${article.articleId}');">
+							<a href="javascript:void(0);" onclick="manageSingle('${article.articleId}');">
 								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
 							</a>
 							<a href="page/${article.permalink}" target="_blank">
@@ -51,7 +51,7 @@
 					<input class="submit" type="button" value="添加新的页面" onclick="location.href='admin-page-add/'" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 		</form>
 		<script type="text/javascript">
 			$("#manageForm").validate({

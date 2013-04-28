@@ -30,7 +30,7 @@ public final class AdminCategoryController extends BaseController {
 	public BlogView categoryList() {
 		BlogView v = new BlogView("category-list");
 		v.add("actionName", "分类");
-		List<Item> items = categoryService.getCategories();
+		List<Item> items = categoryService.getAllCategories();
 		v.add("items", items);
 		return v;
 	}
@@ -91,8 +91,8 @@ public final class AdminCategoryController extends BaseController {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "分类更新成功");
-		v.add("succ", "恭喜您，您的分类排序已成功更新，选中分类已删除。");
-		v.add("redirect", "admin-category/");
+		v.add("succ", "恭喜您，您的分类排序与状态已成功更新。");
+		v.add("redirect", "admin-category-manage");
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
@@ -114,9 +114,9 @@ public final class AdminCategoryController extends BaseController {
 			}
 		}
 
-		if (!ids.isEmpty() && !categoryService.remove(ids)) {
+		if (!ids.isEmpty() && !categoryService.switchStat(ids)) {
 			v.add("err", "数据库更新失败");
-			v.add("msg", "链接删除失败");
+			v.add("msg", "分类更新失败");
 		}
 		return v;
 	}
@@ -126,8 +126,14 @@ public final class AdminCategoryController extends BaseController {
 		String permalink = StringUtils.trimToEmpty(request.getParameter("permalink"));
 		String description = StringUtils.trimToEmpty(request.getParameter("description"));
 		byte itemOrder = 0;
+		byte stat = 1;
 		try {
 			itemOrder = Byte.valueOf(request.getParameter("itemOrder"));
+		} catch (Exception e) {
+			log.error(e);
+		}
+		try {
+			stat = Byte.valueOf(request.getParameter("stat"));
 		} catch (Exception e) {
 			log.error(e);
 		}
@@ -144,10 +150,11 @@ public final class AdminCategoryController extends BaseController {
 			ori.setPermalink(permalink);
 			ori.setDescription(description);
 			ori.setItemOrder(itemOrder);
+			ori.setStat(stat);
 			return ori;
 		}
-		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY, "",
-				Item.STAT_ON);
+		return new Item(id, itemName, permalink, description, 0, itemOrder, Item.TYPE_CATEGORY,
+				stat);
 	}
 
 }

@@ -57,6 +57,11 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	}
 
 	@Override
+	public List<Item> getAllCategories() {
+		return itemDao.findByItemType(Item.TYPE_CATEGORY);
+	}
+
+	@Override
 	public List<Item> findByArticle(Article article) {
 		List<Item> cats = new ArrayList<Item>();
 		if (null != article) {
@@ -101,7 +106,8 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 		}
 		updateCategoryCache();
 		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.DESC, "count")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.DESC, "count"))
+				.getContent();
 	}
 
 	@Override
@@ -117,10 +123,10 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	}
 
 	@Override
-	public boolean remove(Item item) {
+	public boolean switchStat(Item item) {
 		item = itemDao.findOne(item.getItemId());
 		if (null != item) {
-			item.setStat(Item.STAT_OFF);
+			item.setStat(item.getStat() == Item.STAT_ON ? Item.STAT_OFF : Item.STAT_ON);
 			Item itemNew = itemDao.save(item);
 			if (null != itemNew) {
 				updateCategoryCache();
@@ -131,10 +137,10 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	}
 
 	@Override
-	public boolean remove(List<String> ids) {
+	public boolean switchStat(List<String> ids) {
 		Iterable<Item> items = itemDao.findAll(ids);
 		for (Item item : items) {
-			item.setStat(Item.STAT_OFF);
+			item.setStat(item.getStat() == Item.STAT_ON ? Item.STAT_OFF : Item.STAT_ON);
 		}
 		items = itemDao.save(items);
 		if (null != items) {
@@ -161,7 +167,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	@Override
 	public void updateCategoryCache() {
 		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "itemOrder"))
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "itemOrder"))
 				.getContent();
 	}
 

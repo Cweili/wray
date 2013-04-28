@@ -194,9 +194,9 @@ var submitForm = function(form) {
 	});
 };
 
-var deleteSingle = function(id) {
-	$("#deleteId").val(id);
-	$("#deleteForm").submit();
+var manageSingle = function(id) {
+	$("#manageId").val(id);
+	$("#manageForm").submit();
 };
 
 var reSizeMain = function() {

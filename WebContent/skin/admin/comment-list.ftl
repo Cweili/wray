@@ -3,7 +3,7 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (comments?size > 0)>
-		<form id="deleteForm" action="admin-comment-block" method="post">
+		<form id="manageForm" action="admin-comment-manage" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -35,13 +35,15 @@
 						<td>${comment.origin}</td>
 						<td>${comment.artilceTitle}</td>
 						<td><a href="admin-comment-edit-${comment.commentId}">${comment.content}</a></td>
-						<td><#if comment.stat = 2>正常<#else>屏蔽</#if></td>
+						<td>
+							<a href="javascript:void(0);" onclick="manageSingle('${comment.commentId}');">
+								<img src="${staticServePath}include/image/action_<#if comment.stat = 2>check<#else>delete</#if>.png"
+								alt="<#if comment.stat = 2>正常<#else>屏蔽</#if>" />
+							</a>
+						</td>
 						<td>
 							<a href="admin-comment-edit-${comment.commentId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
-							</a>
-							<a href="javascript:void(0);" onclick="deleteSingle('${comment.commentId}');">
-								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
 							</a>
 							<a href="comment-${comment.commentId}" target="_blank">
 								<img src="${staticServePath}include/image/folder.png" alt="查看" />
@@ -59,10 +61,10 @@
 			</table> <!-- END Table -->
 			<fieldset>
 				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="屏蔽选中评论" />
+					<input class="submit" type="submit" value="修改选中评论状态" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 			<input name="page" value="${paginationCurrentPageNum}" type="hidden" />
 		</form>
 		<#include "pagination.ftl">

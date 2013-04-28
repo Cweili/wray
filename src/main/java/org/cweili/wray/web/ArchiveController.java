@@ -44,15 +44,15 @@ public final class ArchiveController extends BaseController {
 		}
 
 		Calendar calendar = new GregorianCalendar(year, month - 1, 1);
-		Page<Article> articles = articleService.findByMonth(calendar.getTime(), page,
-				blogConfig.getInt("pageSize"));
+		int pageSize = blogConfig.getInt("pageSize") * 2;
+		Page<Article> articles = articleService.findByMonth(calendar.getTime(), page, pageSize);
 
 		BlogView v = new BlogView("articles");
 		String archiveTime = year + "-" + (month < 10 ? "0" : "") + month;
 		v.add("title", blogConfig.get("archiveLabel") + ": " + archiveTime);
 		v.add("articles", articles.getContent());
 
-		addPaginator(v, articles);
+		addPaginator(v, articles, pageSize);
 
 		v.add("path", blogConfig.get("staticServePath") + "archive/" + archiveTime + "/");
 

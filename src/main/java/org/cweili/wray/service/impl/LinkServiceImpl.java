@@ -82,7 +82,7 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 	@Override
 	public void updateLinkCache() {
 		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "itemOrder"))
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "itemOrder"))
 				.getContent();
 	}
 

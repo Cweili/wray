@@ -75,8 +75,7 @@ public final class CommentController extends BaseController {
 			return Constant.CAPTCHA;
 		}
 		request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
-		Article article = articleService.findById(articleId);
-		if (null == article && "".equals(content)) {
+		if ("".equals(content)) {
 			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
 					WebRequest.SCOPE_SESSION);
 			return "error";
@@ -94,9 +93,11 @@ public final class CommentController extends BaseController {
 		comment.setLink(link);
 		comment.setParentId(parentId);
 		comment.setStat(Comment.STAT_DISPLAY);
-		commentService.save(comment);
+		if (null != commentService.save(comment)) {
+			return "comment-" + id;
+		}
 
-		return "comment-" + id;
+		return "error";
 	}
 
 }

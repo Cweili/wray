@@ -39,7 +39,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	@Override
 	public List<Comment> findByArticle(Article article) {
 		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY,
-				new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC, "_id")).getContent();
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "_id")).getContent();
 	}
 
 	@Override
@@ -93,12 +93,13 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	}
 
 	@Override
-	public boolean remove(List<String> ids) {
+	public boolean switchStat(List<String> ids) {
 		boolean result = false;
 		for (String id : ids) {
 			Comment comment = commentDao.findOne(id);
 			if (null != comment) {
-				comment.setStat(Comment.STAT_BLOCK);
+				comment.setStat(comment.getStat() == Comment.STAT_DISPLAY ? Comment.STAT_BLOCK
+						: Comment.STAT_DISPLAY);
 				commentDao.save(comment);
 				result = true;
 			}

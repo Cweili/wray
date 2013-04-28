@@ -136,7 +136,7 @@ public abstract class BaseService {
 
 	protected void updatePageCache() {
 		pages = new Page<Article>(articleDao.findMetaByIsPageAndStat(Article.TYPE_PAGE,
-				Article.STAT_PUBLISHED, new PageRequest(0, Constant.MAX_PAGE, Sort.Direction.ASC,
+				Article.STAT_PUBLISHED, new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC,
 						"hit")));
 	}
 

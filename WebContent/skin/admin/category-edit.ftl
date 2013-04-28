@@ -29,6 +29,8 @@
 			</@message>
 			<fieldset><legend>保存分类</legend>
 				<div class="input_field no_margin_bottom">
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="1" <#if category.stat=1>checked="checked" </#if>/>正常</span>
+					<span class="form_line"><input type="radio" name="stat" class="radio" value="0" <#if category.stat=0>checked="checked" </#if>/>关闭</span>
 					<@submit>保存分类</@submit>
 				</div>
 			</fieldset>

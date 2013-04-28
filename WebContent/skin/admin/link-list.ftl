@@ -26,7 +26,7 @@
 							<a href="admin-link-edit-${item.itemId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
 							</a>
-							<a href="javascript:void(0);" onclick="deleteSingle('${item.itemId}');">
+							<a href="javascript:void(0);" onclick="manageSingle('${item.itemId}');">
 								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
 							</a>
 							<a href="${item.description}" target="_blank">
@@ -49,7 +49,7 @@
 					<input class="submit" type="button" value="添加新的链接" onclick="location.href='admin-link-add/'" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 		</form>
 		<script type="text/javascript">
 			$("#manageForm").validate({

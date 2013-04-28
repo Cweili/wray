@@ -69,20 +69,20 @@ public final class AdminCommentController extends BaseController {
 		return Constant.SUBMIT_SUCCESS;
 	}
 
-	@RequestMapping(value = "/admin-comment-block", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin-comment-manage", method = RequestMethod.POST)
 	public BlogView del(WebRequest request) {
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
-		v.add("msg", "评论屏蔽成功");
-		v.add("succ", "恭喜您，您选中的评论已成功屏蔽。");
+		v.add("msg", "评论状态修改成功");
+		v.add("succ", "恭喜您，您选中的评论状态已成功修改。");
 		v.add("redirect", "admin-comment" + "?page=" + request.getParameter("page"));
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
 			Collections.addAll(ids, request.getParameterValues("id"));
 		}
-		if (!commentService.remove(ids)) {
-			v.add("err", "评论屏蔽失败");
+		if (!commentService.switchStat(ids)) {
+			v.add("err", "评论状态修改失败");
 		}
 
 		return v;

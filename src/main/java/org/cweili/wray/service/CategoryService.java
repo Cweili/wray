@@ -19,6 +19,8 @@ public interface CategoryService {
 
 	public List<Item> getCategories();
 
+	public List<Item> getAllCategories();
+
 	public List<Item> findByArticle(Article article);
 
 	public List<Item> getSelectedCategories(Article article);
@@ -27,9 +29,9 @@ public interface CategoryService {
 
 	public Item save(Item category);
 
-	public boolean remove(Item category);
+	public boolean switchStat(Item category);
 
-	public boolean remove(List<String> ids);
+	public boolean switchStat(List<String> ids);
 
 	public void updateCategoryCache();
 }

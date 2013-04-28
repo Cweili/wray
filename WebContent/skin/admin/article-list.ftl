@@ -3,7 +3,7 @@
 	<div id="content"> <!-- Content begins here -->
 		<h2>${actionName?if_exists}</h2>
 		<#if (articles?size > 0)>
-		<form id="deleteForm" action="admin-article-delete-${adminAction?replace('article-','')}" method="post">
+		<form id="manageForm" action="admin-article-delete-${adminAction?replace('article-','')}" method="post">
 			<table cellspacing="0" cellpadding="0" border="0"><!-- Table -->
 				<thead>
 					<tr>
@@ -30,7 +30,7 @@
 							<a href="admin-article-edit-${article.articleId}">
 								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
 							</a>
-							<a href="javascript:void(0);" onclick="deleteSingle('${article.articleId}');">
+							<a href="javascript:void(0);" onclick="manageSingle('${article.articleId}');">
 								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
 							</a>
 							<a href="article/${article.permalink}" target="_blank">
@@ -53,7 +53,7 @@
 					<input class="submit" type="button" value="添加新的文章" onclick="location.href='admin-article-add/'" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 			<input name="page" value="${paginationCurrentPageNum}" type="hidden" />
 		</form>
 		<#include "pagination.ftl">

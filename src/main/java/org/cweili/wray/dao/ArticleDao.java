@@ -25,40 +25,19 @@ public interface ArticleDao extends BaseDao<Article> {
 	public static final String VALUE_ARCHIVE = "{'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
 			+ Article.TYPE_ARTICLE + ", 'stat': " + Article.STAT_PUBLISHED + "}";
 
-	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
-	public List<Article> findMetaByIsPageAndStat(byte isPage, byte stat);
+	@Query(value = VALUE_ARCHIVE, fields = FIELD_META)
+	public Page<Article> findByArchive(Date from, Date to, Pageable page);
 
-	/**
-	 * @param isPage
-	 * @param stat
-	 * @return
-	 */
 	public List<Article> findByIsPageAndStat(byte isPage, byte stat);
 
-	@Query(value = VALUE_ARCHIVE)
-	public List<Article> findByArchive(Date from, Date to);
+	public Page<Article> findByIsPageAndStat(byte isPage, byte stat, Pageable page);
 
 	public List<Article> findBykeywordAndStat(String keyword, byte stat);
 
+	public Article findByPermalinkAndIsPage(String permalink, byte isPage);
+
 	@Query(value = VALUE_ISPAGE_STAT, fields = FIELD_META)
 	public Page<Article> findMetaByIsPageAndStat(byte isPage, byte stat, Pageable page);
-
-	/**
-	 * @param isPage
-	 * @param stat
-	 * @param page
-	 * @return
-	 */
-	public Page<Article> findByIsPageAndStat(byte isPage, byte stat, Pageable page);
-
-	@Query(value = VALUE_ARCHIVE)
-	public Page<Article> findByArchive(Date from, Date to, Pageable page);
-
-	/**
-	 * @param permalink
-	 * @return
-	 */
-	public Article findByPermalinkAndIsPage(String permalink, byte isPage);
 
 	// /**
 	// * @param type

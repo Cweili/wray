@@ -93,7 +93,7 @@ public final class AdminLinkController extends BaseController {
 		v.add("err", "succ");
 		v.add("msg", "链接更新成功");
 		v.add("succ", "恭喜您，您的链接排序已成功更新，选中链接已删除。");
-		v.add("redirect", "admin-link/");
+		v.add("redirect", "admin-link-manage");
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {
@@ -144,7 +144,7 @@ public final class AdminLinkController extends BaseController {
 				ori.setItemOrder(itemOrder);
 				return ori;
 			}
-			return new Item(id, itemName, "", description, 0, itemOrder, Item.TYPE_LINK, "",
+			return new Item(id, itemName, id, description, 0, itemOrder, Item.TYPE_LINK,
 					Item.STAT_ON);
 		}
 		return null;

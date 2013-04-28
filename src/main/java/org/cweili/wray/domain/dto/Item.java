@@ -29,8 +29,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	private int count;
 	private byte itemOrder;
 	private byte itemType;
-	private String parrentId;
-	private byte stat = STAT_ON;
+	private byte stat;
 
 	public static final byte TYPE_CATEGORY = 0;
 	public static final byte TYPE_TAG = 1;
@@ -42,7 +41,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	public static final byte STAT_SELECTED = 2;
 
 	public Item() {
-		this("", "", "", "", 0, (byte) 0, TYPE_CATEGORY, "", STAT_ON);
+		this("", "", "", "", 0, (byte) 0, TYPE_CATEGORY, STAT_ON);
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	 * @param stat
 	 */
 	public Item(String itemId, String itemName, String permalink, String description, int count,
-			byte itemOrder, byte itemType, String parrentId, byte stat) {
+			byte itemOrder, byte itemType, byte stat) {
 		this.itemId = itemId;
 		this.itemName = itemName;
 		this.permalink = permalink;
@@ -65,7 +64,6 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		this.count = count;
 		this.itemOrder = itemOrder;
 		this.itemType = itemType;
-		this.parrentId = parrentId;
 		this.stat = stat;
 	}
 
@@ -77,7 +75,6 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		this.count = item.getCount();
 		this.itemOrder = item.getItemOrder();
 		this.itemType = item.getItemType();
-		this.parrentId = item.getParrentId();
 		this.stat = item.getStat();
 	}
 
@@ -108,9 +105,8 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", permalink=" + permalink
-				+ ", description=" + description + ", count=" + count + ", itemOrder=" + itemOrder
-				+ ", itemType=" + itemType + ", parrentId=" + parrentId + ", stat=" + stat + "]";
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", count=" + count
+				+ ", itemType=" + itemType + ", stat=" + stat + "]";
 	}
 
 	@Override
@@ -177,14 +173,6 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	public void setItemType(byte itemType) {
 		this.itemType = itemType;
-	}
-
-	public String getParrentId() {
-		return parrentId;
-	}
-
-	public void setParrentId(String parrentId) {
-		this.parrentId = parrentId;
 	}
 
 	public byte getStat() {

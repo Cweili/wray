@@ -130,7 +130,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 		Page<Article> pagedArticles = new Page<Article>(articleDao.findByArchive(month,
 				toDate.getTime(), new PageRequest(page - 1, size, Sort.Direction.DESC, "_id")));
 
-		return new Page<Article>(dealArticleList(pagedArticles.getContent()), pagedArticles);
+		return pagedArticles;
 	}
 
 	@Override

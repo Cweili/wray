@@ -11,6 +11,7 @@
 						<th>名称</th>
 						<th>日志数</th>
 						<th style="width:180px;">排序</th>
+						<th>状态</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -23,27 +24,36 @@
 						<td>${item.count}</td>
 						<td><input class="tinyfield" type="text" name="order${item.itemId}" value="${item.itemOrder}" /></td>
 						<td>
-							<a href="admin-category-edit-${item.itemId}"><img src="${staticServePath}include/image/action_edit.png" alt="编辑" /></a>
-							<a href="javascript:void(0);" onclick="deleteSingle('${item.itemId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
-							<a href="category/${item.permalink}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="查看" /></a>
+							<a href="javascript:void(0);" onclick="manageSingle('${item.itemId}');">
+								<img src="${staticServePath}include/image/action_<#if item.stat = 1>check<#else>delete</#if>.png"
+								alt="<#if item.stat = 1>正常<#else>关闭</#if>" />
+							</a>
+						</td>
+						<td>
+							<a href="admin-category-edit-${item.itemId}">
+								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+							</a>
+							<a href="category/${item.permalink}" target="_blank">
+								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+							</a>
 						</td>
 					</tr>
 					</#list>
 					<#assign i = (12 - items?size)>
 					<#if (i > 0)>
 						<#list 1..i as t>
-						<tr><td colspan="5" style="color:#242424">.</td></tr>
+						<tr><td colspan="6" style="color:#242424">.</td></tr>
 						</#list>
 					</#if>
 				</tbody>
 			</table> <!-- END Table -->
 			<fieldset>
 				<div class="input_field no_margin_bottom">
-					<input class="submit" type="submit" value="更新排序并删除选中分类" />
+					<input class="submit" type="submit" value="更新分类排序与状态" />
 					<input class="submit" type="button" value="添加新的分类" onclick="location.href='admin-category-add/'" />
 				</div>
 			</fieldset>
-			<input id="deleteId" name="id" type="hidden" />
+			<input id="manageId" name="id" type="hidden" />
 		</form>
 		<script type="text/javascript">
 			$("#manageForm").validate({
