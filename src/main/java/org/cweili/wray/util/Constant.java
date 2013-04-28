@@ -22,9 +22,9 @@ public class Constant {
 	public static final int MAX_PAGE_SIZE = Integer.MAX_VALUE;
 
 	/**
-	 * Cookie 保存时间
+	 * 客户端缓存时间
 	 */
-	public static final int COOKIE_MAX_AGE = 31536000;
+	public static final int CACHE_MAX_AGE = 31536000;
 
 	/**
 	 * 管理面板分页大小

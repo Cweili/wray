@@ -23,8 +23,8 @@
 						<td>${upload.uploadDate?string("yyyy-MM-dd HH:mm:ss")}</td>
 						<td>${(upload.length / 1024)?int} KB</td>
 						<td>
-							<a href="javascript:void(0);" onclick="manageSingle('${upload.uploadId}');"><img src="${staticServePath}include/image/action_delete.png" alt="删除" /></a>
-							<a href="${staticServePath}upload/${upload.uploadId}/${upload.filename}" target="_blank"><img src="${staticServePath}include/image/folder.png" alt="打开" /></a>
+							<a href="javascript:void(0);" onclick="manageSingle('${upload.uploadId}');"><img src="${staticServePath}res/image/action_delete.png" alt="删除" /></a>
+							<a href="${staticServePath}upload/${upload.uploadId}/${upload.filename}" target="_blank"><img src="${staticServePath}res/image/folder.png" alt="打开" /></a>
 						</td>
 					</tr>
 					</#list>

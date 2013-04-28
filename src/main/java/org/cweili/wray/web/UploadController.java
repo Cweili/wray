@@ -38,6 +38,10 @@ public class UploadController extends BaseController {
 			String[] type = upload.getContentType().split("/");
 			header.setContentType(new MediaType(type[0], type[1]));
 			header.setContentLength(upload.getLength());
+			// header.setCacheControl("max-age");
+			// header.setPragma("max-age");
+			// header.setExpires(Function.timestamp() + Constant.CACHE_MAX_AGE *
+			// 1000);
 			header.set("Content-Disposition",
 					"attachment; filename=" + Function.urlEncode(upload.getFilename()));
 			header.set("Accept-Ranges", "bytes");

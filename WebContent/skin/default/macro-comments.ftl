@@ -93,10 +93,10 @@
 </#macro>
 
 <#macro comment_script>
-<script src="include/js/jquery.validate.min.js" type="text/javascript"></script>
-<script src="include/editor/kindeditor-min.js" type="text/javascript"></script>
-<script src="include/editor/zh_CN.js" type="text/javascript"></script>
-<script src="include/js/comment.js" type="text/javascript"></script>
+<script src="res/js/jquery.validate.min.js" type="text/javascript"></script>
+<script src="res/editor/kindeditor-min.js" type="text/javascript"></script>
+<script src="res/editor/zh_CN.js" type="text/javascript"></script>
+<script src="res/js/comment.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$.extend($.validator.messages, {
 		required: "${requiredErrorLabel}",

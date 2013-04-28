@@ -26,13 +26,13 @@
 						<td><input class="tinyfield" type="text" name="order${article.articleId}" value="${article.hit}" /></td>
 						<td>
 							<a href="admin-page-edit-${article.articleId}">
-								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+								<img src="${staticServePath}res/image/action_edit.png" alt="编辑" />
 							</a>
 							<a href="javascript:void(0);" onclick="manageSingle('${article.articleId}');">
-								<img src="${staticServePath}include/image/action_delete.png" alt="删除" />
+								<img src="${staticServePath}res/image/action_delete.png" alt="删除" />
 							</a>
 							<a href="page/${article.permalink}" target="_blank">
-								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+								<img src="${staticServePath}res/image/folder.png" alt="查看" />
 							</a>
 						</td>
 					</tr>

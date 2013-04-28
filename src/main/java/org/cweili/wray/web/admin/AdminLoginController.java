@@ -84,7 +84,7 @@ public final class AdminLoginController extends BaseController {
 				CookieGenerator cookie = new CookieGenerator();
 				cookie.setCookieName(Constant.AUTHORITY_COOKIE);
 				cookie.setCookiePath(request.getContextPath() + "/");
-				cookie.setCookieMaxAge(Constant.COOKIE_MAX_AGE);
+				cookie.setCookieMaxAge(Constant.CACHE_MAX_AGE);
 				cookie.addCookie(response, URLEncoder.encode(blogConfig.get("adminName"), "UTF-8"));
 
 				if (null != request.getParameterValues("rememberme")

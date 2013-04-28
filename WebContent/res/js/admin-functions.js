@@ -4,13 +4,13 @@ var editor = null;
 var slideToggleDelay = 6000;
 var editorInit = {
 	themeType: "default",
-	cssPath : ['include/editor/plugins/code/prettify.css'],
+	cssPath : ['res/editor/plugins/code/prettify.css'],
 	wellFormatMode: true,
 	indentChar: "",
 	urlType: "relative",
-	emoticonsPath: "include/image/emotion/",
+	emoticonsPath: "res/image/emotion/",
 	uploadJson: "upload-json?a=" + (authority ? authority : 0) + "&t=" + (authorityTime ? authorityTime : 0),
-	//fileManagerJson: "include/editor/jsp/file_manager_json.jsp",
+	//fileManagerJson: "res/editor/jsp/file_manager_json.jsp",
 	allowFileManager : false,
 	allowImageUpload: true,
 	allowFlashUpload: true,

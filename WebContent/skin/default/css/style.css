@@ -969,13 +969,13 @@ label.error {
 	display: inline;
 	float: none;
 	position: static;
-	background: url("../../../include/image/validate_error.png") no-repeat left;
+	background: url("../../../res/image/validate_error.png") no-repeat left;
 	background-position: 2px;
 	margin-left: 2px;
 	padding: 3px 2px 4px 17px;
 	color: #981d05;
 	top: 0;
-	behavior: url("../../../include/js/iepngfic.htc") !important;
+	behavior: url("../../../res/js/iepngfic.htc") !important;
 }
 
 .error {

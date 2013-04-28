@@ -3,9 +3,9 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Wray Admin Panel</title>
-		<link type="text/css" rel="stylesheet" href="${staticServePath}include/css/admin-login.css" charset="utf-8" />
-		<script src="${staticServePath}include/js/jquery-1.9.1.min.js" type="text/javascript"></script>
-		<script src="${staticServePath}include/js/admin-login.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="${staticServePath}res/css/admin-login.css" charset="utf-8" />
+		<script src="${staticServePath}res/js/jquery-1.9.1.min.js" type="text/javascript"></script>
+		<script src="${staticServePath}res/js/admin-login.js" type="text/javascript"></script>
 	</head>
 <body>
 	<div id="container">

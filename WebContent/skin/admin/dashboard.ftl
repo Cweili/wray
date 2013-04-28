@@ -4,31 +4,31 @@
 		<ul class="modals">
 			<li>
 				<a href="admin-article-add">
-					<img src="include/image/pencil_48.png" alt="创建新文章" />
+					<img src="res/image/pencil_48.png" alt="创建新文章" />
 					<div>创建新文章</div>
 				</a>
 			</li>
 			<li>
 				<a href="admin-page-add">
-					<img src="include/image/page_48.png" alt="创建新页面" />
+					<img src="res/image/page_48.png" alt="创建新页面" />
 					<span>创建新页面</span>
 				</a>
 			</li>
 			<li>
 				<a href="admin-comment">
-					<img src="include/image/letter_48.png" alt="管理评论" />
+					<img src="res/image/letter_48.png" alt="管理评论" />
 					<span>管理评论</span>
 				</a>
 			</li>
 			<li>
 				<a href="admin-upload">
-					<img src="include/image/save_48.png" alt="管理附件" />
+					<img src="res/image/save_48.png" alt="管理附件" />
 					<span>管理附件</span>
 				</a>
 			</li>
 			<li>
 				<a href="admin-setup-basic">
-					<img src="include/image/gear_48.png" alt="博客设置" />
+					<img src="res/image/gear_48.png" alt="博客设置" />
 					<span>博客设置</span>
 				</a>
 			</li>
@@ -85,10 +85,10 @@
 						<td><#if comment.stat = 2>正常<#else>屏蔽</#if></td>
 						<td>
 							<a href="admin-comment-edit-${comment.commentId}">
-								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+								<img src="${staticServePath}res/image/action_edit.png" alt="编辑" />
 							</a>
 							<a href="comment-${comment.commentId}" target="_blank">
-								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+								<img src="${staticServePath}res/image/folder.png" alt="查看" />
 							</a>
 						</td>
 					</tr>
@@ -120,10 +120,10 @@
 						<td>${article.commentCount}</td>
 						<td>
 							<a href="admin-article-edit-${article.articleId}">
-								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+								<img src="${staticServePath}res/image/action_edit.png" alt="编辑" />
 							</a>
 							<a href="article/${article.permalink}" target="_blank">
-								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+								<img src="${staticServePath}res/image/folder.png" alt="查看" />
 							</a>
 						</td>
 					</tr>

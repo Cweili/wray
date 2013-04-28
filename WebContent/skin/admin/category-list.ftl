@@ -25,16 +25,16 @@
 						<td><input class="tinyfield" type="text" name="order${item.itemId}" value="${item.itemOrder}" /></td>
 						<td>
 							<a href="javascript:void(0);" onclick="manageSingle('${item.itemId}');">
-								<img src="${staticServePath}include/image/action_<#if item.stat = 1>check<#else>delete</#if>.png"
+								<img src="${staticServePath}res/image/action_<#if item.stat = 1>check<#else>delete</#if>.png"
 								alt="<#if item.stat = 1>正常<#else>关闭</#if>" />
 							</a>
 						</td>
 						<td>
 							<a href="admin-category-edit-${item.itemId}">
-								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+								<img src="${staticServePath}res/image/action_edit.png" alt="编辑" />
 							</a>
 							<a href="category/${item.permalink}" target="_blank">
-								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+								<img src="${staticServePath}res/image/folder.png" alt="查看" />
 							</a>
 						</td>
 					</tr>

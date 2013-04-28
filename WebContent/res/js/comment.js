@@ -4,7 +4,7 @@ var editorInit = {
 	wellFormatMode: true,
 	indentChar: "",
 	urlType: "relative",
-	emoticonsPath: "include/image/emotion/",
+	emoticonsPath: "res/image/emotion/",
 	filterMode: true,
 	allowFileManager : false,
 	allowImageUpload: false,
@@ -211,7 +211,7 @@ $(function() {
 	});
 	
 	$(".comment-author-img").one("error", function() {
-		$(this).attr("src", "include/image/user.png");
+		$(this).attr("src", "res/image/user.png");
 		return false;
 	});
 	

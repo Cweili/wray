@@ -37,16 +37,16 @@
 						<td><a href="admin-comment-edit-${comment.commentId}">${comment.content}</a></td>
 						<td>
 							<a href="javascript:void(0);" onclick="manageSingle('${comment.commentId}');">
-								<img src="${staticServePath}include/image/action_<#if comment.stat = 2>check<#else>delete</#if>.png"
+								<img src="${staticServePath}res/image/action_<#if comment.stat = 2>check<#else>delete</#if>.png"
 								alt="<#if comment.stat = 2>正常<#else>屏蔽</#if>" />
 							</a>
 						</td>
 						<td>
 							<a href="admin-comment-edit-${comment.commentId}">
-								<img src="${staticServePath}include/image/action_edit.png" alt="编辑" />
+								<img src="${staticServePath}res/image/action_edit.png" alt="编辑" />
 							</a>
 							<a href="comment-${comment.commentId}" target="_blank">
-								<img src="${staticServePath}include/image/folder.png" alt="查看" />
+								<img src="${staticServePath}res/image/folder.png" alt="查看" />
 							</a>
 						</td>
 					</tr>
