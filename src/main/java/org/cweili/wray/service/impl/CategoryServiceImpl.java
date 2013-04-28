@@ -11,6 +11,8 @@ import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 /**
@@ -58,7 +60,10 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public List<Item> getAllCategories() {
-		return itemDao.findByItemType(Item.TYPE_CATEGORY);
+		Order[] orders = new Order[] { new Order(Direction.DESC, "stat"),
+				new Order(Direction.ASC, "itemOrder") };
+		return itemDao.findByItemType(Item.TYPE_CATEGORY,
+				new PageRequest(0, Constant.MAX_PAGE_SIZE, new Sort(orders))).getContent();
 	}
 
 	@Override
