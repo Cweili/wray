@@ -33,7 +33,7 @@
 						<li><a href="admin-category-add">新增分类</a></li>
 					</ul>
 				</div>
-				<div class="navhead"><span>标签管理</span></div>
+				<div class="navhead hide"><span>标签管理</span></div>
 				<div class="subnav">
 					<ul class="submenu">
 						<li><a href="#">标签列表</a></li>
@@ -78,7 +78,6 @@
 						<li><a href="admin-setup-basic">基本设置</a></li>
 						<li><a href="admin-setup-account">管理帐户</a></li>
 						<li><a href="admin-setup-skin">外观设置</a></li>
-						<li><a href="admin-setup-test">测试设置</a></li>
 					</ul>
 				</div>
 			</div>
