@@ -3,6 +3,7 @@
  */
 package org.cweili.wray.service.impl;
 
+import java.awt.Color;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.service.SearchService;
+import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;
@@ -42,7 +44,17 @@ public class SearchServiceImpl extends BaseService implements SearchService {
 					articleMap.put(article, 1);
 				}
 			}
-			replacements[i] = "<span class=\"highlight\">" + keywords[i] + "</span>";
+
+			// 关键字高亮
+			Color background = Captcha.getRandomColor(false);
+			String backgroundStr = StringUtils.join(
+					new Integer[] { background.getRed(), background.getGreen(),
+							background.getBlue() }, ',');
+			Color color = Captcha.getRandomColor(true);
+			String colorStr = StringUtils.join(new Integer[] { color.getRed(), color.getGreen(),
+					color.getBlue() }, ',');
+			replacements[i] = "<span style=\"background-color:rgb(" + backgroundStr
+					+ ");color:rgb(" + colorStr + ");\">" + keywords[i] + "</span>";
 		}
 		List<Entry<Article, Integer>> entryList = Function.sortMapByValue(articleMap);
 		Article[] articles = new Article[entryList.size()];
