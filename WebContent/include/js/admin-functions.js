@@ -40,8 +40,8 @@ var editorInit = {
 };
 
 $(function() {
-
- //NAVIGATION MENU
+	
+	//NAVIGATION MENU
 	var locationURL = window.location.pathname + window.location.search;
 	$(".submenu li").each(function(i) {
 		if (i < $(".submenu li").length - 1) {
@@ -76,11 +76,11 @@ $(function() {
 	$(".current_nav").parent().parent().slideToggle("slow");
 	$(".current_nav").parent().parent().prev().toggleClass("selected");
 	
- //DATE PICKER
+	//DATE PICKER
 	$("#datepicker").datepicker();
 
 
- //CLOSE NOTIFICATIONS BUTTON
+	//CLOSE NOTIFICATIONS BUTTON
 	$(".close").click(
 		function () {
 			$(this).parent().fadeTo(400, 0, function () { // Links with the class "close" will close parent
@@ -96,7 +96,7 @@ $(function() {
 	}
 	
 /*
- //Initialize WYSIWYG editor
+	//Initialize WYSIWYG editor
 
 	$("#wysiwyg").wysiwyg({
 		initialContent: "",
@@ -115,7 +115,7 @@ $(function() {
 			}
 	});
 */
- // Check all the checkboxes when the head one is selected:
+	// Check all the checkboxes when the head one is selected:
 		
 	$(".checkall").click(
 		function(){
@@ -150,8 +150,6 @@ $(function() {
 		});
 	}
 	
-	reSizeMain();
-	
 	KindEditor.plugin('insertmore', function(K) {
 		var editor = this;
 		editor.clickToolbar("insertmore", function() {
@@ -163,6 +161,10 @@ $(function() {
 		editor = K.create(".wysiwyg", editorInit);
 //		prettyPrint();
 	});
+	
+	welcome();
+	
+	reSizeMain();
 	
 });
 
@@ -210,6 +212,25 @@ var reSizeMain = function() {
 	$("#main").css({
 		width: mainwidth + "px",
 	});
+};
+
+var welcome = function() {
+	var hour = new Date().getHours();
+	var welcome;
+	if (0 <= hour && 6 > hour) {
+		welcome = "凌晨";
+	} else if(12 > hour) {
+		welcome = "上午";
+	} else if(14 > hour) {
+		welcome = "中午";
+	} else if(17 > hour) {
+		welcome = "下午";
+	} else if(19 > hour) {
+		welcome = "傍晚";
+	} else {
+		welcome = "晚上";
+	}
+	$("#welcome").text(welcome + "好");
 };
 
 $.extend($.validator.messages, {
