@@ -17,6 +17,11 @@ public class Constant {
 	public static final boolean DEBUG = false;
 
 	/**
+	 * 默认字符集
+	 */
+	public static final String CHARSET = "UTF-8";
+
+	/**
 	 * 分页最大值
 	 */
 	public static final int MAX_PAGE_SIZE = Integer.MAX_VALUE;

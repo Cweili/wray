@@ -57,6 +57,16 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 	}
 
 	/*
+	 * （non-Javadoc）
+	 * 
+	 * @see org.cweili.wray.service.ConfigService#save(java.lang.Iterable)
+	 */
+	@Override
+	public void save(Iterable<Config> configs) {
+		configDao.save(configs);
+	}
+
+	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see org.cweili.wray.service.ConfigService#getConfigMap()
@@ -92,7 +102,8 @@ public class ConfigServiceImpl extends BaseService implements ConfigService {
 
 	}
 
-	private void UpdateConfigMap() {
+	@Override
+	public void UpdateConfigMap() {
 		if (configMap != null) {
 			configMap.clear();
 		} else {

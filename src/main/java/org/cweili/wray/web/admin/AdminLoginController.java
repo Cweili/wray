@@ -41,7 +41,7 @@ public final class AdminLoginController extends BaseController {
 			username = StringUtils.stripToEmpty(WebUtils.getCookie(req.getRequest(),
 					Constant.AUTHORITY_COOKIE).getValue());
 			try {
-				username = URLDecoder.decode(username, "UTF-8");
+				username = URLDecoder.decode(username, Constant.CHARSET);
 			} catch (Exception e) {
 				log.error(e);
 			}
@@ -85,7 +85,7 @@ public final class AdminLoginController extends BaseController {
 				cookie.setCookieName(Constant.AUTHORITY_COOKIE);
 				cookie.setCookiePath(request.getContextPath() + "/");
 				cookie.setCookieMaxAge(Constant.CACHE_MAX_AGE);
-				cookie.addCookie(response, URLEncoder.encode(blogConfig.get("adminName"), "UTF-8"));
+				cookie.addCookie(response, URLEncoder.encode(blogConfig.get("adminName"), Constant.CHARSET));
 
 				if (null != request.getParameterValues("rememberme")
 						&& "true".equals(request.getParameterValues("rememberme")[0])) {

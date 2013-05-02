@@ -36,10 +36,20 @@ public interface ConfigService {
 	public void save(Config config);
 
 	/**
+	 * @param configs
+	 */
+	public void save(Iterable<Config> configs);
+
+	/**
 	 * @param request
 	 * @param nonHtmlArray
 	 * @param htmlArray
 	 */
 	public void saveRequest(WebRequest request, String[] nonHtmlArray, String[] htmlArray);
+
+	/**
+	 * 
+	 */
+	public void UpdateConfigMap();
 
 }

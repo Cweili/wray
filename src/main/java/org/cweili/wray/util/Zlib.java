@@ -29,6 +29,7 @@ public class Zlib {
 	public static byte[] compress(byte[] data) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		DeflaterOutputStream dos = new DeflaterOutputStream(bos);
+
 		try {
 			dos.write(data);
 			dos.close();
@@ -36,7 +37,15 @@ public class Zlib {
 			log.error(e);
 			return data;
 		}
-		return bos.toByteArray();
+
+		byte[] result = bos.toByteArray();
+		try {
+			bos.close();
+		} catch (IOException e) {
+			log.error(e);
+			return result;
+		}
+		return result;
 	}
 
 	/**
@@ -49,6 +58,7 @@ public class Zlib {
 	public static byte[] decompress(byte[] data) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		InflaterOutputStream ios = new InflaterOutputStream(bos);
+
 		try {
 			ios.write(data);
 			ios.close();
@@ -56,6 +66,14 @@ public class Zlib {
 			log.error(e);
 			return data;
 		}
-		return bos.toByteArray();
+
+		byte[] result = bos.toByteArray();
+		try {
+			bos.close();
+		} catch (IOException e) {
+			log.error(e);
+			return result;
+		}
+		return result;
 	}
 }

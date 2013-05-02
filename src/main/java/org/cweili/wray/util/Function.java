@@ -351,7 +351,7 @@ public class Function {
 	public static String urlDecode(String input) {
 		if (ServerDetector.getInstance().detect() == ServerDetector.TOMCAT) {
 			try {
-				input = new String(input.getBytes("ISO-8859-1"), "UTF-8");
+				input = new String(input.getBytes("ISO-8859-1"), Constant.CHARSET);
 			} catch (UnsupportedEncodingException e) {
 				input = "";
 			}
@@ -368,7 +368,7 @@ public class Function {
 	public static String urlEncode(String input) {
 		try {
 			input = URLEncoder.encode(StringUtils.stripToEmpty(stripTags(input)).toLowerCase(),
-					"UTF-8");
+					Constant.CHARSET);
 		} catch (UnsupportedEncodingException e) {
 			input = "";
 		}

@@ -14,18 +14,18 @@
 			<form id="admin-login" action="admin-login" method="post">
 				<p class="main">
 					<label for="username">用户名: </label>
-					<input class="text" type="text" name="username" value="${username?if_exists}" /> 
+					<input class="text" type="text" name="username" value="${username?if_exists}" tabindex="1" /> 
 					<label for="password">密码: </label>
-					<input class="text" type="password" name="password" />	
+					<input class="text" type="password" name="password" tabindex="2" />	
 				</p>
 				<p class="main space">
 					<label for="captcha">验证码: </label>
-					<input class="text" type="text" name="captcha" />
+					<input class="text" type="text" name="captcha" tabindex="3" />
 					<img id="captcha" alt="validate" />
 				</p>
 				<p class="space"></p>
-				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" />记住我</div>
-				<input type="submit" value="登 &nbsp; 录" class="login" />
+				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" tabindex="4" />记住我</div>
+				<input type="submit" value="登 &nbsp; 录" class="login" tabindex="5"  />
 				<div id="loading"></div>
 				<input id="hash" type="hidden" name="hash" />
 				<div class=""></div>

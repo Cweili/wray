@@ -16,7 +16,7 @@
 	<script type="text/javascript" src="res/js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="res/js/functions.js"></script>
 	<script type="text/javascript" src="res/editor/plugins/code/prettify.js"></script>
-	${htmlHead}
+	${attachHeader}
 </#macro>
 
 <#macro header>

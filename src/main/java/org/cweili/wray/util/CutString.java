@@ -23,7 +23,7 @@ public class CutString {
 		// 如果字节数大于1，是汉字
 		// 以这种方式区别英文字母和中文汉字并不是十分严谨，但在这个题目中，这样判断已经足够了
 		try {
-			return String.valueOf(c).getBytes("UTF-8").length > 2;
+			return String.valueOf(c).getBytes(Constant.CHARSET).length > 2;
 		} catch (UnsupportedEncodingException e) {
 			return false;
 		}
@@ -46,7 +46,7 @@ public class CutString {
 			// 要截取的字节数大于0，且小于原始字符串的字节数
 			int length = 0;
 			try {
-				length = orignal.getBytes("UTF-8").length;
+				length = orignal.getBytes(Constant.CHARSET).length;
 			} catch (UnsupportedEncodingException e1) {
 
 			}

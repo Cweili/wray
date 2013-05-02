@@ -7,11 +7,6 @@ db.getCollection("config").ensureIndex({
 
 /** config records **/
 db.getCollection("config").insert({
-  "_id": "attachFooter",
-  "_class": "org.cweili.wray.domain.dto.Config",
-  "value": "<!-- footer -->"
-});
-db.getCollection("config").insert({
   "_id": "attachHeader",
   "_class": "org.cweili.wray.domain.dto.Config",
   "value": "<!-- header -->"
@@ -62,19 +57,9 @@ db.getCollection("config").insert({
   "value": "有更新"
 });
 db.getCollection("config").insert({
-  "_id": "noticeBoard",
-  "_class": "org.cweili.wray.domain.dto.Config",
-  "value": "<span style=\"line-height:24px;background-color:#00CC00;color:#003333;font-size:18px;\"><strong>公告栏<\/strong><\/span>"
-});
-db.getCollection("config").insert({
   "_id": "replyLabel",
   "_class": "org.cweili.wray.domain.dto.Config",
   "value": "回复"
-});
-db.getCollection("config").insert({
-  "_id": "mailInvalidLabel",
-  "_class": "org.cweili.wray.domain.dto.Config",
-  "value": "邮箱不合法"
 });
 db.getCollection("config").insert({
   "_id": "nextPageLabel",
@@ -90,11 +75,6 @@ db.getCollection("config").insert({
   "_id": "firstPageLabel",
   "_class": "org.cweili.wray.domain.dto.Config",
   "value": "«"
-});
-db.getCollection("config").insert({
-  "_id": "",
-  "_class": "org.cweili.wray.domain.dto.Config",
-  "value": ""
 });
 db.getCollection("config").insert({
   "_id": "feedSize",
@@ -140,11 +120,6 @@ db.getCollection("config").insert({
   "_id": "moreLabel",
   "_class": "org.cweili.wray.domain.dto.Config",
   "value": "继续阅读"
-});
-db.getCollection("config").insert({
-  "_id": "mostCommentArticlesLabel",
-  "_class": "org.cweili.wray.domain.dto.Config",
-  "value": "热评文章"
 });
 db.getCollection("config").insert({
   "_id": "archiveLabel",
@@ -279,7 +254,22 @@ db.getCollection("config").insert({
 db.getCollection("config").insert({
   "_id": "navigatorSwitch",
   "_class": "org.cweili.wray.domain.dto.Config",
-  "value": "1"
+  "value": "0"
+});
+db.getCollection("config").insert({
+  "_id": "attachFooter",
+  "_class": "org.cweili.wray.domain.dto.Config",
+  "value": "<!-- footer -->"
+});
+db.getCollection("config").insert({
+  "_id": "noticeBoard",
+  "_class": "org.cweili.wray.domain.dto.Config",
+  "value": "<span style=\"line-height:24px;background-color:#00CC00;color:#003333;font-size:18px;\"><strong>公告栏<\/strong><\/span>"
+});
+db.getCollection("config").insert({
+  "_id": "mostCommentArticlesLabel",
+  "_class": "org.cweili.wray.domain.dto.Config",
+  "value": "热评文章"
 });
 db.getCollection("config").insert({
   "_id": "adminPwd",

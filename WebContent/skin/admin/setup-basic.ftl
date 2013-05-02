@@ -15,7 +15,7 @@
 				</div>
 				<div class="input_field">
 					<label for="blogHost">网站URL</label>
-					<input class="bigfield" name="blogSubtitle" type="text" value="${blogHost?if_exists}" />
+					<input class="bigfield" name="blogHost" type="text" value="${blogHost?if_exists}" />
 					<span class="field_desc">用于页脚版权链接</span>
 				</div>
 				<div class="input_field">

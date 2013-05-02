@@ -18,4 +18,6 @@
 			<p>&#9650;</p>
 		</div>
 	</div>
+	${attachFooter}
+	${attachStat}
 </#macro>

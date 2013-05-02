@@ -153,11 +153,13 @@
 	<!-- 拦截器 -->
 	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype"/>
 	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype"/>
+	<bean name="initInterceptor" class="org.cweili.wray.interceptor.InitInterceptor" scope="prototype"/>
 	
 	<mvc:interceptors>
-		<!-- This XML will intercept all URIs -->
-		<ref bean="pageProcessingInterceptor"/>	
-		<!-- This XML will apply interceptor to only certain URIs -->
+		<!-- This will intercept all URIs -->
+		<ref bean="initInterceptor"/>
+		<ref bean="pageProcessingInterceptor"/>
+		<!-- This will apply interceptor to only certain URIs -->
 		<mvc:interceptor>
 		     <mvc:mapping path="/admin-*"/>
 		     <mvc:exclude-mapping path="/admin-login"/>

@@ -1,0 +1,216 @@
+[{
+  "key": "attachFooter",
+  "value": "<!-- footer -->"
+},
+{
+  "key": "attachHeader",
+  "value": "<!-- header -->"
+},
+{
+  "key": "attachStat",
+  "value": "<!-- stat -->"
+},
+{
+  "key": "blogHost",
+  "value": "http:\/\/localhost:8080\/wray"
+},
+{
+  "key": "blogSubtitle",
+  "value": "This is subtitle"
+},
+{
+  "key": "blogTitle",
+  "value": "Cweili Blog"
+},
+{
+  "key": "htmlHead",
+  "value": ""
+},
+{
+  "key": "metaDescription",
+  "value": "Cweili Blog"
+},
+{
+  "key": "metaKeywords",
+  "value": "Cweili,Blog"
+},
+{
+  "key": "topArticleLabel",
+  "value": "置顶"
+},
+{
+  "key": "updatedLabel",
+  "value": "有更新"
+},
+{
+  "key": "noticeBoard",
+  "value": "<span style=\"line-height:24px;background-color:#00CC00;color:#003333;font-size:18px;\"><strong>公告栏<\/strong><\/span>"
+},
+{
+  "key": "replyLabel",
+  "value": "回复"
+},
+{
+  "key": "nextPageLabel",
+  "value": ">"
+},
+{
+  "key": "previousPageLabel",
+  "value": "<"
+},
+{
+  "key": "firstPageLabel",
+  "value": "«"
+},
+{
+  "key": "feedSize",
+  "value": "10"
+},
+{
+  "key": "inputErrorLabel",
+  "value": "填写错误"
+},
+{
+  "key": "pageSize",
+  "value": "10"
+},
+{
+  "key": "recentCommentsSize",
+  "value": "10"
+},
+{
+  "key": "topHitArticlesSize",
+  "value": "10"
+},
+{
+  "key": "topCommentArticlesSize",
+  "value": "10"
+},
+{
+  "key": "mostUsedTagsSize",
+  "value": "30"
+},
+{
+  "key": "commentLabel",
+  "value": "评论"
+},
+{
+  "key": "moreLabel",
+  "value": "继续阅读"
+},
+{
+  "key": "mostCommentArticlesLabel",
+  "value": "热评文章"
+},
+{
+  "key": "archiveLabel",
+  "value": "文章存档"
+},
+{
+  "key": "lastPageLabel",
+  "value": "»"
+},
+{
+  "key": "popTagsLabel",
+  "value": "热门标签"
+},
+{
+  "key": "recentCommentsLabel",
+  "value": "最近评论"
+},
+{
+  "key": "mostViewCountArticlesLabel",
+  "value": "热门点击"
+},
+{
+  "key": "sumLabel",
+  "value": "共"
+},
+{
+  "key": "commentLinkLabel",
+  "value": "链接"
+},
+{
+  "key": "returnLabel",
+  "value": "返回"
+},
+{
+  "key": "maxlengthErrorLabel",
+  "value": "长度最长为"
+},
+{
+  "key": "commentEmailLabel",
+  "value": "E-mail"
+},
+{
+  "key": "allTagsLabel",
+  "value": "标签墙"
+},
+{
+  "key": "tagLabel",
+  "value": "标签"
+},
+{
+  "key": "linkLabel",
+  "value": "友情链接"
+},
+{
+  "key": "viewLabel",
+  "value": "次点击"
+},
+{
+  "key": "pageLabel",
+  "value": "页"
+},
+{
+  "key": "submmitCommentLabel",
+  "value": "提交评论"
+},
+{
+  "key": "searchLabel",
+  "value": "搜索"
+},
+{
+  "key": "skinDir",
+  "value": "default"
+},
+{
+  "key": "commentAuthorLabel",
+  "value": "用户名"
+},
+{
+  "key": "requiredErrorLabel",
+  "value": "必须填写"
+},
+{
+  "key": "noticeBoardLabel",
+  "value": "公告栏"
+},
+{
+  "key": "atomLabel",
+  "value": "RSS\/ATOM"
+},
+{
+  "key": "homeLabel",
+  "value": "首页"
+},
+{
+  "key": "adminNick",
+  "value": "Cweili"
+},
+{
+  "key": "adminName",
+  "value": "Cweili"
+},
+{
+  "key": "adminEmail",
+  "value": "3weili@gmail.com"
+},
+{
+  "key": "navigatorSwitch",
+  "value": "0"
+},
+{
+  "key": "adminPwd",
+  "value": "a773056e3ce4443f5529cb94a6b659eec8e408138c7c380f45249a8c1974c1ed"
+}]
