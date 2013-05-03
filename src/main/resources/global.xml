@@ -10,168 +10,181 @@
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-lazy-init="true">
-	
+
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:config.properties"/>
+		<property name="location" value="classpath:config.properties" />
 	</bean>
 
 	<!-- 自动扫描包，可以写多个 -->
-	<context:component-scan base-package="org.cweili.*.*,org.cweili.*.*.*"/>
-	
+	<context:component-scan base-package="org.cweili.*.*,org.cweili.*.*.*" />
+
 	<!-- 多视图处理器 -->
 	<bean class="org.cweili.wray.util.MixedViewResolver">
 		<property name="resolvers">
 			<map>
 				<entry key="jsp">
-					<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-						<property name="prefix" value="/WEB-INF/jsp/"/>
-						<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+					<bean
+						class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+						<property name="prefix" value="/WEB-INF/jsp/" />
+						<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 					</bean>
 				</entry>
 				<entry key="ftl">
-					<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-						<property name="cache" value="true"/>
+					<bean
+						class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+						<property name="cache" value="true" />
 						<property name="contentType" value="text/html;charset=UTF-8"></property>
-						<property name="exposeSpringMacroHelpers" value="true"/>
-						<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+						<property name="exposeSpringMacroHelpers" value="true" />
+						<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 						<property name="requestContextAttribute" value="rc"></property>
 					</bean>
 				</entry>
 			</map>
 		</property>
 	</bean>
-	
+
 	<!-- freemarker config -->
-	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer"> 
-		<property name="templateLoaderPath" value="/skin/" /> 
-		<property name="freemarkerSettings"> 
-			<props> 
-				<prop key="template_update_delay">5</prop> 
-				<prop key="default_encoding">UTF-8</prop> 
-				<prop key="locale">zh_CN</prop> 
-			</props> 
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/skin/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">5</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+			</props>
 		</property>
 	</bean>
-	
+
 	<!-- 注解请求映射 -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>		
-	
-	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter">
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+	<bean id="bufferedImage_hmc"
+		class="org.springframework.http.converter.BufferedImageHttpMessageConverter">
 		<property name="defaultContentType">
 			<bean class="org.springframework.http.MediaType">
-				<constructor-arg index="0" value="image"/>
-				<constructor-arg index="1" value="gif"/>
+				<constructor-arg index="0" value="image" />
+				<constructor-arg index="1" value="gif" />
 			</bean>
 		</property>
 	</bean>
-	<bean id="byteArray_hmc" class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
-	<bean id="string_hmc" class="org.springframework.http.converter.StringHttpMessageConverter">
+	<bean id="byteArray_hmc"
+		class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	<bean id="string_hmc"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<bean class="org.springframework.http.MediaType">
-					<constructor-arg index="0" value="text"/>
-					<constructor-arg index="1" value="plain"/>
-					<constructor-arg index="2" value="UTF-8"/>
+					<constructor-arg index="0" value="text" />
+					<constructor-arg index="1" value="plain" />
+					<constructor-arg index="2" value="UTF-8" />
 				</bean>
 				<bean class="org.springframework.http.MediaType">
-					<constructor-arg index="0" value="text"/>
-					<constructor-arg index="1" value="html"/>
-					<constructor-arg index="2" value="UTF-8"/>
+					<constructor-arg index="0" value="text" />
+					<constructor-arg index="1" value="html" />
+					<constructor-arg index="2" value="UTF-8" />
 				</bean>
 				<bean class="org.springframework.http.MediaType">
-					<constructor-arg index="0" value="application"/>
-					<constructor-arg index="1" value="json"/>
-					<constructor-arg index="2" value="UTF-8"/>
+					<constructor-arg index="0" value="application" />
+					<constructor-arg index="1" value="json" />
+					<constructor-arg index="2" value="UTF-8" />
 				</bean>
 				<bean class="org.springframework.http.MediaType">
-					<constructor-arg index="0" value="*"/>
-					<constructor-arg index="1" value="*"/>
-					<constructor-arg index="2" value="UTF-8"/>
+					<constructor-arg index="0" value="*" />
+					<constructor-arg index="1" value="*" />
+					<constructor-arg index="2" value="UTF-8" />
 				</bean>
 			</list>
 		</property>
 	</bean>
-	<bean id="resource_hmc" class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+	<bean id="resource_hmc"
+		class="org.springframework.http.converter.ResourceHttpMessageConverter" />
 
 	<!--
-	<bean id="jackson2_hmc" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name = "supportedMediaTypes">
+	<bean id="jackson2_hmc"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
 			<list>
 				<bean class="org.springframework.http.MediaType">
-					<constructor-arg index="0" value="application"/>
-					<constructor-arg index="1" value="json"/>
-					<constructor-arg index="2" value="UTF-8"/>
+					<constructor-arg index="0" value="application" />
+					<constructor-arg index="1" value="json" />
+					<constructor-arg index="2" value="UTF-8" />
 				</bean>
 			</list>
 		</property>
 	</bean>
 	-->
-	
-	<bean id="jaxb2Collection_hmc" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter"/>
-	<bean id="jaxb2RootElement_hmc" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
-	<bean id="source_hmc" class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
-	
-	<bean id="allEncompassingForm_hmc" class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter"/>
-	
+
+	<bean id="jaxb2Collection_hmc" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter" />
+	<bean id="jaxb2RootElement_hmc" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+	<bean id="source_hmc" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+
+	<bean id="allEncompassingForm_hmc" class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
+
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
-		<property name="messageConverters">  
-			<list>  
-				<ref bean="bufferedImage_hmc"/>
-				<ref bean="byteArray_hmc"/>
-				<ref bean="string_hmc"/>
-				<ref bean="resource_hmc"/>
-				<!-- ref bean="jackson2_hmc"/-->
-				<ref bean="jaxb2Collection_hmc"/>
-				<ref bean="jaxb2RootElement_hmc"/>
-				<ref bean="source_hmc"/>
-				<ref bean="allEncompassingForm_hmc"/>
-			</list>  
-		</property>  
+		<property name="messageConverters">
+			<list>
+				<ref bean="bufferedImage_hmc" />
+				<ref bean="byteArray_hmc" />
+				<ref bean="string_hmc" />
+				<ref bean="resource_hmc" />
+				<!-- ref bean="jackson2_hmc"/ -->
+				<ref bean="jaxb2Collection_hmc" />
+				<ref bean="jaxb2RootElement_hmc" />
+				<ref bean="source_hmc" />
+				<ref bean="allEncompassingForm_hmc" />
+			</list>
+		</property>
 	</bean>
-	
+
 	<!-- Multipart数据处理 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-		<property name="maxUploadSize" value="268435456"/>
-		<property name="maxInMemorySize" value="4096"/>
-		<property name="defaultEncoding" value="UTF-8"/>
-		<property name="resolveLazily" value="true"/>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="268435456" />
+		<property name="maxInMemorySize" value="4096" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="resolveLazily" value="true" />
 	</bean>
-	
+
 	<!-- 总错误处理 -->
-	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
 				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">forward:/error/MaxUploadSizeExceeded</prop>
 			</props>
 		</property>
-		<property name="defaultErrorView" value="forward:/error"/>  
-		<property name="defaultStatusCode" value="200"/>  
-		<property name="warnLogCategory" value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"/>  
+		<property name="defaultErrorView" value="forward:/error" />
+		<property name="defaultStatusCode" value="200" />
+		<property name="warnLogCategory"
+			value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" />
 	</bean>
-	
+
 	<!-- 拦截器 -->
-	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype"/>
-	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype"/>
-	<bean name="initInterceptor" class="org.cweili.wray.interceptor.InitInterceptor" scope="prototype"/>
-	
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
+	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
+	<bean name="initInterceptor" class="org.cweili.wray.interceptor.InitInterceptor" scope="prototype" />
+
 	<mvc:interceptors>
 		<!-- This will intercept all URIs -->
-		<ref bean="initInterceptor"/>
-		<ref bean="pageProcessingInterceptor"/>
+		<ref bean="initInterceptor" />
+		<ref bean="pageProcessingInterceptor" />
 		<!-- This will apply interceptor to only certain URIs -->
 		<mvc:interceptor>
-		     <mvc:mapping path="/admin-*"/>
-		     <mvc:exclude-mapping path="/admin-login"/>
-		     <ref bean="authenticationInterceptor"/>
+			<mvc:mapping path="/admin-*" />
+			<mvc:exclude-mapping path="/admin-login" />
+			<ref bean="authenticationInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 	<!-- 允许对静态资源文件的访问 -->
-	<!-- mvc:resources location="/" mapping="#{}" cache-period="31536000"/-->
-	<mvc:resources location="/res" mapping="/res" cache-period="31536000"/>
-	<mvc:default-servlet-handler/>
-	
-	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->  
-	<!-- bean class="com.xxxxx.SpringContextHolder" lazy-init="false" /-->
-	
+	<!-- mvc:resources location="/" mapping="#{}" cache-period="31536000"/ -->
+	<mvc:resources location="/res" mapping="/res" cache-period="31536000" />
+	<mvc:default-servlet-handler />
+
+	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring 
+		bean对象 -->
+	<!-- bean class="com.xxxxx.SpringContextHolder" lazy-init="false" / -->
+
 </beans>
