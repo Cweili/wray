@@ -3,8 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc
@@ -16,7 +16,7 @@
 	</bean>
 
 	<!-- 自动扫描包，可以写多个 -->
-	<context:component-scan base-package="org.cweili.*.*,org.cweili.*.*.*"></context:component-scan>
+	<context:component-scan base-package="org.cweili.*.*,org.cweili.*.*.*"/>
 	
 	<!-- 多视图处理器 -->
 	<bean class="org.cweili.wray.util.MixedViewResolver">
@@ -53,9 +53,8 @@
 		</property>
 	</bean>
 	
-	<!-- 注解请求映射  -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">		
-	</bean>
+	<!-- 注解请求映射 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>		
 	
 	<bean id="bufferedImage_hmc" class="org.springframework.http.converter.BufferedImageHttpMessageConverter">
 		<property name="defaultContentType">
