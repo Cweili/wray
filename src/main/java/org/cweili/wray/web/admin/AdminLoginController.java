@@ -37,9 +37,9 @@ public final class AdminLoginController extends BaseController {
 		String username = "";
 		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
-		if (null != WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_COOKIE)) {
+		if (null != WebUtils.getCookie(req.getRequest(), Constant.AUTHORITY_NAME)) {
 			username = StringUtils.stripToEmpty(WebUtils.getCookie(req.getRequest(),
-					Constant.AUTHORITY_COOKIE).getValue());
+					Constant.AUTHORITY_NAME).getValue());
 			try {
 				username = URLDecoder.decode(username, Constant.CHARSET);
 			} catch (Exception e) {
@@ -82,10 +82,11 @@ public final class AdminLoginController extends BaseController {
 
 				// Cookie 保存用户名
 				CookieGenerator cookie = new CookieGenerator();
-				cookie.setCookieName(Constant.AUTHORITY_COOKIE);
+				cookie.setCookieName(Constant.AUTHORITY_NAME);
 				cookie.setCookiePath(request.getContextPath() + "/");
 				cookie.setCookieMaxAge(Constant.CACHE_MAX_AGE);
-				cookie.addCookie(response, URLEncoder.encode(blogConfig.get("adminName"), Constant.CHARSET));
+				cookie.addCookie(response,
+						URLEncoder.encode(blogConfig.get("adminName"), Constant.CHARSET));
 
 				if (null != request.getParameterValues("rememberme")
 						&& "true".equals(request.getParameterValues("rememberme")[0])) {

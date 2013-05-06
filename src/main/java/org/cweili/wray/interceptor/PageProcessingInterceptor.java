@@ -24,6 +24,17 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
 		printRequestHeader(request);
+
+		// 添加服务器路径
+		if (null == blogConfig.get("staticServePath")) {
+			String host = request.getServerName();
+			if (request.getServerPort() != 80) {
+				host += ":" + request.getServerPort();
+			}
+			String basePath = request.getScheme() + "://" + host + request.getContextPath() + "/";
+			blogConfig.getConfigMap().put("staticServePath", basePath);
+		}
+
 		return true;
 	}
 

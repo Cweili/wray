@@ -36,14 +36,6 @@ public class InitInterceptor extends BaseInterceptor {
 				log.error(e, e);
 				return false;
 			}
-
-			// 添加服务器路径
-			String host = request.getServerName();
-			if (request.getServerPort() != 80) {
-				host += ":" + request.getServerPort();
-			}
-			String basePath = request.getScheme() + "://" + host + request.getContextPath() + "/";
-			blogConfig.getConfigMap().put("staticServePath", basePath);
 		}
 
 		return true;

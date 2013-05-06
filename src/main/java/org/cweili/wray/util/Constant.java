@@ -47,34 +47,34 @@ public class Constant {
 	public static final int CURRENT_MONTH = Calendar.getInstance().get(Calendar.MONTH) + 1;
 
 	/**
-	 * 
+	 * 验证码
 	 */
 	public static final String CAPTCHA = "captcha";
 
 	/**
-	 * 
+	 * 提交成功
 	 */
 	public static final String SUBMIT_SUCCESS = "success";
 
 	/**
-	 * 
+	 * 提交失败
 	 */
 	public static final String SUBMIT_FAILED = "";
 
 	/**
-	 * 
+	 * 登陆验证时间
 	 */
 	public static final String AUTHORITY_TIME = "wray_t";
 
 	/**
-	 * 登陆验证字段
+	 * 登陆验证令牌
 	 */
 	public static final String AUTHORITY_TOKEN = "wray_k";
 
 	/**
-	 * COOKIE 登陆验证
+	 * COOKIE 保存用户名
 	 */
-	public static final String AUTHORITY_COOKIE = "wray_c";
+	public static final String AUTHORITY_NAME = "wray_n";
 
 	/**
 	 * 危险 html 标签
