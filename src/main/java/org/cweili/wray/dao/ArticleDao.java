@@ -16,13 +16,13 @@ import org.springframework.data.mongodb.repository.Query;
  */
 public interface ArticleDao extends BaseDao<Article> {
 
-	public static final String VALUE_ISPAGE_STAT = "{'isPage': ?0, 'stat': ?1}";
+	static final String VALUE_ISPAGE_STAT = "{'isPage': ?0, 'stat': ?1}";
 
-	public static final String FIELD_META = "{'title': 1, 'permalink': 1, 'tag': 1, "
+	static final String FIELD_META = "{'title': 1, 'permalink': 1, 'tag': 1, "
 			+ "'createTime': 1, 'stat': 1, 'hit': 1, 'commentCount': 1, "
 			+ "'commentStatus': 1, 'isPage': 1}";
 
-	public static final String VALUE_ARCHIVE = "{'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
+	static final String VALUE_ARCHIVE = "{'createTime': {'$gt': ?0, '$lt': ?1} , 'isPage': "
 			+ Article.TYPE_ARTICLE + ", 'stat': " + Article.STAT_PUBLISHED + "}";
 
 	@Query(value = VALUE_ARCHIVE, fields = FIELD_META)
