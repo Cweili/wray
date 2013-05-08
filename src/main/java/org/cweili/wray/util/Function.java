@@ -47,7 +47,7 @@ public class Function {
 		String sha256 = sha256(name + time + password);
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < sha256.length(); i += 16) {
-			sb.append(encode(Long.parseLong(sha256.substring(i, i + 15), 16)));
+			sb.append(encode(Long.parseLong(StringUtils.substring(sha256, i, i + 15), 16)));
 		}
 		return sb.toString();
 	}
@@ -81,7 +81,7 @@ public class Function {
 			if (f.isDirectory()) {
 				int beginIndex = f.getPath().lastIndexOf('/');
 				beginIndex = beginIndex > -1 ? beginIndex : f.getPath().lastIndexOf('\\');
-				list.add(f.getPath().substring(beginIndex + 1));
+				list.add(StringUtils.substring(f.getPath(), beginIndex + 1));
 			}
 		}
 		return list;
@@ -243,7 +243,7 @@ public class Function {
 			permalink = StringUtils.replace(permalink, "--", "-");
 		}
 		if (permalink.indexOf('-') == 0) {
-			permalink = permalink.substring(1);
+			permalink = StringUtils.substring(permalink, 1);
 		}
 		if (!permalink.isEmpty() && permalink.lastIndexOf('-') == permalink.length() - 1) {
 			permalink = StringUtils.left(permalink, permalink.length() - 1);

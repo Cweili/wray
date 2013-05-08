@@ -3,6 +3,7 @@
  */
 package org.cweili.wray.test;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -20,7 +21,7 @@ public class TestPath {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		log.info(TestPath.class.getResource("/").toString().substring(6));
+		log.info(StringUtils.substring(TestPath.class.getResource("/").toString(), 6));
 	}
 
 }

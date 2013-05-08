@@ -11,7 +11,8 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-lazy-init="true">
 
-	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:config.properties" />
 	</bean>
 
@@ -26,7 +27,8 @@
 					<bean
 						class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 						<property name="prefix" value="/WEB-INF/jsp/" />
-						<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+						<property name="viewClass"
+							value="org.springframework.web.servlet.view.JstlView" />
 					</bean>
 				</entry>
 				<entry key="ftl">
@@ -35,7 +37,8 @@
 						<property name="cache" value="true" />
 						<property name="contentType" value="text/html;charset=UTF-8"></property>
 						<property name="exposeSpringMacroHelpers" value="true" />
-						<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+						<property name="viewClass"
+							value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 						<property name="requestContextAttribute" value="rc"></property>
 					</bean>
 				</entry>
@@ -116,13 +119,18 @@
 	</bean>
 	-->
 
-	<bean id="jaxb2Collection_hmc" class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter" />
-	<bean id="jaxb2RootElement_hmc" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
-	<bean id="source_hmc" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+	<bean id="jaxb2Collection_hmc"
+		class="org.springframework.http.converter.xml.Jaxb2CollectionHttpMessageConverter" />
+	<bean id="jaxb2RootElement_hmc"
+		class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+	<bean id="source_hmc"
+		class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
 
-	<bean id="allEncompassingForm_hmc" class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
+	<bean id="allEncompassingForm_hmc"
+		class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
 
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>
 				<ref bean="bufferedImage_hmc" />
@@ -152,7 +160,10 @@
 		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">forward:/error/MaxUploadSizeExceeded</prop>
+				<prop
+					key="org.springframework.web.multipart.MaxUploadSizeExceededException">
+					forward:/error/MaxUploadSizeExceeded
+				</prop>
 			</props>
 		</property>
 		<property name="defaultErrorView" value="forward:/error" />
@@ -162,9 +173,12 @@
 	</bean>
 
 	<!-- 拦截器 -->
-	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor" scope="prototype" />
-	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor" scope="prototype" />
-	<bean name="initInterceptor" class="org.cweili.wray.interceptor.InitInterceptor" scope="prototype" />
+	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor"
+		scope="prototype" />
+	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor"
+		scope="prototype" />
+	<bean name="initInterceptor" class="org.cweili.wray.interceptor.InitInterceptor"
+		scope="prototype" />
 
 	<mvc:interceptors>
 		<!-- This will intercept all URIs -->
@@ -180,7 +194,12 @@
 
 	<!-- 允许对静态资源文件的访问 -->
 	<!-- mvc:resources location="/" mapping="#{}" cache-period="31536000"/ -->
-	<mvc:resources location="/res" mapping="/res" cache-period="31536000" />
+	<!-- 给ResourceHttpRequestHandler配置了Resource位置，这样handler就可以处理一个特殊的URL模式对应的静态资源请求。 
+		它提供了一个很方便的方法直接从物理路径访问到静态资源，包括web应用的root路径和classpath上的路径。cache-period属性可以被用来设置未来可能会用上的实验性的header -->
+	<mvc:resources location="/res" mapping="/res"
+		cache-period="31536000" />
+	<mvc:resources location="/skin" mapping="/skin"
+		cache-period="31536000" />
 	<mvc:default-servlet-handler />
 
 	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring 

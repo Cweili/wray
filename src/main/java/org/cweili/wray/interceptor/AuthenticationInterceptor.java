@@ -3,6 +3,7 @@ package org.cweili.wray.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +41,7 @@ public class AuthenticationInterceptor extends BaseInterceptor {
 			log.error("Cookie login failed! Token: " + token);
 		}
 
-		response.sendRedirect("admin-login#" + requestScript(request).substring(7));
+		response.sendRedirect("admin-login#" + StringUtils.substring(requestScript(request), 7));
 		return false;
 	}
 

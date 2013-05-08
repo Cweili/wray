@@ -1,5 +1,6 @@
 package org.cweili.wray.interceptor;
 
+import java.io.CharArrayWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,9 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.util.CharResponseWrapper;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
+
+import com.googlecode.htmlcompressor.compressor.HtmlCompressor;
 
 /**
  * 页面处理
@@ -107,7 +111,7 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 				mv.addObject("adminListSize", Constant.ADMIN_LIST_SIZE);
 
 				// 添加管理员动作
-				String adminAction = reqs.substring(7);
+				String adminAction = StringUtils.substring(reqs, 7);
 				mv.addObject("adminAction", adminAction);
 				log.info("Admin Action: " + adminAction);
 			}
@@ -122,5 +126,16 @@ public class PageProcessingInterceptor extends BaseInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
 			Object handler, Exception ex) throws Exception {
+		log.error(StringUtils.substring(response.getContentType(), 0, 9));
+		if ("text/html".equals(StringUtils.substring(response.getContentType(), 0, 9))) {
+			HtmlCompressor hc = new HtmlCompressor();
+			CharResponseWrapper wrapper = new CharResponseWrapper(response);
+			CharArrayWriter caw = new CharArrayWriter();
+			log.error("--------------------------" + wrapper.toString());
+			caw.write(hc.compress(wrapper.toString()));
+			response.setContentLength(caw.toString().length());
+			response.getWriter().flush();
+			response.getWriter().write(caw.toString());
+		}
 	}
 }

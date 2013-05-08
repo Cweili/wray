@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 
  * @author cweili
@@ -21,9 +23,8 @@ public class SQL2JSON {
 	 */
 	public static void main(String[] args) {
 		try {
-			BufferedReader bw = new BufferedReader(new FileReader(new SQL2JSON().getClass()
-					.getResource("/").toString().substring(6)
-					+ "config.txt"));
+			BufferedReader bw = new BufferedReader(new FileReader(StringUtils.substring(
+					new SQL2JSON().getClass().getResource("/").toString(), 6) + "config.txt"));
 			String line;
 			String[] params;
 			while ((line = bw.readLine()) != null) {

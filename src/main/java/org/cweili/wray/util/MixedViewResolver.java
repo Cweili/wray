@@ -3,6 +3,7 @@ package org.cweili.wray.util;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
@@ -23,7 +24,7 @@ public class MixedViewResolver implements ViewResolver {
 		int n = viewName.lastIndexOf(".");
 		if (n != -1) {
 			// 取出扩展名
-			String suffix = viewName.substring(n + 1);
+			String suffix = StringUtils.substring(viewName, n + 1);
 			// 取出对应的ViewResolver
 			ViewResolver resolver = resolvers.get(suffix);
 			if (resolver == null) {
