@@ -39,7 +39,7 @@
 						<property name="exposeSpringMacroHelpers" value="true" />
 						<property name="viewClass"
 							value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
-						<property name="requestContextAttribute" value="rc"></property>
+						<property name="requestContextAttribute" value="rc" />
 					</bean>
 				</entry>
 			</map>
