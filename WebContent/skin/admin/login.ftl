@@ -28,7 +28,6 @@
 				<input type="submit" value="登 &nbsp; 录" class="login" tabindex="5"  />
 				<div id="loading"></div>
 				<input id="hash" type="hidden" name="hash" />
-				<div class=""></div>
 			</form>
 			<p class="space"></p>
 			<div class="err">
