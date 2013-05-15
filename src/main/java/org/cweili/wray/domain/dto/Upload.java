@@ -20,12 +20,36 @@ import org.springframework.data.annotation.Transient;
 public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 
 	private static final long serialVersionUID = -4128532409330876706L;
+
+	/**
+	 * 附件ID
+	 */
 	@Id
 	private String uploadId;
+
+	/**
+	 * 长度
+	 */
 	private int length;
+
+	/**
+	 * MD5
+	 */
 	private String md5;
+
+	/**
+	 * 文件名
+	 */
 	private String filename;
+
+	/**
+	 * 文件类型
+	 */
 	private String contentType;
+
+	/**
+	 * 上传日期
+	 */
 	private Date uploadDate;
 
 	@Transient

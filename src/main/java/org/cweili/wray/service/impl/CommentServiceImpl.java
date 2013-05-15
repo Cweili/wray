@@ -39,7 +39,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	@Override
 	public List<Comment> findByArticle(Article article) {
 		return commentDao.findByArticleIdAndStat(article.getArticleId(), Comment.STAT_DISPLAY,
-				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "_id")).getContent();
+				new Sort(Sort.Direction.ASC, "_id"));
 	}
 
 	@Override

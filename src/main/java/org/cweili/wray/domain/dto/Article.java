@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Article Model
+ * 文章
  * 
  * @author cweili
  * @version 2012-8-16 下午5:10:14
@@ -25,17 +25,61 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Article implements Serializable, Cloneable, Comparable<Article> {
 
 	private static final long serialVersionUID = 5085621145317473821L;
+
+	/**
+	 * 文章ID
+	 */
 	@Id
 	private String articleId;
+
+	/**
+	 * 标题
+	 */
 	private String title;
+
+	/**
+	 * 永久链接
+	 */
 	private String permalink;
+
+	/**
+	 * 内容
+	 */
 	private String content;
+
+	/**
+	 * 标签
+	 */
 	private String tag;
+
+	/**
+	 * 创建时间
+	 */
 	private Date createTime;
+
+	/**
+	 * 状态
+	 */
 	private byte stat;
+
+	/**
+	 * 点击数
+	 */
 	private int hit;
+
+	/**
+	 * 评论数
+	 */
 	private int commentCount;
+
+	/**
+	 * 评论开关
+	 */
 	private byte commentStatus;
+
+	/**
+	 * 是否为页面
+	 */
 	private byte isPage;
 
 	@Indexed

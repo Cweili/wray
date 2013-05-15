@@ -1,8 +1,9 @@
 package org.cweili.wray.dao;
 
+import java.util.List;
+
 import org.cweili.wray.domain.dto.Comment;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 /**
  * 
@@ -17,6 +18,6 @@ public interface CommentDao extends BaseDao<Comment> {
 	 * @param stat
 	 * @return
 	 */
-	public Page<Comment> findByArticleIdAndStat(String articleId, byte stat, Pageable page);
+	public List<Comment> findByArticleIdAndStat(String articleId, byte stat, Sort sort);
 
 }

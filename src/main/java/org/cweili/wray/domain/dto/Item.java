@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * Item Model
+ * 项目
  * 
  * @author cweili
  * @version 2012-8-16 下午5:12:40
@@ -21,14 +21,46 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Item implements Serializable, Cloneable, Comparable<Item> {
 
 	private static final long serialVersionUID = 644800170130656153L;
+
+	/**
+	 * 项目ID
+	 */
 	@Id
 	private String itemId;
+
+	/**
+	 * 项目名
+	 */
 	private String itemName;
+
+	/**
+	 * 永久链接
+	 */
 	private String permalink;
+
+	/**
+	 * 描述
+	 */
 	private String description;
+
+	/**
+	 * 计数
+	 */
 	private int count;
+
+	/**
+	 * 排序
+	 */
 	private byte itemOrder;
+
+	/**
+	 * 类型
+	 */
 	private byte itemType;
+
+	/**
+	 * 状态
+	 */
 	private byte stat;
 
 	public static final byte TYPE_CATEGORY = 0;

@@ -6,7 +6,6 @@ import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Item;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.stereotype.Controller;
@@ -36,7 +35,7 @@ public final class TagController extends BaseController {
 
 	@RequestMapping("/tags")
 	public BlogView tags() {
-		List<Item> tags = tagService.getTags(0, Constant.MAX_PAGE_SIZE);
+		List<Item> tags = tagService.getTags();
 		BlogView v = new BlogView("tags");
 		v.add("tags", tags);
 		return v;

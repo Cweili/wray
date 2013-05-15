@@ -45,11 +45,9 @@ public class TagServiceImpl extends BaseService implements TagService {
 	}
 
 	@Override
-	public List<Item> getTags(int page, int size) {
-		page = page > 0 ? page : 1;
-		size = size > 0 ? size : 1;
-		return itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(page - 1, size, Sort.Direction.DESC, "count")).getContent();
+	public List<Item> getTags() {
+		return itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON, new Sort(
+				Sort.Direction.DESC, "count"));
 	}
 
 	@Override

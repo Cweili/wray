@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
+ * 关系
  * 
  * @author cweili
  * @version 2013-3-28 下午4:29:04
@@ -22,10 +23,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Relationship implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = -198625132517703178L;
+
+	/**
+	 * 唯一ID
+	 */
 	@Id
 	private String id;
+
+	/**
+	 * 文章ID
+	 */
 	@Indexed
 	private String articleId;
+
+	/**
+	 * 项目ID
+	 */
 	@Indexed
 	private String itemId;
 

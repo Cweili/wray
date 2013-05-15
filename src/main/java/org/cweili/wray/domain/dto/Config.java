@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
+ * 配置
  * 
  * @author cweili
  * @version 2013-3-28 下午4:29:04
@@ -18,8 +19,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Config implements Serializable, Cloneable {
 
 	private static final long serialVersionUID = 5918198530378494132L;
+
+	/**
+	 * 键
+	 */
 	@Id
 	private String key;
+
+	/**
+	 * 值
+	 */
 	private String value;
 
 	public Config() {

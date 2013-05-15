@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
+ * 评论
  * 
  * @author cweili
  * @version 2012-8-21 下午2:18:50
@@ -19,18 +20,62 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 
 	private static final long serialVersionUID = -767060507781375509L;
+
+	/**
+	 * 评论ID
+	 */
 	@Id
 	private String commentId;
+
+	/**
+	 * 文章ID
+	 */
 	@Indexed
 	private String articleId;
+
+	/**
+	 * 作者
+	 */
 	private String author;
+
+	/**
+	 * E-mail
+	 */
 	private String email;
+
+	/**
+	 * 链接
+	 */
 	private String link;
+
+	/**
+	 * IP
+	 */
 	private String ip;
+
+	/**
+	 * 发表时间
+	 */
 	private Date postDate;
+
+	/**
+	 * User-Agent
+	 */
 	private String agent;
+
+	/**
+	 * 内容
+	 */
 	private String content;
+
+	/**
+	 * 父评论
+	 */
 	private String parentId;
+
+	/**
+	 * 状态
+	 */
 	private byte stat;
 
 	@Transient

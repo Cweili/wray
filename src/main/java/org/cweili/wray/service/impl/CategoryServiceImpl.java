@@ -7,9 +7,7 @@ import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.domain.dto.Relationship;
 import org.cweili.wray.service.CategoryService;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
@@ -62,8 +60,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 	public List<Item> getAllCategories() {
 		Order[] orders = new Order[] { new Order(Direction.DESC, "stat"),
 				new Order(Direction.ASC, "itemOrder") };
-		return itemDao.findByItemType(Item.TYPE_CATEGORY,
-				new PageRequest(0, Constant.MAX_PAGE_SIZE, new Sort(orders))).getContent();
+		return itemDao.findByItemType(Item.TYPE_CATEGORY, new Sort(orders));
 	}
 
 	@Override
@@ -110,9 +107,8 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 			}
 		}
 		updateCategoryCache();
-		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON,
-				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.DESC, "count"))
-				.getContent();
+		tags = itemDao.findByItemTypeAndStat(Item.TYPE_TAG, Item.STAT_ON, new Sort(
+				Sort.Direction.DESC, "count"));
 	}
 
 	@Override
@@ -171,9 +167,8 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public void updateCategoryCache() {
-		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON,
-				new PageRequest(0, Constant.MAX_PAGE_SIZE, Sort.Direction.ASC, "itemOrder"))
-				.getContent();
+		categories = itemDao.findByItemTypeAndStat(Item.TYPE_CATEGORY, Item.STAT_ON, new Sort(
+				Sort.Direction.ASC, "itemOrder"));
 	}
 
 }
