@@ -11,6 +11,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc.xsd"
 	default-lazy-init="true">
 
+	<!-- Properties 位置 -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:config.properties" />
@@ -46,7 +47,7 @@
 		</property>
 	</bean>
 
-	<!-- freemarker config -->
+	<!-- freemarker 配置 -->
 	<bean id="freeMarkerConfigurer"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="templateLoaderPath" value="/skin/" />
@@ -63,6 +64,7 @@
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
 
+	<!-- SpringMVC 转换器 -->
 	<bean id="bufferedImage_hmc"
 		class="org.springframework.http.converter.BufferedImageHttpMessageConverter">
 		<property name="defaultContentType">
@@ -146,7 +148,7 @@
 		</property>
 	</bean>
 
-	<!-- Multipart数据处理 -->
+	<!-- Multipart 处理 -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="268435456" />
@@ -172,7 +174,7 @@
 			value="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver" />
 	</bean>
 
-	<!-- 拦截器 -->
+	<!-- SpringMVC 拦截器 -->
 	<bean name="authenticationInterceptor" class="org.cweili.wray.interceptor.AuthenticationInterceptor"
 		scope="prototype" />
 	<bean name="pageProcessingInterceptor" class="org.cweili.wray.interceptor.PageProcessingInterceptor"

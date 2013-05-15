@@ -134,106 +134,197 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 		return 0;
 	}
 
+	/**
+	 * @return commentId
+	 */
 	public String getCommentId() {
 		return commentId;
 	}
 
+	/**
+	 * @param commentId
+	 *            要设置的 commentId
+	 */
 	public void setCommentId(String commentId) {
 		this.commentId = commentId;
 	}
 
+	/**
+	 * @return articleId
+	 */
 	public String getArticleId() {
 		return articleId;
 	}
 
+	/**
+	 * @param articleId
+	 *            要设置的 articleId
+	 */
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 
+	/**
+	 * @return author
+	 */
 	public String getAuthor() {
 		return author;
 	}
 
+	/**
+	 * @param author
+	 *            要设置的 author
+	 */
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
+	/**
+	 * @return email
+	 */
 	public String getEmail() {
 		return email;
 	}
 
+	/**
+	 * @param email
+	 *            要设置的 email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
+	/**
+	 * @return link
+	 */
 	public String getLink() {
 		return link;
 	}
 
+	/**
+	 * @param link
+	 *            要设置的 link
+	 */
 	public void setLink(String link) {
 		this.link = link;
 	}
 
+	/**
+	 * @return ip
+	 */
 	public String getIp() {
 		return ip;
 	}
 
+	/**
+	 * @param ip
+	 *            要设置的 ip
+	 */
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
 
+	/**
+	 * @return postDate
+	 */
 	public Date getPostDate() {
 		return postDate;
 	}
 
+	/**
+	 * @param postDate
+	 *            要设置的 postDate
+	 */
 	public void setPostDate(Date postDate) {
 		this.postDate = postDate;
 	}
 
+	/**
+	 * @return agent
+	 */
 	public String getAgent() {
 		return agent;
 	}
 
+	/**
+	 * @param agent
+	 *            要设置的 agent
+	 */
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
 
+	/**
+	 * @return content
+	 */
 	public String getContent() {
 		return content;
 	}
 
+	/**
+	 * @param content
+	 *            要设置的 content
+	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
 
+	/**
+	 * @return parentId
+	 */
 	public String getParentId() {
 		return parentId;
 	}
 
+	/**
+	 * @param parentId
+	 *            要设置的 parentId
+	 */
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
+	/**
+	 * @return stat
+	 */
 	public byte getStat() {
 		return stat;
 	}
 
+	/**
+	 * @param stat
+	 *            要设置的 stat
+	 */
 	public void setStat(byte stat) {
 		this.stat = stat;
 	}
 
+	/**
+	 * @return artilceTitle
+	 */
 	public String getArtilceTitle() {
 		return artilceTitle;
 	}
 
+	/**
+	 * @param artilceTitle
+	 *            要设置的 artilceTitle
+	 */
 	public void setArtilceTitle(String artilceTitle) {
 		this.artilceTitle = artilceTitle;
 	}
 
+	/**
+	 * @return origin
+	 */
 	public String getOrigin() {
 		return origin;
 	}
 
+	/**
+	 * @param origin
+	 *            要设置的 origin
+	 */
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}

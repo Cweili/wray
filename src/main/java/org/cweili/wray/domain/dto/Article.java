@@ -129,90 +129,167 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 		return 0;
 	}
 
+	/**
+	 * @return articleId
+	 */
 	public String getArticleId() {
 		return articleId;
 	}
 
+	/**
+	 * @param articleId
+	 *            要设置的 articleId
+	 */
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 
+	/**
+	 * @return title
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * @param title
+	 *            要设置的 title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * @return permalink
+	 */
 	public String getPermalink() {
 		return permalink;
 	}
 
+	/**
+	 * @param permalink
+	 *            要设置的 permalink
+	 */
 	public void setPermalink(String permalink) {
 		this.permalink = permalink;
 	}
 
+	/**
+	 * @return content
+	 */
 	public String getContent() {
 		return content;
 	}
 
+	/**
+	 * @param content
+	 *            要设置的 content
+	 */
 	public void setContent(String content) {
 		this.content = content;
 	}
 
+	/**
+	 * @return tag
+	 */
 	public String getTag() {
 		return tag;
 	}
 
+	/**
+	 * @param tag
+	 *            要设置的 tag
+	 */
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 
+	/**
+	 * @return createTime
+	 */
 	public Date getCreateTime() {
 		return createTime;
 	}
 
+	/**
+	 * @param createTime
+	 *            要设置的 createTime
+	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
+	/**
+	 * @return stat
+	 */
 	public byte getStat() {
 		return stat;
 	}
 
+	/**
+	 * @param stat
+	 *            要设置的 stat
+	 */
 	public void setStat(byte stat) {
 		this.stat = stat;
 	}
 
+	/**
+	 * @return hit
+	 */
 	public int getHit() {
 		return hit;
 	}
 
+	/**
+	 * @param hit
+	 *            要设置的 hit
+	 */
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
 
+	/**
+	 * @return commentCount
+	 */
 	public int getCommentCount() {
 		return commentCount;
 	}
 
+	/**
+	 * @param commentCount
+	 *            要设置的 commentCount
+	 */
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
 	}
 
+	/**
+	 * @return commentStatus
+	 */
 	public byte getCommentStatus() {
 		return commentStatus;
 	}
 
+	/**
+	 * @param commentStatus
+	 *            要设置的 commentStatus
+	 */
 	public void setCommentStatus(byte commentStatus) {
 		this.commentStatus = commentStatus;
 	}
 
+	/**
+	 * @return isPage
+	 */
 	public byte getIsPage() {
 		return isPage;
 	}
 
+	/**
+	 * @param isPage
+	 *            要设置的 isPage
+	 */
 	public void setIsPage(byte isPage) {
 		this.isPage = isPage;
 	}

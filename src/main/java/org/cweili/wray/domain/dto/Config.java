@@ -71,18 +71,32 @@ public class Config implements Serializable, Cloneable {
 		return true;
 	}
 
+	/**
+	 * @return key
+	 */
 	public String getKey() {
 		return key;
 	}
 
+	/**
+	 * @param key
+	 *            要设置的 key
+	 */
 	public void setKey(String key) {
 		this.key = key;
 	}
 
+	/**
+	 * @return value
+	 */
 	public String getValue() {
 		return value;
 	}
 
+	/**
+	 * @param value
+	 *            要设置的 value
+	 */
 	public void setValue(String value) {
 		this.value = value;
 	}

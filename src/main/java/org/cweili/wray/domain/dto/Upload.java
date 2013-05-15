@@ -169,62 +169,6 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 		this.content = content;
 	}
 
-	public String getUploadId() {
-		return uploadId;
-	}
-
-	public void setUploadId(String uploadId) {
-		this.uploadId = uploadId;
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
-	}
-
-	public String getMd5() {
-		return md5;
-	}
-
-	public void setMd5(String md5) {
-		this.md5 = md5;
-	}
-
-	public String getFilename() {
-		return filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
-
-	public Date getUploadDate() {
-		return uploadDate;
-	}
-
-	public void setUploadDate(Date uploadDate) {
-		this.uploadDate = uploadDate;
-	}
-
-	public byte[] getContent() {
-		return content;
-	}
-
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
-
 	@Override
 	public String toString() {
 		return "Upload [uploadId=" + uploadId + ", length=" + length + ", filename=" + filename
@@ -264,6 +208,111 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 			return -1;
 		}
 		return 0;
+	}
+
+	/**
+	 * @return uploadId
+	 */
+	public String getUploadId() {
+		return uploadId;
+	}
+
+	/**
+	 * @param uploadId
+	 *            要设置的 uploadId
+	 */
+	public void setUploadId(String uploadId) {
+		this.uploadId = uploadId;
+	}
+
+	/**
+	 * @return length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * @param length
+	 *            要设置的 length
+	 */
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	/**
+	 * @return md5
+	 */
+	public String getMd5() {
+		return md5;
+	}
+
+	/**
+	 * @param md5
+	 *            要设置的 md5
+	 */
+	public void setMd5(String md5) {
+		this.md5 = md5;
+	}
+
+	/**
+	 * @return filename
+	 */
+	public String getFilename() {
+		return filename;
+	}
+
+	/**
+	 * @param filename
+	 *            要设置的 filename
+	 */
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	/**
+	 * @return contentType
+	 */
+	public String getContentType() {
+		return contentType;
+	}
+
+	/**
+	 * @param contentType
+	 *            要设置的 contentType
+	 */
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	/**
+	 * @return uploadDate
+	 */
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	/**
+	 * @param uploadDate
+	 *            要设置的 uploadDate
+	 */
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	/**
+	 * @return content
+	 */
+	public byte[] getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content
+	 *            要设置的 content
+	 */
+	public void setContent(byte[] content) {
+		this.content = content;
 	}
 
 }

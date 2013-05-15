@@ -119,66 +119,122 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 		return 0;
 	}
 
+	/**
+	 * @return itemId
+	 */
 	public String getItemId() {
 		return itemId;
 	}
 
+	/**
+	 * @param itemId
+	 *            要设置的 itemId
+	 */
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 
+	/**
+	 * @return itemName
+	 */
 	public String getItemName() {
 		return itemName;
 	}
 
+	/**
+	 * @param itemName
+	 *            要设置的 itemName
+	 */
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
 
+	/**
+	 * @return permalink
+	 */
 	public String getPermalink() {
 		return permalink;
 	}
 
+	/**
+	 * @param permalink
+	 *            要设置的 permalink
+	 */
 	public void setPermalink(String permalink) {
 		this.permalink = permalink;
 	}
 
+	/**
+	 * @return description
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description
+	 *            要设置的 description
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * @return count
+	 */
 	public int getCount() {
 		return count;
 	}
 
+	/**
+	 * @param count
+	 *            要设置的 count
+	 */
 	public void setCount(int count) {
 		this.count = count;
 	}
 
+	/**
+	 * @return itemOrder
+	 */
 	public byte getItemOrder() {
 		return itemOrder;
 	}
 
+	/**
+	 * @param itemOrder
+	 *            要设置的 itemOrder
+	 */
 	public void setItemOrder(byte itemOrder) {
 		this.itemOrder = itemOrder;
 	}
 
+	/**
+	 * @return itemType
+	 */
 	public byte getItemType() {
 		return itemType;
 	}
 
+	/**
+	 * @param itemType
+	 *            要设置的 itemType
+	 */
 	public void setItemType(byte itemType) {
 		this.itemType = itemType;
 	}
 
+	/**
+	 * @return stat
+	 */
 	public byte getStat() {
 		return stat;
 	}
 
+	/**
+	 * @param stat
+	 *            要设置的 stat
+	 */
 	public void setStat(byte stat) {
 		this.stat = stat;
 	}

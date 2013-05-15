@@ -79,26 +79,47 @@ public class Relationship implements Serializable, Cloneable {
 		return true;
 	}
 
+	/**
+	 * @return id
+	 */
 	public String getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 *            要设置的 id
+	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return articleId
+	 */
 	public String getArticleId() {
 		return articleId;
 	}
 
+	/**
+	 * @param articleId
+	 *            要设置的 articleId
+	 */
 	public void setArticleId(String articleId) {
 		this.articleId = articleId;
 	}
 
+	/**
+	 * @return itemId
+	 */
 	public String getItemId() {
 		return itemId;
 	}
 
+	/**
+	 * @param itemId
+	 *            要设置的 itemId
+	 */
 	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}

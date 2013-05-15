@@ -8,7 +8,7 @@
 	http://www.springframework.org/schema/data/mongo/spring-mongo.xsd"
 	default-lazy-init="true">
 
-	<!-- 定义mongo对象，对应的是mongodb官方jar包中的Mongo -->
+	<!-- 定义 Mongo 对象，对应的是 MongoDB 官方 jar 包中的 Mongo -->
 	<mongo:mongo id="mongo" host="${mongo.host}" port="${mongo.port}">
 		<!-- 一些连接属性的设置 -->
 		<mongo:options connections-per-host="${mongo.connectionsPerHost}"
@@ -25,17 +25,16 @@
 		/>
 	</mongo:mongo>
 
-	<!-- mongo的工厂，通过它来取得mongo实例,dbname为mongodb的数据库名，没有的话会自动创建 -->
+	<!-- Mongo 的工厂，通过它来取得 Mongo 实例, dbname 为 MongoDB 的数据库名, 没有的话会自动创建 -->
 	<mongo:db-factory id="mongoDbFactory" dbname="${mongo.dbname}" mongo-ref="mongo" />
 
-	<!-- mongodb的主要操作对象，所有对mongodb的增删改查的操作都是通过它完成 -->
+	<!-- MongoDB 的主要操作对象, 对 MongoDB 进行增删改查的操作 -->
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
 
-	<!-- 映射转换器，扫描back-package目录下的文件，根据注释，把它们作为mongodb的一个collection的映射 -->
-	<mongo:mapping-converter id="mongoConverter"
-		base-package="org.cweili.*.domain" />
+	<!-- 映射转换, 扫描 base-package 进行 MongoDB 的 Collection 的映射 -->
+	<mongo:mapping-converter id="mongoConverter" base-package="org.cweili.*.domain" />
 
 	<!-- MongoDB GridFS Template -->
 	<bean id="gfs" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
@@ -43,9 +42,10 @@
 		<constructor-arg ref="mongoConverter" />
 	</bean>
 
-	<!-- mongodb bean的仓库目录，会自动扫描扩展了MongoRepository接口的接口进行注入 -->
+	<!-- MongoDB 仓库, 自动注入继承 Repository 的接口 -->
 	<mongo:repositories base-package="org.cweili.*.dao" />
 
+	<!-- MongoDB 事件监听 -->
 	<bean class="org.springframework.data.mongodb.core.mapping.event.LoggingEventListener" />
 
 </beans>
