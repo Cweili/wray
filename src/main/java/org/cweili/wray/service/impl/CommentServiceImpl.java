@@ -53,16 +53,16 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 	@Override
 	public Comment save(Comment comment) {
 		String author = Function.escapeHtml(comment.getAuthor());
-		if ("".equals(author)) {
+		if (StringUtils.isEmpty(author)) {
 			return null;
 		}
 		String email = Function.escapeHtml(comment.getEmail());
-		if ("".equals(email)) {
+		if (StringUtils.isEmpty(email)) {
 			return null;
 		}
 		String link = Function.escapeHtml(comment.getLink());
 		String content = filterContent(comment.getContent());
-		if ("".equals(content)) {
+		if (StringUtils.isEmpty(content)) {
 			return null;
 		}
 
@@ -71,7 +71,7 @@ public class CommentServiceImpl extends BaseService implements CommentService {
 		comment.setLink(link);
 		comment.setContent(content);
 
-		if (!"".equals(comment.getCommentId())) {
+		if (!StringUtils.isEmpty(comment.getCommentId())) {
 			if (null == commentDao.findOne(comment.getCommentId())) {
 				Article article = articleDao.findOne(comment.getArticleId());
 				if (null != article && Article.COMMENT_ON == article.getCommentStatus()) {

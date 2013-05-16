@@ -152,9 +152,9 @@ public final class AdminArticleController extends BaseController {
 		String id = Function.generateId();
 
 		title = Function.escapeHtml(title);
-		title = "".equals(title) ? Function.timeString() : title;
+		title = 0 == title.length() ? Function.timeString() : title;
 		permalink = Function.permalink(permalink);
-		permalink = "".equals(permalink) ? Function.permalink(title) : permalink;
+		permalink = 0 == permalink.length() ? Function.permalink(title) : permalink;
 		tag = Function.stripTags(StringUtils.replaceEach(tag, new String[] { " ", "，" },
 				new String[] { ",", "," }));
 		StringBuilder tagSB = new StringBuilder("");
@@ -195,7 +195,7 @@ public final class AdminArticleController extends BaseController {
 		}
 		if (request.getParameter("tag") != null) {
 			String tag = request.getParameter("tag");
-			if (!"".equals(tag)) {
+			if (!StringUtils.isEmpty(tag)) {
 				tag = Function.stripTags(tag.replaceAll(" ", ",").replaceAll("，", ","));
 				for (String tagStr : tag.split(",")) {
 					tagStr = CutString.substring(tagStr, 18);

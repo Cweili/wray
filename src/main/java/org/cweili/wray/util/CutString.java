@@ -2,6 +2,8 @@ package org.cweili.wray.util;
 
 import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 中文截取
  * 
@@ -43,7 +45,7 @@ public class CutString {
 	 */
 	public static String substring(String orignal, int count) {
 		// 原始字符不为null，也不是空字符串
-		if (orignal != null && !"".equals(orignal)) {
+		if (!StringUtils.isEmpty(orignal)) {
 			// 要截取的字节数大于0，且小于原始字符串的字节数
 			int length = 0;
 			try {

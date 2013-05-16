@@ -3,6 +3,7 @@ package org.cweili.wray.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.domain.dto.Relationship;
@@ -114,7 +115,7 @@ public class CategoryServiceImpl extends BaseService implements CategoryService 
 
 	@Override
 	public Item save(Item item) {
-		if ("".equals(item.getItemId())) {
+		if (StringUtils.isEmpty(item.getItemId())) {
 			item.setItemId(Function.generateId());
 		}
 		Item itemNew = itemDao.save(item);

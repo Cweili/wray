@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Relationship;
@@ -152,7 +153,7 @@ public class ArticleServiceImpl extends BaseService implements ArticleService {
 
 	@Override
 	public Article save(Article article) {
-		if ("".equals(article.getArticleId())) {
+		if (StringUtils.isEmpty(article.getArticleId())) {
 			article.setArticleId(Function.generateId());
 		}
 		Set<String> keyword = ChineseSegment.segmentToSet(Function.stripTags(article.getTitle()

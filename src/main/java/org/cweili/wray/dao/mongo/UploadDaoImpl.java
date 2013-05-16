@@ -3,6 +3,7 @@ package org.cweili.wray.dao.mongo;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
@@ -107,7 +108,7 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 
 	@Override
 	public <S extends Upload> S save(S upload) {
-		if ("".equals(upload.getUploadId())) {
+		if (StringUtils.isEmpty(upload.getUploadId())) {
 			upload.setUploadId(Function.generateId());
 		}
 		setGfs();

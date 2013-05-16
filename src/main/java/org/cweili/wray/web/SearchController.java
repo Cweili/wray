@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.util.Function;
@@ -38,7 +39,7 @@ public final class SearchController extends BaseController {
 		HttpHeaders header = new HttpHeaders();
 		header.setLocation(new URI("search-" + searchId));
 
-		return new ResponseEntity<Object>(header, HttpStatus.MOVED_TEMPORARILY);
+		return new ResponseEntity<Object>(header, HttpStatus.MOVED_PERMANENTLY);
 	}
 
 	@RequestMapping("/search-{searchid}")
@@ -87,7 +88,7 @@ public final class SearchController extends BaseController {
 
 	private String cacheSearchResult(WebRequest request, String keyword) throws NotFoundException {
 		keyword = Function.escapeHtml(keyword);
-		if ("".equals(keyword)) {
+		if (StringUtils.isEmpty(keyword)) {
 			throw new NotFoundException();
 		}
 		String searchId = Function.generateId();

@@ -139,7 +139,7 @@ public final class AdminNavController extends BaseController {
 			}
 
 			itemName = Function.escapeHtml(itemName);
-			itemName = "".equals(itemName) ? Function.timeString() : itemName;
+			itemName = StringUtils.isEmpty(itemName) ? Function.timeString() : itemName;
 			description = Function.escapeHtml(description);
 
 			if (ori != null) {

@@ -2,6 +2,7 @@ package org.cweili.wray.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.service.LinkService;
 import org.cweili.wray.util.Function;
@@ -49,7 +50,7 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 
 	@Override
 	public Item save(Item item) {
-		if ("".equals(item.getItemId())) {
+		if (StringUtils.isEmpty(item.getItemId())) {
 			item.setItemId(Function.generateId());
 		}
 		Item itemNew = itemDao.save(item);

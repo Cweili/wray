@@ -73,7 +73,7 @@ public final class CommentController extends BaseController {
 			return Constant.CAPTCHA;
 		}
 		request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6), WebRequest.SCOPE_SESSION);
-		if ("".equals(content)) {
+		if (0 == content.length()) {
 			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
 					WebRequest.SCOPE_SESSION);
 			return "error";
