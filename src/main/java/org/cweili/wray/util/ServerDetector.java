@@ -1,12 +1,9 @@
-/**
- * 
- */
 package org.cweili.wray.util;
 
 /**
  * 检测应用服务器类型
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-12 下午7:28:30
  * 
  */

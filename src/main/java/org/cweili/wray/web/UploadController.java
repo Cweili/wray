@@ -22,8 +22,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ * 上传 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-8 下午3:53:51
  * 
  */

@@ -9,9 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Zlib压缩
+ * Zlib 压缩
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-2 下午5:28:20
  * 
  */

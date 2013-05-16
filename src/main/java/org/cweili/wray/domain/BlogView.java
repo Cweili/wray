@@ -8,7 +8,7 @@ import org.springframework.web.servlet.View;
 /**
  * 继承 ModelAndView 方便以后扩展
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:23:55
  * 
  */

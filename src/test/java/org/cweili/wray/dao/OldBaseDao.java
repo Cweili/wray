@@ -2,7 +2,7 @@ package org.cweili.wray.dao;
 
 /**
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:07:27
  * 
  * @param <T>

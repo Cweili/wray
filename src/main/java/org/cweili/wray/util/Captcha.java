@@ -15,7 +15,7 @@ import java.util.Random;
 /**
  * 生成验证码
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-16 下午5:35:20
  * 
  */

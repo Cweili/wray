@@ -14,8 +14,9 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 /**
+ * 分类 Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-3 下午3:40:51
  * 
  */

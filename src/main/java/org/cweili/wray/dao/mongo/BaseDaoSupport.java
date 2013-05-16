@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
+ * 基础 DAO 支持
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-3 上午11:20:54
  * 
  */

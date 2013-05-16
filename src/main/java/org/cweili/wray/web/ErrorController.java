@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.web;
 
 import org.cweili.wray.domain.BlogView;
@@ -9,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 错误 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-9-5 下午9:31:12
  * 
  */

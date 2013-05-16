@@ -6,6 +6,7 @@ import org.cweili.wray.domain.dto.Comment;
 import org.springframework.data.domain.Sort;
 
 /**
+ * 评论 DAO
  * 
  * @author Cweili
  * @version 2013-4-3 上午11:19:55

@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * User Model
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:12:51
  * 
  */

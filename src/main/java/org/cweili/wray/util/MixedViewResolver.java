@@ -8,7 +8,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * 说明： 多视图处理器
+ * 多视图处理器
  * 
  * @author 赵磊
  * @version 创建时间：2011-8-19 上午09:41:09

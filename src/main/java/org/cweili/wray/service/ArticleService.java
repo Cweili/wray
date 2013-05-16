@@ -7,8 +7,9 @@ import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Article;
 
 /**
+ * 文章 Service
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-3 下午12:52:59
  * 
  */

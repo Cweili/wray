@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * 文章、页面、首页 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:36:09
  * 
  */

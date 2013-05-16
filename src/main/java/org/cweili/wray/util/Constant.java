@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Wray 常量
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-9 下午4:16:00
  * 
  */

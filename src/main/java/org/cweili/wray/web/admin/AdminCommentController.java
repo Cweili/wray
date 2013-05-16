@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 评论管理 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:36:57
  * 
  */

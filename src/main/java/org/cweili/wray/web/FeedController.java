@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * Feed Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:36:47
  * 
  */

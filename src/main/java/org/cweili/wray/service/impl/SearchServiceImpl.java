@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.service.impl;
 
 import java.awt.Color;
@@ -18,8 +15,9 @@ import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;
 
 /**
+ * 搜索 Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-27 下午3:12:49
  * 
  */

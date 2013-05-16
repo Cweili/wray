@@ -18,8 +18,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
+ * 评论 Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-11-25 下午3:23:57
  * 
  */

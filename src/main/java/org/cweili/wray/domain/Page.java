@@ -6,6 +6,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+/**
+ * 分页
+ * 
+ * @author Cweili
+ * @version 2013-5-16 下午5:21:54
+ * 
+ * @param <T>
+ */
 public class Page<T> extends PageImpl<T> implements org.springframework.data.domain.Page<T> {
 
 	private static final long serialVersionUID = -2437806196142686379L;

@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 中文分词
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-26 下午12:38:51
  * 
  */

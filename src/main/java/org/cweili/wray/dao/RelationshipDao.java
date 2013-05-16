@@ -5,6 +5,7 @@ import java.util.List;
 import org.cweili.wray.domain.dto.Relationship;
 
 /**
+ * 关系 DAO
  * 
  * @author Cweili
  * @version 2013-4-3 上午11:20:43

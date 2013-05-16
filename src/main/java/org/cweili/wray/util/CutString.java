@@ -3,8 +3,9 @@ package org.cweili.wray.util;
 import java.io.UnsupportedEncodingException;
 
 /**
+ * 中文截取
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-21 上午11:15:00
  * 
  */

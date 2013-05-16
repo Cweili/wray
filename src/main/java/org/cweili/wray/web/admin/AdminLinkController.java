@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 链接管理 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:39:12
  * 
  */

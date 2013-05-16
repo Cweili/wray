@@ -5,6 +5,7 @@ import java.util.List;
 import org.cweili.wray.domain.dto.Item;
 
 /**
+ * 链接 Service
  * 
  * @author Cweili
  * @version 2013-4-3 下午3:36:41

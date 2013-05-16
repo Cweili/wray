@@ -11,7 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 
 /**
- * Upload
+ * 附件
  * 
  * @author Cweili
  * @version 2013-3-14 上午10:00:54

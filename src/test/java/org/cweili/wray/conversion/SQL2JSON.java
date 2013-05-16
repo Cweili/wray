@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-3-28 下午5:12:44
  * 
  */

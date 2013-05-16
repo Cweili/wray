@@ -21,6 +21,13 @@ import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 
+/**
+ * 附件 DAO 实现
+ * 
+ * @author Cweili
+ * @version 2013-5-16 下午5:21:20
+ * 
+ */
 @Repository("uploadDao")
 public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 

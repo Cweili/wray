@@ -7,6 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
+ * 基础 Dao
  * 
  * @author Cweili
  * @version 2013-4-3 上午11:27:37

@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * 评论
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-21 下午2:18:50
  * 
  */

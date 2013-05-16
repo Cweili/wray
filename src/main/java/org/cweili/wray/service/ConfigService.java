@@ -6,8 +6,9 @@ import org.cweili.wray.domain.dto.Config;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 配置 Service
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:16:53
  * 
  */

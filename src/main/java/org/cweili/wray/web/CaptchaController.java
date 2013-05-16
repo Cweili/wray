@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.web;
 
 import java.awt.image.BufferedImage;
@@ -17,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 验证码 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-9-5 下午9:31:12
  * 
  */

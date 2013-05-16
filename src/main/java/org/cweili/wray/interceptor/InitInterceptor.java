@@ -15,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 
 /**
- * Initialization Interceptor
+ * 初始化拦截器
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:14:05
  * 
  */

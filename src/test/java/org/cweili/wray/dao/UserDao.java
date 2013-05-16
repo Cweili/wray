@@ -7,7 +7,7 @@ import org.cweili.wray.domain.User;
 
 /**
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:08:39
  * 
  */

@@ -23,7 +23,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * 公用方法
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-27 下午8:13:33
  * 
  */

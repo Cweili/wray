@@ -6,9 +6,9 @@ import java.util.List;
 import org.cweili.wray.util.Function;
 
 /**
- * 分页导航
+ * 分页导航条
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:33:14
  * 
  */

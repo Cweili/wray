@@ -1,6 +1,3 @@
-/**
- * 
- */
 package org.cweili.wray.web;
 
 import java.net.URI;
@@ -27,8 +24,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 评论 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-9-5 下午9:31:12
  * 
  */

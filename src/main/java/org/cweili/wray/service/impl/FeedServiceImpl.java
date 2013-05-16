@@ -6,8 +6,9 @@ import org.cweili.wray.service.FeedService;
 import org.springframework.stereotype.Service;
 
 /**
+ * Feed Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:23:30
  * 
  */

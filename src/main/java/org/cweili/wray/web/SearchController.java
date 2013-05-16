@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 搜索 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:36:09
  * 
  */

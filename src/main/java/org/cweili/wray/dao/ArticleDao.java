@@ -9,8 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;
 
 /**
+ * 文章 DAO
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-3 上午11:19:43
  * 
  */

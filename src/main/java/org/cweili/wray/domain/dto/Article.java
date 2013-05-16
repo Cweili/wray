@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * 文章
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:10:14
  * 
  */

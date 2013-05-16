@@ -23,8 +23,9 @@ import org.springframework.web.util.CookieGenerator;
 import org.springframework.web.util.WebUtils;
 
 /**
+ * 管理登陆 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:39:44
  * 
  */

@@ -7,8 +7,9 @@ import org.cweili.wray.domain.dto.Article;
 import org.cweili.wray.domain.dto.Comment;
 
 /**
+ * 评论 Service
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-11-25 下午3:10:59
  * 
  */

@@ -20,8 +20,9 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ * 基础 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:36:16
  * 
  */

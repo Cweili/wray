@@ -11,6 +11,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+/**
+ * 附件 Service 实现
+ * 
+ * @author Cweili
+ * @version 2013-5-16 下午5:33:00
+ * 
+ */
 @Service("uploadService")
 public class UploadServiceImpl extends BaseService implements UploadService {
 

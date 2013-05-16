@@ -4,15 +4,14 @@ import java.util.List;
 
 import org.cweili.wray.domain.dto.Item;
 import org.cweili.wray.service.LinkService;
-import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
+ * 链接 Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-3 下午3:40:41
  * 
  */
@@ -93,14 +92,14 @@ public class LinkServiceImpl extends BaseService implements LinkService {
 
 	@Override
 	public void updateLinkCache() {
-		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON,
-				new Sort(Sort.Direction.ASC, "itemOrder"));
+		links = itemDao.findByItemTypeAndStat(Item.TYPE_LINK, Item.STAT_ON, new Sort(
+				Sort.Direction.ASC, "itemOrder"));
 	}
 
 	@Override
 	public void updateNavigatorCache() {
-		navigators = itemDao.findByItemTypeAndStat(Item.TYPE_NAVIGATOR, Item.STAT_ON,
-				new Sort( Sort.Direction.ASC, "itemOrder"));
+		navigators = itemDao.findByItemTypeAndStat(Item.TYPE_NAVIGATOR, Item.STAT_ON, new Sort(
+				Sort.Direction.ASC, "itemOrder"));
 	}
 
 }

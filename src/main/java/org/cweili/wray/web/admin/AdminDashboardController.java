@@ -14,8 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * 管理首页 Controller
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:39:07
  * 
  */

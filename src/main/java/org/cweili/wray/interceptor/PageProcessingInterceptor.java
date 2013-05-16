@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 /**
- * 页面处理
+ * 页面处理拦截器
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:15:25
  * 
  */

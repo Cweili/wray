@@ -6,8 +6,9 @@ import org.cweili.wray.domain.Page;
 import org.cweili.wray.domain.dto.Upload;
 
 /**
+ * 附件 Service
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-3-14 下午2:45:33
  * 
  */

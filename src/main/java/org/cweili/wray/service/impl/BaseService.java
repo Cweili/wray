@@ -30,8 +30,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 /**
+ * 基础 Service
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:18:58
  * 
  */

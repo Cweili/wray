@@ -3,7 +3,7 @@ package org.cweili.wray.util;
 /**
  * 中文转换为拼音
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-21 上午10:47:21
  * 
  */

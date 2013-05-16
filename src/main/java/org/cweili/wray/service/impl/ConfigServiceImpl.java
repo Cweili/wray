@@ -14,8 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.WebRequest;
 
 /**
+ * 配置 Service 实现
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:22:46
  * 
  */

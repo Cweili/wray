@@ -10,9 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 /**
- * Authentication Interceptor
+ * 身份验证拦截器
  * 
- * @author cweili
+ * @author Cweili
  * @version 2012-8-16 下午5:14:05
  * 
  */

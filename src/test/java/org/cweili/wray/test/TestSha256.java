@@ -13,7 +13,7 @@ import org.junit.Test;
 
 /**
  * 
- * @author cweili
+ * @author Cweili
  * @version 2013-4-11 上午9:51:42
  * 
  */
