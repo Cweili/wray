@@ -54,8 +54,7 @@ public abstract class BaseInterceptor implements HandlerInterceptor {
 	 * @return
 	 */
 	protected boolean isAdminPanel(HttpServletRequest request) {
-		return requestScript(request).length() > 7 ? StringUtils.left(requestScript(request), 7)
-				.equals("/admin-") : false;
+		return StringUtils.startsWithIgnoreCase(requestScript(request), "/admin-");
 	}
 
 	/**

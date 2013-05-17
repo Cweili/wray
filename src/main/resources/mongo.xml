@@ -34,7 +34,7 @@
 	</bean>
 
 	<!-- 映射转换, 扫描 base-package 进行 MongoDB 的 Collection 的映射 -->
-	<mongo:mapping-converter id="mongoConverter" base-package="org.cweili.*.domain" />
+	<mongo:mapping-converter id="mongoConverter" base-package="org.cweili.wray.domain.dto" />
 
 	<!-- MongoDB GridFS Template -->
 	<bean id="gfs" class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
@@ -43,7 +43,7 @@
 	</bean>
 
 	<!-- MongoDB 仓库, 自动注入继承 Repository 的接口 -->
-	<mongo:repositories base-package="org.cweili.*.dao" />
+	<mongo:repositories base-package="org.cweili.wray.dao" />
 
 	<!-- MongoDB 事件监听 -->
 	<bean class="org.springframework.data.mongodb.core.mapping.event.LoggingEventListener" />
