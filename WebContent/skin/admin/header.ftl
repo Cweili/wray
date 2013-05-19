@@ -12,7 +12,7 @@
 		</script>
 		
 		<script type="text/javascript" src="${staticServePath}res/js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="${staticServePath}res/js/jquery-ui-1.10.2.min.js"></script>
+		<script type="text/javascript" src="${staticServePath}res/js/jquery-ui-1.10.3.min.js"></script>
 		<script type="text/javascript" src="${staticServePath}res/js/jquery.validate.min.js"></script>
 		<#--
 		<script src="${staticServePath}res/js/jquery.wysiwyg.js" type="text/javascript"></script>

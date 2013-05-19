@@ -1,5 +1,3 @@
-// JQUERY CONFIGURATION FILE FOR BLACKADMINV2 
-
 var editor = null;
 var slideToggleDelay = 6000;
 var editorInit = {
@@ -102,7 +100,7 @@ $(function() {
 	$(".current_nav").parent().parent().prev().toggleClass("selected");
 
 	// DATE PICKER
-	$("#datepicker").datepicker();
+	$(".datepicker").datepicker();
 
 	// CLOSE NOTIFICATIONS BUTTON
 	$(".close").click(function() {
@@ -119,17 +117,6 @@ $(function() {
 		}, slideToggleDelay);
 	}
 
-	/*
-	 * //Initialize WYSIWYG editor
-	 * 
-	 * $("#wysiwyg").wysiwyg({ initialContent: "",
-	 * 
-	 * controls: { cut: { visible: true }, copy: { visible: true }, paste: {
-	 * visible: true }, increaseFontSize: { visible: true }, decreaseFontSize: {
-	 * visible: true }, html: { visible : true } // createLink: { visible :
-	 * false }, // unLink: { visible : false }, // insertImage: { visible :
-	 * false }, // insertTable: { visible : false } } });
-	 */
 	// Check all the checkboxes when the head one is selected:
 	$(".checkall").click(
 			function() {

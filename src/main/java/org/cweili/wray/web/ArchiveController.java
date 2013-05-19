@@ -36,7 +36,7 @@ public final class ArchiveController extends BaseController {
 
 	private BlogView getArchiveView(int year, int month, int page) {
 
-		if (year < 1970) {
+		if (year < 1970 || year > 2038) {
 			year = Constant.CURRENT_YEAR;
 		}
 

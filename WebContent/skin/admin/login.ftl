@@ -24,7 +24,7 @@
 					<img id="captcha" alt="validate" />
 				</p>
 				<p class="space"></p>
-				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" tabindex="4" />记住我</div>
+				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" tabindex="4" />一年内自动登录</div>
 				<input type="submit" value="登 &nbsp; 录" class="login" tabindex="5"  />
 				<div id="loading"></div>
 				<input id="hash" type="hidden" name="hash" />

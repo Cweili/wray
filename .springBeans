@@ -7,9 +7,9 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resources/global.xml</config>
 		<config>src/main/resources/datasource.xml</config>
 		<config>src/main/resources/mongo.xml</config>
+		<config>src/main/resources/mvc.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

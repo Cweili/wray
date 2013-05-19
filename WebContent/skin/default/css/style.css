@@ -120,6 +120,7 @@ fieldset legend {
 }
 
 input[type=text], input[type=password], input[type=file], select, textarea {
+	font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma, sans-serif;
     border: 1px solid #858a8e;
     background-color: #c9ccd0;
     color: #333333;

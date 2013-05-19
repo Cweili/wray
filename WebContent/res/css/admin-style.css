@@ -298,6 +298,7 @@ INPUT.radio {
 	border-top: 1px solid #222;
 	border-bottom: 5px solid #111;
 	padding: 10px;
+	border-radius: 5px;
 	-moz-border-radius-topright: 5px;
 	-webkit-border-top-right-radius: 5px;
 } 
@@ -371,6 +372,7 @@ a.close {
 	padding-top: 3px;
 	background: url('../image/greenrep.png') 0 0 repeat-x;
 	border: 1px solid #7dbc00;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	margin-bottom: 5px;
@@ -441,6 +443,7 @@ a.close {
 	color: #ccc;
 	padding-top: 3px;
 	height: 20px;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	background: #111;
@@ -462,6 +465,7 @@ li.current_nav a {
 	margin: 5px 0 27px 15px;
 	background: #161616;
 	padding: 1px 0 0 10px;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 } 
@@ -487,6 +491,7 @@ input, select {
 	border: 1px solid #333;
 	padding: 5px 8px;
 	margin: 2px 0;
+	border-radius: 5px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
@@ -514,6 +519,7 @@ select {
 .pagination li a { 
 	border: 1px solid #222;
 	padding: 4px 7px;
+	border-radius: 5px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 } 
@@ -532,6 +538,7 @@ fieldset {
 	padding: 15px;
 	border: 1px solid #333;
 	background: #252525;
+	border-radius: 5px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 } 
@@ -639,7 +646,8 @@ input.bigfield {
 	width: 500px;
 } 
 
-input[type="text"], input[type="password"], select { 
+input[type="text"], input[type="password"], select {
+	font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma, sans-serif;
 	background: #1a1a1a;
 	color: #eee;
 	border: 1px solid #333;
@@ -677,6 +685,7 @@ a.button {
 }
 
 .button {
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	padding-left: 10px;
@@ -689,6 +698,7 @@ a.button {
 	margin: 16px 0 5px 0;
 	float: left;
 	width: 100%;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
@@ -836,6 +846,7 @@ ul.modals li {
 	padding: 5px;
 	text-align: center;
 	margin: 0 15px 15px 0;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
@@ -881,6 +892,7 @@ textarea {
 	border: 1px solid #333;
 	padding: 10px;
 	margin-top: 20px;
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	background: #1a1a1a;

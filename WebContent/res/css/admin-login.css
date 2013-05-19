@@ -4,6 +4,7 @@
 }
 
 body {
+	font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma, sans-serif;
 	background: #161616 url('../image/rep.png') 0 0 repeat-x;
 	font-family: Arial,"Microsoft YaHei",Tahoma,sans-serif;
 	color: #ccc;
@@ -20,6 +21,10 @@ body {
 h1 {
 	text-align: center;
 	color: #fff;
+}
+
+input {
+	font-family: "Microsoft YaHei", Verdana, Arial, Helvetica, Tahoma, sans-serif;
 }
 
 #container #box {
@@ -52,6 +57,7 @@ p.main input.text {
 	border: 1px solid #111;
 	width: 200px;
 	float: left;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
@@ -65,6 +71,7 @@ input.login {
 	border: 1px solid #7dbc00;
 	font-size: 15px;
 
+	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	margin: -2px 6px 0 10px;
@@ -104,6 +111,7 @@ input.check {
 	float: left;
 	width: 100%;
 	margin-bottom: 5px;
+	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 }
