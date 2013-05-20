@@ -13,8 +13,8 @@ $(document).ready(
 						$("#loading").show();
 
 						$("#hash").val(Math.random());
-						var password = $("input[type=password]").val();
-						$("input[type=password]").val(SHA256(SHA256(password) + $("#hash").val()));
+						var password = $(":password").val();
+						$(":password").val(SHA256(SHA256(password) + $("#hash").val()));
 						$.post("admin-login", $("#admin-login").serialize(), function(data) {
 
 							$("#loading").hide();
@@ -41,7 +41,7 @@ $(document).ready(
 								updateCaptcha("#captcha");
 							}
 						});
-						$("input[type=password]").val(password);
+						$(":password").val(password);
 						return false;
 					});
 

@@ -85,16 +85,25 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	@Indexed
 	private Set<String> keyword;
 
+	// 状态-已发布
 	public static final byte STAT_PUBLISHED = 4;
+	// 状态-私密
 	public static final byte STAT_PRIVATE = 3;
+	// 状态-草稿
 	public static final byte STAT_DRAFT = 2;
+	// 状态-回收站
 	public static final byte STAT_RECYCLE = 1;
+	// 状态-已删除
 	public static final byte STAT_REMOVED = 0;
 
+	// 评论-允许
 	public static final byte COMMENT_ON = 1;
+	// 评论-禁止
 	public static final byte COMMENT_OFF = 0;
 
+	// 类型-文章
 	public static final byte TYPE_ARTICLE = 0;
+	// 类型-页面
 	public static final byte TYPE_PAGE = 1;
 
 	public Article() {

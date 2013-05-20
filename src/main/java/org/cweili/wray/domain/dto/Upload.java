@@ -55,7 +55,9 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	@Transient
 	private byte[] content;
 
+	// 支持上传文件类型
 	public static final Map<String, String> TYPE = new HashMap<String, String>(79);
+	// 已压缩文件类型
 	public static final Set<String> COMPRESSED = new HashSet<String>(27);
 
 	static {

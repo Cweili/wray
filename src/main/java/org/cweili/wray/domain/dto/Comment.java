@@ -83,8 +83,11 @@ public class Comment implements Serializable, Cloneable, Comparable<Comment> {
 	@Transient
 	private String origin = "";
 
+	// 状态-已删除
 	public static final byte STAT_REMOVED = 0;
+	// 状态-屏蔽
 	public static final byte STAT_BLOCK = 1;
+	// 状态-显示
 	public static final byte STAT_DISPLAY = 2;
 
 	public Comment() {

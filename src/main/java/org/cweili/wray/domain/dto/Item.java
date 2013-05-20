@@ -63,13 +63,20 @@ public class Item implements Serializable, Cloneable, Comparable<Item> {
 	 */
 	private byte stat;
 
+	// 类型-分类
 	public static final byte TYPE_CATEGORY = 0;
+	// 类型-标签
 	public static final byte TYPE_TAG = 1;
+	// 类型-链接
 	public static final byte TYPE_LINK = 2;
+	// 类型-导航
 	public static final byte TYPE_NAVIGATOR = 3;
 
+	// 状态-不可用
 	public static final byte STAT_OFF = 0;
+	// 状态-可用
 	public static final byte STAT_ON = 1;
+	// 状态-已选中
 	public static final byte STAT_SELECTED = 2;
 
 	public Item() {
