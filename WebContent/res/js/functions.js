@@ -53,6 +53,7 @@ $(function() {
 	tagCloud();
 });
 
+// 标签云
 var tagCloud = function() {
 	var oTag = null;
 	oDiv = document.getElementById("tagcloud");

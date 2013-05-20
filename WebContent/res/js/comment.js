@@ -88,6 +88,7 @@ var updateCaptcha = function(id) {
 	$(id).attr("src", "captcha?height=28&width=100&" + Math.random());
 };
 
+// 提交评论
 var submitComment = function(id) {
 	$(id).on("submit", function() {
 		$(".captcha-error").hide();
@@ -108,6 +109,7 @@ var submitComment = function(id) {
 	});
 };
 
+// 回复评论
 var replyTo = function(id, author) {
 	// 移除其他回复框
 	$("#replyForm").remove();
@@ -157,6 +159,7 @@ var replyTo = function(id, author) {
 	$("#commentForm").slideUp(500);
 };
 
+// 显示评论
 var showComment = function(it, id) {
 	if ($("#commentRef" + id).length < 1) {
 		var $refComment = $("#comment-" + id + " .comment-panel").clone();
@@ -171,6 +174,7 @@ var showComment = function(it, id) {
 	$("#commentRef" + id).show(300);
 };
 
+// 隐藏评论
 var hideComment = function(id) {
 	$("#commentRef" + id).hide(300);
 };
@@ -220,6 +224,7 @@ $(function() {
 
 	$(".captcha-error").hide();
 
+	// 更新验证码
 	updateCaptcha("#captcha");
 
 	// $("input[name=author]").one("focus", function() {
@@ -231,13 +236,16 @@ $(function() {
 		updateCaptcha("#captcha");
 	});
 
+	// 头像加载错误显示默认头像
 	$(".comment-author-img").one("error", function() {
 		$(this).attr("src", "res/image/user.png");
 		return false;
 	});
 
+	// 添加评论提交
 	submitComment("#commentForm");
 
+	// 评论框添加验证
 	$("#commentForm").validate(commentFormValidation);
 
 });

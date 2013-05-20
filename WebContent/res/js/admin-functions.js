@@ -64,7 +64,7 @@ var editorInit = {
 
 $(function() {
 
-	// NAVIGATION MENU
+	// 侧边导航栏
 	var locationURL = window.location.pathname + window.location.search;
 	$(".submenu li").each(function(i) {
 		if (i < $(".submenu li").length - 1) {
@@ -99,10 +99,7 @@ $(function() {
 	$(".current_nav").parent().parent().slideToggle("slow");
 	$(".current_nav").parent().parent().prev().toggleClass("selected");
 
-	// DATE PICKER
-	$(".datepicker").datepicker();
-
-	// CLOSE NOTIFICATIONS BUTTON
+	// 关闭按钮
 	$(".close").click(function() {
 		$(this).parent().fadeTo(400, 0, function() {
 			$(this).slideUp(400);
@@ -117,7 +114,7 @@ $(function() {
 		}, slideToggleDelay);
 	}
 
-	// Check all the checkboxes when the head one is selected:
+	// 多选框全选
 	$(".checkall").click(
 			function() {
 				$(this).parent().parent().parent().parent().find('input[type="checkbox"]').attr(
@@ -138,6 +135,7 @@ $(function() {
 	// }
 	// });
 
+	// 表单提交操作
 	$("#editForm").on("submit", function() {
 		if ($("#editForm").valid()) {
 			submitForm($("#editForm"));
@@ -145,12 +143,14 @@ $(function() {
 		return false;
 	});
 
-	if ($("#main").height() < 570) {
+	// 页面高度最小值
+	if ($("#main").height() < 600) {
 		$("#main").css({
-			height : "570px"
+			height : "600px"
 		});
 	}
 
+	// 编辑器 "更多" 按钮
 	KindEditor.plugin('insertmore', function(K) {
 		var editor = this;
 		editor.clickToolbar("insertmore", function() {
@@ -158,6 +158,7 @@ $(function() {
 		});
 	});
 
+	// 创建编辑器
 	KindEditor.ready(function(K) {
 		editor = K.create(".wysiwyg", editorInit);
 		// prettyPrint();
@@ -169,10 +170,12 @@ $(function() {
 
 });
 
+// 控制页面宽度
 $(window).resize(function() {
 	reSizeMain();
 });
 
+// 提交表单
 var submitForm = function(form) {
 	$(".loading").show();
 	if (editor != null) {
@@ -201,11 +204,13 @@ var submitForm = function(form) {
 	});
 };
 
+// 管理单一记录
 var manageSingle = function(id) {
 	$("#manageId").val(id);
 	$("#manageForm").submit();
 };
 
+// 控制 main 宽度
 var reSizeMain = function() {
 	var containerwidth = $(window).width();
 	containerwidth = containerwidth > 996 ? containerwidth : 996;
@@ -219,6 +224,7 @@ var reSizeMain = function() {
 	});
 };
 
+// 显示欢迎信息
 var welcome = function() {
 	var hour = new Date().getHours();
 	var welcome;
