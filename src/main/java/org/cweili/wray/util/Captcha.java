@@ -54,7 +54,7 @@ public class Captcha {
 		g.fillRect(0, 0, width, height);
 
 		// 画随机线
-		for (int i = 0; i < 250; ++i) {
+		for (int i = 0; i < 50; ++i) {
 			g.setColor(getRandomColor());
 			int x = random.nextInt(width - 2) + 1;
 			int y = random.nextInt(height - 2) + 1;

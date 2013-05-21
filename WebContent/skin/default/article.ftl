@@ -10,7 +10,6 @@
 		</@head>
 	</head>
 	<body>
-		$`{topBarReplacement}
 		<div id="wrapper" align="center">
 			<@header></@header>
 			<div id="outerwrapper">

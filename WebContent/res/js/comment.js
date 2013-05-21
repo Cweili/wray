@@ -91,6 +91,7 @@ var updateCaptcha = function(id) {
 // 提交评论
 var submitComment = function(id) {
 	$(id).on("submit", function() {
+		editor.sync();
 		$(".captcha-error").hide();
 		if ($(id).valid()) {
 			$.post("comment", $(id).serialize(), function(data) {
@@ -99,7 +100,7 @@ var submitComment = function(id) {
 					$(id + " input[name=captcha]").focus();
 					updateCaptcha("#captcha" + id.substring(12));
 				} else if (data == "error") {
-
+					alert('Error.');
 				} else {
 					window.location.href = data;
 				}
