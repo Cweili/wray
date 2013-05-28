@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,19 +24,38 @@ import com.alibaba.fastjson.JSON;
  */
 public class InitInterceptor extends BaseInterceptor {
 
+	private static boolean unInited = true;
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-		int configCount = blogConfig.getConfigMap().size();
-		if (1 > configCount) {
-			try {
-				importConfig();
-			} catch (Exception e) {
-				response.getWriter().write(e.toString());
-				response.getWriter().close();
-				log.error(e, e);
-				return false;
+
+		if (unInited) {
+
+			// 初始化分词
+			new Thread() {
+
+				@Override
+				public void run() {
+					super.run();
+					ChineseSegment.segmentToSet("");
+				}
+
+			}.start();
+
+			int configCount = blogConfig.getConfigMap().size();
+			if (1 > configCount) {
+				try {
+					importConfig();
+				} catch (Exception e) {
+					response.getWriter().write(e.toString());
+					response.getWriter().close();
+					log.error(e, e);
+					return false;
+				}
 			}
+
+			unInited = false;
 		}
 
 		return true;
@@ -53,6 +73,11 @@ public class InitInterceptor extends BaseInterceptor {
 
 	}
 
+	/**
+	 * 导入默认配置
+	 * 
+	 * @throws IOException
+	 */
 	private void importConfig() throws IOException {
 
 		InputStream is = this.getClass().getResourceAsStream("/initdata.json");
