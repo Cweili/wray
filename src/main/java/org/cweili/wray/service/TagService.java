@@ -2,7 +2,7 @@ package org.cweili.wray.service;
 
 import java.util.List;
 
-import org.cweili.wray.domain.dto.Item;
+import org.cweili.wray.entity.Item;
 
 /**
  * 标签 Service

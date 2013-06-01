@@ -3,7 +3,7 @@ package org.cweili.wray.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.Query;

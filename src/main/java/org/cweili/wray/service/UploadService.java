@@ -3,7 +3,7 @@ package org.cweili.wray.service;
 import java.util.List;
 
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Upload;
+import org.cweili.wray.entity.Upload;
 
 /**
  * 附件 Service

@@ -8,7 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
 import org.cweili.wray.dao.UploadDao;
-import org.cweili.wray.domain.dto.Upload;
+import org.cweili.wray.entity.Upload;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,6 +1,6 @@
 package org.cweili.wray.dao;
 
-import org.cweili.wray.domain.dto.Upload;
+import org.cweili.wray.entity.Upload;
 import org.springframework.data.repository.NoRepositoryBean;
 
 /**

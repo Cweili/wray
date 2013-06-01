@@ -2,7 +2,7 @@ package org.cweili.wray.service;
 
 import java.util.Map;
 
-import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.entity.Config;
 import org.springframework.web.context.request.WebRequest;
 
 /**

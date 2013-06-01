@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 import org.cweili.wray.service.SearchService;
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.ChineseSegment;

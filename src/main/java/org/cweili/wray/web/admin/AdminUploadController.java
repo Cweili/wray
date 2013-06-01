@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Upload;
+import org.cweili.wray.entity.Upload;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.web.BaseController;
 import org.springframework.stereotype.Controller;

@@ -1,6 +1,6 @@
 package org.cweili.wray.service;
 
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 
 /**
  * 搜索 Service

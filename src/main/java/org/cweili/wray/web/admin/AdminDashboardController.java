@@ -4,7 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.cweili.wray.domain.BlogView;
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.web.BaseController;
 import org.springframework.http.HttpHeaders;

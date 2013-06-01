@@ -3,8 +3,8 @@ package org.cweili.wray.service;
 import java.util.List;
 
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Article;
-import org.cweili.wray.domain.dto.Comment;
+import org.cweili.wray.entity.Article;
+import org.cweili.wray.entity.Comment;
 
 /**
  * 评论 Service

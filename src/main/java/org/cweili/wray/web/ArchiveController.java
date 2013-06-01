@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 
 import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 import org.cweili.wray.util.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

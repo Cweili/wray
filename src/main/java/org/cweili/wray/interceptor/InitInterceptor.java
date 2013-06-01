@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.entity.Config;
 import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;

@@ -2,7 +2,7 @@ package org.cweili.wray.dao;
 
 import java.util.List;
 
-import org.cweili.wray.domain.dto.Relationship;
+import org.cweili.wray.entity.Relationship;
 
 /**
  * 关系 DAO

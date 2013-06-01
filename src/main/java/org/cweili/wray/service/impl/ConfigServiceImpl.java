@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.entity.Config;
 import org.cweili.wray.service.ConfigService;
 import org.cweili.wray.util.Function;
 import org.springframework.stereotype.Service;

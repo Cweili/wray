@@ -1,6 +1,6 @@
 package org.cweili.wray.dao;
 
-import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.entity.Config;
 
 /**
  * 配置 DAO

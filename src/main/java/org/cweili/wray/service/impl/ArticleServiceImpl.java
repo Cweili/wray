@@ -10,8 +10,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Article;
-import org.cweili.wray.domain.dto.Relationship;
+import org.cweili.wray.entity.Article;
+import org.cweili.wray.entity.Relationship;
 import org.cweili.wray.service.ArticleService;
 import org.cweili.wray.util.ChineseSegment;
 import org.cweili.wray.util.Function;

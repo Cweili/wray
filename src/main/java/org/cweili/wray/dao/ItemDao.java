@@ -2,7 +2,7 @@ package org.cweili.wray.dao;
 
 import java.util.List;
 
-import org.cweili.wray.domain.dto.Item;
+import org.cweili.wray.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

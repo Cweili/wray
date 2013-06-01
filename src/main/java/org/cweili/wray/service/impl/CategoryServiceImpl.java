@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.dto.Article;
-import org.cweili.wray.domain.dto.Item;
-import org.cweili.wray.domain.dto.Relationship;
+import org.cweili.wray.entity.Article;
+import org.cweili.wray.entity.Item;
+import org.cweili.wray.entity.Relationship;
 import org.cweili.wray.service.CategoryService;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.Sort;

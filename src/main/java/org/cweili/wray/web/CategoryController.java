@@ -2,8 +2,8 @@ package org.cweili.wray.web;
 
 import org.cweili.wray.domain.BlogView;
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Article;
-import org.cweili.wray.domain.dto.Item;
+import org.cweili.wray.entity.Article;
+import org.cweili.wray.entity.Item;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.util.NotFoundException;
 import org.springframework.stereotype.Controller;

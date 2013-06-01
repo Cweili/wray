@@ -3,8 +3,8 @@ package org.cweili.wray.web;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.cweili.wray.domain.dto.Article;
-import org.cweili.wray.domain.dto.Comment;
+import org.cweili.wray.entity.Article;
+import org.cweili.wray.entity.Comment;
 import org.cweili.wray.util.Captcha;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;

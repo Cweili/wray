@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.cweili.wray.domain.BlogView;
-import org.cweili.wray.domain.dto.Config;
+import org.cweili.wray.entity.Config;
 import org.cweili.wray.util.Constant;
 import org.cweili.wray.util.Function;
 import org.cweili.wray.web.BaseController;

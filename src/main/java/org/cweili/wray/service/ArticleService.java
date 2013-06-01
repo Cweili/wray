@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 
 /**
  * 文章 Service

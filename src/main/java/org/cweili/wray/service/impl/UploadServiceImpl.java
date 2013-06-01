@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.cweili.wray.domain.Page;
-import org.cweili.wray.domain.dto.Upload;
+import org.cweili.wray.entity.Upload;
 import org.cweili.wray.service.UploadService;
 import org.cweili.wray.util.Zlib;
 import org.springframework.data.domain.PageRequest;

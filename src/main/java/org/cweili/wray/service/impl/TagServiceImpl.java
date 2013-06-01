@@ -3,7 +3,7 @@ package org.cweili.wray.service.impl;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.dto.Item;
+import org.cweili.wray.entity.Item;
 import org.cweili.wray.service.TagService;
 import org.cweili.wray.util.Function;
 import org.springframework.data.domain.PageRequest;

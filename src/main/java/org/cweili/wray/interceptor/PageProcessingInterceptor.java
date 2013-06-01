@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cweili.wray.domain.dto.Article;
+import org.cweili.wray.entity.Article;
 import org.cweili.wray.util.Constant;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
