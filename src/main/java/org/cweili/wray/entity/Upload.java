@@ -52,6 +52,9 @@ public class Upload implements Serializable, Cloneable, Comparable<Upload> {
 	 */
 	private Date uploadDate;
 
+	/**
+	 * 内容
+	 */
 	@Transient
 	private byte[] content;
 

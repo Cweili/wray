@@ -82,6 +82,9 @@ public class Article implements Serializable, Cloneable, Comparable<Article> {
 	 */
 	private byte isPage;
 
+	/**
+	 * 关键词集合
+	 */
 	@Indexed
 	private Set<String> keyword;
 

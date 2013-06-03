@@ -853,17 +853,20 @@ button {
 	border-radius: 0px;
 	border-style: solid;
 	border-width: 1px;
-	color: #2970A6;
+	color: #FFFFFF;
 	font-size: 12px;
-	height: 22px;
 	line-height: 22px;
-	padding: 0px 6px;
-	background-color:#ffffff;
+	padding: 2px 6px;
+	margin: 0 4px;
+	background-color: #81B840;
+	
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 button:hover {
 	background: none repeat scroll 0 0 #98C64C;
 	border-color: #76B33A #98C64C #98C64C #76B33A;
-	color: #074A7E;
 }
 .commentLinkLabel, .commentLinkLabelReply {
 	position: absolute;
