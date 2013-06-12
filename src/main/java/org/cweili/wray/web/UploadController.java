@@ -56,6 +56,7 @@ public class UploadController extends BaseController {
 	@RequestMapping(value = "/upload-json", method = RequestMethod.POST)
 	public @ResponseBody
 	String uploadJson(MultipartHttpServletRequest request) {
+		// 判断是否有权限
 		String authorityToken = StringUtils.stripToEmpty(request.getParameter("a"));
 		String authorityTime = StringUtils.stripToEmpty(request.getParameter("t"));
 		if (!authorityToken.equals(Function.authorityToken(authorityTime,

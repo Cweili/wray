@@ -52,7 +52,8 @@ public class SearchServiceImpl extends BaseService implements SearchService {
 			String colorStr = StringUtils.join(new Integer[] { color.getRed(), color.getGreen(),
 					color.getBlue() }, ',');
 			replacements[i] = "<span style=\"background-color:rgb(" + backgroundStr
-					+ ");color:rgb(" + colorStr + ");\">" + keywords[i] + "</span>";
+					+ ") !important;color:rgb(" + colorStr + ") !important;\">" + keywords[i]
+					+ "</span>";
 		}
 		List<Entry<Article, Integer>> entryList = Function.sortMapByValue(articleMap);
 		Article[] articles = new Article[entryList.size()];

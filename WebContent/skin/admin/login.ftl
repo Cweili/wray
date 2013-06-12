@@ -27,7 +27,7 @@
 				<div id="rememberme"><input class="check" type="checkbox" name="rememberme" value="true" tabindex="4" />一年内自动登录</div>
 				<input type="submit" value="登 &nbsp; 录" class="login" tabindex="5"  />
 				<div id="loading"></div>
-				<input id="hash" type="hidden" name="hash" />
+				<input id="salt" type="hidden" name="salt" />
 			</form>
 			<p class="space"></p>
 			<div class="err">

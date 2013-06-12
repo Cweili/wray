@@ -126,12 +126,6 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 		return null;
 	}
 
-	private void setGfs() {
-		if (null == gfs) {
-			gfs = new GridFS(db.getDb(), UPLOAD_FILE_GRIDFS);
-		}
-	}
-
 	@Override
 	public Iterable<Upload> findAll(Sort arg0) {
 		return null;
@@ -147,6 +141,12 @@ public class UploadDaoImpl extends BaseDaoSupport implements UploadDao {
 				+ (page.getOffset() + page.getPageSize()));
 		return new PageImpl<Upload>(db.find(q, Upload.class, UPLOAD_FILE_GRIDFS + ".files"), page,
 				count());
+	}
+
+	private void setGfs() {
+		if (null == gfs) {
+			gfs = new GridFS(db.getDb(), UPLOAD_FILE_GRIDFS);
+		}
 	}
 
 }

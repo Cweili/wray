@@ -1,51 +1,56 @@
-$(document).ready(
-		function() {
-			updateCaptcha("#captcha");
+$(document).ready(function() {
+	updateCaptcha("#captcha");
 
-			$("#captcha").on("click", function() {
+	$("#captcha").on("click", function() {
+		updateCaptcha("#captcha");
+	});
+
+	$("#admin-login").on("submit", function() {
+		// 显示载入状态
+		$("#loading").show();
+		// 为密码加上随机数
+		$("#salt").val(Math.random());
+		var password = $(":password").val();
+		// 对密码与随机数进行SHA-256加密，产生新密码提交
+		$(":password").val(SHA256(SHA256(password) + $("#salt").val()));
+		$.post("admin-login", $("#admin-login").serialize(), function(data) {
+			// 隐藏载入状态
+			$("#loading").hide();
+			// 登录成功
+			if (data == "success") {
+				$(".err").hide();
+				$(".succes").slideDown();
+				if (window.location.hash) {
+					setTimeout(function() {
+						// 跳转至登录前请求页面
+						window.location.href = "admin-" + window.location.hash.substring(1);
+					}, 2000);
+				} else {
+					setTimeout(function() {
+						window.location.href = "admin-dashboard";
+					}, 2000);
+				}
+				// 验证码错误
+			} else if (data == "captcha") {
+				$(".err").hide();
+				$(".err p").html("验证码输入错误.");
+				$(".err").slideDown();
 				updateCaptcha("#captcha");
-			});
-
-			$("#admin-login").on(
-					"submit",
-					function() {
-
-						$("#loading").show();
-
-						$("#hash").val(Math.random());
-						var password = $(":password").val();
-						$(":password").val(SHA256(SHA256(password) + $("#hash").val()));
-						$.post("admin-login", $("#admin-login").serialize(), function(data) {
-
-							$("#loading").hide();
-
-							if (data == "success") {
-								$(".err").hide();
-								$(".succes").slideDown();
-								if (window.location.hash) {
-									setTimeout("window.location.href='admin-"
-											+ window.location.hash.substring(1) + "';", 2000);
-								} else {
-									setTimeout("window.location.href='admin-dashboard';", 2000);
-								}
-							} else if (data == "captcha") {
-								$(".err").hide();
-								$(".err p").html("验证码输入错误.");
-								$(".err").slideDown();
-								updateCaptcha("#captcha");
-								$("input[name=captcha]").focus();
-							} else {
-								$(".err").hide();
-								$(".err p").html("请确认您的用户名和密码正确.");
-								$(".err").slideDown();
-								updateCaptcha("#captcha");
-							}
-						});
-						$(":password").val(password);
-						return false;
-					});
-
+				$("input[name=captcha]").focus();
+				// 登录失败
+			} else {
+				$(".err").hide();
+				$(".err p").html("请确认您的用户名和密码正确.");
+				$(".err").slideDown();
+				updateCaptcha("#captcha");
+			}
 		});
+		// 输入框中还原原密码
+		$(":password").val(password);
+		return false;
+	});
+
+});
 
 var updateCaptcha = function(id) {
 	$(id).attr("src", "captcha?height=27&width=266&" + Math.random());

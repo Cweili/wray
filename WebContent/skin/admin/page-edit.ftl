@@ -14,7 +14,6 @@
 					<label for="permalink">永久链接</label>
 					<span class="field_desc">${staticServePath}page/</sapn>
 					<input class="mediumfield" name="permalink" type="text" value="${article.permalink?if_exists}" />
-					<span class="field_desc">/</span>
 				</div>
 				<div class="input_field">
 					<label for="tag">关键字</label>

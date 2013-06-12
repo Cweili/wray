@@ -1,6 +1,14 @@
 <div id="searchbox">
 	<form id="searchform" action="search" method="post">
-		<input type="text" value="${searchLabel}" name="k" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+		<#if (mostUsedTags?size > 0)>
+			<#list mostUsedTags as tag>
+				<#if tag_index == 0>
+					<input type="text" value="${tag.itemName?url('UTF-8')}" name="k" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+				</#if>
+			</#list>
+		<#else>
+			<input type="text" value="${searchLabel}" name="k" id="searchbox" onfocus="this.value=''" class="searchinput"/>
+		</#if>
 		<input type="submit" class="submitbutton" value="${searchLabel}" />
 	</form> 
 	<div class="clr"></div>

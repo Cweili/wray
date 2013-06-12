@@ -91,14 +91,17 @@ public final class AdminNavController extends BaseController {
 
 	@RequestMapping(value = "/admin-nav-manage", method = RequestMethod.POST)
 	public BlogView manage(WebRequest request) {
+		int navigatorSwitch = Function.defaultInteger(request.getParameter("navigatorSwitch"), 0);
+		if (navigatorSwitch != blogConfig.getInt("navigatorSwitch")) {
+			blogConfig.save(new Config("navigatorSwitch", navigatorSwitch));
+			blogConfig.getConfigMap().put("navigatorSwitch", "" + navigatorSwitch);
+		}
+
 		BlogView v = new BlogView("msg");
 		v.add("err", "succ");
 		v.add("msg", "导航更新成功");
 		v.add("succ", "恭喜您，您的导航设置已成功更新，选中导航已删除。");
 		v.add("redirect", "admin-nav-manage");
-
-		blogConfig.save(new Config("navigatorSwitch", Function.defaultInteger(
-				request.getParameter("navigatorSwitch"), 0)));
 
 		List<String> ids = new ArrayList<String>();
 		if (request.getParameterValues("id") != null) {

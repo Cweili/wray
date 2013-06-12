@@ -296,7 +296,7 @@ public class Function {
 	 * @return
 	 */
 	public static String stripTags(String input) {
-		return input.replaceAll("<[^>]+>", "");
+		return escapeHtml(input.replaceAll("<[^>]+>", ""));
 	}
 
 	public static String stripTags(String input, String[] tags) {

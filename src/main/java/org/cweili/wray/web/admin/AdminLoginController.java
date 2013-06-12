@@ -60,6 +60,7 @@ public final class AdminLoginController extends BaseController {
 		ServletRequestAttributes req = (ServletRequestAttributes) RequestContextHolder
 				.currentRequestAttributes();
 
+		// 判断验证码
 		if (!StringUtils.stripToEmpty(request.getParameter(Constant.CAPTCHA)).toUpperCase()
 				.equals(request.getAttribute(Constant.CAPTCHA, WebRequest.SCOPE_SESSION))) {
 			request.setAttribute(Constant.CAPTCHA, Captcha.getRandomString(6),
@@ -67,11 +68,12 @@ public final class AdminLoginController extends BaseController {
 			return Constant.CAPTCHA;
 		}
 
+		// 判断用户名与密码
 		if (null != request.getParameter("username") && null != request.getParameter("password")
-				&& null != request.getParameter("hash")
+				&& null != request.getParameter("salt")
 				&& request.getParameter("username").equals(blogConfig.get("adminName"))) {
 			String password = Function.sha256(blogConfig.get("adminPwd")
-					+ request.getParameter("hash"));
+					+ request.getParameter("salt"));
 			if (password.equals(request.getParameter("password"))) {
 
 				// 保存登陆状态
