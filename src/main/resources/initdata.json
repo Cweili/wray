@@ -1,216 +1,216 @@
-[{
-  "key": "attachFooter",
+{
+  "_id": "attachFooter",
   "value": "<!-- footer -->"
 },
 {
-  "key": "attachHeader",
+  "_id": "attachHeader",
   "value": "<!-- header -->"
 },
 {
-  "key": "attachStat",
+  "_id": "attachStat",
   "value": "<!-- stat -->"
 },
 {
-  "key": "blogHost",
+  "_id": "blogHost",
   "value": "http:\/\/localhost:8080\/wray"
 },
 {
-  "key": "blogSubtitle",
+  "_id": "blogSubtitle",
   "value": "This is subtitle"
 },
 {
-  "key": "blogTitle",
+  "_id": "blogTitle",
   "value": "Cweili Blog"
 },
 {
-  "key": "htmlHead",
+  "_id": "htmlHead",
   "value": ""
 },
 {
-  "key": "metaDescription",
+  "_id": "metaDescription",
   "value": "Cweili Blog"
 },
 {
-  "key": "metaKeywords",
+  "_id": "metaKeywords",
   "value": "Cweili,Blog"
 },
 {
-  "key": "topArticleLabel",
+  "_id": "topArticleLabel",
   "value": "置顶"
 },
 {
-  "key": "updatedLabel",
+  "_id": "updatedLabel",
   "value": "有更新"
 },
 {
-  "key": "noticeBoard",
-  "value": "<span style=\"line-height:24px;background-color:#00CC00;color:#003333;font-size:18px;\"><strong>公告栏<\/strong><\/span>"
-},
-{
-  "key": "replyLabel",
+  "_id": "replyLabel",
   "value": "回复"
 },
 {
-  "key": "nextPageLabel",
+  "_id": "nextPageLabel",
   "value": ">"
 },
 {
-  "key": "previousPageLabel",
+  "_id": "previousPageLabel",
   "value": "<"
 },
 {
-  "key": "firstPageLabel",
+  "_id": "firstPageLabel",
   "value": "«"
 },
 {
-  "key": "feedSize",
+  "_id": "feedSize",
   "value": "10"
 },
 {
-  "key": "inputErrorLabel",
+  "_id": "inputErrorLabel",
   "value": "填写错误"
 },
 {
-  "key": "pageSize",
+  "_id": "pageSize",
   "value": "10"
 },
 {
-  "key": "recentCommentsSize",
+  "_id": "recentCommentsSize",
   "value": "10"
 },
 {
-  "key": "topHitArticlesSize",
+  "_id": "topHitArticlesSize",
   "value": "10"
 },
 {
-  "key": "topCommentArticlesSize",
+  "_id": "topCommentArticlesSize",
   "value": "10"
 },
 {
-  "key": "mostUsedTagsSize",
+  "_id": "mostUsedTagsSize",
   "value": "30"
 },
 {
-  "key": "commentLabel",
+  "_id": "commentLabel",
   "value": "评论"
 },
 {
-  "key": "moreLabel",
+  "_id": "moreLabel",
   "value": "继续阅读"
 },
 {
-  "key": "mostCommentArticlesLabel",
+  "_id": "mostCommentArticlesLabel",
   "value": "热评文章"
 },
 {
-  "key": "archiveLabel",
+  "_id": "archiveLabel",
   "value": "文章存档"
 },
 {
-  "key": "lastPageLabel",
+  "_id": "lastPageLabel",
   "value": "»"
 },
 {
-  "key": "popTagsLabel",
+  "_id": "popTagsLabel",
   "value": "热门标签"
 },
 {
-  "key": "recentCommentsLabel",
+  "_id": "recentCommentsLabel",
   "value": "最近评论"
 },
 {
-  "key": "mostViewCountArticlesLabel",
+  "_id": "mostViewCountArticlesLabel",
   "value": "热门点击"
 },
 {
-  "key": "sumLabel",
+  "_id": "sumLabel",
   "value": "共"
 },
 {
-  "key": "commentLinkLabel",
+  "_id": "commentLinkLabel",
   "value": "链接"
 },
 {
-  "key": "returnLabel",
+  "_id": "returnLabel",
   "value": "返回"
 },
 {
-  "key": "maxlengthErrorLabel",
+  "_id": "maxlengthErrorLabel",
   "value": "长度最长为"
 },
 {
-  "key": "commentEmailLabel",
+  "_id": "commentEmailLabel",
   "value": "E-mail"
 },
 {
-  "key": "allTagsLabel",
+  "_id": "allTagsLabel",
   "value": "标签墙"
 },
 {
-  "key": "tagLabel",
+  "_id": "tagLabel",
   "value": "标签"
 },
 {
-  "key": "linkLabel",
+  "_id": "linkLabel",
   "value": "友情链接"
 },
 {
-  "key": "viewLabel",
+  "_id": "viewLabel",
   "value": "次点击"
 },
 {
-  "key": "pageLabel",
+  "_id": "pageLabel",
   "value": "页"
 },
 {
-  "key": "submmitCommentLabel",
+  "_id": "submmitCommentLabel",
   "value": "提交评论"
 },
 {
-  "key": "searchLabel",
+  "_id": "searchLabel",
   "value": "搜索"
 },
 {
-  "key": "skinDir",
+  "_id": "skinDir",
   "value": "default"
 },
 {
-  "key": "commentAuthorLabel",
+  "_id": "commentAuthorLabel",
   "value": "用户名"
 },
 {
-  "key": "requiredErrorLabel",
+  "_id": "requiredErrorLabel",
   "value": "必须填写"
 },
 {
-  "key": "noticeBoardLabel",
+  "_id": "noticeBoardLabel",
   "value": "公告栏"
 },
 {
-  "key": "atomLabel",
+  "_id": "atomLabel",
   "value": "RSS\/ATOM"
 },
 {
-  "key": "homeLabel",
+  "_id": "homeLabel",
   "value": "首页"
 },
 {
-  "key": "adminNick",
+  "_id": "adminNick",
   "value": "Cweili"
 },
 {
-  "key": "adminName",
+  "_id": "adminName",
   "value": "Cweili"
 },
 {
-  "key": "adminEmail",
+  "_id": "adminEmail",
   "value": "3weili@gmail.com"
 },
 {
-  "key": "navigatorSwitch",
+  "_id": "navigatorSwitch",
   "value": "0"
 },
 {
-  "key": "adminPwd",
-  "value": "a773056e3ce4443f5529cb94a6b659eec8e408138c7c380f45249a8c1974c1ed"
-}]
+  "_id": "adminPwd",
+  "value": "c20f9025a70ed23b81c0b811b2aa2de1ba026ca3e1d4056fb2aebab9a71ac307"
+},
+{
+  "_id": "noticeBoard",
+  "value": "<span style=\"line-height:24px;background-color:#00CC00;color:#003333;font-size:18px;\"><strong>这是公告栏内容<br \/>\r\n<\/strong><\/span>"
+},
