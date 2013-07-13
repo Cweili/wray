@@ -3,7 +3,7 @@ Wray
 
 * A simple Blog written in Java.
 * Store data and attachments in [MongoDB](http://www.mongodb.org/).
-* Blog Skins  written in [FreeMarker](http://www.freemarker.org/).
+* Blog Skins written in [FreeMarker](http://www.freemarker.org/).
 
 Project Home: <https://github.com/Cweili/wray>
 
