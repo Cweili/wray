@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -94,15 +93,16 @@ public class Function {
 	 * @return
 	 */
 	public static String encode(long src) {
-		char[] c = new char[11];
+		final byte LENGTH = 11;
+		char[] c = new char[LENGTH];
 		long tmp = src;
 		tmp = tmp > 0 ? tmp : -1 - tmp;
-		int i = 11;
+		int i = LENGTH;
 		while (tmp > 0 && i >= 0) {
 			c[--i] = CHARS.charAt((int) tmp & 0x3f);
 			tmp >>>= 6;
 		}
-		return new String(Arrays.copyOfRange(c, i, 11));
+		return new String(c, i, LENGTH - i);
 	}
 
 	/**
